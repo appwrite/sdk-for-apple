@@ -12,8 +12,8 @@ func main() {
     ) { result in
         switch result {
         case .failure(let error):
-            print(error)
-        case .success(let response):
+            print(error.message)
+        case .success(var response):
             print(result) // Resource URL
         }
     }

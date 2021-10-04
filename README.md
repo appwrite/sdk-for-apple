@@ -1,13 +1,16 @@
-# Appwrite Apple SDK
+# Appwrite NAME SDK
 
+![Cocoapods](https://img.shields.io/cocoapods/v/Appwrite.svg?color=green&style=flat-square)
 ![Swift Package Manager](https://img.shields.io/github/v/release/repoowner/reponame.svg?color=green&style=flat-square)
 ![License](https://img.shields.io/github/license/repoowner/reponame.svg?style=flat-square)
-![Version](https://img.shields.io/badge/api%20version-0.8.0-blue.svg?style=flat-square)
+![Version](https://img.shields.io/badge/api%20version-0.10.4-blue.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/com/appwrite/sdk-generator?style=flat-square)](https://travis-ci.com/appwrite/sdk-generator)
 [![Twitter Account](https://img.shields.io/twitter/follow/appwrite_io?color=00acee&label=twitter&style=flat-square)](https://twitter.com/appwrite_io)
 [![Discord](https://img.shields.io/discord/564160730845151244?label=discord&style=flat-square)](https://appwrite.io/discord)
 
 **WORK IN PROGRESS - NOT READY FOR USAGE**
+
+Repo description goes here
 
 ![Appwrite](https://appwrite.io/v1/images/console.png)
 
@@ -17,11 +20,17 @@
 
 The Appwrite Swift SDK is available via multiple package managers, including Swift Package Manager. In order to use the Appwrite Swift SDK from Xcode, select File > Swift Packages > **Add Package Dependency**
 
+>>IMAGE<<
+
 In the dialog that appears, enter the Appwrite Swift SDK [package URL]() and click **Next**.
 
 Once the repository information is loaded, add your version rules and click **Next** again.
 
+>>IMAGE<<
+
 On the final screen, make sure you see `Appwrite` as a product selected for your target:
+
+>>IMAGE<<
 
 ### Swift Package Manager
 
@@ -29,20 +38,28 @@ Add the package to your `Package.swift` dependencies:
 
 ```swift
     dependencies: [
-        .package(url: "https://github.com/appwrite/sdk-for-apple", from: "0.0.1"),
+        .package(url: "", from: "0.0.1"),
     ],
 ```
 
 Then add it to your target:
 
 ```swift
-    .target(
-        name: "YourAppTarget",
-        dependencies: [
-            "Appwrite"
-        ]
-    ),
+    targets: [
+        .target(
+            name: "YourAppTarget",
+            dependencies: [
+                .product(name: "", package: "reponame")
+            ]
+        ),
 ```
+
+### Cocoapods
+
+```ruby
+    pod '', git: '', tag: '0.0.1'
+```
+
 
 ## Contribution
 

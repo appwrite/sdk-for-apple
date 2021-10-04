@@ -1,14 +1,8 @@
-//
-//  ViewController.swift
-//  UIKitExample
-//
-//  Created by Jake Barnby on 10/08/21.
-//
-//
-
 import UIKit
 import NIO
 import Appwrite
+
+let host = "https://demo.appwrite.io/v1"
 
 class ViewController: UIViewController {
 
@@ -21,11 +15,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var image: UIImageView!
     
     let client = Client()
-        .setEndpoint("http://192.168.20.6:80/v1")
-        .setProject("613b18dabf74a")
-        .setSelfSigned(true)
+        .setEndpoint(host)
+        .setProject("60f6a0d6e2a52")
 
-    let COLLECTION_ID = "6149afd52ce3b"
+    let COLLECTION_ID = "6155742223662"
     
     lazy var account = Account(client: client)
     lazy var storage = Storage(client: client)
@@ -49,7 +42,7 @@ class ViewController: UIViewController {
         disptch.enter()
         var string: String = ""
         
-        account.create("jake@appwrite.io", "password") { result in
+        account.create(email: "jake@appwrite.io", password: "password") { result in
             switch result {
             case .failure(let error): string = error.message
             case .success(var response): string = response.body!.readString(length: response.body!.readableBytes) ?? ""
@@ -61,7 +54,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func loginClick(_ sender: Any) {
-        account.createSession("jake@appwrite.io", "password") { result in
+        account.createSession(email: "jake@appwrite.io", password: "password") { result in
             var string: String = ""
             
             switch result {
@@ -78,9 +71,9 @@ class ViewController: UIViewController {
     
     @IBAction func loginWithFacebook(_ sender: UIButton) {
         account.createOAuth2Session(
-            "facebook",
-            "https://demo.appwrite.io/auth/oauth2/success",
-            "https://demo.appwrite.io/auth/oauth2/failure") { result in
+            provider: "facebook",
+            success: "https://demo.appwrite.io/auth/oauth2/success",
+            failure: "https://demo.appwrite.io/auth/oauth2/failure") { result in
                 var string: String = ""
                 
                 switch result {
@@ -96,7 +89,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func download(_ sender: Any) {
-        storage.getFileDownload("614afaf579352") { result in
+        storage.getFileDownload(fileId: "614afaf579352") { result in
             switch result {
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -117,16 +110,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func subscribe(_ sender: Any) {
-        _ = realtime.subscribe(channels:["collections.\(COLLECTION_ID).documents"], payloadType: Room.self) { message in
-            print(message)
+        _ = realtime.subscribe(channel:"collections.\(COLLECTION_ID).documents") { message in
+            DispatchQueue.main.async {
+                self.text.text = String(describing: message)
+            }
         }
     }
     
     @IBAction func createDocument(_ sender: Any) {
-        database.createDocument(COLLECTION_ID, [
-            "name": "Name \(Int.random(in: 0...Int.max))",
-            "description": "Description \(Int.random(in: 0...Int.max))"
-        ], ["*"], ["*"]) { result in
+        database.createDocument(
+            collectionId: COLLECTION_ID,
+            data: [
+                "name": "Name \(Int.random(in: 0...Int.max))",
+                "description": "Description \(Int.random(in: 0...Int.max))"
+            ]
+        ) { result in
             var string: String = ""
             
             switch result {
@@ -152,7 +150,7 @@ extension ViewController: ImagePickerDelegate {
         
         let file = File(name: "my_image.jpg", buffer: buffer)
         
-        storage.createFile(file, ["*"], ["*"]) { result in
+        storage.createFile(file: file) { result in
             switch result {
             case .failure(let error):
                 output = error.message
@@ -165,7 +163,4 @@ extension ViewController: ImagePickerDelegate {
             }
         }
     }
-}
-
-class Room : Model {
 }

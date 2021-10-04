@@ -1,10 +1,3 @@
-//
-// Client.swift
-//
-// Created by Armino <devel@boioiong.com>
-// GitHub: https://github.com/armino-dev/sdk-generator
-//
-
 import NIO
 import NIOSSL
 import Foundation
@@ -24,7 +17,7 @@ open class Client {
     open var headers: [String: String] = [
       "content-type": "",
       "x-sdk-version": "appwrite:swiftclient:0.0.1",
-      "X-Appwrite-Response-Format": "0.7.0"    
+      "X-Appwrite-Response-Format": "0.7.0"
     ]
 
     open var config: [String: String] = [:]
@@ -101,21 +94,6 @@ open class Client {
     }
 
     ///
-    /// Set Key
-    ///
-    /// Your secret API key
-    ///
-    /// @param String value
-    ///
-    /// @return Client
-    ///
-    open func setKey(_ value: String) -> Client {
-        config["key"] = value
-        _ = addHeader(key: "X-Appwrite-Key", value: value)
-        return self
-    }
-
-    ///
     /// Set JWT
     ///
     /// Your secret JSON Web Token
@@ -143,19 +121,6 @@ open class Client {
         return self
     }
 
-    ///
-    /// Set Mode
-    ///
-    /// @param String value
-    ///
-    /// @return Client
-    ///
-    open func setMode(_ value: String) -> Client {
-        config["mode"] = value
-        _ = addHeader(key: "X-Appwrite-Mode", value: value)
-        return self
-    }
-
 
     ///
     /// Set self signed
@@ -164,7 +129,7 @@ open class Client {
     ///
     /// @return Client
     ///
-    open func setSelfSigned(_ status: Bool = false) -> Client {
+    open func setSelfSigned(_ status: Bool = true) -> Client {
         try! http.syncShutdown()
         http = Client.createHTTP(selfSigned: status)
         return self
@@ -290,8 +255,7 @@ open class Client {
         }
 
         addHeaders(to: &request)
-        addCookies(to: &request)
-
+        request.addDomainCookies()
 
         if "GET" == method {
             execute(request, completion: completion)
@@ -311,17 +275,6 @@ open class Client {
     fileprivate func addHeaders(to request: inout HTTPClient.Request) {
         for (key, value) in self.headers {
             request.headers.add(name: key, value: value)
-        }
-    }
-
-    fileprivate func addCookies(to request: inout HTTPClient.Request) {
-        let cookieJson = UserDefaults.standard.string(forKey: "\(request.url.host ?? "")-cookies")
-        let cookies = try! cookieJson?.fromJson(to: [HTTPClient.Cookie].self)
-
-        if let authCookie = cookies?.first(where: { cookie in
-            cookie.name.starts(with: "a_session_") && !cookie.name.contains("legacy")
-        }) {
-            request.headers.add(name: "cookie", value: "\(authCookie.name)=\(authCookie.value)")
         }
     }
 
@@ -359,17 +312,29 @@ open class Client {
         }
 
         func complete(with result: Result<HTTPClient.Response, Error>) {
-            if let completion = completion {
-                switch result {
-                case .failure(let error): print(error)
-                case .success(let response):
-                    guard response.cookies.count > 0 else {
-                        break
+            guard let completion = completion else {
+                return
+            }
+
+            switch result {
+            case .failure(let error): print(error)
+            case .success(let response):
+                switch response.status.code {
+                case 0..<400:
+                    if response.cookies.count > 0 {
+                        UserDefaults.standard.set(
+                            try! response.cookies.toJson(),
+                            forKey: "\(response.host)-cookies"
+                        )
                     }
-                    let cookieJson = try! response.cookies.toJson()
-                    UserDefaults.standard.set(cookieJson, forKey: "\(response.host)-cookies")
+                    completion(.success(response))
+                default:
+                    let error = AppwriteError(
+                        message: response.body?.getString(at: 0, length: response.body!.readableBytes) ?? response.status.reasonPhrase,
+                        code: Int(response.status.code)
+                    )
+                    completion(.failure(error))
                 }
-                completion(result.mapError { AppwriteError(message: $0.localizedDescription) })
             }
         }
     }

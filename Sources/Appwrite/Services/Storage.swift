@@ -17,7 +17,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func listFiles(_ search: String = "", _ limit: Int = 25, _ offset: Int = 0, _ orderType: String = "ASC", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func listFiles(search: String = "", limit: Int = 25, offset: Int = 0, orderType: String = "ASC", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         let path: String = "/storage/files"
 
         let params: [String: Any?] = [
@@ -47,7 +47,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func createFile(_ file: File, _ read: Array<Any>? = [], _ write: Array<Any>? = [], completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func createFile(file: File, read: Array<Any>? = [], write: Array<Any>? = [], completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         let path: String = "/storage/files"
 
         let params: [String: Any?] = [
@@ -73,7 +73,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFile(_ fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getFile(fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/storage/files/{fileId}"
 
         path = path.replacingOccurrences(
@@ -102,7 +102,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func updateFile(_ fileId: String, _ read: Array<Any>?, _ write: Array<Any>?, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func updateFile(fileId: String, read: Array<Any>?, write: Array<Any>?, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/storage/files/{fileId}"
 
         path = path.replacingOccurrences(
@@ -132,7 +132,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteFile(_ fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func deleteFile(fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/storage/files/{fileId}"
 
         path = path.replacingOccurrences(
@@ -160,7 +160,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFileDownload(_ fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getFileDownload(fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/storage/files/{fileId}/download"
 
         path = path.replacingOccurrences(
@@ -186,6 +186,7 @@ open class Storage: Service {
     /// @param String fileId
     /// @param Int width
     /// @param Int height
+    /// @param String gravity
     /// @param Int quality
     /// @param Int borderWidth
     /// @param String borderColor
@@ -197,7 +198,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFilePreview(_ fileId: String, _ width: Int = 0, _ height: Int = 0, _ quality: Int = 100, _ borderWidth: Int = 0, _ borderColor: String = "", _ borderRadius: Int = 0, _ opacity: Double = 1.0, _ rotation: Int = 0, _ background: String = "", _ output: String = "", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getFilePreview(fileId: String, width: Int = 0, height: Int = 0, gravity: String = "center", quality: Int = 100, borderWidth: Int = 0, borderColor: String = "", borderRadius: Int = 0, opacity: Double = 1.0, rotation: Int = 0, background: String = "", output: String = "", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/storage/files/{fileId}/preview"
 
         path = path.replacingOccurrences(
@@ -208,6 +209,7 @@ open class Storage: Service {
         let params: [String: Any?] = [
             "width": width,
             "height": height,
+            "gravity": gravity,
             "quality": quality,
             "borderWidth": borderWidth,
             "borderColor": borderColor,
@@ -233,7 +235,7 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFileView(_ fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getFileView(fileId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/storage/files/{fileId}/view"
 
         path = path.replacingOccurrences(

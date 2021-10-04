@@ -16,7 +16,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func list(_ search: String = "", _ limit: Int = 25, _ offset: Int = 0, _ orderType: String = "ASC", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func list(search: String = "", limit: Int = 25, offset: Int = 0, orderType: String = "ASC", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         let path: String = "/users"
 
         let params: [String: Any?] = [
@@ -44,7 +44,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func create(_ email: String, _ password: String, _ name: String = "", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func create(email: String, password: String, name: String = "", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         let path: String = "/users"
 
         let params: [String: Any?] = [
@@ -69,7 +69,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func get(_ userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func get(userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}"
 
         path = path.replacingOccurrences(
@@ -95,7 +95,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func delete(_ userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func delete(userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}"
 
         path = path.replacingOccurrences(
@@ -121,7 +121,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getLogs(_ userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getLogs(userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/logs"
 
         path = path.replacingOccurrences(
@@ -147,7 +147,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getPrefs(_ userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getPrefs(userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/prefs"
 
         path = path.replacingOccurrences(
@@ -175,7 +175,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func updatePrefs(_ userId: String, _ prefs: Any?, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func updatePrefs(userId: String, prefs: Any?, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/prefs"
 
         path = path.replacingOccurrences(
@@ -203,7 +203,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getSessions(_ userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getSessions(userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/sessions"
 
         path = path.replacingOccurrences(
@@ -229,7 +229,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteSessions(_ userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func deleteSessions(userId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/sessions"
 
         path = path.replacingOccurrences(
@@ -256,7 +256,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteSession(_ userId: String, _ sessionId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func deleteSession(userId: String, sessionId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/sessions/{sessionId}"
 
         path = path.replacingOccurrences(
@@ -288,7 +288,7 @@ open class Users: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func updateStatus(_ userId: String, _ status: Int, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func updateStatus(userId: String, status: Int, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
         var path: String = "/users/{userId}/status"
 
         path = path.replacingOccurrences(
