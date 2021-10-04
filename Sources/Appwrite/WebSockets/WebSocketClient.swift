@@ -197,16 +197,16 @@ public class WebSocketClient {
         delegate: WebSocketClientDelegate? = nil
     ) {
         let rawUrl = URL(string: url)
+        let hasTLS =  rawUrl?.scheme == "wss" || rawUrl?.scheme == "https"
         self.frameKey = "tergregfgbsfdgfdsfgdbv=="
         self.host = rawUrl?.host ?? "localhost"
-        self.port = rawUrl?.port ?? 80
+        self.port = rawUrl?.port ?? (hasTLS ? 443 : 80)
         self.uri = rawUrl?.path ?? "/"
         self.query = rawUrl?.query ?? ""
         self.headers = headers
         self.maxFrameSize = 24
-        self.tlsEnabled = rawUrl?.scheme == "wss" || rawUrl?.scheme == "https"
-        self.delegate = delegate
-    }
+        self.tlsEnabled = hasTLS
+        self.delegate = delegate    }
     
     deinit {
         try! threadGroup.syncShutdownGracefully()
