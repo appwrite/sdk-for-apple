@@ -206,7 +206,8 @@ public class WebSocketClient {
         self.headers = headers
         self.maxFrameSize = 24
         self.tlsEnabled = hasTLS
-        self.delegate = delegate    }
+        self.delegate = delegate
+    }
     
     deinit {
         try! threadGroup.syncShutdownGracefully()

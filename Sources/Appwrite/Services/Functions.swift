@@ -1,4 +1,5 @@
 import AsyncHTTPClient
+import AppwriteModels
 import Foundation
 import NIO
 
@@ -19,7 +20,7 @@ open class Functions: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func listExecutions(functionId: String, search: String = "", limit: Int = 25, offset: Int = 0, orderType: String = "ASC", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func listExecutions(functionId: String, search: String = "", limit: Int = 25, offset: Int = 0, orderType: String = "ASC", completion: ((Result<AppwriteModels.ExecutionList, AppwriteError>) -> Void)? = nil) {
         var path: String = "/functions/{functionId}/executions"
 
         path = path.replacingOccurrences(
@@ -37,8 +38,17 @@ open class Functions: Service {
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.ExecutionList = { dict in
+            return AppwriteModels.ExecutionList.from(map: dict)
+        }
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -54,7 +64,7 @@ open class Functions: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func createExecution(functionId: String, data: String = "", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func createExecution(functionId: String, data: String = "", completion: ((Result<AppwriteModels.Execution, AppwriteError>) -> Void)? = nil) {
         var path: String = "/functions/{functionId}/executions"
 
         path = path.replacingOccurrences(
@@ -69,8 +79,17 @@ open class Functions: Service {
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        client.call(method: "POST", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.Execution = { dict in
+            return AppwriteModels.Execution.from(map: dict)
+        }
+        client.call(
+            method: "POST",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -83,7 +102,7 @@ open class Functions: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getExecution(functionId: String, executionId: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getExecution(functionId: String, executionId: String, completion: ((Result<AppwriteModels.Execution, AppwriteError>) -> Void)? = nil) {
         var path: String = "/functions/{functionId}/executions/{executionId}"
 
         path = path.replacingOccurrences(
@@ -101,8 +120,17 @@ open class Functions: Service {
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.Execution = { dict in
+            return AppwriteModels.Execution.from(map: dict)
+        }
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
 }

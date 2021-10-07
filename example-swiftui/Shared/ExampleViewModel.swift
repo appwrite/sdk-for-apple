@@ -3,8 +3,8 @@ import SwiftUI
 import Appwrite
 import NIO
 
-let host = "https://demo.appwrite.io/v1"
-let projectId = "60f6a0d6e2a52"
+let host = "http://localhost/v1"
+let projectId = "613b18dabf74a"
 
 extension ExampleView {
     
@@ -13,16 +13,17 @@ extension ExampleView {
         let client = Client()
             .setEndpoint(host)
             .setProject(projectId)
+            .setSelfSigned()
         
-        lazy var account = Account(client: client)
-        lazy var storage = Storage(client: client)
-        lazy var realtime = Realtime(client: client)
+        lazy var account = Account(client)
+        lazy var storage = Storage(client)
+        lazy var realtime = Realtime(client)
         
         @Published var downloadedImage: Image? = nil
 
         @Published public var username: String = "test@test.test"
         @Published public var password: String = "password"
-        @Published public var fileId: String = "60f7a0178c3e5"
+        @Published public var fileId: String = "614c5b12007f5"
         @Published public var collectionId: String = "6155742223662"
         @Published public var isShowPhotoLibrary = false
         @Published public var response: String = ""
@@ -33,11 +34,13 @@ extension ExampleView {
                     switch result {
                     case .failure(let error):
                         self.response = error.message
-                    case .success(var response):
-                        self.response = response.body!.readString(length: response.body!.readableBytes) ?? ""
+                    case .success(let response):
+                        self.response = response.email
                     }
                 }
             }
+            
+            
         }
         
         func login() {
@@ -46,8 +49,8 @@ extension ExampleView {
                     switch result {
                     case .failure(let error):
                         self.response = error.message
-                    case .success(var response):
-                        self.response = response.body!.readString(length: response.body!.readableBytes) ?? ""
+                    case .success(let response):
+                        self.response = response.userId
                     }
                 }
             }
@@ -71,10 +74,8 @@ extension ExampleView {
                 DispatchQueue.main.async {
                     switch result {
                     case .failure(let error): self.response = error.message
-                    case .success(var response):
-                        self.downloadedImage = Image(
-                            data: response.body!.readData(
-                                length: response.body!.readableBytes)!)
+                    case .success(let response):
+                        self.downloadedImage = Image(data: Data(buffer: response))
                     }
                 }
             }
@@ -100,8 +101,8 @@ extension ExampleView {
                     switch result {
                     case .failure(let error):
                         self.response = error.message
-                    case .success(var response):
-                        self.response = response.body!.readString(length: response.body!.readableBytes) ?? ""
+                    case .success(let response):
+                        self.response = response.name
                     }
                 }
             }

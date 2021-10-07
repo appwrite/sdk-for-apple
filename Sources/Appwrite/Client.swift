@@ -2,6 +2,7 @@ import NIO
 import NIOSSL
 import Foundation
 import AsyncHTTPClient
+@_exported import AppwriteModels
 
 let DASHDASH = "--"
 let CRLF = "\r\n"
@@ -15,9 +16,9 @@ open class Client {
     open var endPointRealtime: String? = nil
 
     open var headers: [String: String] = [
-      "content-type": "",
-      "x-sdk-version": "appwrite:swiftclient:0.0.1",
-      "X-Appwrite-Response-Format": "0.7.0"
+        "content-type": "",
+        "x-sdk-version": "appwrite:swiftclient:0.0.1",
+        "X-Appwrite-Response-Format": "0.7.0"
     ]
 
     open var config: [String: String] = [:]
@@ -232,7 +233,15 @@ open class Client {
     /// @return Response
     /// @throws Exception
     ///
-    func call(method: String, path: String = "", headers: [String: String] = [:], params: [String: Any?] = [:], sink: ((ByteBuffer) -> Void)? = nil,  completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    func call<T>(
+        method: String,
+        path: String = "",
+        headers: [String: String] = [:],
+        params: [String: Any?] = [:],
+        sink: ((ByteBuffer) -> Void)? = nil,
+        convert: (([String: Any]) -> T)? = nil,
+        completion: ((Result<T, AppwriteError>) -> Void)? = nil
+    ) {
         self.headers.merge(headers) { (_, new) in
             new
         }
@@ -258,7 +267,7 @@ open class Client {
         request.addDomainCookies()
 
         if "GET" == method {
-            execute(request, completion: completion)
+            execute(request, convert: convert, completion: completion)
             return
         }
 
@@ -269,7 +278,7 @@ open class Client {
             return
         }
 
-        execute(request, withSink: sink, completion: completion)
+        execute(request, withSink: sink, convert: convert, completion: completion)
     }
 
     fileprivate func addHeaders(to request: inout HTTPClient.Request) {
@@ -289,10 +298,11 @@ open class Client {
         }
     }
 
-    fileprivate func execute(
+    fileprivate func execute<T>(
         _ request: HTTPClient.Request,
         withSink bufferSink: ((ByteBuffer) -> Void)? = nil,
-        completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil
+        convert: (([String: Any]) -> T)? = nil,
+        completion: ((Result<T, AppwriteError>) -> Void)? = nil
     ) {
         if bufferSink == nil {
             http.execute(
@@ -327,7 +337,15 @@ open class Client {
                             forKey: "\(response.host)-cookies"
                         )
                     }
-                    completion(.success(response))
+                    switch T.self {
+                    case is ByteBuffer.Type:
+                        completion(.success(response.body! as! T))
+                    default:
+                        let dict = try! JSONSerialization
+                            .jsonObject(with: response.body!) as? [String: Any]
+
+                        completion(.success(convert!(dict!)))
+                    }
                 default:
                     let error = AppwriteError(
                         message: response.body?.getString(at: 0, length: response.body!.readableBytes) ?? response.status.reasonPhrase,
