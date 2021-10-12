@@ -35,6 +35,10 @@ open class Client {
 
     public init() {
         http = Client.createHTTP()
+
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        addUserAgent()
+        #endif
     }
 
     private static func createHTTP(
@@ -328,7 +332,7 @@ open class Client {
 
             switch result {
             case .failure(let error): print(error)
-            case .success(let response):
+            case .success(var response):
                 switch response.status.code {
                 case 0..<400:
                     if response.cookies.count > 0 {
@@ -444,6 +448,49 @@ open class Client {
         request.headers.add(name: "Content-Length", value: bodyBuffer.readableBytes.description)
         request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(boundary)\"")
         request.body = .byteBuffer(bodyBuffer)
+    }
+
+    private func addUserAgent() {
+        let packageInfo = OSPackageInfo.get()
+        let deviceInfo = OSDeviceInfo()
+        var device = "";
+        var operatingSystem = ""
+
+        #if os(iOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.modelIdentifier) iOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "ios"
+        #elseif os(tvOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.systemInfo.machine) tvOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "tvos"
+        #elseif os(watchOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.systemInfo.machine) watchOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "watchos"
+        #elseif os(macOS)
+        let macinfo = deviceInfo.macOSInfo
+        device = "(Macintosh; \(macinfo!.model))"
+        operatingSystem = "macos"
+        #elseif os(Linux)
+        let lininfo = deviceInfo.linuxInfo
+        device = "(Linux; U; \(lininfo!.id) \(lininfo!.version))"
+        operatingSystem = "linux"
+        #elseif os(Windows)
+        let wininfo = deviceInfo.windowsInfo
+        device = "(Windows NT; \(wininfo!.computerName))"
+        operatingSystem = "windows"
+        #endif
+
+        _ = addHeader(
+            key: "Origin",
+            value: "appwrite-\(operatingSystem)://\(packageInfo.packageName)"
+        )
+
+        _ = addHeader(
+            key: "user-agent",
+            value: "\(packageInfo.packageName)/\(packageInfo.version) \(device)"
+        )
     }
 }
 
