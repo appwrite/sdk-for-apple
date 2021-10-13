@@ -13,7 +13,7 @@ public class LogList {
 
     public static func from(map: [String: Any]) -> LogList {
         return LogList(
-            logs: (map["logs"] as! [[String: Any]]).map { Log.from(map: $0) } as! [Log]
+            logs: (map["logs"] as! [[String: Any]]).map { Log.from(map: $0) }
         )
     }
 

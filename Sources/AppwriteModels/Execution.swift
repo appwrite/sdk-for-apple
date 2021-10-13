@@ -59,7 +59,7 @@ public class Execution {
     public static func from(map: [String: Any]) -> Execution {
         return Execution(
             id: map["$id"] as! String,
-            permissions: Permissions.from(map: map["$permissions"] as! [String: Any]) as! Permissions,
+            permissions: Permissions.from(map: map["$permissions"] as! [String: Any]),
             functionId: map["functionId"] as! String,
             dateCreated: map["dateCreated"] as! Int,
             trigger: map["trigger"] as! String,

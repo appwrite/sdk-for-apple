@@ -19,7 +19,7 @@ public class CurrencyList {
     public static func from(map: [String: Any]) -> CurrencyList {
         return CurrencyList(
             sum: map["sum"] as! Int,
-            currencies: (map["currencies"] as! [[String: Any]]).map { Currency.from(map: $0) } as! [Currency]
+            currencies: (map["currencies"] as! [[String: Any]]).map { Currency.from(map: $0) }
         )
     }
 

@@ -19,7 +19,7 @@ public class SessionList {
     public static func from(map: [String: Any]) -> SessionList {
         return SessionList(
             sum: map["sum"] as! Int,
-            sessions: (map["sessions"] as! [[String: Any]]).map { Session.from(map: $0) } as! [Session]
+            sessions: (map["sessions"] as! [[String: Any]]).map { Session.from(map: $0) }
         )
     }
 

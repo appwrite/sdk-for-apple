@@ -19,7 +19,7 @@ public class FileList {
     public static func from(map: [String: Any]) -> FileList {
         return FileList(
             sum: map["sum"] as! Int,
-            files: (map["files"] as! [[String: Any]]).map { File.from(map: $0) } as! [File]
+            files: (map["files"] as! [[String: Any]]).map { File.from(map: $0) }
         )
     }
 

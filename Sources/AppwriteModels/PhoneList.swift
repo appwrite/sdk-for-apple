@@ -19,7 +19,7 @@ public class PhoneList {
     public static func from(map: [String: Any]) -> PhoneList {
         return PhoneList(
             sum: map["sum"] as! Int,
-            phones: (map["phones"] as! [[String: Any]]).map { Phone.from(map: $0) } as! [Phone]
+            phones: (map["phones"] as! [[String: Any]]).map { Phone.from(map: $0) }
         )
     }
 

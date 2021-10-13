@@ -19,7 +19,7 @@ public class TeamList {
     public static func from(map: [String: Any]) -> TeamList {
         return TeamList(
             sum: map["sum"] as! Int,
-            teams: (map["teams"] as! [[String: Any]]).map { Team.from(map: $0) } as! [Team]
+            teams: (map["teams"] as! [[String: Any]]).map { Team.from(map: $0) }
         )
     }
 

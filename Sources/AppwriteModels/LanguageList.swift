@@ -19,7 +19,7 @@ public class LanguageList {
     public static func from(map: [String: Any]) -> LanguageList {
         return LanguageList(
             sum: map["sum"] as! Int,
-            languages: (map["languages"] as! [[String: Any]]).map { Language.from(map: $0) } as! [Language]
+            languages: (map["languages"] as! [[String: Any]]).map { Language.from(map: $0) }
         )
     }
 

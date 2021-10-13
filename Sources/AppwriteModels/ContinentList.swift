@@ -19,7 +19,7 @@ public class ContinentList {
     public static func from(map: [String: Any]) -> ContinentList {
         return ContinentList(
             sum: map["sum"] as! Int,
-            continents: (map["continents"] as! [[String: Any]]).map { Continent.from(map: $0) } as! [Continent]
+            continents: (map["continents"] as! [[String: Any]]).map { Continent.from(map: $0) }
         )
     }
 

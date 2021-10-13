@@ -29,7 +29,7 @@ public class Document {
         return Document(
             id: map["$id"] as! String,
             collection: map["$collection"] as! String,
-            permissions: Permissions.from(map: map["$permissions"] as! [String: Any]) as! Permissions,
+            permissions: Permissions.from(map: map["$permissions"] as! [String: Any]),
             data: map
         )
     }

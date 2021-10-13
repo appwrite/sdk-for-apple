@@ -1,4 +1,6 @@
 import NIO
+import NIOCore
+import NIOFoundationCompat
 import NIOSSL
 import Foundation
 import AsyncHTTPClient
@@ -17,8 +19,7 @@ open class Client {
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.0.1",
-        "X-Appwrite-Response-Format": "0.7.0"
+        "x-sdk-version": "appwrite:swiftclient:0.0.1",        "X-Appwrite-Response-Format": "0.10.0"
     ]
 
     open var config: [String: String] = [:]
@@ -35,6 +36,10 @@ open class Client {
 
     public init() {
         http = Client.createHTTP()
+
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        addUserAgent()
+        #endif
     }
 
     private static func createHTTP(
@@ -233,7 +238,7 @@ open class Client {
     /// @return Response
     /// @throws Exception
     ///
-    func call<T>(
+    open func call<T>(
         method: String,
         path: String = "",
         headers: [String: String] = [:],
@@ -281,13 +286,13 @@ open class Client {
         execute(request, withSink: sink, convert: convert, completion: completion)
     }
 
-    fileprivate func addHeaders(to request: inout HTTPClient.Request) {
+    private func addHeaders(to request: inout HTTPClient.Request) {
         for (key, value) in self.headers {
             request.headers.add(name: key, value: value)
         }
     }
 
-    fileprivate func buildBody(
+    private func buildBody(
         for request: inout HTTPClient.Request,
         with params: [String: Any?]
     ) throws {
@@ -298,7 +303,7 @@ open class Client {
         }
     }
 
-    fileprivate func execute<T>(
+    private func execute<T>(
         _ request: HTTPClient.Request,
         withSink bufferSink: ((ByteBuffer) -> Void)? = nil,
         convert: (([String: Any]) -> T)? = nil,
@@ -321,7 +326,7 @@ open class Client {
             complete(with: result)
         }
 
-        func complete(with result: Result<HTTPClient.Response, Error>) {
+        func complete(with result: Result<HTTPClient.Response, Swift.Error>) {
             guard let completion = completion else {
                 return
             }
@@ -338,6 +343,8 @@ open class Client {
                         )
                     }
                     switch T.self {
+                    case is Bool.Type:
+                        completion(.success(true as! T))
                     case is ByteBuffer.Type:
                         completion(.success(response.body! as! T))
                     default:
@@ -347,17 +354,30 @@ open class Client {
                         completion(.success(convert!(dict!)))
                     }
                 default:
+                    var message = ""
+
+                    do {
+                        let dict = try JSONSerialization
+                            .jsonObject(with: response.body!) as? [String: Any]
+
+                        message = dict?["response"] as? String
+                            ?? response.status.reasonPhrase
+                    } catch {
+                        message =  response.status.reasonPhrase
+                    }
+
                     let error = AppwriteError(
-                        message: response.body?.getString(at: 0, length: response.body!.readableBytes) ?? response.status.reasonPhrase,
+                        message: message,
                         code: Int(response.status.code)
                     )
+
                     completion(.failure(error))
                 }
             }
         }
     }
 
-    fileprivate func randomBoundary() -> String {
+    private func randomBoundary() -> String {
         var string = ""
         for _ in 0..<16 {
             string.append(Client.boundaryChars.randomElement()!)
@@ -365,7 +385,7 @@ open class Client {
         return string
     }
 
-    fileprivate func buildJSON(
+    private func buildJSON(
         _ request: inout HTTPClient.Request,
         with params: [String: Any?] = [:]
     ) throws {
@@ -374,7 +394,7 @@ open class Client {
         request.body = .data(json)
     }
 
-    fileprivate func buildMultipart(
+    private func buildMultipart(
         _ request: inout HTTPClient.Request,
         with params: [String: Any?] = [:]
     ) {
@@ -429,6 +449,49 @@ open class Client {
         request.headers.add(name: "Content-Length", value: bodyBuffer.readableBytes.description)
         request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(boundary)\"")
         request.body = .byteBuffer(bodyBuffer)
+    }
+
+    private func addUserAgent() {
+        let packageInfo = OSPackageInfo.get()
+        let deviceInfo = OSDeviceInfo()
+        var device = "";
+        var operatingSystem = ""
+
+        #if os(iOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.modelIdentifier) iOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "ios"
+        #elseif os(tvOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.systemInfo.machine) tvOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "tvos"
+        #elseif os(watchOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.systemInfo.machine) watchOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "watchos"
+        #elseif os(macOS)
+        let macinfo = deviceInfo.macOSInfo
+        device = "(Macintosh; \(macinfo!.model))"
+        operatingSystem = "macos"
+        #elseif os(Linux)
+        let lininfo = deviceInfo.linuxInfo
+        device = "(Linux; U; \(lininfo!.id) \(lininfo!.version))"
+        operatingSystem = "linux"
+        #elseif os(Windows)
+        let wininfo = deviceInfo.windowsInfo
+        device = "(Windows NT; \(wininfo!.computerName))"
+        operatingSystem = "windows"
+        #endif
+
+        _ = addHeader(
+            key: "Origin",
+            value: "appwrite-\(operatingSystem)://\(packageInfo.packageName)"
+        )
+
+        _ = addHeader(
+            key: "user-agent",
+            value: "\(packageInfo.packageName)/\(packageInfo.version) \(device)"
+        )
     }
 }
 

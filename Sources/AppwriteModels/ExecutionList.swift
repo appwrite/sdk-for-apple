@@ -19,7 +19,7 @@ public class ExecutionList {
     public static func from(map: [String: Any]) -> ExecutionList {
         return ExecutionList(
             sum: map["sum"] as! Int,
-            executions: (map["executions"] as! [[String: Any]]).map { Execution.from(map: $0) } as! [Execution]
+            executions: (map["executions"] as! [[String: Any]]).map { Execution.from(map: $0) }
         )
     }
 

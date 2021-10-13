@@ -55,7 +55,7 @@ public class User {
             passwordUpdate: map["passwordUpdate"] as! Int,
             email: map["email"] as! String,
             emailVerification: map["emailVerification"] as! Bool,
-            prefs: Preferences.from(map: map["prefs"] as! [String: Any]) as! Preferences
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any])
         )
     }
 

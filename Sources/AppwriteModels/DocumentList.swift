@@ -19,7 +19,7 @@ public class DocumentList {
     public static func from(map: [String: Any]) -> DocumentList {
         return DocumentList(
             sum: map["sum"] as! Int,
-            documents: (map["documents"] as! [[String: Any]]).map { Document.from(map: $0) } as! [Document]
+            documents: (map["documents"] as! [[String: Any]]).map { Document.from(map: $0) }
         )
     }
 

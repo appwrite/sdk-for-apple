@@ -19,7 +19,7 @@ public class CountryList {
     public static func from(map: [String: Any]) -> CountryList {
         return CountryList(
             sum: map["sum"] as! Int,
-            countries: (map["countries"] as! [[String: Any]]).map { Country.from(map: $0) } as! [Country]
+            countries: (map["countries"] as! [[String: Any]]).map { Country.from(map: $0) }
         )
     }
 

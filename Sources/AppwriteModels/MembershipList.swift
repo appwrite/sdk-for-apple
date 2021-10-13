@@ -19,7 +19,7 @@ public class MembershipList {
     public static func from(map: [String: Any]) -> MembershipList {
         return MembershipList(
             sum: map["sum"] as! Int,
-            memberships: (map["memberships"] as! [[String: Any]]).map { Membership.from(map: $0) } as! [Membership]
+            memberships: (map["memberships"] as! [[String: Any]]).map { Membership.from(map: $0) }
         )
     }
 

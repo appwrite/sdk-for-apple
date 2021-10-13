@@ -658,7 +658,7 @@ open class Account: Service {
     /// @return array
     ///
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-    open func createOAuth2Session(provider: String, success: String = "", failure: String = "", scopes: Array<Any>? = nil, completion: ((Result<Bool, AppwriteError>) -> Void)? = nil) {
+    open func createOAuth2Session(provider: String, success: String = "https://appwrite.io/auth/oauth2/success", failure: String = "https://appwrite.io/auth/oauth2/failure", scopes: Array<Any>? = nil, completion: ((Result<Bool, AppwriteError>) -> Void)? = nil) {
         var path: String = "/account/sessions/oauth2/{provider}"
 
         path = path.replacingOccurrences(
