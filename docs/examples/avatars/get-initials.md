@@ -7,12 +7,12 @@ func main() {
       .setProject("5df5acd0d48c2") // Your project ID
 
     let avatars = Avatars(client: client)
-    avatars.getInitials(
+    avatars.getInitials() { result in
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(var response):
-            print(result) // Resource URL
+        case .success(let byteBuffer):
+            print(String(describing: byteBuffer)
         }
     }
 }

@@ -13,8 +13,8 @@ func main() {
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(var response):
-            print(result) // Resource URL
+        case .success(let byteBuffer):
+            print(String(describing: byteBuffer)
         }
     }
 }

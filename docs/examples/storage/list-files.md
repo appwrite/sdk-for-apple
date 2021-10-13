@@ -7,12 +7,12 @@ func main() {
       .setProject("5df5acd0d48c2") // Your project ID
 
     let storage = Storage(client: client)
-    storage.listFiles(
+    storage.listFiles() { result in
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(var response):
-            let json = response.body!.readString(length: response.body!.readableBytes)
+        case .success(let fileList):
+            print(String(describing: fileList)
         }
     }
 }

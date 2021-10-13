@@ -15,8 +15,8 @@ func main() {
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(var response):
-            let json = response.body!.readString(length: response.body!.readableBytes)
+        case .success(let file):
+            print(String(describing: file)
         }
     }
 }

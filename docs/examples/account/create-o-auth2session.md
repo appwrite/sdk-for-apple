@@ -9,12 +9,12 @@ func main() {
     let account = Account(client: client)
     account.createOAuth2Session(
         provider: "amazon"
-    ) { 
+    ) { result in
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(var response):
-            print(result)
+        case .success(let success):
+            print(String(describing: success)
         }
     }
 }

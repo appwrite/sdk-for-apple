@@ -7,12 +7,12 @@ func main() {
       .setProject("5df5acd0d48c2") // Your project ID
 
     let teams = Teams(client: client)
-    teams.list(
+    teams.list() { result in
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(var response):
-            let json = response.body!.readString(length: response.body!.readableBytes)
+        case .success(let teamList):
+            print(String(describing: teamList)
         }
     }
 }
