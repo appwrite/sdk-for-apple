@@ -333,7 +333,7 @@ open class Client {
 
             switch result {
             case .failure(let error): print(error)
-            case .success(let response):
+            case .success(var response):
                 switch response.status.code {
                 case 0..<400:
                     if response.cookies.count > 0 {
