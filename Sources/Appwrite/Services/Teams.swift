@@ -20,10 +20,10 @@ open class Teams: Service {
     /// @return array
     ///
     open func list(
-        search: String = "",
-        limit: Int = 25,
-        offset: Int = 0,
-        orderType: String = "ASC",
+        search: String? = nil,
+        limit: Int? = nil,
+        offset: Int? = nil,
+        orderType: String? = nil,
         completion: ((Result<AppwriteModels.TeamList, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/teams"
@@ -68,7 +68,7 @@ open class Teams: Service {
     ///
     open func create(
         name: String,
-        roles: Array<Any>? = nil,
+        roles: Array<Any>?? = nil,
         completion: ((Result<AppwriteModels.Team, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/teams"
@@ -231,10 +231,10 @@ open class Teams: Service {
     ///
     open func getMemberships(
         teamId: String,
-        search: String = "",
-        limit: Int = 25,
-        offset: Int = 0,
-        orderType: String = "ASC",
+        search: String? = nil,
+        limit: Int? = nil,
+        offset: Int? = nil,
+        orderType: String? = nil,
         completion: ((Result<AppwriteModels.MembershipList, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/teams/{teamId}/memberships"
@@ -301,7 +301,7 @@ open class Teams: Service {
         email: String,
         roles: Array<Any>?,
         url: String,
-        name: String = "",
+        name: String? = nil,
         completion: ((Result<AppwriteModels.Membership, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/teams/{teamId}/memberships"

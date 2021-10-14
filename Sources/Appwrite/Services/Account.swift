@@ -56,7 +56,7 @@ open class Account: Service {
     open func create(
         email: String,
         password: String,
-        name: String = "",
+        name: String? = nil,
         completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/account"
@@ -284,7 +284,7 @@ open class Account: Service {
     ///
     open func updatePassword(
         password: String,
-        oldPassword: String = "",
+        oldPassword: String? = nil,
         completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/account/password"
@@ -647,7 +647,7 @@ open class Account: Service {
     ///
     open func createMagicURLSession(
         email: String,
-        url: String = "",
+        url: String? = nil,
         completion: ((Result<AppwriteModels.Token, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/account/sessions/magic-url"
@@ -751,17 +751,16 @@ open class Account: Service {
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
     open func createOAuth2Session(
         provider: String,
-        success: String = "https://appwrite.io/auth/oauth2/success",
-        failure: String = "https://appwrite.io/auth/oauth2/failure",
-        scopes: Array<Any>? = nil,
+        success: String? = nil,
+        failure: String? = nil,
+        scopes: Array<Any>?? = nil,
         completion: ((Result<Bool, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/account/sessions/oauth2/{provider}"
 
         path = path.replacingOccurrences(
           of: "{provider}",
-          with: provider        
-		)
+          with: provider        )
 
         let params: [String: Any?] = [
             "success": success,

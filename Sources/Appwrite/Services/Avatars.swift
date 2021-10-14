@@ -21,9 +21,9 @@ open class Avatars: Service {
     ///
     open func getBrowser(
         code: String,
-        width: Int = 100,
-        height: Int = 100,
-        quality: Int = 100,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/avatars/browsers/{code}"
@@ -63,9 +63,9 @@ open class Avatars: Service {
     ///
     open func getCreditCard(
         code: String,
-        width: Int = 100,
-        height: Int = 100,
-        quality: Int = 100,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/avatars/credit-cards/{code}"
@@ -135,9 +135,9 @@ open class Avatars: Service {
     ///
     open func getFlag(
         code: String,
-        width: Int = 100,
-        height: Int = 100,
-        quality: Int = 100,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/avatars/flags/{code}"
@@ -177,8 +177,8 @@ open class Avatars: Service {
     ///
     open func getImage(
         url: String,
-        width: Int = 400,
-        height: Int = 400,
+        width: Int? = nil,
+        height: Int? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/avatars/image"
@@ -221,11 +221,11 @@ open class Avatars: Service {
     /// @return array
     ///
     open func getInitials(
-        name: String = "",
-        width: Int = 500,
-        height: Int = 500,
-        color: String = "",
-        background: String = "",
+        name: String? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        color: String? = nil,
+        background: String? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/avatars/initials"
@@ -262,9 +262,9 @@ open class Avatars: Service {
     ///
     open func getQR(
         text: String,
-        size: Int = 400,
-        margin: Int = 1,
-        download: Bool = false,
+        size: Int? = nil,
+        margin: Int? = nil,
+        download: Bool? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/avatars/qr"

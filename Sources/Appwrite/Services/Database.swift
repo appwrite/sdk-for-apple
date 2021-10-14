@@ -25,13 +25,13 @@ open class Database: Service {
     ///
     open func listDocuments(
         collectionId: String,
-        filters: Array<Any>? = nil,
-        limit: Int = 25,
-        offset: Int = 0,
-        orderField: String = "",
-        orderType: String = "ASC",
-        orderCast: String = "string",
-        search: String = "",
+        filters: Array<Any>?? = nil,
+        limit: Int? = nil,
+        offset: Int? = nil,
+        orderField: String? = nil,
+        orderType: String? = nil,
+        orderCast: String? = nil,
+        search: String? = nil,
         completion: ((Result<AppwriteModels.DocumentList, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/database/collections/{collectionId}/documents"
@@ -89,11 +89,11 @@ open class Database: Service {
     open func createDocument(
         collectionId: String,
         data: Any?,
-        read: Array<Any>? = [],
-        write: Array<Any>? = [],
-        parentDocument: String = "",
-        parentProperty: String = "",
-        parentPropertyType: String = "assign",
+        read: Array<Any>?? = nil,
+        write: Array<Any>?? = nil,
+        parentDocument: String? = nil,
+        parentProperty: String? = nil,
+        parentPropertyType: String? = nil,
         completion: ((Result<AppwriteModels.Document, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/database/collections/{collectionId}/documents"
@@ -193,8 +193,8 @@ open class Database: Service {
         collectionId: String,
         documentId: String,
         data: Any?,
-        read: Array<Any>? = [],
-        write: Array<Any>? = [],
+        read: Array<Any>?? = nil,
+        write: Array<Any>?? = nil,
         completion: ((Result<AppwriteModels.Document, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/database/collections/{collectionId}/documents/{documentId}"

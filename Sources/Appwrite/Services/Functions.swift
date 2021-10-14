@@ -22,10 +22,10 @@ open class Functions: Service {
     ///
     open func listExecutions(
         functionId: String,
-        search: String = "",
-        limit: Int = 25,
-        offset: Int = 0,
-        orderType: String = "ASC",
+        search: String? = nil,
+        limit: Int? = nil,
+        offset: Int? = nil,
+        orderType: String? = nil,
         completion: ((Result<AppwriteModels.ExecutionList, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/functions/{functionId}/executions"
@@ -74,7 +74,7 @@ open class Functions: Service {
     ///
     open func createExecution(
         functionId: String,
-        data: String = "",
+        data: String? = nil,
         completion: ((Result<AppwriteModels.Execution, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/functions/{functionId}/executions"

@@ -251,8 +251,10 @@ open class Client {
             new
         }
 
-        let queryParameters = method == "GET" && !params.isEmpty
-            ? "?" + parametersToQueryString(params: params)
+        let validParams = params.filter { $0.value != nil }
+
+        let queryParameters = method == "GET" && !validParams.isEmpty
+            ? "?" + parametersToQueryString(params: validParams)
             : ""
 
         let targetURL = URL(string: endPoint + path + queryParameters)!
@@ -277,7 +279,7 @@ open class Client {
         }
 
         do {
-            try buildBody(for: &request, with: params)
+            try buildBody(for: &request, with: validParams)
         } catch let error {
             completion?(Result.failure(AppwriteError(message: error.localizedDescription)))
             return

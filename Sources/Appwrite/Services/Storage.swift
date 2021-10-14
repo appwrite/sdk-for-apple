@@ -19,10 +19,10 @@ open class Storage: Service {
     /// @return array
     ///
     open func listFiles(
-        search: String = "",
-        limit: Int = 25,
-        offset: Int = 0,
-        orderType: String = "ASC",
+        search: String? = nil,
+        limit: Int? = nil,
+        offset: Int? = nil,
+        orderType: String? = nil,
         completion: ((Result<AppwriteModels.FileList, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/storage/files"
@@ -67,8 +67,8 @@ open class Storage: Service {
     ///
     open func createFile(
         file: File,
-        read: Array<Any>? = [],
-        write: Array<Any>? = [],
+        read: Array<Any>?? = nil,
+        write: Array<Any>?? = nil,
         completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/storage/files"
@@ -277,17 +277,17 @@ open class Storage: Service {
     ///
     open func getFilePreview(
         fileId: String,
-        width: Int = 0,
-        height: Int = 0,
-        gravity: String = "center",
-        quality: Int = 100,
-        borderWidth: Int = 0,
-        borderColor: String = "",
-        borderRadius: Int = 0,
-        opacity: Double = 1.0,
-        rotation: Int = 0,
-        background: String = "",
-        output: String = "",
+        width: Int? = nil,
+        height: Int? = nil,
+        gravity: String? = nil,
+        quality: Int? = nil,
+        borderWidth: Int? = nil,
+        borderColor: String? = nil,
+        borderRadius: Int? = nil,
+        opacity: Double? = nil,
+        rotation: Int? = nil,
+        background: String? = nil,
+        output: String? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/storage/files/{fileId}/preview"
