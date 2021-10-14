@@ -13,7 +13,7 @@ open class Database: Service {
     /// modes](/docs/admin).
     ///
     /// @param String collectionId
-    /// @param Array<Any>? filters
+    /// @param [Any] filters
     /// @param Int limit
     /// @param Int offset
     /// @param String orderField
@@ -25,7 +25,7 @@ open class Database: Service {
     ///
     open func listDocuments(
         collectionId: String,
-        filters: Array<Any>?? = nil,
+        filters: [Any]? = nil,
         limit: Int? = nil,
         offset: Int? = nil,
         orderField: String? = nil,
@@ -77,9 +77,9 @@ open class Database: Service {
     /// directly from your database console.
     ///
     /// @param String collectionId
-    /// @param Any? data
-    /// @param Array<Any>? read
-    /// @param Array<Any>? write
+    /// @param Any data
+    /// @param [Any] read
+    /// @param [Any] write
     /// @param String parentDocument
     /// @param String parentProperty
     /// @param String parentPropertyType
@@ -88,9 +88,9 @@ open class Database: Service {
     ///
     open func createDocument(
         collectionId: String,
-        data: Any?,
-        read: Array<Any>?? = nil,
-        write: Array<Any>?? = nil,
+        data: Any,
+        read: [Any]? = nil,
+        write: [Any]? = nil,
         parentDocument: String? = nil,
         parentProperty: String? = nil,
         parentPropertyType: String? = nil,
@@ -183,18 +183,18 @@ open class Database: Service {
     ///
     /// @param String collectionId
     /// @param String documentId
-    /// @param Any? data
-    /// @param Array<Any>? read
-    /// @param Array<Any>? write
+    /// @param Any data
+    /// @param [Any] read
+    /// @param [Any] write
     /// @throws Exception
     /// @return array
     ///
     open func updateDocument(
         collectionId: String,
         documentId: String,
-        data: Any?,
-        read: Array<Any>?? = nil,
-        write: Array<Any>?? = nil,
+        data: Any,
+        read: [Any]? = nil,
+        write: [Any]? = nil,
         completion: ((Result<AppwriteModels.Document, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/database/collections/{collectionId}/documents/{documentId}"

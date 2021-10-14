@@ -351,12 +351,12 @@ open class Account: Service {
     /// Update currently logged in user account preferences. You can pass only the
     /// specific settings you wish to update.
     ///
-    /// @param Any? prefs
+    /// @param Any prefs
     /// @throws Exception
     /// @return array
     ///
     open func updatePrefs(
-        prefs: Any?,
+        prefs: Any,
         completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/account/prefs"
@@ -744,7 +744,7 @@ open class Account: Service {
     /// @param String provider
     /// @param String success
     /// @param String failure
-    /// @param Array<Any>? scopes
+    /// @param [Any] scopes
     /// @throws Exception
     /// @return array
     ///
@@ -753,7 +753,7 @@ open class Account: Service {
         provider: String,
         success: String? = nil,
         failure: String? = nil,
-        scopes: Array<Any>?? = nil,
+        scopes: [Any]? = nil,
         completion: ((Result<Bool, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/account/sessions/oauth2/{provider}"

@@ -27,7 +27,7 @@ public class Membership {
     public let confirm: Bool
 
     /// User list of roles
-    public let roles: Array<Any>?
+    public let roles: [Any]
 
     init(
         id: String,
@@ -38,7 +38,7 @@ public class Membership {
         invited: Int,
         joined: Int,
         confirm: Bool,
-        roles: Array<Any>?
+        roles: [Any]
     ) {
         self.id = id
         self.userId = userId
@@ -61,7 +61,7 @@ public class Membership {
             invited: map["invited"] as! Int,
             joined: map["joined"] as! Int,
             confirm: map["confirm"] as! Bool,
-            roles: map["roles"] as! Array<Any>?
+            roles: map["roles"] as! [Any]
         )
     }
 

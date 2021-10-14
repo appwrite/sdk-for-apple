@@ -60,15 +60,15 @@ open class Storage: Service {
     /// read and write arguments.
     ///
     /// @param File file
-    /// @param Array<Any>? read
-    /// @param Array<Any>? write
+    /// @param [Any] read
+    /// @param [Any] write
     /// @throws Exception
     /// @return array
     ///
     open func createFile(
         file: File,
-        read: Array<Any>?? = nil,
-        write: Array<Any>?? = nil,
+        read: [Any]? = nil,
+        write: [Any]? = nil,
         completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
     ) {
         let path: String = "/storage/files"
@@ -144,15 +144,15 @@ open class Storage: Service {
     /// access to update this resource.
     ///
     /// @param String fileId
-    /// @param Array<Any>? read
-    /// @param Array<Any>? write
+    /// @param [Any] read
+    /// @param [Any] write
     /// @throws Exception
     /// @return array
     ///
     open func updateFile(
         fileId: String,
-        read: Array<Any>?,
-        write: Array<Any>?,
+        read: [Any],
+        write: [Any],
         completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/storage/files/{fileId}"

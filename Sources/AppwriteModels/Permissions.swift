@@ -3,14 +3,14 @@
 public class Permissions {
 
     /// Read permissions.
-    public let read: Array<Any>?
+    public let read: [Any]
 
     /// Write permissions.
-    public let write: Array<Any>?
+    public let write: [Any]
 
     init(
-        read: Array<Any>?,
-        write: Array<Any>?
+        read: [Any],
+        write: [Any]
     ) {
         self.read = read
         self.write = write
@@ -18,8 +18,8 @@ public class Permissions {
 
     public static func from(map: [String: Any]) -> Permissions {
         return Permissions(
-            read: map["read"] as! Array<Any>?,
-            write: map["write"] as! Array<Any>?
+            read: map["read"] as! [Any],
+            write: map["write"] as! [Any]
         )
     }
 
