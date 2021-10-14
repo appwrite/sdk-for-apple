@@ -1,7 +1,7 @@
 import AsyncHTTPClient
-import AppwriteModels
 import Foundation
 import NIO
+import AppwriteModels
 
 open class Storage: Service {
     ///
@@ -18,7 +18,13 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func listFiles(search: String = "", limit: Int = 25, offset: Int = 0, orderType: String = "ASC", completion: ((Result<AppwriteModels.FileList, AppwriteError>) -> Void)? = nil) {
+    open func listFiles(
+        search: String = "",
+        limit: Int = 25,
+        offset: Int = 0,
+        orderType: String = "ASC",
+        completion: ((Result<AppwriteModels.FileList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/storage/files"
 
         let params: [String: Any?] = [
@@ -31,9 +37,11 @@ open class Storage: Service {
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
+
         let convert: ([String: Any]) -> AppwriteModels.FileList = { dict in
             return AppwriteModels.FileList.from(map: dict)
         }
+
         client.call(
             method: "GET",
             path: path,
@@ -57,7 +65,12 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func createFile(file: File, read: Array<Any>? = [], write: Array<Any>? = [], completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil) {
+    open func createFile(
+        file: File,
+        read: Array<Any>? = [],
+        write: Array<Any>? = [],
+        completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/storage/files"
 
         let params: [String: Any?] = [
@@ -69,9 +82,11 @@ open class Storage: Service {
         let headers: [String: String] = [
             "content-type": "multipart/form-data"
         ]
+
         let convert: ([String: Any]) -> AppwriteModels.File = { dict in
             return AppwriteModels.File.from(map: dict)
         }
+
         client.call(
             method: "POST",
             path: path,
@@ -92,22 +107,26 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFile(fileId: String, completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil) {
+    open func getFile(
+        fileId: String,
+        completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/storage/files/{fileId}"
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId
-        )
+          with: fileId        )
 
         let params: [String: Any?] = [:]
 
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
+
         let convert: ([String: Any]) -> AppwriteModels.File = { dict in
             return AppwriteModels.File.from(map: dict)
         }
+
         client.call(
             method: "GET",
             path: path,
@@ -130,13 +149,17 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func updateFile(fileId: String, read: Array<Any>?, write: Array<Any>?, completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil) {
+    open func updateFile(
+        fileId: String,
+        read: Array<Any>?,
+        write: Array<Any>?,
+        completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/storage/files/{fileId}"
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId
-        )
+          with: fileId        )
 
         let params: [String: Any?] = [
             "read": read,
@@ -146,9 +169,11 @@ open class Storage: Service {
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
+
         let convert: ([String: Any]) -> AppwriteModels.File = { dict in
             return AppwriteModels.File.from(map: dict)
         }
+
         client.call(
             method: "PUT",
             path: path,
@@ -169,19 +194,22 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteFile(fileId: String, completion: ((Result<Bool, AppwriteError>) -> Void)? = nil) {
+    open func deleteFile(
+        fileId: String,
+        completion: ((Result<Any, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/storage/files/{fileId}"
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId
-        )
+          with: fileId        )
 
         let params: [String: Any?] = [:]
 
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
+
         client.call(
             method: "DELETE",
             path: path,
@@ -202,13 +230,15 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFileDownload(fileId: String, completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil) {
+    open func getFileDownload(
+        fileId: String,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/storage/files/{fileId}/download"
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId
-        )
+          with: fileId        )
 
         let params: [String: Any?] = [
             "project": client.config["project"]
@@ -245,13 +275,26 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFilePreview(fileId: String, width: Int = 0, height: Int = 0, gravity: String = "center", quality: Int = 100, borderWidth: Int = 0, borderColor: String = "", borderRadius: Int = 0, opacity: Double = 1.0, rotation: Int = 0, background: String = "", output: String = "", completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil) {
+    open func getFilePreview(
+        fileId: String,
+        width: Int = 0,
+        height: Int = 0,
+        gravity: String = "center",
+        quality: Int = 100,
+        borderWidth: Int = 0,
+        borderColor: String = "",
+        borderRadius: Int = 0,
+        opacity: Double = 1.0,
+        rotation: Int = 0,
+        background: String = "",
+        output: String = "",
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/storage/files/{fileId}/preview"
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId
-        )
+          with: fileId        )
 
         let params: [String: Any?] = [
             "width": width,
@@ -287,13 +330,15 @@ open class Storage: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFileView(fileId: String, completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil) {
+    open func getFileView(
+        fileId: String,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/storage/files/{fileId}/view"
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId
-        )
+          with: fileId        )
 
         let params: [String: Any?] = [
             "project": client.config["project"]

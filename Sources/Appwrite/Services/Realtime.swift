@@ -64,7 +64,7 @@ open class Realtime : Service {
     ) -> RealtimeSubscription {
         return subscribe(
             channels: [channel],
-            payloadType: JSONValue.self,
+            payloadType: String.self,
             callback: callback
         )
     }
@@ -75,7 +75,7 @@ open class Realtime : Service {
     ) -> RealtimeSubscription {
         return subscribe(
             channels: channels,
-            payloadType: JSONValue.self,
+            payloadType: String.self,
             callback: callback
         )
     }
@@ -177,14 +177,12 @@ extension Realtime: WebSocketClientDelegate {
         }
     }
 
-    public func onError(error: Error?, status: HTTPResponseStatus?) {
+    public func onError(error: Swift.Error?, status: HTTPResponseStatus?) {
         print(error?.localizedDescription ?? "Unknown error")
     }
 
     func handleResponseError(from json: [String: Any]) throws {
-//        throw try message.data
-//            .toJson()
-//            .fromJson(to: AppwriteError.self)
+        throw AppwriteError(message: json["message"] as? String ?? "Unknown error")
     }
 
     func handleResponseEvent(from json: [String: Any]) {
