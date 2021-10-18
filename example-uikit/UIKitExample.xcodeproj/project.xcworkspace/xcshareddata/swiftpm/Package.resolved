@@ -38,15 +38,6 @@
         }
       },
       {
-        "package": "swift-nio-http2",
-        "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
-        "state": {
-          "branch": null,
-          "revision": "42bdcae4ac4913507a5ee7af963c559deb60d1fc",
-          "version": "1.18.2"
-        }
-      },
-      {
         "package": "swift-nio-ssl",
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
@@ -62,15 +53,6 @@
           "branch": null,
           "revision": "39587bceccda72780e2a8a8c5e857e42a9df2fa8",
           "version": "1.11.0"
-        }
-      },
-      {
-        "package": "Swockets",
-        "repositoryURL": "https://github.com/abnegate/swockets.git",
-        "state": {
-          "branch": "develop",
-          "revision": "d04d00e98f07355ab7a377a3ab1c969b5ff335dc",
-          "version": null
         }
       }
     ]

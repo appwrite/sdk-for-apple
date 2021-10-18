@@ -1,4 +1,3 @@
-```swift
 import Appwrite
 
 func main() {
@@ -6,16 +5,15 @@ func main() {
       .setEndpoint("https://[HOSTNAME_OR_IP]/v1") // Your API Endpoint
       .setProject("5df5acd0d48c2") // Your project ID
 
-    let avatars = Avatars(client: client)
+    let avatars = Avatars(client)
     avatars.getQR(
         text: "[TEXT]"
     ) { result in
         switch result {
         case .failure(let error):
-            print(error)
-        case .success(let response):
-            print(result) // Resource URL
+            print(error.message)
+        case .success(let byteBuffer):
+            print(String(describing: byteBuffer)
         }
     }
 }
-```

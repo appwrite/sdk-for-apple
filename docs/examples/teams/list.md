@@ -1,4 +1,3 @@
-```swift
 import Appwrite
 
 func main() {
@@ -6,14 +5,13 @@ func main() {
       .setEndpoint("https://[HOSTNAME_OR_IP]/v1") // Your API Endpoint
       .setProject("5df5acd0d48c2") // Your project ID
 
-    let teams = Teams(client: client)
-    teams.list(
+    let teams = Teams(client)
+    teams.list() { result in
         switch result {
         case .failure(let error):
-            print(error)
-        case .success(let response):
-            let json = response.body!.readString(length: response.body!.readableBytes)
+            print(error.message)
+        case .success(let teamList):
+            print(String(describing: teamList)
         }
     }
 }
-```

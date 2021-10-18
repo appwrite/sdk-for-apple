@@ -1,14 +1,10 @@
-//
-// Client.swift
-//
-// Created by Armino <devel@boioiong.com>
-// GitHub: https://github.com/armino-dev/sdk-generator
-//
-
 import NIO
+import NIOCore
+import NIOFoundationCompat
 import NIOSSL
 import Foundation
 import AsyncHTTPClient
+@_exported import AppwriteModels
 
 let DASHDASH = "--"
 let CRLF = "\r\n"
@@ -22,9 +18,8 @@ open class Client {
     open var endPointRealtime: String? = nil
 
     open var headers: [String: String] = [
-      "content-type": "",
-      "x-sdk-version": "appwrite:swiftclient:0.0.1",
-      "X-Appwrite-Response-Format": "0.7.0"    
+        "content-type": "",
+        "x-sdk-version": "appwrite:swiftclient:0.1.0",        "X-Appwrite-Response-Format": "0.10.0"
     ]
 
     open var config: [String: String] = [:]
@@ -41,6 +36,10 @@ open class Client {
 
     public init() {
         http = Client.createHTTP()
+
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        addUserAgent()
+        #endif
     }
 
     private static func createHTTP(
@@ -101,21 +100,6 @@ open class Client {
     }
 
     ///
-    /// Set Key
-    ///
-    /// Your secret API key
-    ///
-    /// @param String value
-    ///
-    /// @return Client
-    ///
-    open func setKey(_ value: String) -> Client {
-        config["key"] = value
-        _ = addHeader(key: "X-Appwrite-Key", value: value)
-        return self
-    }
-
-    ///
     /// Set JWT
     ///
     /// Your secret JSON Web Token
@@ -143,19 +127,6 @@ open class Client {
         return self
     }
 
-    ///
-    /// Set Mode
-    ///
-    /// @param String value
-    ///
-    /// @return Client
-    ///
-    open func setMode(_ value: String) -> Client {
-        config["mode"] = value
-        _ = addHeader(key: "X-Appwrite-Mode", value: value)
-        return self
-    }
-
 
     ///
     /// Set self signed
@@ -164,7 +135,7 @@ open class Client {
     ///
     /// @return Client
     ///
-    open func setSelfSigned(_ status: Bool = false) -> Client {
+    open func setSelfSigned(_ status: Bool = true) -> Client {
         try! http.syncShutdown()
         http = Client.createHTTP(selfSigned: status)
         return self
@@ -267,13 +238,23 @@ open class Client {
     /// @return Response
     /// @throws Exception
     ///
-    func call(method: String, path: String = "", headers: [String: String] = [:], params: [String: Any?] = [:], sink: ((ByteBuffer) -> Void)? = nil,  completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func call<T>(
+        method: String,
+        path: String = "",
+        headers: [String: String] = [:],
+        params: [String: Any?] = [:],
+        sink: ((ByteBuffer) -> Void)? = nil,
+        convert: (([String: Any]) -> T)? = nil,
+        completion: ((Result<T, AppwriteError>) -> Void)? = nil
+    ) {
         self.headers.merge(headers) { (_, new) in
             new
         }
 
-        let queryParameters = method == "GET" && !params.isEmpty
-            ? "?" + parametersToQueryString(params: params)
+        let validParams = params.filter { $0.value != nil }
+
+        let queryParameters = method == "GET" && !validParams.isEmpty
+            ? "?" + parametersToQueryString(params: validParams)
             : ""
 
         let targetURL = URL(string: endPoint + path + queryParameters)!
@@ -290,42 +271,30 @@ open class Client {
         }
 
         addHeaders(to: &request)
-        addCookies(to: &request)
-
+        request.addDomainCookies()
 
         if "GET" == method {
-            execute(request, completion: completion)
+            execute(request, convert: convert, completion: completion)
             return
         }
 
         do {
-            try buildBody(for: &request, with: params)
+            try buildBody(for: &request, with: validParams)
         } catch let error {
             completion?(Result.failure(AppwriteError(message: error.localizedDescription)))
             return
         }
 
-        execute(request, withSink: sink, completion: completion)
+        execute(request, withSink: sink, convert: convert, completion: completion)
     }
 
-    fileprivate func addHeaders(to request: inout HTTPClient.Request) {
+    private func addHeaders(to request: inout HTTPClient.Request) {
         for (key, value) in self.headers {
             request.headers.add(name: key, value: value)
         }
     }
 
-    fileprivate func addCookies(to request: inout HTTPClient.Request) {
-        let cookieJson = UserDefaults.standard.string(forKey: "\(request.url.host ?? "")-cookies")
-        let cookies = try! cookieJson?.fromJson(to: [HTTPClient.Cookie].self)
-
-        if let authCookie = cookies?.first(where: { cookie in
-            cookie.name.starts(with: "a_session_") && !cookie.name.contains("legacy")
-        }) {
-            request.headers.add(name: "cookie", value: "\(authCookie.name)=\(authCookie.value)")
-        }
-    }
-
-    fileprivate func buildBody(
+    private func buildBody(
         for request: inout HTTPClient.Request,
         with params: [String: Any?]
     ) throws {
@@ -336,10 +305,11 @@ open class Client {
         }
     }
 
-    fileprivate func execute(
+    private func execute<T>(
         _ request: HTTPClient.Request,
         withSink bufferSink: ((ByteBuffer) -> Void)? = nil,
-        completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil
+        convert: (([String: Any]) -> T)? = nil,
+        completion: ((Result<T, AppwriteError>) -> Void)? = nil
     ) {
         if bufferSink == nil {
             http.execute(
@@ -358,23 +328,62 @@ open class Client {
             complete(with: result)
         }
 
-        func complete(with result: Result<HTTPClient.Response, Error>) {
-            if let completion = completion {
-                switch result {
-                case .failure(let error): print(error)
-                case .success(let response):
-                    guard response.cookies.count > 0 else {
-                        break
+        func complete(with result: Result<HTTPClient.Response, Swift.Error>) {
+            guard let completion = completion else {
+                return
+            }
+
+            switch result {
+            case .failure(let error): print(error)
+            case .success(var response):
+                switch response.status.code {
+                case 0..<400:
+                    if response.cookies.count > 0 {
+                        UserDefaults.standard.set(
+                            try! response.cookies.toJson(),
+                            forKey: "\(response.host)-cookies"
+                        )
                     }
-                    let cookieJson = try! response.cookies.toJson()
-                    UserDefaults.standard.set(cookieJson, forKey: "\(response.host)-cookies")
+                    switch T.self {
+                    case is Bool.Type:
+                        completion(.success(true as! T))
+                    case is ByteBuffer.Type:
+                        completion(.success(response.body! as! T))
+                    default:
+                        if response.body == nil {
+                            completion(.success(true as! T))
+                            return
+                        }
+                        let dict = try! JSONSerialization
+                            .jsonObject(with: response.body!) as? [String: Any]
+
+                        completion(.success(convert?(dict!) ?? dict! as! T))
+                    }
+                default:
+                    var message = ""
+
+                    do {
+                        let dict = try JSONSerialization
+                            .jsonObject(with: response.body!) as? [String: Any]
+
+                        message = dict?["message"] as? String
+                            ?? response.status.reasonPhrase
+                    } catch {
+                        message =  response.body!.readString(length: response.body!.readableBytes)!
+                    }
+
+                    let error = AppwriteError(
+                        message: message,
+                        code: Int(response.status.code)
+                    )
+
+                    completion(.failure(error))
                 }
-                completion(result.mapError { AppwriteError(message: $0.localizedDescription) })
             }
         }
     }
 
-    fileprivate func randomBoundary() -> String {
+    private func randomBoundary() -> String {
         var string = ""
         for _ in 0..<16 {
             string.append(Client.boundaryChars.randomElement()!)
@@ -382,7 +391,7 @@ open class Client {
         return string
     }
 
-    fileprivate func buildJSON(
+    private func buildJSON(
         _ request: inout HTTPClient.Request,
         with params: [String: Any?] = [:]
     ) throws {
@@ -391,7 +400,7 @@ open class Client {
         request.body = .data(json)
     }
 
-    fileprivate func buildMultipart(
+    private func buildMultipart(
         _ request: inout HTTPClient.Request,
         with params: [String: Any?] = [:]
     ) {
@@ -446,6 +455,46 @@ open class Client {
         request.headers.add(name: "Content-Length", value: bodyBuffer.readableBytes.description)
         request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(boundary)\"")
         request.body = .byteBuffer(bodyBuffer)
+    }
+
+    private func addUserAgent() {
+        let packageInfo = OSPackageInfo.get()
+        let deviceInfo = OSDeviceInfo()
+        var device = "";
+        var operatingSystem = ""
+
+        #if os(iOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.modelIdentifier) iOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "ios"
+        #elseif os(tvOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.systemInfo.machine) tvOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "tvos"
+        #elseif os(watchOS)
+        let iosinfo = deviceInfo.iOSInfo
+        device = "\(iosinfo!.systemInfo.machine) watchOS/\(iosinfo!.systemVersion)";
+        operatingSystem = "watchos"
+        #elseif os(macOS)
+        let macinfo = deviceInfo.macOSInfo
+        device = "(Macintosh; \(macinfo!.model))"
+        operatingSystem = "macos"
+        #elseif os(Linux)
+        let lininfo = deviceInfo.linuxInfo
+        device = "(Linux; U; \(lininfo!.id) \(lininfo!.version))"
+        operatingSystem = "linux"
+        #elseif os(Windows)
+        let wininfo = deviceInfo.windowsInfo
+        device = "(Windows NT; \(wininfo!.computerName))"
+        operatingSystem = "windows"
+        #endif
+
+        #if !os(Linux) && !os(Windows)
+        _ = addHeader(
+            key: "user-agent",
+            value: "\(packageInfo.packageName)/\(packageInfo.version) \(device)"
+        )
+        #endif
     }
 }
 

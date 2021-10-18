@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 import Foundation
 import NIO
+import AppwriteModels
 
 open class Locale: Service {
     ///
@@ -16,7 +17,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func get(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func get(
+        completion: ((Result<AppwriteModels.Locale, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale"
 
         let params: [String: Any?] = [:]
@@ -25,7 +28,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.Locale = { dict in
+            return AppwriteModels.Locale.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -37,7 +51,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getContinents(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getContinents(
+        completion: ((Result<AppwriteModels.ContinentList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale/continents"
 
         let params: [String: Any?] = [:]
@@ -46,7 +62,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.ContinentList = { dict in
+            return AppwriteModels.ContinentList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -58,7 +85,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getCountries(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getCountries(
+        completion: ((Result<AppwriteModels.CountryList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale/countries"
 
         let params: [String: Any?] = [:]
@@ -67,7 +96,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.CountryList = { dict in
+            return AppwriteModels.CountryList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -79,7 +119,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getCountriesEU(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getCountriesEU(
+        completion: ((Result<AppwriteModels.CountryList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale/countries/eu"
 
         let params: [String: Any?] = [:]
@@ -88,7 +130,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.CountryList = { dict in
+            return AppwriteModels.CountryList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -100,7 +153,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getCountriesPhones(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getCountriesPhones(
+        completion: ((Result<AppwriteModels.PhoneList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale/countries/phones"
 
         let params: [String: Any?] = [:]
@@ -109,7 +164,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.PhoneList = { dict in
+            return AppwriteModels.PhoneList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -122,7 +188,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getCurrencies(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getCurrencies(
+        completion: ((Result<AppwriteModels.CurrencyList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale/currencies"
 
         let params: [String: Any?] = [:]
@@ -131,7 +199,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.CurrencyList = { dict in
+            return AppwriteModels.CurrencyList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
     ///
@@ -143,7 +222,9 @@ open class Locale: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getLanguages(completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getLanguages(
+        completion: ((Result<AppwriteModels.LanguageList, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/locale/languages"
 
         let params: [String: Any?] = [:]
@@ -152,7 +233,18 @@ open class Locale: Service {
             "content-type": "application/json"
         ]
 
-        client.call(method: "GET", path: path, headers: headers, params: params, completion: completion)
+        let convert: ([String: Any]) -> AppwriteModels.LanguageList = { dict in
+            return AppwriteModels.LanguageList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
     }
 
 }

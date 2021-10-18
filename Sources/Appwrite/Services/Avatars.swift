@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 import Foundation
 import NIO
+import AppwriteModels
 
 open class Avatars: Service {
     ///
@@ -18,13 +19,18 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getBrowser(_ code: String, _ width: Int = 100, _ height: Int = 100, _ quality: Int = 100, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getBrowser(
+        code: String,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/avatars/browsers/{code}"
 
         path = path.replacingOccurrences(
           of: "{code}",
-          with: code
-        )
+          with: code        )
 
         let params: [String: Any?] = [
             "width": width,
@@ -33,7 +39,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
     ///
@@ -50,13 +61,18 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getCreditCard(_ code: String, _ width: Int = 100, _ height: Int = 100, _ quality: Int = 100, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getCreditCard(
+        code: String,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/avatars/credit-cards/{code}"
 
         path = path.replacingOccurrences(
           of: "{code}",
-          with: code
-        )
+          with: code        )
 
         let params: [String: Any?] = [
             "width": width,
@@ -65,7 +81,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
     ///
@@ -79,7 +100,10 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFavicon(_ url: String, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getFavicon(
+        url: String,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/avatars/favicon"
 
         let params: [String: Any?] = [
@@ -87,7 +111,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
     ///
@@ -104,13 +133,18 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getFlag(_ code: String, _ width: Int = 100, _ height: Int = 100, _ quality: Int = 100, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getFlag(
+        code: String,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         var path: String = "/avatars/flags/{code}"
 
         path = path.replacingOccurrences(
           of: "{code}",
-          with: code
-        )
+          with: code        )
 
         let params: [String: Any?] = [
             "width": width,
@@ -119,7 +153,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
     ///
@@ -136,7 +175,12 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getImage(_ url: String, _ width: Int = 400, _ height: Int = 400, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getImage(
+        url: String,
+        width: Int? = nil,
+        height: Int? = nil,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/avatars/image"
 
         let params: [String: Any?] = [
@@ -146,7 +190,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
     ///
@@ -171,7 +220,14 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getInitials(_ name: String = "", _ width: Int = 500, _ height: Int = 500, _ color: String = "", _ background: String = "", completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getInitials(
+        name: String? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        color: String? = nil,
+        background: String? = nil,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/avatars/initials"
 
         let params: [String: Any?] = [
@@ -183,7 +239,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
     ///
@@ -199,7 +260,13 @@ open class Avatars: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getQR(_ text: String, _ size: Int = 400, _ margin: Int = 1, _ download: Bool = false, completion: ((Result<HTTPClient.Response, AppwriteError>) -> Void)? = nil) {
+    open func getQR(
+        text: String,
+        size: Int? = nil,
+        margin: Int? = nil,
+        download: Bool? = nil,
+        completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
+    ) {
         let path: String = "/avatars/qr"
 
         let params: [String: Any?] = [
@@ -210,7 +277,12 @@ open class Avatars: Service {
             "project": client.config["project"]
         ]
 
-        client.call(method: "GET", path: path, params: params, completion: completion)
+        client.call(
+            method: "GET",
+            path: path,
+            params: params,
+            completion: completion
+        )
     }
 
 }
