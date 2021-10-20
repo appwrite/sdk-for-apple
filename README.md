@@ -7,7 +7,7 @@
 [![Twitter Account](https://img.shields.io/twitter/follow/appwrite_io?color=00acee&label=twitter&style=flat-square)](https://twitter.com/appwrite_io)
 [![Discord](https://img.shields.io/discord/564160730845151244?label=discord&style=flat-square)](https://appwrite.io/discord)
 
-**WORK IN PROGRESS - NOT READY FOR USAGE**
+**This SDK is compatible with Appwrite server version 0.11.x. For older versions, please check [previous releases](https://github.com/appwrite/sdk-for-apple/releases).**
 
 Appwrite is an open-source backend as a service server that abstract and simplify complex and repetitive development tasks behind a very simple to use REST API. Appwrite aims to help you develop your apps faster and in a more secure way. Use the Apple SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
 
@@ -31,7 +31,7 @@ Add the package to your `Package.swift` dependencies:
 
 ```swift
     dependencies: [
-        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "0.0.1"),
+        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "0.1.0"),
     ],
 ```
 

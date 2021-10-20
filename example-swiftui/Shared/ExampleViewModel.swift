@@ -3,8 +3,8 @@ import SwiftUI
 import Appwrite
 import NIO
 
-let host = "http://localhost/v1"
-let projectId = "613b18dabf74a"
+let host = "https://localhost/v1"
+let projectId = "60f6a0d6e2a52"
 
 extension ExampleView {
     
@@ -13,7 +13,6 @@ extension ExampleView {
         let client = Client()
             .setEndpoint(host)
             .setProject(projectId)
-            .setSelfSigned()
         
         lazy var account = Account(client)
         lazy var storage = Storage(client)
@@ -23,7 +22,7 @@ extension ExampleView {
 
         @Published public var username: String = "test@test.test"
         @Published public var password: String = "password"
-        @Published public var fileId: String = "614c5b12007f5"
+        @Published public var fileId: String = "60f7a0178c3e5"
         @Published public var collectionId: String = "6155742223662"
         @Published public var isShowPhotoLibrary = false
         @Published public var response: String = ""

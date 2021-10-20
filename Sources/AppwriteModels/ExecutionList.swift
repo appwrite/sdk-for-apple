@@ -2,7 +2,7 @@
 /// Executions List
 public class ExecutionList {
 
-    /// Total sum of items in the list.
+    /// Total number of items available on the server.
     public let sum: Int
 
     /// List of executions.

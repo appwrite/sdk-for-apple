@@ -2,7 +2,7 @@
 /// Documents List
 public class DocumentList {
 
-    /// Total sum of items in the list.
+    /// Total number of items available on the server.
     public let sum: Int
 
     /// List of documents.

@@ -312,9 +312,9 @@ open class Teams: Service {
 
         let params: [String: Any?] = [
             "email": email,
-            "name": name,
             "roles": roles,
-            "url": url
+            "url": url,
+            "name": name
         ]
 
         let headers: [String: String] = [

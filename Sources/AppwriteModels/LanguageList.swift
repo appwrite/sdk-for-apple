@@ -2,7 +2,7 @@
 /// Languages List
 public class LanguageList {
 
-    /// Total sum of items in the list.
+    /// Total number of items available on the server.
     public let sum: Int
 
     /// List of languages.
