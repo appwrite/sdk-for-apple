@@ -19,7 +19,7 @@ open class Client {
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.1.0",        "X-Appwrite-Response-Format": "0.11.0"
+        "x-sdk-version": "appwrite:swiftclient:0.1.1",        "X-Appwrite-Response-Format": "0.11.0"
     ]
 
     open var config: [String: String] = [:]

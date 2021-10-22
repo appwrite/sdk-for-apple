@@ -1,6 +1,5 @@
 # Appwrite Apple SDK
 
-![Cocoapods](https://img.shields.io/cocoapods/v/Appwrite.svg?color=green&style=flat-square)
 ![Swift Package Manager](https://img.shields.io/github/v/release/appwrite/sdk-for-apple.svg?color=green&style=flat-square)
 ![License](https://img.shields.io/github/license/appwrite/sdk-for-apple.svg?style=flat-square)
 ![Version](https://img.shields.io/badge/api%20version-0.11.0-blue.svg?style=flat-square)
@@ -20,17 +19,11 @@ Appwrite is an open-source backend as a service server that abstract and simplif
 
 The Appwrite Swift SDK is available via multiple package managers, including Swift Package Manager. In order to use the Appwrite Swift SDK from Xcode, select File > Swift Packages > **Add Package Dependency**
 
->>IMAGE<<
-
 In the dialog that appears, enter the Appwrite Swift SDK [package URL](git@github.com:appwrite/sdk-for-apple.git) and click **Next**.
 
 Once the repository information is loaded, add your version rules and click **Next** again.
 
->>IMAGE<<
-
 On the final screen, make sure you see `Appwrite` as a product selected for your target:
-
->>IMAGE<<
 
 ### Swift Package Manager
 
@@ -38,7 +31,7 @@ Add the package to your `Package.swift` dependencies:
 
 ```swift
     dependencies: [
-        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "0.1.0"),
+        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "0.1.1"),
     ],
 ```
 
@@ -52,12 +45,6 @@ Then add it to your target:
                 .product(name: "", package: "sdk-for-apple")
             ]
         ),
-```
-
-### Cocoapods
-
-```ruby
-    pod '', git: 'git@github.com:appwrite/sdk-for-apple.git', tag: '0.1.0'
 ```
 
 
