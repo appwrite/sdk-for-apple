@@ -1,3 +1,4 @@
+```swift
 import Appwrite
 
 func main() {
@@ -18,3 +19,4 @@ func main() {
         }
     }
 }
+```
