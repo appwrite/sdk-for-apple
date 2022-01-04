@@ -29,5 +29,5 @@ public class LanguageList {
             "languages": languages.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                                                                        
 }

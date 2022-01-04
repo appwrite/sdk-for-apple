@@ -29,5 +29,5 @@ public class CountryList {
             "countries": countries.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                                                                        
 }

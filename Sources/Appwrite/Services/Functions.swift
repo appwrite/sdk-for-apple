@@ -13,19 +13,21 @@ open class Functions: Service {
     /// different API modes](/docs/admin).
     ///
     /// @param String functionId
-    /// @param String search
     /// @param Int limit
     /// @param Int offset
-    /// @param String orderType
+    /// @param String search
+    /// @param String cursor
+    /// @param String cursorDirection
     /// @throws Exception
     /// @return array
     ///
     open func listExecutions(
         functionId: String,
-        search: String? = nil,
         limit: Int? = nil,
         offset: Int? = nil,
-        orderType: String? = nil,
+        search: String? = nil,
+        cursor: String? = nil,
+        cursorDirection: String? = nil,
         completion: ((Result<AppwriteModels.ExecutionList, AppwriteError>) -> Void)? = nil
     ) {
         var path: String = "/functions/{functionId}/executions"
@@ -35,10 +37,11 @@ open class Functions: Service {
           with: functionId        )
 
         let params: [String: Any?] = [
-            "search": search,
             "limit": limit,
             "offset": offset,
-            "orderType": orderType
+            "search": search,
+            "cursor": cursor,
+            "cursorDirection": cursorDirection
         ]
 
         let headers: [String: String] = [

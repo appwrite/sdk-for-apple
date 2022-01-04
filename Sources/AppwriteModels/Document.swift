@@ -8,20 +8,25 @@ public class Document {
     /// Collection ID.
     public let collection: String
 
-    /// Document permissions.
-    public let permissions: Permissions
+    /// Document read permissions.
+    public let read: [Any]
+
+    /// Document write permissions.
+    public let write: [Any]
 
     let data: [String: Any]
 
     init(
         id: String,
         collection: String,
-        permissions: Permissions,
+        read: [Any],
+        write: [Any],
         data: [String: Any]
     ) {
         self.id = id
         self.collection = collection
-        self.permissions = permissions
+        self.read = read
+        self.write = write
         self.data = data
     }
 
@@ -29,7 +34,8 @@ public class Document {
         return Document(
             id: map["$id"] as! String,
             collection: map["$collection"] as! String,
-            permissions: Permissions.from(map: map["$permissions"] as! [String: Any]),
+            read: map["$read"] as! [Any],
+            write: map["$write"] as! [Any],
             data: map
         )
     }
@@ -38,7 +44,8 @@ public class Document {
         return [
             "$id": id as Any,
             "$collection": collection as Any,
-            "$permissions": permissions.toMap() as Any,
+            "$read": read as Any,
+            "$write": write as Any,
             "data": data
         ]
     }
@@ -46,5 +53,5 @@ public class Document {
     public func convertTo<T>(fromJson: ([String: Any]) -> T) -> T {
         return fromJson(data)
     }
-                                                                                                                                                
+                        
 }

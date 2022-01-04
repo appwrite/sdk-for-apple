@@ -7,14 +7,17 @@ open class Teams: Service {
     ///
     /// List Teams
     ///
-    /// Get a list of all the current user teams. You can use the query params to
-    /// filter your results. On admin mode, this endpoint will return a list of all
-    /// of the project's teams. [Learn more about different API
-    /// modes](/docs/admin).
+    /// Get a list of all the teams in which the current user is a member. You can
+    /// use the parameters to filter your results.
+    /// 
+    /// In admin mode, this endpoint returns a list of all the teams in the current
+    /// project. [Learn more about different API modes](/docs/admin).
     ///
     /// @param String search
     /// @param Int limit
     /// @param Int offset
+    /// @param String cursor
+    /// @param String cursorDirection
     /// @param String orderType
     /// @throws Exception
     /// @return array
@@ -23,6 +26,8 @@ open class Teams: Service {
         search: String? = nil,
         limit: Int? = nil,
         offset: Int? = nil,
+        cursor: String? = nil,
+        cursorDirection: String? = nil,
         orderType: String? = nil,
         completion: ((Result<AppwriteModels.TeamList, AppwriteError>) -> Void)? = nil
     ) {
@@ -32,6 +37,8 @@ open class Teams: Service {
             "search": search,
             "limit": limit,
             "offset": offset,
+            "cursor": cursor,
+            "cursorDirection": cursorDirection,
             "orderType": orderType
         ]
 
@@ -57,16 +64,17 @@ open class Teams: Service {
     /// Create Team
     ///
     /// Create a new team. The user who creates the team will automatically be
-    /// assigned as the owner of the team. The team owner can invite new members,
-    /// who will be able add new owners and update or delete the team from your
-    /// project.
+    /// assigned as the owner of the team. Only the users with the owner role can
+    /// invite new members, add new owners and delete or update the team.
     ///
+    /// @param String teamId
     /// @param String name
     /// @param [Any] roles
     /// @throws Exception
     /// @return array
     ///
     open func create(
+        teamId: String,
         name: String,
         roles: [Any]? = nil,
         completion: ((Result<AppwriteModels.Team, AppwriteError>) -> Void)? = nil
@@ -74,6 +82,7 @@ open class Teams: Service {
         let path: String = "/teams"
 
         let params: [String: Any?] = [
+            "teamId": teamId,
             "name": name,
             "roles": roles
         ]
@@ -99,8 +108,7 @@ open class Teams: Service {
     ///
     /// Get Team
     ///
-    /// Get a team by its unique ID. All team members have read access for this
-    /// resource.
+    /// Get a team by its ID. All team members have read access for this resource.
     ///
     /// @param String teamId
     /// @throws Exception
@@ -139,8 +147,8 @@ open class Teams: Service {
     ///
     /// Update Team
     ///
-    /// Update a team by its unique ID. Only team owners have write access for this
-    /// resource.
+    /// Update a team using its ID. Only members with the owner role can update the
+    /// team.
     ///
     /// @param String teamId
     /// @param String name
@@ -183,8 +191,8 @@ open class Teams: Service {
     ///
     /// Delete Team
     ///
-    /// Delete a team by its unique ID. Only team owners have write access for this
-    /// resource.
+    /// Delete a team using its ID. Only team members with the owner role can
+    /// delete the team.
     ///
     /// @param String teamId
     /// @throws Exception
@@ -218,13 +226,15 @@ open class Teams: Service {
     ///
     /// Get Team Memberships
     ///
-    /// Get a team members by the team unique ID. All team members have read access
-    /// for this list of resources.
+    /// Use this endpoint to list a team's members using the team's ID. All team
+    /// members have read access to this endpoint.
     ///
     /// @param String teamId
     /// @param String search
     /// @param Int limit
     /// @param Int offset
+    /// @param String cursor
+    /// @param String cursorDirection
     /// @param String orderType
     /// @throws Exception
     /// @return array
@@ -234,6 +244,8 @@ open class Teams: Service {
         search: String? = nil,
         limit: Int? = nil,
         offset: Int? = nil,
+        cursor: String? = nil,
+        cursorDirection: String? = nil,
         orderType: String? = nil,
         completion: ((Result<AppwriteModels.MembershipList, AppwriteError>) -> Void)? = nil
     ) {
@@ -247,6 +259,8 @@ open class Teams: Service {
             "search": search,
             "limit": limit,
             "offset": offset,
+            "cursor": cursor,
+            "cursorDirection": cursorDirection,
             "orderType": orderType
         ]
 
@@ -271,22 +285,21 @@ open class Teams: Service {
     ///
     /// Create Team Membership
     ///
-    /// Use this endpoint to invite a new member to join your team. If initiated
-    /// from Client SDK, an email with a link to join the team will be sent to the
-    /// new member's email address if the member doesn't exist in the project it
-    /// will be created automatically. If initiated from server side SDKs, new
-    /// member will automatically be added to the team.
+    /// Invite a new member to join your team. If initiated from the client SDK, an
+    /// email with a link to join the team will be sent to the member's email
+    /// address and an account will be created for them should they not be signed
+    /// up already. If initiated from server-side SDKs, the new member will
+    /// automatically be added to the team.
     /// 
-    /// Use the 'URL' parameter to redirect the user from the invitation email back
+    /// Use the 'url' parameter to redirect the user from the invitation email back
     /// to your app. When the user is redirected, use the [Update Team Membership
     /// Status](/docs/client/teams#teamsUpdateMembershipStatus) endpoint to allow
-    /// the user to accept the invitation to the team.  While calling from side
-    /// SDKs the redirect url can be empty string.
+    /// the user to accept the invitation to the team. 
     /// 
-    /// Please note that in order to avoid a [Redirect
-    /// Attacks](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
+    /// Please note that to avoid a [Redirect
+    /// Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
     /// the only valid redirect URL's are the once from domains you have set when
-    /// added your platforms in the console interface.
+    /// adding your platforms in the console interface.
     ///
     /// @param String teamId
     /// @param String email
@@ -336,7 +349,57 @@ open class Teams: Service {
     }
 
     ///
+    /// Get Team Membership
+    ///
+    /// Get a team member by the membership unique id. All team members have read
+    /// access for this resource.
+    ///
+    /// @param String teamId
+    /// @param String membershipId
+    /// @throws Exception
+    /// @return array
+    ///
+    open func getMembership(
+        teamId: String,
+        membershipId: String,
+        completion: ((Result<AppwriteModels.MembershipList, AppwriteError>) -> Void)? = nil
+    ) {
+        var path: String = "/teams/{teamId}/memberships/{membershipId}"
+
+        path = path.replacingOccurrences(
+          of: "{teamId}",
+          with: teamId        )
+
+        path = path.replacingOccurrences(
+          of: "{membershipId}",
+          with: membershipId        )
+
+        let params: [String: Any?] = [:]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let convert: ([String: Any]) -> AppwriteModels.MembershipList = { dict in
+            return AppwriteModels.MembershipList.from(map: dict)
+        }
+
+        client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
+    }
+
+    ///
     /// Update Membership Roles
+    ///
+    /// Modify the roles of a team member. Only team members with the owner role
+    /// have access to this endpoint. Learn more about [roles and
+    /// permissions](/docs/permissions).
     ///
     /// @param String teamId
     /// @param String membershipId
@@ -428,7 +491,7 @@ open class Teams: Service {
     /// Update Team Membership Status
     ///
     /// Use this endpoint to allow a user to accept an invitation to join a team
-    /// after being redirected back to your app from the invitation email recieved
+    /// after being redirected back to your app from the invitation email received
     /// by the user.
     ///
     /// @param String teamId

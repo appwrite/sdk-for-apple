@@ -7,6 +7,7 @@ func main() {
 
     let account = Account(client)
     account.createMagicURLSession(
+        userId: "",
         email: "email@example.com"
     ) { result in
         switch result {

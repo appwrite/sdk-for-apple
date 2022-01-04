@@ -14,6 +14,8 @@ open class Storage: Service {
     /// @param String search
     /// @param Int limit
     /// @param Int offset
+    /// @param String cursor
+    /// @param String cursorDirection
     /// @param String orderType
     /// @throws Exception
     /// @return array
@@ -22,6 +24,8 @@ open class Storage: Service {
         search: String? = nil,
         limit: Int? = nil,
         offset: Int? = nil,
+        cursor: String? = nil,
+        cursorDirection: String? = nil,
         orderType: String? = nil,
         completion: ((Result<AppwriteModels.FileList, AppwriteError>) -> Void)? = nil
     ) {
@@ -31,6 +35,8 @@ open class Storage: Service {
             "search": search,
             "limit": limit,
             "offset": offset,
+            "cursor": cursor,
+            "cursorDirection": cursorDirection,
             "orderType": orderType
         ]
 
@@ -59,6 +65,7 @@ open class Storage: Service {
     /// assigned to read and write access unless he has passed custom values for
     /// read and write arguments.
     ///
+    /// @param String fileId
     /// @param File file
     /// @param [Any] read
     /// @param [Any] write
@@ -66,6 +73,7 @@ open class Storage: Service {
     /// @return array
     ///
     open func createFile(
+        fileId: String,
         file: File,
         read: [Any]? = nil,
         write: [Any]? = nil,
@@ -74,6 +82,7 @@ open class Storage: Service {
         let path: String = "/storage/files"
 
         let params: [String: Any?] = [
+            "fileId": fileId,
             "file": file,
             "read": read,
             "write": write

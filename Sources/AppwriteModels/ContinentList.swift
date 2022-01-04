@@ -29,5 +29,5 @@ public class ContinentList {
             "continents": continents.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                                                                        
 }

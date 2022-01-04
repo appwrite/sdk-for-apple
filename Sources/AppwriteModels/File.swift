@@ -5,8 +5,11 @@ public class File {
     /// File ID.
     public let id: String
 
-    /// File permissions.
-    public let permissions: Permissions
+    /// File read permissions.
+    public let read: [Any]
+
+    /// File write permissions.
+    public let write: [Any]
 
     /// File name.
     public let name: String
@@ -25,7 +28,8 @@ public class File {
 
     init(
         id: String,
-        permissions: Permissions,
+        read: [Any],
+        write: [Any],
         name: String,
         dateCreated: Int,
         signature: String,
@@ -33,7 +37,8 @@ public class File {
         sizeOriginal: Int
     ) {
         self.id = id
-        self.permissions = permissions
+        self.read = read
+        self.write = write
         self.name = name
         self.dateCreated = dateCreated
         self.signature = signature
@@ -44,7 +49,8 @@ public class File {
     public static func from(map: [String: Any]) -> File {
         return File(
             id: map["$id"] as! String,
-            permissions: Permissions.from(map: map["$permissions"] as! [String: Any]),
+            read: map["$read"] as! [Any],
+            write: map["$write"] as! [Any],
             name: map["name"] as! String,
             dateCreated: map["dateCreated"] as! Int,
             signature: map["signature"] as! String,
@@ -56,7 +62,8 @@ public class File {
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
-            "$permissions": permissions.toMap() as Any,
+            "$read": read as Any,
+            "$write": write as Any,
             "name": name as Any,
             "dateCreated": dateCreated as Any,
             "signature": signature as Any,
@@ -64,5 +71,5 @@ public class File {
             "sizeOriginal": sizeOriginal as Any
         ]
     }
-                                                                                                                                                            
+                                    
 }
