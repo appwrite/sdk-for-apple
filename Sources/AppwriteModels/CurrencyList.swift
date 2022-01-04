@@ -29,5 +29,5 @@ public class CurrencyList {
             "currencies": currencies.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                                                                        
+                                                                                                                                    
 }

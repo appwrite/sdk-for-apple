@@ -71,5 +71,5 @@ public class User {
             "prefs": prefs.toMap() as Any
         ]
     }
-                                                                                                                                                                                                                
+                                                                                                                                                            
 }

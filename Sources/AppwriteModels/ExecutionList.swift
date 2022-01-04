@@ -29,5 +29,5 @@ public class ExecutionList {
             "executions": executions.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                                                                        
+                                                                                                                                    
 }

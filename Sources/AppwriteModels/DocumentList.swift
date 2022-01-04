@@ -29,9 +29,9 @@ public class DocumentList {
             "documents": documents.map { $0.toMap() } as Any
         ]
     }
-                                                                                                            
+                                                                    
     public func convertTo<T>(fromJson: ([String: Any]) -> T) -> [T] {
         documents.map { d in d.convertTo(fromJson: fromJson) }
     }
-                                                                            
+                                                                
 }

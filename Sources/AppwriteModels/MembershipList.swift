@@ -29,5 +29,5 @@ public class MembershipList {
             "memberships": memberships.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                                                                        
+                                                                                                                                    
 }

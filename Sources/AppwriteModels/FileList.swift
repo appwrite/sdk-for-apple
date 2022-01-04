@@ -29,5 +29,5 @@ public class FileList {
             "files": files.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                                                                        
+                                                                                                                                    
 }
