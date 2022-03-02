@@ -11,6 +11,7 @@ open class Storage: Service {
     /// your results. On admin mode, this endpoint will return a list of all of the
     /// project's files. [Learn more about different API modes](/docs/admin).
     ///
+    /// @param String bucketId
     /// @param String search
     /// @param Int limit
     /// @param Int offset
@@ -21,6 +22,7 @@ open class Storage: Service {
     /// @return array
     ///
     open func listFiles(
+        bucketId: String,
         search: String? = nil,
         limit: Int? = nil,
         offset: Int? = nil,
@@ -29,7 +31,12 @@ open class Storage: Service {
         orderType: String? = nil,
         completion: ((Result<AppwriteModels.FileList, AppwriteError>) -> Void)? = nil
     ) {
-        let path: String = "/storage/files"
+        var path: String = "/storage/buckets/{bucketId}/files"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         let params: [String: Any?] = [
             "search": search,
@@ -61,10 +68,26 @@ open class Storage: Service {
     ///
     /// Create File
     ///
-    /// Create a new file. The user who creates the file will automatically be
-    /// assigned to read and write access unless he has passed custom values for
-    /// read and write arguments.
+    /// Create a new file. Before using this route, you should create a new bucket
+    /// resource using either a [server
+    /// integration](/docs/server/database#storageCreateBucket) API or directly
+    /// from your Appwrite console.
+    /// 
+    /// Larger files should be uploaded using multiple requests with the
+    /// [content-range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range)
+    /// header to send a partial request with a maximum supported chunk of `5MB`.
+    /// The `content-range` header values should always be in bytes.
+    /// 
+    /// When the first request is sent, the server will return the **File** object,
+    /// and the subsequent part request must include the file's **id** in
+    /// `x-appwrite-id` header to allow the server to know that the partial upload
+    /// is for the existing file and not for a new one.
+    /// 
+    /// If you're creating a new file using one of the Appwrite SDKs, all the
+    /// chunking logic will be managed by the SDK internally.
+    /// 
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @param File file
     /// @param [Any] read
@@ -73,22 +96,29 @@ open class Storage: Service {
     /// @return array
     ///
     open func createFile(
+        bucketId: String,
         fileId: String,
         file: File,
         read: [Any]? = nil,
         write: [Any]? = nil,
+        onProgress: ((UploadProgress) -> Void)? = nil,
         completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
     ) {
-        let path: String = "/storage/files"
+        var path: String = "/storage/buckets/{bucketId}/files"
 
-        let params: [String: Any?] = [
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
+
+        var params: [String: Any?] = [
             "fileId": fileId,
             "file": file,
             "read": read,
             "write": write
         ]
 
-        let headers: [String: String] = [
+        var headers: [String: String] = [
             "content-type": "multipart/form-data"
         ]
 
@@ -96,12 +126,15 @@ open class Storage: Service {
             return AppwriteModels.File.from(map: dict)
         }
 
-        client.call(
-            method: "POST",
+        let paramName = "file"
+
+        client.chunkedUpload(
             path: path,
-            headers: headers,
-            params: params,
+            headers: &headers,
+            params: &params,
+            paramName: paramName,
             convert: convert,
+            onProgress: onProgress,
             completion: completion
         )
     }
@@ -112,19 +145,27 @@ open class Storage: Service {
     /// Get a file by its unique ID. This endpoint response returns a JSON object
     /// with the file metadata.
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @throws Exception
     /// @return array
     ///
     open func getFile(
+        bucketId: String,
         fileId: String,
         completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
     ) {
-        var path: String = "/storage/files/{fileId}"
+        var path: String = "/storage/buckets/{bucketId}/files/{fileId}"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId        )
+          with: fileId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -152,6 +193,7 @@ open class Storage: Service {
     /// Update a file by its unique ID. Only users with write permissions have
     /// access to update this resource.
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @param [Any] read
     /// @param [Any] write
@@ -159,16 +201,23 @@ open class Storage: Service {
     /// @return array
     ///
     open func updateFile(
+        bucketId: String,
         fileId: String,
-        read: [Any],
-        write: [Any],
+        read: [Any]? = nil,
+        write: [Any]? = nil,
         completion: ((Result<AppwriteModels.File, AppwriteError>) -> Void)? = nil
     ) {
-        var path: String = "/storage/files/{fileId}"
+        var path: String = "/storage/buckets/{bucketId}/files/{fileId}"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId        )
+          with: fileId        
+        )
 
         let params: [String: Any?] = [
             "read": read,
@@ -199,19 +248,27 @@ open class Storage: Service {
     /// Delete a file by its unique ID. Only users with write permissions have
     /// access to delete this resource.
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @throws Exception
     /// @return array
     ///
     open func deleteFile(
+        bucketId: String,
         fileId: String,
         completion: ((Result<Any, AppwriteError>) -> Void)? = nil
     ) {
-        var path: String = "/storage/files/{fileId}"
+        var path: String = "/storage/buckets/{bucketId}/files/{fileId}"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId        )
+          with: fileId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -235,19 +292,27 @@ open class Storage: Service {
     /// 'Content-Disposition: attachment' header that tells the browser to start
     /// downloading the file to user downloads directory.
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @throws Exception
     /// @return array
     ///
     open func getFileDownload(
+        bucketId: String,
         fileId: String,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
-        var path: String = "/storage/files/{fileId}/download"
+        var path: String = "/storage/buckets/{bucketId}/files/{fileId}/download"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId        )
+          with: fileId        
+        )
 
         let params: [String: Any?] = [
             "project": client.config["project"]
@@ -267,8 +332,10 @@ open class Storage: Service {
     /// Get a file preview image. Currently, this method supports preview for image
     /// files (jpg, png, and gif), other supported formats, like pdf, docs, slides,
     /// and spreadsheets, will return the file icon image. You can also pass query
-    /// string arguments for cutting and resizing your preview image.
+    /// string arguments for cutting and resizing your preview image. Preview is
+    /// supported only for image files smaller than 10MB.
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @param Int width
     /// @param Int height
@@ -285,6 +352,7 @@ open class Storage: Service {
     /// @return array
     ///
     open func getFilePreview(
+        bucketId: String,
         fileId: String,
         width: Int? = nil,
         height: Int? = nil,
@@ -299,11 +367,17 @@ open class Storage: Service {
         output: String? = nil,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
-        var path: String = "/storage/files/{fileId}/preview"
+        var path: String = "/storage/buckets/{bucketId}/files/{fileId}/preview"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId        )
+          with: fileId        
+        )
 
         let params: [String: Any?] = [
             "width": width,
@@ -335,19 +409,27 @@ open class Storage: Service {
     /// download method but returns with no  'Content-Disposition: attachment'
     /// header.
     ///
+    /// @param String bucketId
     /// @param String fileId
     /// @throws Exception
     /// @return array
     ///
     open func getFileView(
+        bucketId: String,
         fileId: String,
         completion: ((Result<ByteBuffer, AppwriteError>) -> Void)? = nil
     ) {
-        var path: String = "/storage/files/{fileId}/view"
+        var path: String = "/storage/buckets/{bucketId}/files/{fileId}/view"
+
+        path = path.replacingOccurrences(
+          of: "{bucketId}",
+          with: bucketId        
+        )
 
         path = path.replacingOccurrences(
           of: "{fileId}",
-          with: fileId        )
+          with: fileId        
+        )
 
         let params: [String: Any?] = [
             "project": client.config["project"]

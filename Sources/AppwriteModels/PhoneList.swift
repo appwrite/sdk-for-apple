@@ -2,30 +2,30 @@
 /// Phones List
 public class PhoneList {
 
-    /// Total number of items available on the server.
-    public let sum: Int
+    /// Total number of phones documents that matched your query.
+    public let total: Int
 
     /// List of phones.
     public let phones: [Phone]
 
     init(
-        sum: Int,
+        total: Int,
         phones: [Phone]
     ) {
-        self.sum = sum
+        self.total = total
         self.phones = phones
     }
 
     public static func from(map: [String: Any]) -> PhoneList {
         return PhoneList(
-            sum: map["sum"] as! Int,
+            total: map["total"] as! Int,
             phones: (map["phones"] as! [[String: Any]]).map { Phone.from(map: $0) }
         )
     }
 
     public func toMap() -> [String: Any] {
         return [
-            "sum": sum as Any,
+            "total": total as Any,
             "phones": phones.map { $0.toMap() } as Any
         ]
     }

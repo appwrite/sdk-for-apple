@@ -360,8 +360,9 @@ open class Account: Service {
     ///
     /// Update Account Preferences
     ///
-    /// Update currently logged in user account preferences. You can pass only the
-    /// specific settings you wish to update.
+    /// Update currently logged in user account preferences. The object you pass is
+    /// stored as is, and replaces any previous value. The maximum allowed prefs
+    /// size is 64kB and throws error if exceeded.
     ///
     /// @param Any prefs
     /// @throws Exception
@@ -775,7 +776,8 @@ open class Account: Service {
 
         path = path.replacingOccurrences(
           of: "{provider}",
-          with: provider        )
+          with: provider        
+        )
 
         let params: [String: Any?] = [
             "success": success,
@@ -814,7 +816,8 @@ open class Account: Service {
 
         path = path.replacingOccurrences(
           of: "{sessionId}",
-          with: sessionId        )
+          with: sessionId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -837,11 +840,50 @@ open class Account: Service {
     }
 
     ///
+    /// Update Session (Refresh Tokens)
+    ///
+    /// @param String sessionId
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updateSession(
+        sessionId: String,
+        completion: ((Result<AppwriteModels.Session, AppwriteError>) -> Void)? = nil
+    ) {
+        var path: String = "/account/sessions/{sessionId}"
+
+        path = path.replacingOccurrences(
+          of: "{sessionId}",
+          with: sessionId        
+        )
+
+        let params: [String: Any?] = [:]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let convert: ([String: Any]) -> AppwriteModels.Session = { dict in
+            return AppwriteModels.Session.from(map: dict)
+        }
+
+        client.call(
+            method: "PATCH",
+            path: path,
+            headers: headers,
+            params: params,
+            convert: convert,
+            completion: completion
+        )
+    }
+
+    ///
     /// Delete Account Session
     ///
     /// Use this endpoint to log out the currently logged in user from all their
     /// account sessions across all of their different devices. When using the
-    /// option id argument, only the session unique ID provider will be deleted.
+    /// Session ID argument, only the unique session ID provided is deleted.
+    /// 
     ///
     /// @param String sessionId
     /// @throws Exception
@@ -855,7 +897,8 @@ open class Account: Service {
 
         path = path.replacingOccurrences(
           of: "{sessionId}",
-          with: sessionId        )
+          with: sessionId        
+        )
 
         let params: [String: Any?] = [:]
 

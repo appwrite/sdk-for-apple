@@ -2,30 +2,30 @@
 /// Currencies List
 public class CurrencyList {
 
-    /// Total number of items available on the server.
-    public let sum: Int
+    /// Total number of currencies documents that matched your query.
+    public let total: Int
 
     /// List of currencies.
     public let currencies: [Currency]
 
     init(
-        sum: Int,
+        total: Int,
         currencies: [Currency]
     ) {
-        self.sum = sum
+        self.total = total
         self.currencies = currencies
     }
 
     public static func from(map: [String: Any]) -> CurrencyList {
         return CurrencyList(
-            sum: map["sum"] as! Int,
+            total: map["total"] as! Int,
             currencies: (map["currencies"] as! [[String: Any]]).map { Currency.from(map: $0) }
         )
     }
 
     public func toMap() -> [String: Any] {
         return [
-            "sum": sum as Any,
+            "total": total as Any,
             "currencies": currencies.map { $0.toMap() } as Any
         ]
     }

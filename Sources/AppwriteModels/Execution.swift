@@ -20,8 +20,8 @@ public class Execution {
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
     public let status: String
 
-    /// The script exit code.
-    public let exitCode: Int
+    /// The script status code.
+    public let statusCode: Int
 
     /// The script stdout output string. Logs the last 4,000 characters of the execution stdout output.
     public let stdout: String
@@ -39,7 +39,7 @@ public class Execution {
         dateCreated: Int,
         trigger: String,
         status: String,
-        exitCode: Int,
+        statusCode: Int,
         stdout: String,
         stderr: String,
         time: Double
@@ -50,7 +50,7 @@ public class Execution {
         self.dateCreated = dateCreated
         self.trigger = trigger
         self.status = status
-        self.exitCode = exitCode
+        self.statusCode = statusCode
         self.stdout = stdout
         self.stderr = stderr
         self.time = time
@@ -64,7 +64,7 @@ public class Execution {
             dateCreated: map["dateCreated"] as! Int,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
-            exitCode: map["exitCode"] as! Int,
+            statusCode: map["statusCode"] as! Int,
             stdout: map["stdout"] as! String,
             stderr: map["stderr"] as! String,
             time: map["time"] as! Double
@@ -79,7 +79,7 @@ public class Execution {
             "dateCreated": dateCreated as Any,
             "trigger": trigger as Any,
             "status": status as Any,
-            "exitCode": exitCode as Any,
+            "statusCode": statusCode as Any,
             "stdout": stdout as Any,
             "stderr": stderr as Any,
             "time": time as Any

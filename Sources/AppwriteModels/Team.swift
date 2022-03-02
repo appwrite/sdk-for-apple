@@ -11,19 +11,19 @@ public class Team {
     /// Team creation date in Unix timestamp.
     public let dateCreated: Int
 
-    /// Total sum of team members.
-    public let sum: Int
+    /// Total number of team members.
+    public let total: Int
 
     init(
         id: String,
         name: String,
         dateCreated: Int,
-        sum: Int
+        total: Int
     ) {
         self.id = id
         self.name = name
         self.dateCreated = dateCreated
-        self.sum = sum
+        self.total = total
     }
 
     public static func from(map: [String: Any]) -> Team {
@@ -31,7 +31,7 @@ public class Team {
             id: map["$id"] as! String,
             name: map["name"] as! String,
             dateCreated: map["dateCreated"] as! Int,
-            sum: map["sum"] as! Int
+            total: map["total"] as! Int
         )
     }
 
@@ -40,7 +40,7 @@ public class Team {
             "$id": id as Any,
             "name": name as Any,
             "dateCreated": dateCreated as Any,
-            "sum": sum as Any
+            "total": total as Any
         ]
     }
                     

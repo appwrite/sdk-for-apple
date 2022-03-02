@@ -38,7 +38,8 @@ open class Database: Service {
 
         path = path.replacingOccurrences(
           of: "{collectionId}",
-          with: collectionId        )
+          with: collectionId        
+        )
 
         let params: [String: Any?] = [
             "queries": queries,
@@ -96,7 +97,8 @@ open class Database: Service {
 
         path = path.replacingOccurrences(
           of: "{collectionId}",
-          with: collectionId        )
+          with: collectionId        
+        )
 
         let params: [String: Any?] = [
             "documentId": documentId,
@@ -143,11 +145,13 @@ open class Database: Service {
 
         path = path.replacingOccurrences(
           of: "{collectionId}",
-          with: collectionId        )
+          with: collectionId        
+        )
 
         path = path.replacingOccurrences(
           of: "{documentId}",
-          with: documentId        )
+          with: documentId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -195,11 +199,13 @@ open class Database: Service {
 
         path = path.replacingOccurrences(
           of: "{collectionId}",
-          with: collectionId        )
+          with: collectionId        
+        )
 
         path = path.replacingOccurrences(
           of: "{documentId}",
-          with: documentId        )
+          with: documentId        
+        )
 
         let params: [String: Any?] = [
             "data": data,
@@ -246,11 +252,13 @@ open class Database: Service {
 
         path = path.replacingOccurrences(
           of: "{collectionId}",
-          with: collectionId        )
+          with: collectionId        
+        )
 
         path = path.replacingOccurrences(
           of: "{documentId}",
-          with: documentId        )
+          with: documentId        
+        )
 
         let params: [String: Any?] = [:]
 

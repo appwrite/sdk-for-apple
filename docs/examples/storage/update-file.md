@@ -7,9 +7,8 @@ func main() {
 
     let storage = Storage(client)
     storage.updateFile(
-        fileId: "[FILE_ID]",
-        read: [],
-        write: []
+        bucketId: "[BUCKET_ID]",
+        fileId: "[FILE_ID]"
     ) { result in
         switch result {
         case .failure(let error):

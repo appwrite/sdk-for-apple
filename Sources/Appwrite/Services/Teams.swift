@@ -122,7 +122,8 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -164,7 +165,8 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         let params: [String: Any?] = [
             "name": name
@@ -206,7 +208,8 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -253,7 +256,8 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         let params: [String: Any?] = [
             "search": search,
@@ -321,7 +325,8 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         let params: [String: Any?] = [
             "email": email,
@@ -368,11 +373,13 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId        )
+          with: membershipId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -417,11 +424,13 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId        )
+          with: membershipId        
+        )
 
         let params: [String: Any?] = [
             "roles": roles
@@ -466,11 +475,13 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId        )
+          with: membershipId        
+        )
 
         let params: [String: Any?] = [:]
 
@@ -493,6 +504,10 @@ open class Teams: Service {
     /// Use this endpoint to allow a user to accept an invitation to join a team
     /// after being redirected back to your app from the invitation email received
     /// by the user.
+    /// 
+    /// If the request is successful, a session for the user is automatically
+    /// created.
+    /// 
     ///
     /// @param String teamId
     /// @param String membershipId
@@ -512,11 +527,13 @@ open class Teams: Service {
 
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId        )
+          with: teamId        
+        )
 
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId        )
+          with: membershipId        
+        )
 
         let params: [String: Any?] = [
             "userId": userId,
