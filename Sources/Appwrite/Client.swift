@@ -20,7 +20,8 @@ open class Client {
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.3.0",        "X-Appwrite-Response-Format": "0.13.0"
+        "x-sdk-version": "appwrite:swiftclient:0.3.0",
+        "X-Appwrite-Response-Format": "0.13.0"
     ]
 
     open var config: [String: String] = [:]
@@ -250,9 +251,8 @@ open class Client {
         headers: [String: String] = [:],
         params: [String: Any?] = [:],
         sink: ((ByteBuffer) -> Void)? = nil,
-        convert: (([String: Any]) -> T)? = nil,
-        completion: ((Result<T, AppwriteError>) -> Void)? = nil
-    ) {
+        convert: (([String: Any]) -> T)? = nil
+    ) async throws -> T {
         self.headers.merge(headers) { (_, new) in
             new
         }
@@ -263,49 +263,26 @@ open class Client {
             ? "?" + parametersToQueryString(params: validParams)
             : ""
 
-        let targetURL = URL(string: endPoint + path + queryParameters)!
+        var request = HTTPClientRequest(url: endPoint + path + queryParameters)
+        request.method = .RAW(value: method)
 
-        var request: HTTPClient.Request
-        do {
-            request = try HTTPClient.Request(
-                url: targetURL,
-                method: .RAW(value: method)
-            )
-        } catch {
-            completion?(Result.failure(AppwriteError(
-                message: error.localizedDescription
-            )))
-            return
-        }
-
-        addHeaders(to: &request)
-        request.addDomainCookies()
-
-        if "GET" == method {
-            execute(request, convert: convert, completion: completion)
-            return
-        }
-
-        do {
-            try buildBody(for: &request, with: validParams)
-        } catch let error {
-            completion?(Result.failure(AppwriteError(
-                message: error.localizedDescription
-            )))
-            return
-        }
-
-        execute(request, withSink: sink, convert: convert, completion: completion)
-    }
-
-    private func addHeaders(to request: inout HTTPClient.Request) {
         for (key, value) in self.headers {
             request.headers.add(name: key, value: value)
         }
+
+        request.addDomainCookies()
+
+        if "GET" == method {
+            return try await execute(request, convert: convert)
+        }
+
+        try buildBody(for: &request, with: validParams)
+
+        return try await execute(request, withSink: sink, convert: convert)
     }
 
     private func buildBody(
-        for request: inout HTTPClient.Request,
+        for request: inout HTTPClientRequest,
         with params: [String: Any?]
     ) throws {
         if request.headers["content-type"][0] == "multipart/form-data" {
@@ -316,96 +293,62 @@ open class Client {
     }
 
     private func execute<T>(
-        _ request: HTTPClient.Request,
+        _ request: HTTPClientRequest,
         withSink bufferSink: ((ByteBuffer) -> Void)? = nil,
-        convert: (([String: Any]) -> T)? = nil,
-        completion: ((Result<T, AppwriteError>) -> Void)? = nil
-    ) {
-        if bufferSink == nil {
-            http.execute(
-                request: request,
-                delegate: ResponseAccumulator(request: request)
-            ).futureResult.whenComplete( { result in
-                complete(with: result)
-            })
-            return
-        }
-
-        http.execute(
-            request: request,
-            delegate: StreamingDelegate(request: request, sink: bufferSink)
-        ).futureResult.whenComplete { result in
-            complete(with: result)
-        }
-
-        func complete(with result: Result<HTTPClient.Response, Swift.Error>) {
-            guard let completion = completion else {
-                return
-            }
-
-            switch result {
-            case .failure(let error): 
-                completion(.failure(AppwriteError(
-                    message: error.localizedDescription
-                )))
-            case .success(var response):
-                switch response.status.code {
-                case 0..<400:
-                    if response.cookies.count > 0 {
-                        UserDefaults.standard.set(
-                            try! response.cookies.toJson(),
-                            forKey: "\(response.host)-cookies"
-                        )
-                    }
-                    switch T.self {
-                    case is Bool.Type:
-                        completion(.success(true as! T))
-                    case is ByteBuffer.Type:
-                        completion(.success(response.body! as! T))
-                    default:
-                        if response.body == nil {
-                            completion(.success(true as! T))
-                            return
-                        }
-                        let dict = try! JSONSerialization
-                            .jsonObject(with: response.body!) as? [String: Any]
-
-                        completion(.success(convert?(dict!) ?? dict! as! T))
-                    }
-                default:
-                    var message = ""
-                    var type = ""
-
-                    if response.body == nil {
-                        completion(.failure(AppwriteError(
-                            message: "Unknown error with status code \(response.status.code)",
-                            code: Int(response.status.code)
-                        )))
-                        return
-                    }
-
-                    do {
-                        let dict = try JSONSerialization
-                            .jsonObject(with: response.body!) as? [String: Any]
-
-                        message = dict?["message"] as? String
-                            ?? response.status.reasonPhrase
-                        
-                        type = dict?["type"] as? String ?? ""
-                    } catch {
-                        message =  response.body!.readString(length: response.body!.readableBytes)!
-                    }
-
-                    let error = AppwriteError(
-                        message: message,
-                        code: Int(response.status.code),
-                        type: type
+        convert: (([String: Any]) -> T)? = nil
+    ) async throws -> T {
+        func complete(with response: HTTPClientResponse) async throws -> T {
+            switch response.status.code {
+            case 0..<400:
+                if response.headers["cookies"].count > 0 {
+                    UserDefaults.standard.set(
+                        try! response.headers["cookies"].toJson(),
+                        forKey: URL(string: request.url)!.host! + "-cookies"
                     )
-
-                    completion(.failure(error))
                 }
+                switch T.self {
+                case is Bool.Type:
+                    return true as! T
+                case is ByteBuffer.Type:
+                    return response.body as! T
+                default:
+                    let data = try await response.body.collect(upTo: Int.max)
+                    let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+                    return convert?(dict!) ?? dict! as! T
+                }
+            default:
+                var message = ""
+                var data = try await response.body.collect(upTo: Int.max)
+                
+                do {
+                    let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+                    message = dict?["message"] as? String ?? response.status.reasonPhrase
+                } catch {
+                    message =  data.readString(length: data.readableBytes)!
+                }
+
+                throw AppwriteError(
+                    message: message,
+                    code: Int(response.status.code)
+                )
             }
         }
+
+        if bufferSink == nil {
+            let response = try await http.execute(
+                request, 
+                timeout: .seconds(30)
+            )
+            return try await complete(with: response)
+        }
+
+        let response = try await http.execute(
+            request,
+            timeout: .seconds(30)
+        )
+        return try await complete(with: response)
     }
 
     func chunkedUpload<T>(
@@ -414,60 +357,43 @@ open class Client {
         params: inout [String: Any?],
         paramName: String,
         convert: (([String: Any]) -> T)? = nil,
-        onProgress: ((UploadProgress) -> Void)? = nil,
-        completion: ((Result<T, AppwriteError>) -> Void)? = nil
-    ) {
+        onProgress: ((UploadProgress) -> Void)? = nil
+    ) async throws -> T {
         let file = params[paramName] as! File
         let size = file.buffer.readableBytes
 
         if size < Client.chunkSize {
-            call(
+            return try await call(
                 method: "POST",
                 path: path,
                 headers: headers,
                 params: params,
-                convert: convert,
-                completion: completion
+                convert: convert
             )
-            return
         }
 
         var input = file.buffer
         var offset = 0
         var result = [String:Any]()
-        let group = DispatchGroup()
 
         while offset < size {
             let slice = input.readSlice(length: Client.chunkSize)
                 ?? input.readSlice(length: Int(size - offset))
-            
+
             params[paramName] = File(
                 name: file.name,
                 buffer: slice!
             )
-            
+
             headers["content-range"] = "bytes \(offset)-\(min((offset + Client.chunkSize) - 1, size))/\(size)"
 
-            group.enter()
-
-            call(
+            result = try await call(
                 method: "POST",
                 path: path,
                 headers: headers,
                 params: params,
                 convert: { return $0 }
-            ) { response in
-                switch response {
-                case let .success(map):
-                    result = map
-                    group.leave()
-                case let .failure(error):
-                    completion?(.failure(error))
-                    return
-                }
-            }
-            
-            group.wait()
+            )
 
             offset += Client.chunkSize
             headers["x-appwrite-id"] = result["$id"] as? String
@@ -480,9 +406,8 @@ open class Client {
             ))
         }
 
-        completion?(.success(convert!(result)))
+        return convert!(result)
     }
-
 
     private static func randomBoundary() -> String {
         var string = ""
@@ -493,16 +418,16 @@ open class Client {
     }
 
     private func buildJSON(
-        _ request: inout HTTPClient.Request,
+        _ request: inout HTTPClientRequest,
         with params: [String: Any?] = [:]
     ) throws {
         let json = try JSONSerialization.data(withJSONObject: params, options: [])
 
-        request.body = .data(json)
+        request.body = .bytes(json)
     }
 
     private func buildMultipart(
-        _ request: inout HTTPClient.Request,
+        _ request: inout HTTPClientRequest,
         with params: [String: Any?] = [:],
         chunked: Bool = false
     ) {
@@ -557,7 +482,7 @@ open class Client {
         request.headers.add(name: "Content-Length", value: bodyBuffer.readableBytes.description)
         }
         request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(Client.boundary)\"")
-        request.body = .byteBuffer(bodyBuffer)
+        request.body = .bytes(bodyBuffer)
     }
 
     private func addUserAgent() {
