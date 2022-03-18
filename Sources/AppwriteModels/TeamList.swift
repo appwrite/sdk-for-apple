@@ -29,5 +29,5 @@ public class TeamList {
             "teams": teams.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                    
 }

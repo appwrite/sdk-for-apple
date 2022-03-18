@@ -29,5 +29,5 @@ public class SessionList {
             "sessions": sessions.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                    
 }
