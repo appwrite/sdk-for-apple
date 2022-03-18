@@ -5,16 +5,16 @@ func main() {
       .setEndpoint("https://[HOSTNAME_OR_IP]/v1") // Your API Endpoint
       .setProject("5df5acd0d48c2") // Your project ID
 
-    let account = Account(client)
-    account.createMagicURLSession(
-        userId: "[USER_ID]",
-        email: "email@example.com"
+    let teams = Teams(client)
+    teams.getMembership(
+        teamId: "[TEAM_ID]",
+        membershipId: "[MEMBERSHIP_ID]"
     ) { result in
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(let token):
-            print(String(describing: token)
+        case .success(let membershipList):
+            print(String(describing: membershipList)
         }
     }
 }

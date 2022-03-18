@@ -7,6 +7,7 @@ func main() {
 
     let teams = Teams(client)
     teams.create(
+        teamId: "[TEAM_ID]",
         name: "[NAME]"
     ) { result in
         switch result {

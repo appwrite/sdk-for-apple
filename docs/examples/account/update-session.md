@@ -6,15 +6,14 @@ func main() {
       .setProject("5df5acd0d48c2") // Your project ID
 
     let account = Account(client)
-    account.createMagicURLSession(
-        userId: "[USER_ID]",
-        email: "email@example.com"
+    account.updateSession(
+        sessionId: "[SESSION_ID]"
     ) { result in
         switch result {
         case .failure(let error):
             print(error.message)
-        case .success(let token):
-            print(String(describing: token)
+        case .success(let session):
+            print(String(describing: session)
         }
     }
 }

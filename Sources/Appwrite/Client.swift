@@ -12,22 +12,27 @@ let CRLF = "\r\n"
 open class Client {
 
     // MARK: Properties
+    public static var chunkSize = 5 * 1024 * 1024 // 5MB
 
-    open var endPoint = "https://appwrite.io/v1"
+    open var endPoint = "https://HOSTNAME/v1"
 
     open var endPointRealtime: String? = nil
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.1.0",        "X-Appwrite-Response-Format": "0.11.0"
+        "x-sdk-version": "appwrite:swiftclient:0.3.0",        "X-Appwrite-Response-Format": "0.13.0"
     ]
 
     open var config: [String: String] = [:]
+
+    open var selfSigned: Bool = false
 
     open var http: HTTPClient
 
     private static let boundaryChars =
         "abcdefghijklmnopqrstuvwxyz1234567890"
+
+    private static let boundary = randomBoundary()
 
     private static var eventLoopGroupProvider =
         HTTPClient.EventLoopGroupProvider.createNew
@@ -136,6 +141,7 @@ open class Client {
     /// @return Client
     ///
     open func setSelfSigned(_ status: Bool = true) -> Client {
+        self.selfSigned = status
         try! http.syncShutdown()
         http = Client.createHTTP(selfSigned: status)
         return self
@@ -266,7 +272,9 @@ open class Client {
                 method: .RAW(value: method)
             )
         } catch {
-            completion?(Result.failure(AppwriteError(message: error.localizedDescription)))
+            completion?(Result.failure(AppwriteError(
+                message: error.localizedDescription
+            )))
             return
         }
 
@@ -281,7 +289,9 @@ open class Client {
         do {
             try buildBody(for: &request, with: validParams)
         } catch let error {
-            completion?(Result.failure(AppwriteError(message: error.localizedDescription)))
+            completion?(Result.failure(AppwriteError(
+                message: error.localizedDescription
+            )))
             return
         }
 
@@ -299,7 +309,7 @@ open class Client {
         with params: [String: Any?]
     ) throws {
         if request.headers["content-type"][0] == "multipart/form-data" {
-            buildMultipart(&request, with: params)
+            buildMultipart(&request, with: params, chunked: !request.headers["content-range"].isEmpty)
         } else {
             try buildJSON(&request, with: params)
         }
@@ -334,7 +344,10 @@ open class Client {
             }
 
             switch result {
-            case .failure(let error): print(error)
+            case .failure(let error): 
+                completion(.failure(AppwriteError(
+                    message: error.localizedDescription
+                )))
             case .success(var response):
                 switch response.status.code {
                 case 0..<400:
@@ -361,6 +374,15 @@ open class Client {
                     }
                 default:
                     var message = ""
+                    var type = ""
+
+                    if response.body == nil {
+                        completion(.failure(AppwriteError(
+                            message: "Unknown error with status code \(response.status.code)",
+                            code: Int(response.status.code)
+                        )))
+                        return
+                    }
 
                     do {
                         let dict = try JSONSerialization
@@ -368,13 +390,16 @@ open class Client {
 
                         message = dict?["message"] as? String
                             ?? response.status.reasonPhrase
+                        
+                        type = dict?["type"] as? String ?? ""
                     } catch {
                         message =  response.body!.readString(length: response.body!.readableBytes)!
                     }
 
                     let error = AppwriteError(
                         message: message,
-                        code: Int(response.status.code)
+                        code: Int(response.status.code),
+                        type: type
                     )
 
                     completion(.failure(error))
@@ -383,7 +408,83 @@ open class Client {
         }
     }
 
-    private func randomBoundary() -> String {
+    func chunkedUpload<T>(
+        path: String,
+        headers: inout [String: String],
+        params: inout [String: Any?],
+        paramName: String,
+        convert: (([String: Any]) -> T)? = nil,
+        onProgress: ((UploadProgress) -> Void)? = nil,
+        completion: ((Result<T, AppwriteError>) -> Void)? = nil
+    ) {
+        let file = params[paramName] as! File
+        let size = file.buffer.readableBytes
+
+        if size < Client.chunkSize {
+            call(
+                method: "POST",
+                path: path,
+                headers: headers,
+                params: params,
+                convert: convert,
+                completion: completion
+            )
+            return
+        }
+
+        var input = file.buffer
+        var offset = 0
+        var result = [String:Any]()
+        let group = DispatchGroup()
+
+        while offset < size {
+            let slice = input.readSlice(length: Client.chunkSize)
+                ?? input.readSlice(length: Int(size - offset))
+            
+            params[paramName] = File(
+                name: file.name,
+                buffer: slice!
+            )
+            
+            headers["content-range"] = "bytes \(offset)-\(min((offset + Client.chunkSize) - 1, size))/\(size)"
+
+            group.enter()
+
+            call(
+                method: "POST",
+                path: path,
+                headers: headers,
+                params: params,
+                convert: { return $0 }
+            ) { response in
+                switch response {
+                case let .success(map):
+                    result = map
+                    group.leave()
+                case let .failure(error):
+                    completion?(.failure(error))
+                    return
+                }
+            }
+            
+            group.wait()
+
+            offset += Client.chunkSize
+            headers["x-appwrite-id"] = result["$id"] as? String
+            onProgress?(UploadProgress(
+                id: result["$id"] as? String ?? "",
+                progress: Double(min(offset, size))/Double(size) * 100.0,
+                sizeUploaded: min(offset, size),
+                chunksTotal: result["chunksTotal"] as? Int ?? -1,
+                chunksUploaded: result["chunksUploaded"] as? Int ?? -1
+            ))
+        }
+
+        completion?(.success(convert!(result)))
+    }
+
+
+    private static func randomBoundary() -> String {
         var string = ""
         for _ in 0..<16 {
             string.append(Client.boundaryChars.randomElement()!)
@@ -402,11 +503,12 @@ open class Client {
 
     private func buildMultipart(
         _ request: inout HTTPClient.Request,
-        with params: [String: Any?] = [:]
+        with params: [String: Any?] = [:],
+        chunked: Bool = false
     ) {
         func addPart(name: String, value: Any) {
             bodyBuffer.writeString(DASHDASH)
-            bodyBuffer.writeString(boundary)
+            bodyBuffer.writeString(Client.boundary)
             bodyBuffer.writeString(CRLF)
             bodyBuffer.writeString("Content-Disposition: form-data; name=\"\(name)\"")
 
@@ -428,7 +530,6 @@ open class Client {
             bodyBuffer.writeString(CRLF)
         }
 
-        let boundary = randomBoundary()
         var bodyBuffer = ByteBuffer()
 
         for (key, value) in params {
@@ -447,13 +548,15 @@ open class Client {
         }
 
         bodyBuffer.writeString(DASHDASH)
-        bodyBuffer.writeString(boundary)
+        bodyBuffer.writeString(Client.boundary)
         bodyBuffer.writeString(DASHDASH)
         bodyBuffer.writeString(CRLF)
 
         request.headers.remove(name: "content-type")
+        if !chunked {
         request.headers.add(name: "Content-Length", value: bodyBuffer.readableBytes.description)
-        request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(boundary)\"")
+        }
+        request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(Client.boundary)\"")
         request.body = .byteBuffer(bodyBuffer)
     }
 

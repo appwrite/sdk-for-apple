@@ -17,8 +17,14 @@ public class Session {
     /// Session Provider User ID.
     public let providerUid: String
 
-    /// Session Provider Token.
-    public let providerToken: String
+    /// Session Provider Access Token.
+    public let providerAccessToken: String
+
+    /// Date, the Unix timestamp of when the access token expires.
+    public let providerAccessTokenExpiry: Int
+
+    /// Session Provider Refresh Token.
+    public let providerRefreshToken: String
 
     /// IP in use when the session was created.
     public let ip: String
@@ -74,7 +80,9 @@ public class Session {
         expire: Int,
         provider: String,
         providerUid: String,
-        providerToken: String,
+        providerAccessToken: String,
+        providerAccessTokenExpiry: Int,
+        providerRefreshToken: String,
         ip: String,
         osCode: String,
         osName: String,
@@ -97,7 +105,9 @@ public class Session {
         self.expire = expire
         self.provider = provider
         self.providerUid = providerUid
-        self.providerToken = providerToken
+        self.providerAccessToken = providerAccessToken
+        self.providerAccessTokenExpiry = providerAccessTokenExpiry
+        self.providerRefreshToken = providerRefreshToken
         self.ip = ip
         self.osCode = osCode
         self.osName = osName
@@ -123,7 +133,9 @@ public class Session {
             expire: map["expire"] as! Int,
             provider: map["provider"] as! String,
             providerUid: map["providerUid"] as! String,
-            providerToken: map["providerToken"] as! String,
+            providerAccessToken: map["providerAccessToken"] as! String,
+            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! Int,
+            providerRefreshToken: map["providerRefreshToken"] as! String,
             ip: map["ip"] as! String,
             osCode: map["osCode"] as! String,
             osName: map["osName"] as! String,
@@ -150,7 +162,9 @@ public class Session {
             "expire": expire as Any,
             "provider": provider as Any,
             "providerUid": providerUid as Any,
-            "providerToken": providerToken as Any,
+            "providerAccessToken": providerAccessToken as Any,
+            "providerAccessTokenExpiry": providerAccessTokenExpiry as Any,
+            "providerRefreshToken": providerRefreshToken as Any,
             "ip": ip as Any,
             "osCode": osCode as Any,
             "osName": osName as Any,
@@ -169,5 +183,5 @@ public class Session {
             "current": current as Any
         ]
     }
-                                                                                            
+                                                                                                    
 }

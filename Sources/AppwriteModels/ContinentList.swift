@@ -2,32 +2,32 @@
 /// Continents List
 public class ContinentList {
 
-    /// Total number of items available on the server.
-    public let sum: Int
+    /// Total number of continents documents that matched your query.
+    public let total: Int
 
     /// List of continents.
     public let continents: [Continent]
 
     init(
-        sum: Int,
+        total: Int,
         continents: [Continent]
     ) {
-        self.sum = sum
+        self.total = total
         self.continents = continents
     }
 
     public static func from(map: [String: Any]) -> ContinentList {
         return ContinentList(
-            sum: map["sum"] as! Int,
+            total: map["total"] as! Int,
             continents: (map["continents"] as! [[String: Any]]).map { Continent.from(map: $0) }
         )
     }
 
     public func toMap() -> [String: Any] {
         return [
-            "sum": sum as Any,
+            "total": total as Any,
             "continents": continents.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                    
 }

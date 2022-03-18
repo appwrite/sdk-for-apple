@@ -11,8 +11,8 @@ public class User {
     /// User registration date in Unix timestamp.
     public let registration: Int
 
-    /// User status. 0 for Unactivated, 1 for active and 2 is blocked.
-    public let status: Int
+    /// User status. Pass `true` for enabled and `false` for disabled.
+    public let status: Bool
 
     /// Unix timestamp of the most recent password update
     public let passwordUpdate: Int
@@ -30,7 +30,7 @@ public class User {
         id: String,
         name: String,
         registration: Int,
-        status: Int,
+        status: Bool,
         passwordUpdate: Int,
         email: String,
         emailVerification: Bool,
@@ -51,7 +51,7 @@ public class User {
             id: map["$id"] as! String,
             name: map["name"] as! String,
             registration: map["registration"] as! Int,
-            status: map["status"] as! Int,
+            status: map["status"] as! Bool,
             passwordUpdate: map["passwordUpdate"] as! Int,
             email: map["email"] as! String,
             emailVerification: map["emailVerification"] as! Bool,
@@ -71,5 +71,5 @@ public class User {
             "prefs": prefs.toMap() as Any
         ]
     }
-                                                                                                                                                                
+                                                                                                                                                            
 }

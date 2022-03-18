@@ -5,6 +5,18 @@ public class Log {
     /// Event name.
     public let event: String
 
+    /// User ID.
+    public let userId: String
+
+    /// User Email.
+    public let userEmail: String
+
+    /// User Name.
+    public let userName: String
+
+    /// API mode when event triggered.
+    public let mode: String
+
     /// IP session in use when the session was created.
     public let ip: String
 
@@ -55,6 +67,10 @@ public class Log {
 
     init(
         event: String,
+        userId: String,
+        userEmail: String,
+        userName: String,
+        mode: String,
         ip: String,
         time: Int,
         osCode: String,
@@ -73,6 +89,10 @@ public class Log {
         countryName: String
     ) {
         self.event = event
+        self.userId = userId
+        self.userEmail = userEmail
+        self.userName = userName
+        self.mode = mode
         self.ip = ip
         self.time = time
         self.osCode = osCode
@@ -94,6 +114,10 @@ public class Log {
     public static func from(map: [String: Any]) -> Log {
         return Log(
             event: map["event"] as! String,
+            userId: map["userId"] as! String,
+            userEmail: map["userEmail"] as! String,
+            userName: map["userName"] as! String,
+            mode: map["mode"] as! String,
             ip: map["ip"] as! String,
             time: map["time"] as! Int,
             osCode: map["osCode"] as! String,
@@ -116,6 +140,10 @@ public class Log {
     public func toMap() -> [String: Any] {
         return [
             "event": event as Any,
+            "userId": userId as Any,
+            "userEmail": userEmail as Any,
+            "userName": userName as Any,
+            "mode": mode as Any,
             "ip": ip as Any,
             "time": time as Any,
             "osCode": osCode as Any,
@@ -134,5 +162,5 @@ public class Log {
             "countryName": countryName as Any
         ]
     }
-                                                                        
+                                                                                        
 }

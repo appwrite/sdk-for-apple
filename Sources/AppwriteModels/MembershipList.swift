@@ -2,32 +2,32 @@
 /// Memberships List
 public class MembershipList {
 
-    /// Total number of items available on the server.
-    public let sum: Int
+    /// Total number of memberships documents that matched your query.
+    public let total: Int
 
     /// List of memberships.
     public let memberships: [Membership]
 
     init(
-        sum: Int,
+        total: Int,
         memberships: [Membership]
     ) {
-        self.sum = sum
+        self.total = total
         self.memberships = memberships
     }
 
     public static func from(map: [String: Any]) -> MembershipList {
         return MembershipList(
-            sum: map["sum"] as! Int,
+            total: map["total"] as! Int,
             memberships: (map["memberships"] as! [[String: Any]]).map { Membership.from(map: $0) }
         )
     }
 
     public func toMap() -> [String: Any] {
         return [
-            "sum": sum as Any,
+            "total": total as Any,
             "memberships": memberships.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                        
+                                                                                                                                    
 }
