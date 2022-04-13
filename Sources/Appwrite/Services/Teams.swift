@@ -31,7 +31,6 @@ open class Teams: Service {
         orderType: String? = nil
     ) async throws -> AppwriteModels.TeamList {
         let path: String = "/teams"
-
         let params: [String: Any?] = [
             "search": search,
             "limit": limit,
@@ -40,21 +39,18 @@ open class Teams: Service {
             "cursorDirection": cursorDirection,
             "orderType": orderType
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.TeamList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.TeamList = { dict in
             return AppwriteModels.TeamList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -77,27 +73,23 @@ open class Teams: Service {
         roles: [Any]? = nil
     ) async throws -> AppwriteModels.Team {
         let path: String = "/teams"
-
         let params: [String: Any?] = [
             "teamId": teamId,
             "name": name,
             "roles": roles
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Team = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Team = { dict in
             return AppwriteModels.Team.from(map: dict)
         }
-
         return try await client.call(
             method: "POST",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -114,28 +106,23 @@ open class Teams: Service {
         teamId: String
     ) async throws -> AppwriteModels.Team {
         var path: String = "/teams/{teamId}"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Team = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Team = { dict in
             return AppwriteModels.Team.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -155,30 +142,25 @@ open class Teams: Service {
         name: String
     ) async throws -> AppwriteModels.Team {
         var path: String = "/teams/{teamId}"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         let params: [String: Any?] = [
             "name": name
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Team = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Team = { dict in
             return AppwriteModels.Team.from(map: dict)
         }
-
         return try await client.call(
             method: "PUT",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -196,18 +178,14 @@ open class Teams: Service {
         teamId: String
     ) async throws -> Any {
         var path: String = "/teams/{teamId}"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
         return try await client.call(
             method: "DELETE",
             path: path,
@@ -241,12 +219,10 @@ open class Teams: Service {
         orderType: String? = nil
     ) async throws -> AppwriteModels.MembershipList {
         var path: String = "/teams/{teamId}/memberships"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         let params: [String: Any?] = [
             "search": search,
             "limit": limit,
@@ -255,21 +231,18 @@ open class Teams: Service {
             "cursorDirection": cursorDirection,
             "orderType": orderType
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.MembershipList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.MembershipList = { dict in
             return AppwriteModels.MembershipList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -308,33 +281,28 @@ open class Teams: Service {
         name: String? = nil
     ) async throws -> AppwriteModels.Membership {
         var path: String = "/teams/{teamId}/memberships"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         let params: [String: Any?] = [
             "email": email,
             "roles": roles,
             "url": url,
             "name": name
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Membership = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Membership = { dict in
             return AppwriteModels.Membership.from(map: dict)
         }
-
         return try await client.call(
             method: "POST",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -354,33 +322,27 @@ open class Teams: Service {
         membershipId: String
     ) async throws -> AppwriteModels.MembershipList {
         var path: String = "/teams/{teamId}/memberships/{membershipId}"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         path = path.replacingOccurrences(
           of: "{membershipId}",
           with: membershipId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.MembershipList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.MembershipList = { dict in
             return AppwriteModels.MembershipList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -403,35 +365,29 @@ open class Teams: Service {
         roles: [Any]
     ) async throws -> AppwriteModels.Membership {
         var path: String = "/teams/{teamId}/memberships/{membershipId}"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         path = path.replacingOccurrences(
           of: "{membershipId}",
           with: membershipId
         )
-
         let params: [String: Any?] = [
             "roles": roles
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Membership = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Membership = { dict in
             return AppwriteModels.Membership.from(map: dict)
         }
-
         return try await client.call(
             method: "PATCH",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -452,23 +408,18 @@ open class Teams: Service {
         membershipId: String
     ) async throws -> Any {
         var path: String = "/teams/{teamId}/memberships/{membershipId}"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         path = path.replacingOccurrences(
           of: "{membershipId}",
           with: membershipId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
         return try await client.call(
             method: "DELETE",
             path: path,
@@ -501,36 +452,30 @@ open class Teams: Service {
         secret: String
     ) async throws -> AppwriteModels.Membership {
         var path: String = "/teams/{teamId}/memberships/{membershipId}/status"
-
         path = path.replacingOccurrences(
           of: "{teamId}",
           with: teamId
         )
-
         path = path.replacingOccurrences(
           of: "{membershipId}",
           with: membershipId
         )
-
         let params: [String: Any?] = [
             "userId": userId,
             "secret": secret
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Membership = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Membership = { dict in
             return AppwriteModels.Membership.from(map: dict)
         }
-
         return try await client.call(
             method: "PATCH",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 

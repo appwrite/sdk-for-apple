@@ -19,28 +19,22 @@ open class Functions: Service {
         buildId: String
     ) async throws -> Any {
         var path: String = "/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}"
-
         path = path.replacingOccurrences(
           of: "{functionId}",
           with: functionId
         )
-
         path = path.replacingOccurrences(
           of: "{deploymentId}",
           with: deploymentId
         )
-
         path = path.replacingOccurrences(
           of: "{buildId}",
           with: buildId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
         return try await client.call(
             method: "POST",
             path: path,
@@ -74,12 +68,10 @@ open class Functions: Service {
         cursorDirection: String? = nil
     ) async throws -> AppwriteModels.ExecutionList {
         var path: String = "/functions/{functionId}/executions"
-
         path = path.replacingOccurrences(
           of: "{functionId}",
           with: functionId
         )
-
         let params: [String: Any?] = [
             "limit": limit,
             "offset": offset,
@@ -87,21 +79,18 @@ open class Functions: Service {
             "cursor": cursor,
             "cursorDirection": cursorDirection
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.ExecutionList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.ExecutionList = { dict in
             return AppwriteModels.ExecutionList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -125,31 +114,26 @@ open class Functions: Service {
         async: Bool? = nil
     ) async throws -> AppwriteModels.Execution {
         var path: String = "/functions/{functionId}/executions"
-
         path = path.replacingOccurrences(
           of: "{functionId}",
           with: functionId
         )
-
         let params: [String: Any?] = [
             "data": data,
             "async": async
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Execution = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Execution = { dict in
             return AppwriteModels.Execution.from(map: dict)
         }
-
         return try await client.call(
             method: "POST",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -168,33 +152,27 @@ open class Functions: Service {
         executionId: String
     ) async throws -> AppwriteModels.Execution {
         var path: String = "/functions/{functionId}/executions/{executionId}"
-
         path = path.replacingOccurrences(
           of: "{functionId}",
           with: functionId
         )
-
         path = path.replacingOccurrences(
           of: "{executionId}",
           with: executionId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Execution = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Execution = { dict in
             return AppwriteModels.Execution.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 

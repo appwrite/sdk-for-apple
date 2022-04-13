@@ -26,19 +26,16 @@ open class Avatars: Service {
         quality: Int? = nil
     ) async throws -> ByteBuffer {
         var path: String = "/avatars/browsers/{code}"
-
         path = path.replacingOccurrences(
           of: "{code}",
           with: code
         )
-
         let params: [String: Any?] = [
             "width": width,
             "height": height,
             "quality": quality,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,
@@ -67,19 +64,16 @@ open class Avatars: Service {
         quality: Int? = nil
     ) async throws -> ByteBuffer {
         var path: String = "/avatars/credit-cards/{code}"
-
         path = path.replacingOccurrences(
           of: "{code}",
           with: code
         )
-
         let params: [String: Any?] = [
             "width": width,
             "height": height,
             "quality": quality,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,
@@ -102,12 +96,10 @@ open class Avatars: Service {
         url: String
     ) async throws -> ByteBuffer {
         let path: String = "/avatars/favicon"
-
         let params: [String: Any?] = [
             "url": url,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,
@@ -136,19 +128,16 @@ open class Avatars: Service {
         quality: Int? = nil
     ) async throws -> ByteBuffer {
         var path: String = "/avatars/flags/{code}"
-
         path = path.replacingOccurrences(
           of: "{code}",
           with: code
         )
-
         let params: [String: Any?] = [
             "width": width,
             "height": height,
             "quality": quality,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,
@@ -176,14 +165,12 @@ open class Avatars: Service {
         height: Int? = nil
     ) async throws -> ByteBuffer {
         let path: String = "/avatars/image"
-
         let params: [String: Any?] = [
             "url": url,
             "width": width,
             "height": height,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,
@@ -221,7 +208,6 @@ open class Avatars: Service {
         background: String? = nil
     ) async throws -> ByteBuffer {
         let path: String = "/avatars/initials"
-
         let params: [String: Any?] = [
             "name": name,
             "width": width,
@@ -230,7 +216,6 @@ open class Avatars: Service {
             "background": background,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,
@@ -258,7 +243,6 @@ open class Avatars: Service {
         download: Bool? = nil
     ) async throws -> ByteBuffer {
         let path: String = "/avatars/qr"
-
         let params: [String: Any?] = [
             "text": text,
             "size": size,
@@ -266,7 +250,6 @@ open class Avatars: Service {
             "download": download,
             "project": client.config["project"]
         ]
-
         return try await client.call(
             method: "GET",
             path: path,

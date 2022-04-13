@@ -34,12 +34,10 @@ open class Database: Service {
         orderTypes: [Any]? = nil
     ) async throws -> AppwriteModels.DocumentList {
         var path: String = "/database/collections/{collectionId}/documents"
-
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
         )
-
         let params: [String: Any?] = [
             "queries": queries,
             "limit": limit,
@@ -49,21 +47,18 @@ open class Database: Service {
             "orderAttributes": orderAttributes,
             "orderTypes": orderTypes
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.DocumentList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.DocumentList = { dict in
             return AppwriteModels.DocumentList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -91,33 +86,28 @@ open class Database: Service {
         write: [Any]? = nil
     ) async throws -> AppwriteModels.Document {
         var path: String = "/database/collections/{collectionId}/documents"
-
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
         )
-
         let params: [String: Any?] = [
             "documentId": documentId,
             "data": data,
             "read": read,
             "write": write
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Document = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Document = { dict in
             return AppwriteModels.Document.from(map: dict)
         }
-
         return try await client.call(
             method: "POST",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -137,33 +127,27 @@ open class Database: Service {
         documentId: String
     ) async throws -> AppwriteModels.Document {
         var path: String = "/database/collections/{collectionId}/documents/{documentId}"
-
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
         )
-
         path = path.replacingOccurrences(
           of: "{documentId}",
           with: documentId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Document = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Document = { dict in
             return AppwriteModels.Document.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -189,37 +173,31 @@ open class Database: Service {
         write: [Any]? = nil
     ) async throws -> AppwriteModels.Document {
         var path: String = "/database/collections/{collectionId}/documents/{documentId}"
-
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
         )
-
         path = path.replacingOccurrences(
           of: "{documentId}",
           with: documentId
         )
-
         let params: [String: Any?] = [
             "data": data,
             "read": read,
             "write": write
         ]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Document = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Document = { dict in
             return AppwriteModels.Document.from(map: dict)
         }
-
         return try await client.call(
             method: "PATCH",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -240,23 +218,18 @@ open class Database: Service {
         documentId: String
     ) async throws -> Any {
         var path: String = "/database/collections/{collectionId}/documents/{documentId}"
-
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
         )
-
         path = path.replacingOccurrences(
           of: "{documentId}",
           with: documentId
         )
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
         return try await client.call(
             method: "DELETE",
             path: path,

@@ -20,23 +20,19 @@ open class Locale: Service {
     open func get(
     ) async throws -> AppwriteModels.Locale {
         let path: String = "/locale"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.Locale = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.Locale = { dict in
             return AppwriteModels.Locale.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -52,23 +48,19 @@ open class Locale: Service {
     open func getContinents(
     ) async throws -> AppwriteModels.ContinentList {
         let path: String = "/locale/continents"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.ContinentList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.ContinentList = { dict in
             return AppwriteModels.ContinentList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -84,23 +76,19 @@ open class Locale: Service {
     open func getCountries(
     ) async throws -> AppwriteModels.CountryList {
         let path: String = "/locale/countries"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.CountryList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.CountryList = { dict in
             return AppwriteModels.CountryList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -116,23 +104,19 @@ open class Locale: Service {
     open func getCountriesEU(
     ) async throws -> AppwriteModels.CountryList {
         let path: String = "/locale/countries/eu"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.CountryList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.CountryList = { dict in
             return AppwriteModels.CountryList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -148,23 +132,19 @@ open class Locale: Service {
     open func getCountriesPhones(
     ) async throws -> AppwriteModels.PhoneList {
         let path: String = "/locale/countries/phones"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.PhoneList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.PhoneList = { dict in
             return AppwriteModels.PhoneList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -181,23 +161,19 @@ open class Locale: Service {
     open func getCurrencies(
     ) async throws -> AppwriteModels.CurrencyList {
         let path: String = "/locale/currencies"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.CurrencyList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.CurrencyList = { dict in
             return AppwriteModels.CurrencyList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
@@ -213,23 +189,19 @@ open class Locale: Service {
     open func getLanguages(
     ) async throws -> AppwriteModels.LanguageList {
         let path: String = "/locale/languages"
-
         let params: [String: Any?] = [:]
-
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-
-        let convert: ([String: Any]) -> AppwriteModels.LanguageList = { dict in
+        let converter: ([String: Any]) -> AppwriteModels.LanguageList = { dict in
             return AppwriteModels.LanguageList.from(map: dict)
         }
-
         return try await client.call(
             method: "GET",
             path: path,
             headers: headers,
             params: params,
-            convert: convert
+            converter: converter
         )
     }
 
