@@ -20,7 +20,7 @@ open class Client {
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.4.0",
+        "x-sdk-version": "appwrite:swiftclient:0.5.0",
         "X-Appwrite-Response-Format": "0.13.0"
     ]
 

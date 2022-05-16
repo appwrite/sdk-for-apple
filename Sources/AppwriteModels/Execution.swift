@@ -23,8 +23,8 @@ public class Execution {
     /// The script status code.
     public let statusCode: Int
 
-    /// The script stdout output string. Logs the last 4,000 characters of the execution stdout output.
-    public let stdout: String
+    /// The script response output string. Logs the last 4,000 characters of the execution response output.
+    public let response: String
 
     /// The script stderr output string. Logs the last 4,000 characters of the execution stderr output
     public let stderr: String
@@ -40,7 +40,7 @@ public class Execution {
         trigger: String,
         status: String,
         statusCode: Int,
-        stdout: String,
+        response: String,
         stderr: String,
         time: Double
     ) {
@@ -51,7 +51,7 @@ public class Execution {
         self.trigger = trigger
         self.status = status
         self.statusCode = statusCode
-        self.stdout = stdout
+        self.response = response
         self.stderr = stderr
         self.time = time
     }
@@ -65,7 +65,7 @@ public class Execution {
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
             statusCode: map["statusCode"] as! Int,
-            stdout: map["stdout"] as! String,
+            response: map["response"] as! String,
             stderr: map["stderr"] as! String,
             time: map["time"] as! Double
         )
@@ -80,7 +80,7 @@ public class Execution {
             "trigger": trigger as Any,
             "status": status as Any,
             "statusCode": statusCode as Any,
-            "stdout": stdout as Any,
+            "response": response as Any,
             "stderr": stderr as Any,
             "time": time as Any
         ]

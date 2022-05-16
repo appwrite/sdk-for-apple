@@ -8,14 +8,17 @@ public class Membership {
     /// User ID.
     public let userId: String
 
+    /// User name.
+    public let userName: String
+
+    /// User email address.
+    public let userEmail: String
+
     /// Team ID.
     public let teamId: String
 
-    /// User name.
-    public let name: String
-
-    /// User email address.
-    public let email: String
+    /// Team name.
+    public let teamName: String
 
     /// Date, the user has been invited to join the team in Unix timestamp.
     public let invited: Int
@@ -32,9 +35,10 @@ public class Membership {
     init(
         id: String,
         userId: String,
+        userName: String,
+        userEmail: String,
         teamId: String,
-        name: String,
-        email: String,
+        teamName: String,
         invited: Int,
         joined: Int,
         confirm: Bool,
@@ -42,9 +46,10 @@ public class Membership {
     ) {
         self.id = id
         self.userId = userId
+        self.userName = userName
+        self.userEmail = userEmail
         self.teamId = teamId
-        self.name = name
-        self.email = email
+        self.teamName = teamName
         self.invited = invited
         self.joined = joined
         self.confirm = confirm
@@ -55,9 +60,10 @@ public class Membership {
         return Membership(
             id: map["$id"] as! String,
             userId: map["userId"] as! String,
+            userName: map["userName"] as! String,
+            userEmail: map["userEmail"] as! String,
             teamId: map["teamId"] as! String,
-            name: map["name"] as! String,
-            email: map["email"] as! String,
+            teamName: map["teamName"] as! String,
             invited: map["invited"] as! Int,
             joined: map["joined"] as! Int,
             confirm: map["confirm"] as! Bool,
@@ -69,14 +75,15 @@ public class Membership {
         return [
             "$id": id as Any,
             "userId": userId as Any,
+            "userName": userName as Any,
+            "userEmail": userEmail as Any,
             "teamId": teamId as Any,
-            "name": name as Any,
-            "email": email as Any,
+            "teamName": teamName as Any,
             "invited": invited as Any,
             "joined": joined as Any,
             "confirm": confirm as Any,
             "roles": roles as Any
         ]
     }
-                                        
+                                            
 }
