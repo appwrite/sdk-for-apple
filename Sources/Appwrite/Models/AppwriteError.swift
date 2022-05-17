@@ -12,3 +12,19 @@ open class AppwriteError : Swift.Error, Decodable {
         self.type = type
     }
 }
+
+extension AppwriteError: CustomStringConvertible {
+    public var description: String {
+        get {
+            return self.message
+        }
+    }
+}
+
+extension AppwriteError: LocalizedError {
+    public var errorDescription: String? {
+        get {
+            return self.message
+        }
+    }
+}
