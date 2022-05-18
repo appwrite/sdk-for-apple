@@ -135,7 +135,7 @@ public class Session {
             providerUid: map["providerUid"] as! String,
             providerAccessToken: map["providerAccessToken"] as! String,
             providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! Int,
-            providerRefreshToken: map["providerRefreshToken"] as! String,
+            providerRefreshToken: map["providerRefreshToken"] as? String ?? "",
             ip: map["ip"] as! String,
             osCode: map["osCode"] as! String,
             osName: map["osName"] as! String,
