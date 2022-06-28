@@ -3,15 +3,19 @@ import Foundation
 import NIO
 import AppwriteModels
 
-open class Database: Service {
+open class Databases: Service {
+    var databaseId: String
+
+    public init(_ client: Client, _ databaseId: String)
+    {
+        self.databaseId = databaseId
+        super.init(client)
+    }
+
     ///
     /// List Documents
     ///
-    /// Get a list of all the user documents. You can use the query params to
-    /// filter your results. On admin mode, this endpoint will return a list of all
-    /// of the project's documents. [Learn more about different API
-    /// modes](/docs/admin).
-    ///
+    /// @param String databaseId
     /// @param String collectionId
     /// @param [Any] queries
     /// @param Int limit
@@ -33,7 +37,11 @@ open class Database: Service {
         orderAttributes: [Any]? = nil,
         orderTypes: [Any]? = nil
     ) async throws -> AppwriteModels.DocumentList {
-        var path: String = "/database/collections/{collectionId}/documents"
+        var path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        path = path.replacingOccurrences(
+          of: "{databaseId}",
+          with: self.databaseId
+        )
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
@@ -65,11 +73,7 @@ open class Database: Service {
     ///
     /// Create Document
     ///
-    /// Create a new Document. Before using this route, you should create a new
-    /// collection resource using either a [server
-    /// integration](/docs/server/database#databaseCreateCollection) API or
-    /// directly from your database console.
-    ///
+    /// @param String databaseId
     /// @param String collectionId
     /// @param String documentId
     /// @param Any data
@@ -85,7 +89,11 @@ open class Database: Service {
         read: [Any]? = nil,
         write: [Any]? = nil
     ) async throws -> AppwriteModels.Document {
-        var path: String = "/database/collections/{collectionId}/documents"
+        var path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        path = path.replacingOccurrences(
+          of: "{databaseId}",
+          with: self.databaseId
+        )
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
@@ -114,9 +122,7 @@ open class Database: Service {
     ///
     /// Get Document
     ///
-    /// Get a document by its unique ID. This endpoint response returns a JSON
-    /// object with the document data.
-    ///
+    /// @param String databaseId
     /// @param String collectionId
     /// @param String documentId
     /// @throws Exception
@@ -126,7 +132,11 @@ open class Database: Service {
         collectionId: String,
         documentId: String
     ) async throws -> AppwriteModels.Document {
-        var path: String = "/database/collections/{collectionId}/documents/{documentId}"
+        var path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        path = path.replacingOccurrences(
+          of: "{databaseId}",
+          with: self.databaseId
+        )
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
@@ -154,9 +164,7 @@ open class Database: Service {
     ///
     /// Update Document
     ///
-    /// Update a document by its unique ID. Using the patch method you can pass
-    /// only specific fields that will get updated.
-    ///
+    /// @param String databaseId
     /// @param String collectionId
     /// @param String documentId
     /// @param Any data
@@ -168,11 +176,15 @@ open class Database: Service {
     open func updateDocument(
         collectionId: String,
         documentId: String,
-        data: Any,
+        data: Any? = nil,
         read: [Any]? = nil,
         write: [Any]? = nil
     ) async throws -> AppwriteModels.Document {
-        var path: String = "/database/collections/{collectionId}/documents/{documentId}"
+        var path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        path = path.replacingOccurrences(
+          of: "{databaseId}",
+          with: self.databaseId
+        )
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
@@ -204,8 +216,7 @@ open class Database: Service {
     ///
     /// Delete Document
     ///
-    /// Delete a document by its unique ID.
-    ///
+    /// @param String databaseId
     /// @param String collectionId
     /// @param String documentId
     /// @throws Exception
@@ -215,7 +226,11 @@ open class Database: Service {
         collectionId: String,
         documentId: String
     ) async throws -> Any {
-        var path: String = "/database/collections/{collectionId}/documents/{documentId}"
+        var path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        path = path.replacingOccurrences(
+          of: "{databaseId}",
+          with: self.databaseId
+        )
         path = path.replacingOccurrences(
           of: "{collectionId}",
           with: collectionId
@@ -238,11 +253,6 @@ open class Database: Service {
 
     ///
     /// List Documents
-    ///
-    /// Get a list of all the user documents. You can use the query params to
-    /// filter your results. On admin mode, this endpoint will return a list of all
-    /// of the project's documents. [Learn more about different API
-    /// modes](/docs/admin).
     ///
     /// @param String collectionId
     /// @param [Any] queries
@@ -289,11 +299,6 @@ open class Database: Service {
     ///
     /// Create Document
     ///
-    /// Create a new Document. Before using this route, you should create a new
-    /// collection resource using either a [server
-    /// integration](/docs/server/database#databaseCreateCollection) API or
-    /// directly from your database console.
-    ///
     /// @param String collectionId
     /// @param String documentId
     /// @param Any data
@@ -330,9 +335,6 @@ open class Database: Service {
     ///
     /// Get Document
     ///
-    /// Get a document by its unique ID. This endpoint response returns a JSON
-    /// object with the document data.
-    ///
     /// @param String collectionId
     /// @param String documentId
     /// @throws Exception
@@ -360,9 +362,6 @@ open class Database: Service {
     ///
     /// Update Document
     ///
-    /// Update a document by its unique ID. Using the patch method you can pass
-    /// only specific fields that will get updated.
-    ///
     /// @param String collectionId
     /// @param String documentId
     /// @param Any data
@@ -375,7 +374,7 @@ open class Database: Service {
     open func updateDocument(
         collectionId: String,
         documentId: String,
-        data: Any,
+        data: Any? = nil,
         read: [Any]? = nil,
         write: [Any]? = nil,
         completion: ((Result<AppwriteModels.Document, AppwriteError>) -> Void)? = nil
@@ -398,8 +397,6 @@ open class Database: Service {
 
     ///
     /// Delete Document
-    ///
-    /// Delete a document by its unique ID.
     ///
     /// @param String collectionId
     /// @param String documentId

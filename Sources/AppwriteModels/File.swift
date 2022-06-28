@@ -8,6 +8,12 @@ public class File {
     /// Bucket ID.
     public let bucketId: String
 
+    /// File creation date in Unix timestamp.
+    public let createdAt: Int
+
+    /// File update date in Unix timestamp.
+    public let updatedAt: Int
+
     /// File read permissions.
     public let read: [Any]
 
@@ -16,9 +22,6 @@ public class File {
 
     /// File name.
     public let name: String
-
-    /// File creation date in Unix timestamp.
-    public let dateCreated: Int
 
     /// File MD5 signature.
     public let signature: String
@@ -38,10 +41,11 @@ public class File {
     init(
         id: String,
         bucketId: String,
+        createdAt: Int,
+        updatedAt: Int,
         read: [Any],
         write: [Any],
         name: String,
-        dateCreated: Int,
         signature: String,
         mimeType: String,
         sizeOriginal: Int,
@@ -50,10 +54,11 @@ public class File {
     ) {
         self.id = id
         self.bucketId = bucketId
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
         self.read = read
         self.write = write
         self.name = name
-        self.dateCreated = dateCreated
         self.signature = signature
         self.mimeType = mimeType
         self.sizeOriginal = sizeOriginal
@@ -65,10 +70,11 @@ public class File {
         return File(
             id: map["$id"] as! String,
             bucketId: map["bucketId"] as! String,
+            createdAt: map["$createdAt"] as! Int,
+            updatedAt: map["$updatedAt"] as! Int,
             read: map["$read"] as! [Any],
             write: map["$write"] as! [Any],
             name: map["name"] as! String,
-            dateCreated: map["dateCreated"] as! Int,
             signature: map["signature"] as! String,
             mimeType: map["mimeType"] as! String,
             sizeOriginal: map["sizeOriginal"] as! Int,
@@ -81,10 +87,11 @@ public class File {
         return [
             "$id": id as Any,
             "bucketId": bucketId as Any,
+            "$createdAt": createdAt as Any,
+            "$updatedAt": updatedAt as Any,
             "$read": read as Any,
             "$write": write as Any,
             "name": name as Any,
-            "dateCreated": dateCreated as Any,
             "signature": signature as Any,
             "mimeType": mimeType as Any,
             "sizeOriginal": sizeOriginal as Any,
@@ -92,5 +99,5 @@ public class File {
             "chunksUploaded": chunksUploaded as Any
         ]
     }
-                                                
+                                                    
 }

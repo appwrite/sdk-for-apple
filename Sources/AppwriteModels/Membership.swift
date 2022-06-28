@@ -5,6 +5,12 @@ public class Membership {
     /// Membership ID.
     public let id: String
 
+    /// Membership creation date in Unix timestamp.
+    public let createdAt: Int
+
+    /// Membership update date in Unix timestamp.
+    public let updatedAt: Int
+
     /// User ID.
     public let userId: String
 
@@ -34,6 +40,8 @@ public class Membership {
 
     init(
         id: String,
+        createdAt: Int,
+        updatedAt: Int,
         userId: String,
         userName: String,
         userEmail: String,
@@ -45,6 +53,8 @@ public class Membership {
         roles: [Any]
     ) {
         self.id = id
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
         self.userId = userId
         self.userName = userName
         self.userEmail = userEmail
@@ -59,6 +69,8 @@ public class Membership {
     public static func from(map: [String: Any]) -> Membership {
         return Membership(
             id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! Int,
+            updatedAt: map["$updatedAt"] as! Int,
             userId: map["userId"] as! String,
             userName: map["userName"] as! String,
             userEmail: map["userEmail"] as! String,
@@ -74,6 +86,8 @@ public class Membership {
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
+            "$createdAt": createdAt as Any,
+            "$updatedAt": updatedAt as Any,
             "userId": userId as Any,
             "userName": userName as Any,
             "userEmail": userEmail as Any,
@@ -85,5 +99,5 @@ public class Membership {
             "roles": roles as Any
         ]
     }
-                                            
+                                                    
 }

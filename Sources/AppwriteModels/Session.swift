@@ -5,6 +5,9 @@ public class Session {
     /// Session ID.
     public let id: String
 
+    /// Session creation date in Unix timestamp.
+    public let createdAt: Int
+
     /// User ID.
     public let userId: String
 
@@ -76,6 +79,7 @@ public class Session {
 
     init(
         id: String,
+        createdAt: Int,
         userId: String,
         expire: Int,
         provider: String,
@@ -101,6 +105,7 @@ public class Session {
         current: Bool
     ) {
         self.id = id
+        self.createdAt = createdAt
         self.userId = userId
         self.expire = expire
         self.provider = provider
@@ -129,6 +134,7 @@ public class Session {
     public static func from(map: [String: Any]) -> Session {
         return Session(
             id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! Int,
             userId: map["userId"] as! String,
             expire: map["expire"] as! Int,
             provider: map["provider"] as! String,
@@ -158,6 +164,7 @@ public class Session {
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
+            "$createdAt": createdAt as Any,
             "userId": userId as Any,
             "expire": expire as Any,
             "provider": provider as Any,
@@ -183,5 +190,5 @@ public class Session {
             "current": current as Any
         ]
     }
-                                                                                                    
+                                                                                                        
 }

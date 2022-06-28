@@ -5,14 +5,17 @@ public class Execution {
     /// Execution ID.
     public let id: String
 
+    /// Execution creation date in Unix timestamp.
+    public let createdAt: Int
+
+    /// Execution update date in Unix timestamp.
+    public let updatedAt: Int
+
     /// Execution read permissions.
     public let read: [Any]
 
     /// Function ID.
     public let functionId: String
-
-    /// The execution creation date in Unix timestamp.
-    public let dateCreated: Int
 
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: String
@@ -34,9 +37,10 @@ public class Execution {
 
     init(
         id: String,
+        createdAt: Int,
+        updatedAt: Int,
         read: [Any],
         functionId: String,
-        dateCreated: Int,
         trigger: String,
         status: String,
         statusCode: Int,
@@ -45,9 +49,10 @@ public class Execution {
         time: Double
     ) {
         self.id = id
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
         self.read = read
         self.functionId = functionId
-        self.dateCreated = dateCreated
         self.trigger = trigger
         self.status = status
         self.statusCode = statusCode
@@ -59,9 +64,10 @@ public class Execution {
     public static func from(map: [String: Any]) -> Execution {
         return Execution(
             id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! Int,
+            updatedAt: map["$updatedAt"] as! Int,
             read: map["$read"] as! [Any],
             functionId: map["functionId"] as! String,
-            dateCreated: map["dateCreated"] as! Int,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
             statusCode: map["statusCode"] as! Int,
@@ -74,9 +80,10 @@ public class Execution {
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
+            "$createdAt": createdAt as Any,
+            "$updatedAt": updatedAt as Any,
             "$read": read as Any,
             "functionId": functionId as Any,
-            "dateCreated": dateCreated as Any,
             "trigger": trigger as Any,
             "status": status as Any,
             "statusCode": statusCode as Any,
@@ -85,5 +92,5 @@ public class Execution {
             "time": time as Any
         ]
     }
-                                            
+                                                
 }

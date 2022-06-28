@@ -20,8 +20,8 @@ open class Client {
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.5.0",
-        "X-Appwrite-Response-Format": "0.14.0"
+        "x-sdk-version": "appwrite:swiftclient:0.6.0",
+        "X-Appwrite-Response-Format": "0.15.0"
     ]
 
     open var config: [String: String] = [:]
@@ -305,7 +305,7 @@ open class Client {
                 case is Bool.Type:
                     return true as! T
                 case is ByteBuffer.Type:
-                    return response.body as! T
+                    return try await response.body.collect(upTo: Int.max) as! T
                 default:
                     let data = try await response.body.collect(upTo: Int.max)
                     if data.readableBytes == 0 {
@@ -358,10 +358,21 @@ open class Client {
         converter: (([String: Any]) -> T)? = nil,
         onProgress: ((UploadProgress) -> Void)? = nil
     ) async throws -> T {
-        let file = params[paramName] as! File
-        let size = file.buffer.readableBytes
+        let input = params[paramName] as! InputFile
+
+        switch(input.sourceType) {
+        case "path":
+            input.data = ByteBuffer(data: try! Data(contentsOf: URL(fileURLWithPath: input.path)))
+        case "data":
+            input.data = ByteBuffer(data: input.data as! Data)
+        default:
+            break
+        }
+
+        let size = (input.data as! ByteBuffer).readableBytes
 
         if size < Client.chunkSize {
+            params[paramName] = input
             return try await call(
                 method: "POST",
                 path: path,
@@ -371,7 +382,6 @@ open class Client {
             )
         }
 
-        let input = file.buffer
         var offset = 0
         var result = [String:Any]()
 
@@ -389,14 +399,10 @@ open class Client {
         }
 
         while offset < size {
-            let slice = input.getSlice(at: offset, length: Client.chunkSize)
-                ?? input.getSlice(at: offset, length: Int(size - offset))
+            let slice = (input.data as! ByteBuffer).getSlice(at: offset, length: Client.chunkSize)
+                ?? (input.data as! ByteBuffer).getSlice(at: offset, length: Int(size - offset))
             
-            params[paramName] = File(
-                name: file.name,
-                buffer: slice!
-            )
-
+            params[paramName] = InputFile.fromBuffer(slice!, filename: input.filename, mimeType: input.mimeType)
             headers["content-range"] = "bytes \(offset)-\(min((offset + Client.chunkSize) - 1, size))/\(size)"
 
             result = try await call(
@@ -449,12 +455,15 @@ open class Client {
             bodyBuffer.writeString(CRLF)
             bodyBuffer.writeString("Content-Disposition: form-data; name=\"\(name)\"")
 
-            if let file = value as? File {
-                bodyBuffer.writeString("; filename=\"\(file.name)\"")
+            if let file = value as? InputFile {
+                bodyBuffer.writeString("; filename=\"\(file.filename)\"")
                 bodyBuffer.writeString(CRLF)
                 bodyBuffer.writeString("Content-Length: \(bodyBuffer.readableBytes)")
                 bodyBuffer.writeString(CRLF+CRLF)
-                bodyBuffer.writeBuffer(&file.buffer)
+
+                var buffer = file.data! as! ByteBuffer
+
+                bodyBuffer.writeBuffer(&buffer)
                 bodyBuffer.writeString(CRLF)
                 return
             }
