@@ -1,3 +1,4 @@
+```swift
 import Appwrite
 
 func main() async throws {
@@ -8,4 +9,4 @@ func main() async throws {
     let user = try await account.get()
 
     print(String(describing: user)
-}
+}```

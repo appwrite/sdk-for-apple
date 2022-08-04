@@ -1,3 +1,4 @@
+```swift
 import Appwrite
 
 func main() async throws {
@@ -12,3 +13,4 @@ func main() async throws {
 
     print(String(describing: file)
 }
+```
