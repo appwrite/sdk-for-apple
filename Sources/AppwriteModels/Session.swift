@@ -5,14 +5,14 @@ public class Session {
     /// Session ID.
     public let id: String
 
-    /// Session creation date in Unix timestamp.
-    public let createdAt: Int
+    /// Session creation date in ISO 8601 format.
+    public let createdAt: String
 
     /// User ID.
     public let userId: String
 
-    /// Session expiration date in Unix timestamp.
-    public let expire: Int
+    /// Session expiration date in ISO 8601 format.
+    public let expire: String
 
     /// Session Provider.
     public let provider: String
@@ -23,8 +23,8 @@ public class Session {
     /// Session Provider Access Token.
     public let providerAccessToken: String
 
-    /// Date, the Unix timestamp of when the access token expires.
-    public let providerAccessTokenExpiry: Int
+    /// The date of when the access token expires in ISO 8601 format.
+    public let providerAccessTokenExpiry: String
 
     /// Session Provider Refresh Token.
     public let providerRefreshToken: String
@@ -79,13 +79,13 @@ public class Session {
 
     init(
         id: String,
-        createdAt: Int,
+        createdAt: String,
         userId: String,
-        expire: Int,
+        expire: String,
         provider: String,
         providerUid: String,
         providerAccessToken: String,
-        providerAccessTokenExpiry: Int,
+        providerAccessTokenExpiry: String,
         providerRefreshToken: String,
         ip: String,
         osCode: String,
@@ -134,13 +134,13 @@ public class Session {
     public static func from(map: [String: Any]) -> Session {
         return Session(
             id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! Int,
+            createdAt: map["$createdAt"] as! String,
             userId: map["userId"] as! String,
-            expire: map["expire"] as! Int,
+            expire: map["expire"] as! String,
             provider: map["provider"] as! String,
             providerUid: map["providerUid"] as! String,
             providerAccessToken: map["providerAccessToken"] as! String,
-            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! Int,
+            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! String,
             providerRefreshToken: map["providerRefreshToken"] as! String,
             ip: map["ip"] as! String,
             osCode: map["osCode"] as! String,

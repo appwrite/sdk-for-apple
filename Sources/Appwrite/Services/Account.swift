@@ -13,14 +13,15 @@ open class Account: Service {
     /// @return array
     ///
     open func get(
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "GET",
@@ -53,7 +54,7 @@ open class Account: Service {
         email: String,
         password: String,
         name: String? = nil
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account"
         let params: [String: Any?] = [
             "userId": userId,
@@ -61,11 +62,12 @@ open class Account: Service {
             "password": password,
             "name": name
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "POST",
@@ -96,17 +98,18 @@ open class Account: Service {
     open func updateEmail(
         email: String,
         password: String
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account/email"
         let params: [String: Any?] = [
             "email": email,
             "password": password
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "PATCH",
@@ -133,6 +136,7 @@ open class Account: Service {
     ) async throws -> AppwriteModels.Jwt {
         let path: String = "/account/jwt"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -154,20 +158,18 @@ open class Account: Service {
     /// Get currently logged in user list of latest security activity logs. Each
     /// log returns user IP address, location and date and time of log.
     ///
-    /// @param Int limit
-    /// @param Int offset
+    /// @param [String] queries
     /// @throws Exception
     /// @return array
     ///
     open func getLogs(
-        limit: Int? = nil,
-        offset: Int? = nil
+        queries: [String]? = nil
     ) async throws -> AppwriteModels.LogList {
         let path: String = "/account/logs"
         let params: [String: Any?] = [
-            "limit": limit,
-            "offset": offset
+            "queries": queries
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -194,16 +196,17 @@ open class Account: Service {
     ///
     open func updateName(
         name: String
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account/name"
         let params: [String: Any?] = [
             "name": name
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "PATCH",
@@ -229,17 +232,18 @@ open class Account: Service {
     open func updatePassword(
         password: String,
         oldPassword: String? = nil
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account/password"
         let params: [String: Any?] = [
             "password": password,
             "oldPassword": oldPassword
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "PATCH",
@@ -253,30 +257,32 @@ open class Account: Service {
     ///
     /// Update Account Phone
     ///
-    /// Update currently logged in user account phone number. After changing phone
-    /// number, the user confirmation status will get reset. A new confirmation SMS
-    /// is not sent automatically however you can use the phone confirmation
-    /// endpoint again to send the confirmation SMS.
+    /// Update the currently logged in user's phone number. After updating the
+    /// phone number, the phone verification status will be reset. A confirmation
+    /// SMS is not sent automatically, however you can use the [POST
+    /// /account/verification/phone](/docs/client/account#accountCreatePhoneVerification)
+    /// endpoint to send a confirmation SMS.
     ///
-    /// @param String number
+    /// @param String phone
     /// @param String password
     /// @throws Exception
     /// @return array
     ///
     open func updatePhone(
-        number: String,
+        phone: String,
         password: String
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account/phone"
         let params: [String: Any?] = [
-            "number": number,
+            "phone": phone,
             "password": password
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "PATCH",
@@ -299,6 +305,7 @@ open class Account: Service {
     ) async throws -> AppwriteModels.Preferences {
         let path: String = "/account/prefs"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -327,16 +334,17 @@ open class Account: Service {
     ///
     open func updatePrefs(
         prefs: Any
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account/prefs"
         let params: [String: Any?] = [
             "prefs": prefs
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "PATCH",
@@ -373,6 +381,7 @@ open class Account: Service {
             "email": email,
             "url": url
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -421,6 +430,7 @@ open class Account: Service {
             "password": password,
             "passwordAgain": passwordAgain
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -449,6 +459,7 @@ open class Account: Service {
     ) async throws -> AppwriteModels.SessionList {
         let path: String = "/account/sessions"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -477,6 +488,7 @@ open class Account: Service {
     ) async throws -> Any {
         let path: String = "/account/sessions"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -504,6 +516,7 @@ open class Account: Service {
     ) async throws -> AppwriteModels.Session {
         let path: String = "/account/sessions/anonymous"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -539,6 +552,7 @@ open class Account: Service {
             "email": email,
             "password": password
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -557,9 +571,10 @@ open class Account: Service {
     ///
     /// Create Magic URL session
     ///
-    /// Sends the user an email with a secret key for creating a session. When the
-    /// user clicks the link in the email, the user is redirected back to the URL
-    /// you provided with the secret key and userId values attached to the URL
+    /// Sends the user an email with a secret key for creating a session. If the
+    /// provided user ID has not be registered, a new user will be created. When
+    /// the user clicks the link in the email, the user is redirected back to the
+    /// URL you provided with the secret key and userId values attached to the URL
     /// query string. Use the query string parameters to submit a request to the
     /// [PUT
     /// /account/sessions/magic-url](/docs/client/account#accountUpdateMagicURLSession)
@@ -585,6 +600,7 @@ open class Account: Service {
             "email": email,
             "url": url
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -629,6 +645,7 @@ open class Account: Service {
             "userId": userId,
             "secret": secret
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -663,7 +680,7 @@ open class Account: Service {
     /// @param String provider
     /// @param String success
     /// @param String failure
-    /// @param [Any] scopes
+    /// @param [String] scopes
     /// @throws Exception
     /// @return array
     ///
@@ -672,19 +689,19 @@ open class Account: Service {
         provider: String,
         success: String? = nil,
         failure: String? = nil,
-        scopes: [Any]? = nil
+        scopes: [String]? = nil
     ) async throws -> Bool {
         var path: String = "/account/sessions/oauth2/{provider}"
         path = path.replacingOccurrences(
           of: "{provider}",
-          with: provider
-        )
+          with: provider        )
         let params: [String: Any?] = [
             "success": success,
             "failure": failure,
             "scopes": scopes,
             "project": client.config["project"]
         ]
+
         let query = "?\(client.parametersToQueryString(params: params))"
         let url = URL(string: client.endPoint + path + query)!
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
@@ -697,31 +714,34 @@ open class Account: Service {
         group.wait()
         
         return true
+
     }
 
     ///
     /// Create Phone session
     ///
-    /// Sends the user a SMS with a secret key for creating a session. Use the
-    /// returned user ID and the secret to submit a request to the [PUT
+    /// Sends the user an SMS with a secret key for creating a session. If the
+    /// provided user ID has not be registered, a new user will be created. Use the
+    /// returned user ID and secret and submit a request to the [PUT
     /// /account/sessions/phone](/docs/client/account#accountUpdatePhoneSession)
     /// endpoint to complete the login process. The secret sent to the user's phone
     /// is valid for 15 minutes.
     ///
     /// @param String userId
-    /// @param String number
+    /// @param String phone
     /// @throws Exception
     /// @return array
     ///
     open func createPhoneSession(
         userId: String,
-        number: String
+        phone: String
     ) async throws -> AppwriteModels.Token {
         let path: String = "/account/sessions/phone"
         let params: [String: Any?] = [
             "userId": userId,
-            "number": number
+            "phone": phone
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -738,19 +758,13 @@ open class Account: Service {
     }
 
     ///
-    /// Create Phone session (confirmation)
+    /// Create Phone Session (confirmation)
     ///
-    /// Use this endpoint to complete creating the session with the Magic URL. Both
-    /// the **userId** and **secret** arguments will be passed as query parameters
-    /// to the redirect URL you have provided when sending your request to the
-    /// [POST
-    /// /account/sessions/magic-url](/docs/client/account#accountCreateMagicURLSession)
-    /// endpoint.
-    /// 
-    /// Please note that in order to avoid a [Redirect
-    /// Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-    /// the only valid redirect URLs are the ones from domains you have set when
-    /// adding your platforms in the console interface.
+    /// Use this endpoint to complete creating a session with SMS. Use the
+    /// **userId** from the
+    /// [createPhoneSession](/docs/client/account#accountCreatePhoneSession)
+    /// endpoint and the **secret** received via SMS to successfully update and
+    /// confirm the phone session.
     ///
     /// @param String userId
     /// @param String secret
@@ -766,6 +780,7 @@ open class Account: Service {
             "userId": userId,
             "secret": secret
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -797,9 +812,9 @@ open class Account: Service {
         var path: String = "/account/sessions/{sessionId}"
         path = path.replacingOccurrences(
           of: "{sessionId}",
-          with: sessionId
-        )
+          with: sessionId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -832,9 +847,9 @@ open class Account: Service {
         var path: String = "/account/sessions/{sessionId}"
         path = path.replacingOccurrences(
           of: "{sessionId}",
-          with: sessionId
-        )
+          with: sessionId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -868,9 +883,9 @@ open class Account: Service {
         var path: String = "/account/sessions/{sessionId}"
         path = path.replacingOccurrences(
           of: "{sessionId}",
-          with: sessionId
-        )
+          with: sessionId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -892,14 +907,15 @@ open class Account: Service {
     /// @return array
     ///
     open func updateStatus(
-    ) async throws -> AppwriteModels.User {
+    ) async throws -> AppwriteModels.Account {
         let path: String = "/account/status"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
-        let converter: ([String: Any]) -> AppwriteModels.User = { dict in
-            return AppwriteModels.User.from(map: dict)
+        let converter: ([String: Any]) -> AppwriteModels.Account = { dict in
+            return AppwriteModels.Account.from(map: dict)
         }
         return try await client.call(
             method: "PATCH",
@@ -940,6 +956,7 @@ open class Account: Service {
         let params: [String: Any?] = [
             "url": url
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -977,6 +994,7 @@ open class Account: Service {
             "userId": userId,
             "secret": secret
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -995,13 +1013,12 @@ open class Account: Service {
     ///
     /// Create Phone Verification
     ///
-    /// Use this endpoint to send a verification message to your user's phone
-    /// number to confirm they are the valid owners of that address. The provided
-    /// secret should allow you to complete the verification process by verifying
-    /// both the **userId** and **secret** parameters. Learn more about how to
-    /// [complete the verification
+    /// Use this endpoint to send a verification SMS to the currently logged in
+    /// user. This endpoint is meant for use after updating a user's phone number
+    /// using the [accountUpdatePhone](/docs/client/account#accountUpdatePhone)
+    /// endpoint. Learn more about how to [complete the verification
     /// process](/docs/client/account#accountUpdatePhoneVerification). The
-    /// verification link sent to the user's phone number is valid for 15 minutes.
+    /// verification code sent to the user's phone number is valid for 15 minutes.
     ///
     /// @throws Exception
     /// @return array
@@ -1010,6 +1027,7 @@ open class Account: Service {
     ) async throws -> AppwriteModels.Token {
         let path: String = "/account/verification/phone"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -1047,6 +1065,7 @@ open class Account: Service {
             "userId": userId,
             "secret": secret
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -1073,7 +1092,7 @@ open class Account: Service {
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func get(
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1109,7 +1128,7 @@ open class Account: Service {
         email: String,
         password: String,
         name: String? = nil,
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1147,7 +1166,7 @@ open class Account: Service {
     open func updateEmail(
         email: String,
         password: String,
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1195,22 +1214,19 @@ open class Account: Service {
     /// Get currently logged in user list of latest security activity logs. Each
     /// log returns user IP address, location and date and time of log.
     ///
-    /// @param Int limit
-    /// @param Int offset
+    /// @param [String] queries
     /// @throws Exception
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func getLogs(
-        limit: Int? = nil,
-        offset: Int? = nil,
+        queries: [String]? = nil,
         completion: ((Result<AppwriteModels.LogList, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
                 let result = try await getLogs(
-                    limit: limit,
-                    offset: offset
+                    queries: queries
                 )
                 completion?(.success(result))
             } catch {
@@ -1231,7 +1247,7 @@ open class Account: Service {
     @available(*, deprecated, message: "Use the async overload instead")
     open func updateName(
         name: String,
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1261,7 +1277,7 @@ open class Account: Service {
     open func updatePassword(
         password: String,
         oldPassword: String? = nil,
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1279,26 +1295,27 @@ open class Account: Service {
     ///
     /// Update Account Phone
     ///
-    /// Update currently logged in user account phone number. After changing phone
-    /// number, the user confirmation status will get reset. A new confirmation SMS
-    /// is not sent automatically however you can use the phone confirmation
-    /// endpoint again to send the confirmation SMS.
+    /// Update the currently logged in user's phone number. After updating the
+    /// phone number, the phone verification status will be reset. A confirmation
+    /// SMS is not sent automatically, however you can use the [POST
+    /// /account/verification/phone](/docs/client/account#accountCreatePhoneVerification)
+    /// endpoint to send a confirmation SMS.
     ///
-    /// @param String number
+    /// @param String phone
     /// @param String password
     /// @throws Exception
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func updatePhone(
-        number: String,
+        phone: String,
         password: String,
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
                 let result = try await updatePhone(
-                    number: number,
+                    phone: phone,
                     password: password
                 )
                 completion?(.success(result))
@@ -1345,7 +1362,7 @@ open class Account: Service {
     @available(*, deprecated, message: "Use the async overload instead")
     open func updatePrefs(
         prefs: Any,
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1547,9 +1564,10 @@ open class Account: Service {
     ///
     /// Create Magic URL session
     ///
-    /// Sends the user an email with a secret key for creating a session. When the
-    /// user clicks the link in the email, the user is redirected back to the URL
-    /// you provided with the secret key and userId values attached to the URL
+    /// Sends the user an email with a secret key for creating a session. If the
+    /// provided user ID has not be registered, a new user will be created. When
+    /// the user clicks the link in the email, the user is redirected back to the
+    /// URL you provided with the secret key and userId values attached to the URL
     /// query string. Use the query string parameters to submit a request to the
     /// [PUT
     /// /account/sessions/magic-url](/docs/client/account#accountUpdateMagicURLSession)
@@ -1643,7 +1661,7 @@ open class Account: Service {
     /// @param String provider
     /// @param String success
     /// @param String failure
-    /// @param [Any] scopes
+    /// @param [String] scopes
     /// @throws Exception
     /// @return array
     ///
@@ -1653,7 +1671,7 @@ open class Account: Service {
         provider: String,
         success: String? = nil,
         failure: String? = nil,
-        scopes: [Any]? = nil,
+        scopes: [String]? = nil,
         completion: ((Result<Bool, AppwriteError>) -> Void)? = nil
     ) {
         Task {
@@ -1674,28 +1692,29 @@ open class Account: Service {
     ///
     /// Create Phone session
     ///
-    /// Sends the user a SMS with a secret key for creating a session. Use the
-    /// returned user ID and the secret to submit a request to the [PUT
+    /// Sends the user an SMS with a secret key for creating a session. If the
+    /// provided user ID has not be registered, a new user will be created. Use the
+    /// returned user ID and secret and submit a request to the [PUT
     /// /account/sessions/phone](/docs/client/account#accountUpdatePhoneSession)
     /// endpoint to complete the login process. The secret sent to the user's phone
     /// is valid for 15 minutes.
     ///
     /// @param String userId
-    /// @param String number
+    /// @param String phone
     /// @throws Exception
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func createPhoneSession(
         userId: String,
-        number: String,
+        phone: String,
         completion: ((Result<AppwriteModels.Token, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
                 let result = try await createPhoneSession(
                     userId: userId,
-                    number: number
+                    phone: phone
                 )
                 completion?(.success(result))
             } catch {
@@ -1705,19 +1724,13 @@ open class Account: Service {
     }
 
     ///
-    /// Create Phone session (confirmation)
+    /// Create Phone Session (confirmation)
     ///
-    /// Use this endpoint to complete creating the session with the Magic URL. Both
-    /// the **userId** and **secret** arguments will be passed as query parameters
-    /// to the redirect URL you have provided when sending your request to the
-    /// [POST
-    /// /account/sessions/magic-url](/docs/client/account#accountCreateMagicURLSession)
-    /// endpoint.
-    /// 
-    /// Please note that in order to avoid a [Redirect
-    /// Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-    /// the only valid redirect URLs are the ones from domains you have set when
-    /// adding your platforms in the console interface.
+    /// Use this endpoint to complete creating a session with SMS. Use the
+    /// **userId** from the
+    /// [createPhoneSession](/docs/client/account#accountCreatePhoneSession)
+    /// endpoint and the **secret** received via SMS to successfully update and
+    /// confirm the phone session.
     ///
     /// @param String userId
     /// @param String secret
@@ -1839,7 +1852,7 @@ open class Account: Service {
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func updateStatus(
-        completion: ((Result<AppwriteModels.User, AppwriteError>) -> Void)? = nil
+        completion: ((Result<AppwriteModels.Account, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
@@ -1927,13 +1940,12 @@ open class Account: Service {
     ///
     /// Create Phone Verification
     ///
-    /// Use this endpoint to send a verification message to your user's phone
-    /// number to confirm they are the valid owners of that address. The provided
-    /// secret should allow you to complete the verification process by verifying
-    /// both the **userId** and **secret** parameters. Learn more about how to
-    /// [complete the verification
+    /// Use this endpoint to send a verification SMS to the currently logged in
+    /// user. This endpoint is meant for use after updating a user's phone number
+    /// using the [accountUpdatePhone](/docs/client/account#accountUpdatePhone)
+    /// endpoint. Learn more about how to [complete the verification
     /// process](/docs/client/account#accountUpdatePhoneVerification). The
-    /// verification link sent to the user's phone number is valid for 15 minutes.
+    /// verification code sent to the user's phone number is valid for 15 minutes.
     ///
     /// @throws Exception
     /// @return array
