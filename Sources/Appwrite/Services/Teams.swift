@@ -13,32 +13,21 @@ open class Teams: Service {
     /// In admin mode, this endpoint returns a list of all the teams in the current
     /// project. [Learn more about different API modes](/docs/admin).
     ///
+    /// @param [String] queries
     /// @param String search
-    /// @param Int limit
-    /// @param Int offset
-    /// @param String cursor
-    /// @param String cursorDirection
-    /// @param String orderType
     /// @throws Exception
     /// @return array
     ///
     open func list(
-        search: String? = nil,
-        limit: Int? = nil,
-        offset: Int? = nil,
-        cursor: String? = nil,
-        cursorDirection: String? = nil,
-        orderType: String? = nil
+        queries: [String]? = nil,
+        search: String? = nil
     ) async throws -> AppwriteModels.TeamList {
         let path: String = "/teams"
         let params: [String: Any?] = [
-            "search": search,
-            "limit": limit,
-            "offset": offset,
-            "cursor": cursor,
-            "cursorDirection": cursorDirection,
-            "orderType": orderType
+            "queries": queries,
+            "search": search
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -63,14 +52,14 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param String name
-    /// @param [Any] roles
+    /// @param [String] roles
     /// @throws Exception
     /// @return array
     ///
     open func create(
         teamId: String,
         name: String,
-        roles: [Any]? = nil
+        roles: [String]? = nil
     ) async throws -> AppwriteModels.Team {
         let path: String = "/teams"
         let params: [String: Any?] = [
@@ -78,6 +67,7 @@ open class Teams: Service {
             "name": name,
             "roles": roles
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -108,9 +98,9 @@ open class Teams: Service {
         var path: String = "/teams/{teamId}"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -144,11 +134,11 @@ open class Teams: Service {
         var path: String = "/teams/{teamId}"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         let params: [String: Any?] = [
             "name": name
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -180,9 +170,9 @@ open class Teams: Service {
         var path: String = "/teams/{teamId}"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -200,37 +190,25 @@ open class Teams: Service {
     /// members have read access to this endpoint.
     ///
     /// @param String teamId
+    /// @param [String] queries
     /// @param String search
-    /// @param Int limit
-    /// @param Int offset
-    /// @param String cursor
-    /// @param String cursorDirection
-    /// @param String orderType
     /// @throws Exception
     /// @return array
     ///
     open func getMemberships(
         teamId: String,
-        search: String? = nil,
-        limit: Int? = nil,
-        offset: Int? = nil,
-        cursor: String? = nil,
-        cursorDirection: String? = nil,
-        orderType: String? = nil
+        queries: [String]? = nil,
+        search: String? = nil
     ) async throws -> AppwriteModels.MembershipList {
         var path: String = "/teams/{teamId}/memberships"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         let params: [String: Any?] = [
-            "search": search,
-            "limit": limit,
-            "offset": offset,
-            "cursor": cursor,
-            "cursorDirection": cursorDirection,
-            "orderType": orderType
+            "queries": queries,
+            "search": search
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -267,7 +245,7 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param String email
-    /// @param [Any] roles
+    /// @param [String] roles
     /// @param String url
     /// @param String name
     /// @throws Exception
@@ -276,21 +254,21 @@ open class Teams: Service {
     open func createMembership(
         teamId: String,
         email: String,
-        roles: [Any],
+        roles: [String],
         url: String,
         name: String? = nil
     ) async throws -> AppwriteModels.Membership {
         var path: String = "/teams/{teamId}/memberships"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         let params: [String: Any?] = [
             "email": email,
             "roles": roles,
             "url": url,
             "name": name
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -324,13 +302,12 @@ open class Teams: Service {
         var path: String = "/teams/{teamId}/memberships/{membershipId}"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId
-        )
+          with: membershipId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -355,27 +332,26 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param String membershipId
-    /// @param [Any] roles
+    /// @param [String] roles
     /// @throws Exception
     /// @return array
     ///
     open func updateMembershipRoles(
         teamId: String,
         membershipId: String,
-        roles: [Any]
+        roles: [String]
     ) async throws -> AppwriteModels.Membership {
         var path: String = "/teams/{teamId}/memberships/{membershipId}"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId
-        )
+          with: membershipId        )
         let params: [String: Any?] = [
             "roles": roles
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -410,13 +386,12 @@ open class Teams: Service {
         var path: String = "/teams/{teamId}/memberships/{membershipId}"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId
-        )
+          with: membershipId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -454,16 +429,15 @@ open class Teams: Service {
         var path: String = "/teams/{teamId}/memberships/{membershipId}/status"
         path = path.replacingOccurrences(
           of: "{teamId}",
-          with: teamId
-        )
+          with: teamId        )
         path = path.replacingOccurrences(
           of: "{membershipId}",
-          with: membershipId
-        )
+          with: membershipId        )
         let params: [String: Any?] = [
             "userId": userId,
             "secret": secret
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -489,34 +463,22 @@ open class Teams: Service {
     /// In admin mode, this endpoint returns a list of all the teams in the current
     /// project. [Learn more about different API modes](/docs/admin).
     ///
+    /// @param [String] queries
     /// @param String search
-    /// @param Int limit
-    /// @param Int offset
-    /// @param String cursor
-    /// @param String cursorDirection
-    /// @param String orderType
     /// @throws Exception
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func list(
+        queries: [String]? = nil,
         search: String? = nil,
-        limit: Int? = nil,
-        offset: Int? = nil,
-        cursor: String? = nil,
-        cursorDirection: String? = nil,
-        orderType: String? = nil,
         completion: ((Result<AppwriteModels.TeamList, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
                 let result = try await list(
-                    search: search,
-                    limit: limit,
-                    offset: offset,
-                    cursor: cursor,
-                    cursorDirection: cursorDirection,
-                    orderType: orderType
+                    queries: queries,
+                    search: search
                 )
                 completion?(.success(result))
             } catch {
@@ -534,7 +496,7 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param String name
-    /// @param [Any] roles
+    /// @param [String] roles
     /// @throws Exception
     /// @return array
     ///
@@ -542,7 +504,7 @@ open class Teams: Service {
     open func create(
         teamId: String,
         name: String,
-        roles: [Any]? = nil,
+        roles: [String]? = nil,
         completion: ((Result<AppwriteModels.Team, AppwriteError>) -> Void)? = nil
     ) {
         Task {
@@ -649,36 +611,24 @@ open class Teams: Service {
     /// members have read access to this endpoint.
     ///
     /// @param String teamId
+    /// @param [String] queries
     /// @param String search
-    /// @param Int limit
-    /// @param Int offset
-    /// @param String cursor
-    /// @param String cursorDirection
-    /// @param String orderType
     /// @throws Exception
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func getMemberships(
         teamId: String,
+        queries: [String]? = nil,
         search: String? = nil,
-        limit: Int? = nil,
-        offset: Int? = nil,
-        cursor: String? = nil,
-        cursorDirection: String? = nil,
-        orderType: String? = nil,
         completion: ((Result<AppwriteModels.MembershipList, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
                 let result = try await getMemberships(
                     teamId: teamId,
-                    search: search,
-                    limit: limit,
-                    offset: offset,
-                    cursor: cursor,
-                    cursorDirection: cursorDirection,
-                    orderType: orderType
+                    queries: queries,
+                    search: search
                 )
                 completion?(.success(result))
             } catch {
@@ -708,7 +658,7 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param String email
-    /// @param [Any] roles
+    /// @param [String] roles
     /// @param String url
     /// @param String name
     /// @throws Exception
@@ -718,7 +668,7 @@ open class Teams: Service {
     open func createMembership(
         teamId: String,
         email: String,
-        roles: [Any],
+        roles: [String],
         url: String,
         name: String? = nil,
         completion: ((Result<AppwriteModels.Membership, AppwriteError>) -> Void)? = nil
@@ -778,7 +728,7 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param String membershipId
-    /// @param [Any] roles
+    /// @param [String] roles
     /// @throws Exception
     /// @return array
     ///
@@ -786,7 +736,7 @@ open class Teams: Service {
     open func updateMembershipRoles(
         teamId: String,
         membershipId: String,
-        roles: [Any],
+        roles: [String],
         completion: ((Result<AppwriteModels.Membership, AppwriteError>) -> Void)? = nil
     ) {
         Task {

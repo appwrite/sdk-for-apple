@@ -8,17 +8,14 @@ public class File {
     /// Bucket ID.
     public let bucketId: String
 
-    /// File creation date in Unix timestamp.
-    public let createdAt: Int
+    /// File creation date in ISO 8601 format.
+    public let createdAt: String
 
-    /// File update date in Unix timestamp.
-    public let updatedAt: Int
+    /// File update date in ISO 8601 format.
+    public let updatedAt: String
 
-    /// File read permissions.
-    public let read: [Any]
-
-    /// File write permissions.
-    public let write: [Any]
+    /// File permissions. [Learn more about permissions](/docs/permissions).
+    public let permissions: [Any]
 
     /// File name.
     public let name: String
@@ -41,10 +38,9 @@ public class File {
     init(
         id: String,
         bucketId: String,
-        createdAt: Int,
-        updatedAt: Int,
-        read: [Any],
-        write: [Any],
+        createdAt: String,
+        updatedAt: String,
+        permissions: [Any],
         name: String,
         signature: String,
         mimeType: String,
@@ -56,8 +52,7 @@ public class File {
         self.bucketId = bucketId
         self.createdAt = createdAt
         self.updatedAt = updatedAt
-        self.read = read
-        self.write = write
+        self.permissions = permissions
         self.name = name
         self.signature = signature
         self.mimeType = mimeType
@@ -70,10 +65,9 @@ public class File {
         return File(
             id: map["$id"] as! String,
             bucketId: map["bucketId"] as! String,
-            createdAt: map["$createdAt"] as! Int,
-            updatedAt: map["$updatedAt"] as! Int,
-            read: map["$read"] as! [Any],
-            write: map["$write"] as! [Any],
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            permissions: map["$permissions"] as! [Any],
             name: map["name"] as! String,
             signature: map["signature"] as! String,
             mimeType: map["mimeType"] as! String,
@@ -89,8 +83,7 @@ public class File {
             "bucketId": bucketId as Any,
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
-            "$read": read as Any,
-            "$write": write as Any,
+            "$permissions": permissions as Any,
             "name": name as Any,
             "signature": signature as Any,
             "mimeType": mimeType as Any,
@@ -99,5 +92,5 @@ public class File {
             "chunksUploaded": chunksUploaded as Any
         ]
     }
-                                                    
+                                                
 }

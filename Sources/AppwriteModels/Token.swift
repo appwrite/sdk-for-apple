@@ -5,8 +5,8 @@ public class Token {
     /// Token ID.
     public let id: String
 
-    /// Token creation date in Unix timestamp.
-    public let createdAt: Int
+    /// Token creation date in ISO 8601 format.
+    public let createdAt: String
 
     /// User ID.
     public let userId: String
@@ -14,15 +14,15 @@ public class Token {
     /// Token secret key. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let secret: String
 
-    /// Token expiration date in Unix timestamp.
-    public let expire: Int
+    /// Token expiration date in ISO 8601 format.
+    public let expire: String
 
     init(
         id: String,
-        createdAt: Int,
+        createdAt: String,
         userId: String,
         secret: String,
-        expire: Int
+        expire: String
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -34,10 +34,10 @@ public class Token {
     public static func from(map: [String: Any]) -> Token {
         return Token(
             id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! Int,
+            createdAt: map["$createdAt"] as! String,
             userId: map["userId"] as! String,
             secret: map["secret"] as! String,
-            expire: map["expire"] as! Int
+            expire: map["expire"] as! String
         )
     }
 

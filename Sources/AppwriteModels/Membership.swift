@@ -5,11 +5,11 @@ public class Membership {
     /// Membership ID.
     public let id: String
 
-    /// Membership creation date in Unix timestamp.
-    public let createdAt: Int
+    /// Membership creation date in ISO 8601 format.
+    public let createdAt: String
 
-    /// Membership update date in Unix timestamp.
-    public let updatedAt: Int
+    /// Membership update date in ISO 8601 format.
+    public let updatedAt: String
 
     /// User ID.
     public let userId: String
@@ -26,11 +26,11 @@ public class Membership {
     /// Team name.
     public let teamName: String
 
-    /// Date, the user has been invited to join the team in Unix timestamp.
-    public let invited: Int
+    /// Date, the user has been invited to join the team in ISO 8601 format.
+    public let invited: String
 
-    /// Date, the user has accepted the invitation to join the team in Unix timestamp.
-    public let joined: Int
+    /// Date, the user has accepted the invitation to join the team in ISO 8601 format.
+    public let joined: String
 
     /// User confirmation status, true if the user has joined the team or false otherwise.
     public let confirm: Bool
@@ -40,15 +40,15 @@ public class Membership {
 
     init(
         id: String,
-        createdAt: Int,
-        updatedAt: Int,
+        createdAt: String,
+        updatedAt: String,
         userId: String,
         userName: String,
         userEmail: String,
         teamId: String,
         teamName: String,
-        invited: Int,
-        joined: Int,
+        invited: String,
+        joined: String,
         confirm: Bool,
         roles: [Any]
     ) {
@@ -69,15 +69,15 @@ public class Membership {
     public static func from(map: [String: Any]) -> Membership {
         return Membership(
             id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! Int,
-            updatedAt: map["$updatedAt"] as! Int,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
             userId: map["userId"] as! String,
             userName: map["userName"] as! String,
             userEmail: map["userEmail"] as! String,
             teamId: map["teamId"] as! String,
             teamName: map["teamName"] as! String,
-            invited: map["invited"] as! Int,
-            joined: map["joined"] as! Int,
+            invited: map["invited"] as! String,
+            joined: map["joined"] as! String,
             confirm: map["confirm"] as! Bool,
             roles: map["roles"] as! [Any]
         )

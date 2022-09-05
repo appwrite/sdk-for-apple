@@ -21,17 +21,15 @@ open class Functions: Service {
         var path: String = "/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}"
         path = path.replacingOccurrences(
           of: "{functionId}",
-          with: functionId
-        )
+          with: functionId        )
         path = path.replacingOccurrences(
           of: "{deploymentId}",
-          with: deploymentId
-        )
+          with: deploymentId        )
         path = path.replacingOccurrences(
           of: "{buildId}",
-          with: buildId
-        )
+          with: buildId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -51,34 +49,25 @@ open class Functions: Service {
     /// different API modes](/docs/admin).
     ///
     /// @param String functionId
-    /// @param Int limit
-    /// @param Int offset
+    /// @param [String] queries
     /// @param String search
-    /// @param String cursor
-    /// @param String cursorDirection
     /// @throws Exception
     /// @return array
     ///
     open func listExecutions(
         functionId: String,
-        limit: Int? = nil,
-        offset: Int? = nil,
-        search: String? = nil,
-        cursor: String? = nil,
-        cursorDirection: String? = nil
+        queries: [String]? = nil,
+        search: String? = nil
     ) async throws -> AppwriteModels.ExecutionList {
         var path: String = "/functions/{functionId}/executions"
         path = path.replacingOccurrences(
           of: "{functionId}",
-          with: functionId
-        )
+          with: functionId        )
         let params: [String: Any?] = [
-            "limit": limit,
-            "offset": offset,
-            "search": search,
-            "cursor": cursor,
-            "cursorDirection": cursorDirection
+            "queries": queries,
+            "search": search
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -116,12 +105,12 @@ open class Functions: Service {
         var path: String = "/functions/{functionId}/executions"
         path = path.replacingOccurrences(
           of: "{functionId}",
-          with: functionId
-        )
+          with: functionId        )
         let params: [String: Any?] = [
             "data": data,
             "async": async
         ]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -154,13 +143,12 @@ open class Functions: Service {
         var path: String = "/functions/{functionId}/executions/{executionId}"
         path = path.replacingOccurrences(
           of: "{functionId}",
-          with: functionId
-        )
+          with: functionId        )
         path = path.replacingOccurrences(
           of: "{executionId}",
-          with: executionId
-        )
+          with: executionId        )
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -216,33 +204,24 @@ open class Functions: Service {
     /// different API modes](/docs/admin).
     ///
     /// @param String functionId
-    /// @param Int limit
-    /// @param Int offset
+    /// @param [String] queries
     /// @param String search
-    /// @param String cursor
-    /// @param String cursorDirection
     /// @throws Exception
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
     open func listExecutions(
         functionId: String,
-        limit: Int? = nil,
-        offset: Int? = nil,
+        queries: [String]? = nil,
         search: String? = nil,
-        cursor: String? = nil,
-        cursorDirection: String? = nil,
         completion: ((Result<AppwriteModels.ExecutionList, AppwriteError>) -> Void)? = nil
     ) {
         Task {
             do {
                 let result = try await listExecutions(
                     functionId: functionId,
-                    limit: limit,
-                    offset: offset,
-                    search: search,
-                    cursor: cursor,
-                    cursorDirection: cursorDirection
+                    queries: queries,
+                    search: search
                 )
                 completion?(.success(result))
             } catch {

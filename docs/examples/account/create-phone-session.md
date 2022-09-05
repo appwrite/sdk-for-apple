@@ -7,7 +7,7 @@ func main() async throws {
     let account = Account(client)
     let token = try await account.createPhoneSession(
         userId: "[USER_ID]",
-        number: ""
+        phone: ""
     )
 
     print(String(describing: token)

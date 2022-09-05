@@ -1,27 +1,27 @@
 
-/// User
-public class User {
+/// Account
+public class Account {
 
     /// User ID.
     public let id: String
 
-    /// User creation date in Unix timestamp.
-    public let createdAt: Int
+    /// User creation date in ISO 8601 format.
+    public let createdAt: String
 
-    /// User update date in Unix timestamp.
-    public let updatedAt: Int
+    /// User update date in ISO 8601 format.
+    public let updatedAt: String
 
     /// User name.
     public let name: String
 
-    /// User registration date in Unix timestamp.
-    public let registration: Int
+    /// User registration date in ISO 8601 format.
+    public let registration: String
 
     /// User status. Pass `true` for enabled and `false` for disabled.
     public let status: Bool
 
-    /// Unix timestamp of the most recent password update
-    public let passwordUpdate: Int
+    /// Password update time in ISO 8601 format.
+    public let passwordUpdate: String
 
     /// User email address.
     public let email: String
@@ -40,12 +40,12 @@ public class User {
 
     init(
         id: String,
-        createdAt: Int,
-        updatedAt: Int,
+        createdAt: String,
+        updatedAt: String,
         name: String,
-        registration: Int,
+        registration: String,
         status: Bool,
-        passwordUpdate: Int,
+        passwordUpdate: String,
         email: String,
         phone: String,
         emailVerification: Bool,
@@ -66,15 +66,15 @@ public class User {
         self.prefs = prefs
     }
 
-    public static func from(map: [String: Any]) -> User {
-        return User(
+    public static func from(map: [String: Any]) -> Account {
+        return Account(
             id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! Int,
-            updatedAt: map["$updatedAt"] as! Int,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
             name: map["name"] as! String,
-            registration: map["registration"] as! Int,
+            registration: map["registration"] as! String,
             status: map["status"] as! Bool,
-            passwordUpdate: map["passwordUpdate"] as! Int,
+            passwordUpdate: map["passwordUpdate"] as! String,
             email: map["email"] as! String,
             phone: map["phone"] as! String,
             emailVerification: map["emailVerification"] as! Bool,

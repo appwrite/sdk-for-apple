@@ -21,6 +21,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.Locale {
         let path: String = "/locale"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -49,6 +50,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.ContinentList {
         let path: String = "/locale/continents"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -77,6 +79,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.CountryList {
         let path: String = "/locale/countries"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -105,6 +108,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.CountryList {
         let path: String = "/locale/countries/eu"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -133,6 +137,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.PhoneList {
         let path: String = "/locale/countries/phones"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -162,6 +167,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.CurrencyList {
         let path: String = "/locale/currencies"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
@@ -190,6 +196,7 @@ open class Locale: Service {
     ) async throws -> AppwriteModels.LanguageList {
         let path: String = "/locale/languages"
         let params: [String: Any?] = [:]
+
         let headers: [String: String] = [
             "content-type": "application/json"
         ]

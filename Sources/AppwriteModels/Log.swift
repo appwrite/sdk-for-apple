@@ -20,8 +20,8 @@ public class Log {
     /// IP session in use when the session was created.
     public let ip: String
 
-    /// Log creation time in Unix timestamp.
-    public let time: Int
+    /// Log creation date in ISO 8601 format.
+    public let time: String
 
     /// Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
     public let osCode: String
@@ -72,7 +72,7 @@ public class Log {
         userName: String,
         mode: String,
         ip: String,
-        time: Int,
+        time: String,
         osCode: String,
         osName: String,
         osVersion: String,
@@ -119,7 +119,7 @@ public class Log {
             userName: map["userName"] as! String,
             mode: map["mode"] as! String,
             ip: map["ip"] as! String,
-            time: map["time"] as! Int,
+            time: map["time"] as! String,
             osCode: map["osCode"] as! String,
             osName: map["osName"] as! String,
             osVersion: map["osVersion"] as! String,

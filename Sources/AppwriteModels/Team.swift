@@ -5,11 +5,11 @@ public class Team {
     /// Team ID.
     public let id: String
 
-    /// Team creation date in Unix timestamp.
-    public let createdAt: Int
+    /// Team creation date in ISO 8601 format.
+    public let createdAt: String
 
-    /// Team update date in Unix timestamp.
-    public let updatedAt: Int
+    /// Team update date in ISO 8601 format.
+    public let updatedAt: String
 
     /// Team name.
     public let name: String
@@ -19,8 +19,8 @@ public class Team {
 
     init(
         id: String,
-        createdAt: Int,
-        updatedAt: Int,
+        createdAt: String,
+        updatedAt: String,
         name: String,
         total: Int
     ) {
@@ -34,8 +34,8 @@ public class Team {
     public static func from(map: [String: Any]) -> Team {
         return Team(
             id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! Int,
-            updatedAt: map["$updatedAt"] as! Int,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
             name: map["name"] as! String,
             total: map["total"] as! Int
         )

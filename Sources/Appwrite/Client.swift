@@ -20,8 +20,11 @@ open class Client {
 
     open var headers: [String: String] = [
         "content-type": "",
-        "x-sdk-version": "appwrite:swiftclient:0.6.0",
-        "X-Appwrite-Response-Format": "0.15.0"
+        "x-sdk-name": "Apple",
+        "x-sdk-platform": "client",
+        "x-sdk-language": "swiftclient",
+        "x-sdk-version": "1.0.0-RC1",
+        "X-Appwrite-Response-Format": "1.0.0-RC1"
     ]
 
     open var config: [String: String] = [:]
@@ -387,15 +390,19 @@ open class Client {
 
         if idParamName != nil && params[idParamName!] as! String != "unique()" {
             // Make a request to check if a file already exists
-            let map = try! await call(
-                method: "GET",
-                path: path + "/" + (params[idParamName!] as! String),
-                headers: headers,
-                params: [:],
-                converter: { return $0 }
-            )
-            let chunksUploaded = map["chunksUploaded"] as! Int
-            offset = min(size, (chunksUploaded * Client.chunkSize))
+            do {
+                let map = try await call(
+                    method: "GET",
+                    path: path + "/" + (params[idParamName!] as! String),
+                    headers: headers,
+                    params: [:],
+                    converter: { return $0 }
+                )
+                let chunksUploaded = map["chunksUploaded"] as! Int
+                offset = min(size, (chunksUploaded * Client.chunkSize))
+            } catch {
+                // File does not exist yet, swallow exception
+            }
         }
 
         while offset < size {
