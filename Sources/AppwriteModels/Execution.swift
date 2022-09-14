@@ -35,8 +35,8 @@ public class Execution {
     /// The script stderr output string. Logs the last 4,000 characters of the execution stderr output. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let stderr: String
 
-    /// The script execution time in seconds.
-    public let time: Double
+    /// The script execution duration in seconds.
+    public let duration: Double
 
     init(
         id: String,
@@ -50,7 +50,7 @@ public class Execution {
         response: String,
         stdout: String,
         stderr: String,
-        time: Double
+        duration: Double
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -63,7 +63,7 @@ public class Execution {
         self.response = response
         self.stdout = stdout
         self.stderr = stderr
-        self.time = time
+        self.duration = duration
     }
 
     public static func from(map: [String: Any]) -> Execution {
@@ -79,7 +79,7 @@ public class Execution {
             response: map["response"] as! String,
             stdout: map["stdout"] as! String,
             stderr: map["stderr"] as! String,
-            time: map["time"] as! Double
+            duration: map["duration"] as! Double
         )
     }
 
@@ -96,7 +96,7 @@ public class Execution {
             "response": response as Any,
             "stdout": stdout as Any,
             "stderr": stderr as Any,
-            "time": time as Any
+            "duration": duration as Any
         ]
     }
                                                     

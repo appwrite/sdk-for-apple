@@ -184,7 +184,7 @@ open class Teams: Service {
     }
 
     ///
-    /// Get Team Memberships
+    /// List Team Memberships
     ///
     /// Use this endpoint to list a team's members using the team's ID. All team
     /// members have read access to this endpoint.
@@ -195,7 +195,7 @@ open class Teams: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func getMemberships(
+    open func listMemberships(
         teamId: String,
         queries: [String]? = nil,
         search: String? = nil
@@ -605,7 +605,7 @@ open class Teams: Service {
     }
 
     ///
-    /// Get Team Memberships
+    /// List Team Memberships
     ///
     /// Use this endpoint to list a team's members using the team's ID. All team
     /// members have read access to this endpoint.
@@ -617,7 +617,7 @@ open class Teams: Service {
     /// @return array
     ///
     @available(*, deprecated, message: "Use the async overload instead")
-    open func getMemberships(
+    open func listMemberships(
         teamId: String,
         queries: [String]? = nil,
         search: String? = nil,
@@ -625,7 +625,7 @@ open class Teams: Service {
     ) {
         Task {
             do {
-                let result = try await getMemberships(
+                let result = try await listMemberships(
                     teamId: teamId,
                     queries: queries,
                     search: search

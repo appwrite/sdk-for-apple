@@ -6,7 +6,10 @@ public class Document {
     public let id: String
 
     /// Collection ID.
-    public let collection: String
+    public let collectionId: String
+
+    /// Database ID.
+    public let databaseId: String
 
     /// Document creation date in ISO 8601 format.
     public let createdAt: String
@@ -21,14 +24,16 @@ public class Document {
 
     init(
         id: String,
-        collection: String,
+        collectionId: String,
+        databaseId: String,
         createdAt: String,
         updatedAt: String,
         permissions: [Any],
         data: [String: Any]
     ) {
         self.id = id
-        self.collection = collection
+        self.collectionId = collectionId
+        self.databaseId = databaseId
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.permissions = permissions
@@ -38,7 +43,8 @@ public class Document {
     public static func from(map: [String: Any]) -> Document {
         return Document(
             id: map["$id"] as! String,
-            collection: map["$collection"] as! String,
+            collectionId: map["$collectionId"] as! String,
+            databaseId: map["$databaseId"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
             permissions: map["$permissions"] as! [Any],
@@ -49,7 +55,8 @@ public class Document {
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
-            "$collection": collection as Any,
+            "$collectionId": collectionId as Any,
+            "$databaseId": databaseId as Any,
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
@@ -60,5 +67,5 @@ public class Document {
     public func convertTo<T>(fromJson: ([String: Any]) -> T) -> T {
         return fromJson(data)
     }
-                            
+                                
 }

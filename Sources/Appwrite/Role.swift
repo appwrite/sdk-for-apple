@@ -3,12 +3,18 @@ public class Role {
         return "any"
     }
 
-    public static func user(_ id: String) -> String {
-        return "user:\(id)"
+    public static func user(_ id: String, _ status: String = "") -> String {
+        if(status.isEmpty) {
+            return "user:\(id)"
+        }
+        return "user:\(id)/\(status)"
     }
 
-    public static func users() -> String {
-        return "users"
+    public static func users(_ status: String = "") -> String {
+        if(status.isEmpty) {
+            return "users"
+        }
+        return "users/\(status)"
     }
 
     public static func guests() -> String {
@@ -20,6 +26,10 @@ public class Role {
             return "team:\(id)"
         }
         return "team:\(id)/\(role)"
+    }
+
+    public static func member(_ id: String) -> String {
+        return "member:\(id)"
     }
 
     public static func status(_ status: String) -> String {
