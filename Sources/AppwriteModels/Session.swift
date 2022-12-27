@@ -1,3 +1,4 @@
+import Foundation
 
 /// Session
 public class Session {
@@ -77,6 +78,7 @@ public class Session {
     /// Returns true if this the current user session.
     public let current: Bool
 
+
     init(
         id: String,
         createdAt: String,
@@ -131,36 +133,6 @@ public class Session {
         self.current = current
     }
 
-    public static func from(map: [String: Any]) -> Session {
-        return Session(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            userId: map["userId"] as! String,
-            expire: map["expire"] as! String,
-            provider: map["provider"] as! String,
-            providerUid: map["providerUid"] as! String,
-            providerAccessToken: map["providerAccessToken"] as! String,
-            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! String,
-            providerRefreshToken: map["providerRefreshToken"] as! String,
-            ip: map["ip"] as! String,
-            osCode: map["osCode"] as! String,
-            osName: map["osName"] as! String,
-            osVersion: map["osVersion"] as! String,
-            clientType: map["clientType"] as! String,
-            clientCode: map["clientCode"] as! String,
-            clientName: map["clientName"] as! String,
-            clientVersion: map["clientVersion"] as! String,
-            clientEngine: map["clientEngine"] as! String,
-            clientEngineVersion: map["clientEngineVersion"] as! String,
-            deviceName: map["deviceName"] as! String,
-            deviceBrand: map["deviceBrand"] as! String,
-            deviceModel: map["deviceModel"] as! String,
-            countryCode: map["countryCode"] as! String,
-            countryName: map["countryName"] as! String,
-            current: map["current"] as! Bool
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -190,5 +162,34 @@ public class Session {
             "current": current as Any
         ]
     }
-                                                                                                        
+
+    public static func from(map: [String: Any] ) -> Session {
+        return Session(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            userId: map["userId"] as! String,
+            expire: map["expire"] as! String,
+            provider: map["provider"] as! String,
+            providerUid: map["providerUid"] as! String,
+            providerAccessToken: map["providerAccessToken"] as! String,
+            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! String,
+            providerRefreshToken: map["providerRefreshToken"] as! String,
+            ip: map["ip"] as! String,
+            osCode: map["osCode"] as! String,
+            osName: map["osName"] as! String,
+            osVersion: map["osVersion"] as! String,
+            clientType: map["clientType"] as! String,
+            clientCode: map["clientCode"] as! String,
+            clientName: map["clientName"] as! String,
+            clientVersion: map["clientVersion"] as! String,
+            clientEngine: map["clientEngine"] as! String,
+            clientEngineVersion: map["clientEngineVersion"] as! String,
+            deviceName: map["deviceName"] as! String,
+            deviceBrand: map["deviceBrand"] as! String,
+            deviceModel: map["deviceModel"] as! String,
+            countryCode: map["countryCode"] as! String,
+            countryName: map["countryName"] as! String,
+            current: map["current"] as! Bool
+        )
+    }
 }

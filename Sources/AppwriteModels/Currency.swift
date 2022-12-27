@@ -1,3 +1,4 @@
+import Foundation
 
 /// Currency
 public class Currency {
@@ -23,6 +24,7 @@ public class Currency {
     /// Currency plural name
     public let namePlural: String
 
+
     init(
         symbol: String,
         name: String,
@@ -41,18 +43,6 @@ public class Currency {
         self.namePlural = namePlural
     }
 
-    public static func from(map: [String: Any]) -> Currency {
-        return Currency(
-            symbol: map["symbol"] as! String,
-            name: map["name"] as! String,
-            symbolNative: map["symbolNative"] as! String,
-            decimalDigits: map["decimalDigits"] as! Int,
-            rounding: map["rounding"] as! Double,
-            code: map["code"] as! String,
-            namePlural: map["namePlural"] as! String
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "symbol": symbol as Any,
@@ -64,5 +54,16 @@ public class Currency {
             "namePlural": namePlural as Any
         ]
     }
-                                
+
+    public static func from(map: [String: Any] ) -> Currency {
+        return Currency(
+            symbol: map["symbol"] as! String,
+            name: map["name"] as! String,
+            symbolNative: map["symbolNative"] as! String,
+            decimalDigits: map["decimalDigits"] as! Int,
+            rounding: map["rounding"] as! Double,
+            code: map["code"] as! String,
+            namePlural: map["namePlural"] as! String
+        )
+    }
 }

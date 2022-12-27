@@ -1,3 +1,4 @@
+import Foundation
 
 /// Token
 public class Token {
@@ -17,6 +18,7 @@ public class Token {
     /// Token expiration date in ISO 8601 format.
     public let expire: String
 
+
     init(
         id: String,
         createdAt: String,
@@ -31,16 +33,6 @@ public class Token {
         self.expire = expire
     }
 
-    public static func from(map: [String: Any]) -> Token {
-        return Token(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            userId: map["userId"] as! String,
-            secret: map["secret"] as! String,
-            expire: map["expire"] as! String
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -50,5 +42,14 @@ public class Token {
             "expire": expire as Any
         ]
     }
-                        
+
+    public static func from(map: [String: Any] ) -> Token {
+        return Token(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            userId: map["userId"] as! String,
+            secret: map["secret"] as! String,
+            expire: map["expire"] as! String
+        )
+    }
 }

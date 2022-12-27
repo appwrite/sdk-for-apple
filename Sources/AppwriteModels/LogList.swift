@@ -1,3 +1,4 @@
+import Foundation
 
 /// Logs List
 public class LogList {
@@ -8,6 +9,7 @@ public class LogList {
     /// List of logs.
     public let logs: [Log]
 
+
     init(
         total: Int,
         logs: [Log]
@@ -16,18 +18,17 @@ public class LogList {
         self.logs = logs
     }
 
-    public static func from(map: [String: Any]) -> LogList {
-        return LogList(
-            total: map["total"] as! Int,
-            logs: (map["logs"] as! [[String: Any]]).map { Log.from(map: $0) }
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
             "logs": logs.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                    
+
+    public static func from(map: [String: Any] ) -> LogList {
+        return LogList(
+            total: map["total"] as! Int,
+            logs: (map["logs"] as! [[String: Any]]).map { Log.from(map: $0) }
+        )
+    }
 }

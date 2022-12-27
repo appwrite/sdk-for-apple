@@ -1,3 +1,4 @@
+import Foundation
 
 /// Memberships List
 public class MembershipList {
@@ -8,6 +9,7 @@ public class MembershipList {
     /// List of memberships.
     public let memberships: [Membership]
 
+
     init(
         total: Int,
         memberships: [Membership]
@@ -16,18 +18,17 @@ public class MembershipList {
         self.memberships = memberships
     }
 
-    public static func from(map: [String: Any]) -> MembershipList {
-        return MembershipList(
-            total: map["total"] as! Int,
-            memberships: (map["memberships"] as! [[String: Any]]).map { Membership.from(map: $0) }
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
             "memberships": memberships.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                    
+
+    public static func from(map: [String: Any] ) -> MembershipList {
+        return MembershipList(
+            total: map["total"] as! Int,
+            memberships: (map["memberships"] as! [[String: Any]]).map { Membership.from(map: $0) }
+        )
+    }
 }

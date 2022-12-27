@@ -1,3 +1,4 @@
+import Foundation
 
 /// Log
 public class Log {
@@ -65,6 +66,7 @@ public class Log {
     /// Country name.
     public let countryName: String
 
+
     init(
         event: String,
         userId: String,
@@ -111,32 +113,6 @@ public class Log {
         self.countryName = countryName
     }
 
-    public static func from(map: [String: Any]) -> Log {
-        return Log(
-            event: map["event"] as! String,
-            userId: map["userId"] as! String,
-            userEmail: map["userEmail"] as! String,
-            userName: map["userName"] as! String,
-            mode: map["mode"] as! String,
-            ip: map["ip"] as! String,
-            time: map["time"] as! String,
-            osCode: map["osCode"] as! String,
-            osName: map["osName"] as! String,
-            osVersion: map["osVersion"] as! String,
-            clientType: map["clientType"] as! String,
-            clientCode: map["clientCode"] as! String,
-            clientName: map["clientName"] as! String,
-            clientVersion: map["clientVersion"] as! String,
-            clientEngine: map["clientEngine"] as! String,
-            clientEngineVersion: map["clientEngineVersion"] as! String,
-            deviceName: map["deviceName"] as! String,
-            deviceBrand: map["deviceBrand"] as! String,
-            deviceModel: map["deviceModel"] as! String,
-            countryCode: map["countryCode"] as! String,
-            countryName: map["countryName"] as! String
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "event": event as Any,
@@ -162,5 +138,30 @@ public class Log {
             "countryName": countryName as Any
         ]
     }
-                                                                                        
+
+    public static func from(map: [String: Any] ) -> Log {
+        return Log(
+            event: map["event"] as! String,
+            userId: map["userId"] as! String,
+            userEmail: map["userEmail"] as! String,
+            userName: map["userName"] as! String,
+            mode: map["mode"] as! String,
+            ip: map["ip"] as! String,
+            time: map["time"] as! String,
+            osCode: map["osCode"] as! String,
+            osName: map["osName"] as! String,
+            osVersion: map["osVersion"] as! String,
+            clientType: map["clientType"] as! String,
+            clientCode: map["clientCode"] as! String,
+            clientName: map["clientName"] as! String,
+            clientVersion: map["clientVersion"] as! String,
+            clientEngine: map["clientEngine"] as! String,
+            clientEngineVersion: map["clientEngineVersion"] as! String,
+            deviceName: map["deviceName"] as! String,
+            deviceBrand: map["deviceBrand"] as! String,
+            deviceModel: map["deviceModel"] as! String,
+            countryCode: map["countryCode"] as! String,
+            countryName: map["countryName"] as! String
+        )
+    }
 }

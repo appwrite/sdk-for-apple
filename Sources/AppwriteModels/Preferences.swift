@@ -1,29 +1,26 @@
+import Foundation
 
 /// Preferences
-public class Preferences {
+public class Preferences<T : Codable> {
 
-    let data: [String: Any]
+    /// Additional properties
+    public let data: T
 
     init(
-        data: [String: Any]
+        data: T
     ) {
         self.data = data
     }
 
-    public static func from(map: [String: Any]) -> Preferences {
-        return Preferences(
-            data: map
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
-            "data": data
+            "data": try! JSONEncoder().encode(data)
         ]
     }
 
-    public func convertTo<T>(fromJson: ([String: Any]) -> T) -> T {
-        return fromJson(data)
+    public static func from(map: [String: Any] ) -> Preferences {
+        return Preferences(
+            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
+        )
     }
-        
 }

@@ -22,8 +22,8 @@ open class Client {
         "content-type": "",
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
-        "x-sdk-language": "swiftclient",
-        "x-sdk-version": "1.1.0",
+        "x-sdk-language": "apple",
+        "x-sdk-version": "1.2.0",
         "X-Appwrite-Response-Format": "1.0.0"
     ]
 
@@ -252,7 +252,7 @@ open class Client {
         headers: [String: String] = [:],
         params: [String: Any?] = [:],
         sink: ((ByteBuffer) -> Void)? = nil,
-        converter: (([String: Any]) -> T)? = nil
+        converter: ((Any) -> T)? = nil
     ) async throws -> T {
         let validParams = params.filter { $0.value != nil }
 
@@ -293,7 +293,7 @@ open class Client {
     private func execute<T>(
         _ request: HTTPClientRequest,
         withSink bufferSink: ((ByteBuffer) -> Void)? = nil,
-        converter: (([String: Any]) -> T)? = nil
+        converter: ((Any) -> T)? = nil
     ) async throws -> T {
         func complete(with response: HTTPClientResponse) async throws -> T {
             switch response.status.code {
@@ -358,7 +358,7 @@ open class Client {
         params: inout [String: Any?],
         paramName: String,
         idParamName: String? = nil,
-        converter: (([String: Any]) -> T)? = nil,
+        converter: ((Any) -> T)? = nil,
         onProgress: ((UploadProgress) -> Void)? = nil
     ) async throws -> T {
         let input = params[paramName] as! InputFile
@@ -396,7 +396,7 @@ open class Client {
                     path: path + "/" + (params[idParamName!] as! String),
                     headers: headers,
                     params: [:],
-                    converter: { return $0 }
+                    converter: { return $0 as! [String: Any] }
                 )
                 let chunksUploaded = map["chunksUploaded"] as! Int
                 offset = min(size, (chunksUploaded * Client.chunkSize))
@@ -417,7 +417,7 @@ open class Client {
                 path: path,
                 headers: headers,
                 params: params,
-                converter: { return $0 }
+                converter: { return $0 as! [String: Any] }
             )
 
             offset += Client.chunkSize
@@ -446,7 +446,28 @@ open class Client {
         _ request: inout HTTPClientRequest,
         with params: [String: Any?] = [:]
     ) throws {
-        let json = try JSONSerialization.data(withJSONObject: params, options: [])
+        var encodedParams = [String:Any]()
+
+        for (key, param) in params {
+            if param is String
+                || param is Int
+                || param is Float
+                || param is Bool
+                || param is [String]
+                || param is [Int]
+                || param is [Float]
+                || param is [Bool]
+                || param is [String: Any]
+                || param is [Int: Any]
+                || param is [Float: Any]
+                || param is [Bool: Any] {
+                encodedParams[key] = param
+            } else {
+                encodedParams[key] = try! (param as! Encodable).toJson()
+            }
+        }
+
+        let json = try JSONSerialization.data(withJSONObject: encodedParams, options: [])
 
         request.body = .bytes(json)
     }

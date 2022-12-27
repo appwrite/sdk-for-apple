@@ -1,3 +1,4 @@
+import Foundation
 
 /// Country
 public class Country {
@@ -8,6 +9,7 @@ public class Country {
     /// Country two-character ISO 3166-1 alpha code.
     public let code: String
 
+
     init(
         name: String,
         code: String
@@ -16,18 +18,17 @@ public class Country {
         self.code = code
     }
 
-    public static func from(map: [String: Any]) -> Country {
-        return Country(
-            name: map["name"] as! String,
-            code: map["code"] as! String
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "name": name as Any,
             "code": code as Any
         ]
     }
-            
+
+    public static func from(map: [String: Any] ) -> Country {
+        return Country(
+            name: map["name"] as! String,
+            code: map["code"] as! String
+        )
+    }
 }

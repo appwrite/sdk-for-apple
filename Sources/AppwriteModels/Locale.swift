@@ -1,3 +1,4 @@
+import Foundation
 
 /// Locale
 public class Locale {
@@ -23,6 +24,7 @@ public class Locale {
     /// Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
     public let currency: String
 
+
     init(
         ip: String,
         countryCode: String,
@@ -41,18 +43,6 @@ public class Locale {
         self.currency = currency
     }
 
-    public static func from(map: [String: Any]) -> Locale {
-        return Locale(
-            ip: map["ip"] as! String,
-            countryCode: map["countryCode"] as! String,
-            country: map["country"] as! String,
-            continentCode: map["continentCode"] as! String,
-            continent: map["continent"] as! String,
-            eu: map["eu"] as! Bool,
-            currency: map["currency"] as! String
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "ip": ip as Any,
@@ -64,5 +54,16 @@ public class Locale {
             "currency": currency as Any
         ]
     }
-                                
+
+    public static func from(map: [String: Any] ) -> Locale {
+        return Locale(
+            ip: map["ip"] as! String,
+            countryCode: map["countryCode"] as! String,
+            country: map["country"] as! String,
+            continentCode: map["continentCode"] as! String,
+            continent: map["continent"] as! String,
+            eu: map["eu"] as! Bool,
+            currency: map["currency"] as! String
+        )
+    }
 }
