@@ -1,6 +1,7 @@
+import Foundation
 
 /// Account
-public class Account {
+public class Account<T : Codable> {
 
     /// User ID.
     public let id: String
@@ -36,7 +37,8 @@ public class Account {
     public let phoneVerification: Bool
 
     /// User preferences as a key-value object
-    public let prefs: Preferences
+    public let prefs: Preferences<T>
+
 
     init(
         id: String,
@@ -50,7 +52,7 @@ public class Account {
         phone: String,
         emailVerification: Bool,
         phoneVerification: Bool,
-        prefs: Preferences
+        prefs: Preferences<T>
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -64,23 +66,6 @@ public class Account {
         self.emailVerification = emailVerification
         self.phoneVerification = phoneVerification
         self.prefs = prefs
-    }
-
-    public static func from(map: [String: Any]) -> Account {
-        return Account(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            name: map["name"] as! String,
-            registration: map["registration"] as! String,
-            status: map["status"] as! Bool,
-            passwordUpdate: map["passwordUpdate"] as! String,
-            email: map["email"] as! String,
-            phone: map["phone"] as! String,
-            emailVerification: map["emailVerification"] as! Bool,
-            phoneVerification: map["phoneVerification"] as! Bool,
-            prefs: Preferences.from(map: map["prefs"] as! [String: Any])
-        )
     }
 
     public func toMap() -> [String: Any] {
@@ -99,5 +84,21 @@ public class Account {
             "prefs": prefs.toMap() as Any
         ]
     }
-                                                                                                                                                                            
+
+    public static func from(map: [String: Any] ) -> Account {
+        return Account(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            name: map["name"] as! String,
+            registration: map["registration"] as! String,
+            status: map["status"] as! Bool,
+            passwordUpdate: map["passwordUpdate"] as! String,
+            email: map["email"] as! String,
+            phone: map["phone"] as! String,
+            emailVerification: map["emailVerification"] as! Bool,
+            phoneVerification: map["phoneVerification"] as! Bool,
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any])
+        )
+    }
 }

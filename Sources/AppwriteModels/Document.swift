@@ -1,6 +1,7 @@
+import Foundation
 
 /// Document
-public class Document {
+public class Document<T : Codable> {
 
     /// Document ID.
     public let id: String
@@ -20,7 +21,8 @@ public class Document {
     /// Document permissions. [Learn more about permissions](/docs/permissions).
     public let permissions: [Any]
 
-    let data: [String: Any]
+    /// Additional properties
+    public let data: T
 
     init(
         id: String,
@@ -29,7 +31,7 @@ public class Document {
         createdAt: String,
         updatedAt: String,
         permissions: [Any],
-        data: [String: Any]
+        data: T
     ) {
         self.id = id
         self.collectionId = collectionId
@@ -40,18 +42,6 @@ public class Document {
         self.data = data
     }
 
-    public static func from(map: [String: Any]) -> Document {
-        return Document(
-            id: map["$id"] as! String,
-            collectionId: map["$collectionId"] as! String,
-            databaseId: map["$databaseId"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
-            data: map
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -60,12 +50,19 @@ public class Document {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
-            "data": data
+            "data": try! JSONEncoder().encode(data)
         ]
     }
 
-    public func convertTo<T>(fromJson: ([String: Any]) -> T) -> T {
-        return fromJson(data)
+    public static func from(map: [String: Any] ) -> Document {
+        return Document(
+            id: map["$id"] as! String,
+            collectionId: map["$collectionId"] as! String,
+            databaseId: map["$databaseId"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            permissions: map["$permissions"] as! [Any],
+            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
+        )
     }
-                                
 }

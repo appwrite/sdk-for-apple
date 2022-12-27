@@ -1,3 +1,4 @@
+import Foundation
 
 /// Membership
 public class Membership {
@@ -38,6 +39,7 @@ public class Membership {
     /// User list of roles
     public let roles: [Any]
 
+
     init(
         id: String,
         createdAt: String,
@@ -66,23 +68,6 @@ public class Membership {
         self.roles = roles
     }
 
-    public static func from(map: [String: Any]) -> Membership {
-        return Membership(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            userId: map["userId"] as! String,
-            userName: map["userName"] as! String,
-            userEmail: map["userEmail"] as! String,
-            teamId: map["teamId"] as! String,
-            teamName: map["teamName"] as! String,
-            invited: map["invited"] as! String,
-            joined: map["joined"] as! String,
-            confirm: map["confirm"] as! Bool,
-            roles: map["roles"] as! [Any]
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -99,5 +84,21 @@ public class Membership {
             "roles": roles as Any
         ]
     }
-                                                    
+
+    public static func from(map: [String: Any] ) -> Membership {
+        return Membership(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            userId: map["userId"] as! String,
+            userName: map["userName"] as! String,
+            userEmail: map["userEmail"] as! String,
+            teamId: map["teamId"] as! String,
+            teamName: map["teamName"] as! String,
+            invited: map["invited"] as! String,
+            joined: map["joined"] as! String,
+            confirm: map["confirm"] as! Bool,
+            roles: map["roles"] as! [Any]
+        )
+    }
 }

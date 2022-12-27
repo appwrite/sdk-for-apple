@@ -1,3 +1,4 @@
+import Foundation
 
 /// Execution
 public class Execution {
@@ -38,6 +39,7 @@ public class Execution {
     /// The script execution duration in seconds.
     public let duration: Double
 
+
     init(
         id: String,
         createdAt: String,
@@ -66,23 +68,6 @@ public class Execution {
         self.duration = duration
     }
 
-    public static func from(map: [String: Any]) -> Execution {
-        return Execution(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
-            functionId: map["functionId"] as! String,
-            trigger: map["trigger"] as! String,
-            status: map["status"] as! String,
-            statusCode: map["statusCode"] as! Int,
-            response: map["response"] as! String,
-            stdout: map["stdout"] as! String,
-            stderr: map["stderr"] as! String,
-            duration: map["duration"] as! Double
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -99,5 +84,21 @@ public class Execution {
             "duration": duration as Any
         ]
     }
-                                                    
+
+    public static func from(map: [String: Any] ) -> Execution {
+        return Execution(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            permissions: map["$permissions"] as! [Any],
+            functionId: map["functionId"] as! String,
+            trigger: map["trigger"] as! String,
+            status: map["status"] as! String,
+            statusCode: map["statusCode"] as! Int,
+            response: map["response"] as! String,
+            stdout: map["stdout"] as! String,
+            stderr: map["stderr"] as! String,
+            duration: map["duration"] as! Double
+        )
+    }
 }

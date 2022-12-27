@@ -1,3 +1,4 @@
+import Foundation
 
 /// Teams List
 public class TeamList {
@@ -8,6 +9,7 @@ public class TeamList {
     /// List of teams.
     public let teams: [Team]
 
+
     init(
         total: Int,
         teams: [Team]
@@ -16,18 +18,17 @@ public class TeamList {
         self.teams = teams
     }
 
-    public static func from(map: [String: Any]) -> TeamList {
-        return TeamList(
-            total: map["total"] as! Int,
-            teams: (map["teams"] as! [[String: Any]]).map { Team.from(map: $0) }
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
             "teams": teams.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                    
+
+    public static func from(map: [String: Any] ) -> TeamList {
+        return TeamList(
+            total: map["total"] as! Int,
+            teams: (map["teams"] as! [[String: Any]]).map { Team.from(map: $0) }
+        )
+    }
 }

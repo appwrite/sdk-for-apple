@@ -1,3 +1,4 @@
+import Foundation
 
 /// Sessions List
 public class SessionList {
@@ -8,6 +9,7 @@ public class SessionList {
     /// List of sessions.
     public let sessions: [Session]
 
+
     init(
         total: Int,
         sessions: [Session]
@@ -16,18 +18,17 @@ public class SessionList {
         self.sessions = sessions
     }
 
-    public static func from(map: [String: Any]) -> SessionList {
-        return SessionList(
-            total: map["total"] as! Int,
-            sessions: (map["sessions"] as! [[String: Any]]).map { Session.from(map: $0) }
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
             "sessions": sessions.map { $0.toMap() } as Any
         ]
     }
-                                                                                                                                    
+
+    public static func from(map: [String: Any] ) -> SessionList {
+        return SessionList(
+            total: map["total"] as! Int,
+            sessions: (map["sessions"] as! [[String: Any]]).map { Session.from(map: $0) }
+        )
+    }
 }

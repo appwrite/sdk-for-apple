@@ -1,3 +1,4 @@
+import Foundation
 
 /// Team
 public class Team {
@@ -17,6 +18,7 @@ public class Team {
     /// Total number of team members.
     public let total: Int
 
+
     init(
         id: String,
         createdAt: String,
@@ -31,16 +33,6 @@ public class Team {
         self.total = total
     }
 
-    public static func from(map: [String: Any]) -> Team {
-        return Team(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            name: map["name"] as! String,
-            total: map["total"] as! Int
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -50,5 +42,14 @@ public class Team {
             "total": total as Any
         ]
     }
-                        
+
+    public static func from(map: [String: Any] ) -> Team {
+        return Team(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            name: map["name"] as! String,
+            total: map["total"] as! Int
+        )
+    }
 }

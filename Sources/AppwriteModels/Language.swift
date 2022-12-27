@@ -1,3 +1,4 @@
+import Foundation
 
 /// Language
 public class Language {
@@ -11,6 +12,7 @@ public class Language {
     /// Language native name.
     public let nativeName: String
 
+
     init(
         name: String,
         code: String,
@@ -21,14 +23,6 @@ public class Language {
         self.nativeName = nativeName
     }
 
-    public static func from(map: [String: Any]) -> Language {
-        return Language(
-            name: map["name"] as! String,
-            code: map["code"] as! String,
-            nativeName: map["nativeName"] as! String
-        )
-    }
-
     public func toMap() -> [String: Any] {
         return [
             "name": name as Any,
@@ -36,5 +30,12 @@ public class Language {
             "nativeName": nativeName as Any
         ]
     }
-                
+
+    public static func from(map: [String: Any] ) -> Language {
+        return Language(
+            name: map["name"] as! String,
+            code: map["code"] as! String,
+            nativeName: map["nativeName"] as! String
+        )
+    }
 }
