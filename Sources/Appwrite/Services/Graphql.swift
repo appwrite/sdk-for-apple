@@ -15,7 +15,7 @@ open class Graphql: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func query(
+    open func query<T:Any>(
         query: T
     ) async throws -> Any {
         let path: String = "/graphql"
@@ -51,7 +51,7 @@ open class Graphql: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func mutation(
+    open func mutation<T:Any>(
         query: T
     ) async throws -> Any {
         let path: String = "/graphql/mutation"
