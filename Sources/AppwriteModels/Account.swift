@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Account
 public class Account<T : Codable> {

@@ -13,7 +13,7 @@ let package = Package(
     products: [
         .library(
             name: "Appwrite",
-            targets: ["Appwrite", "AppwriteModels"]
+            targets: ["Appwrite", "AppwriteModels", "JSONCodable"]
         ),
     ],
     dependencies: [
@@ -26,11 +26,18 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOWebSocket", package: "swift-nio"),
-                "AppwriteModels"
+                "AppwriteModels",
+                "JSONCodable"
             ]
         ),
         .target(
-            name: "AppwriteModels"
+            name: "AppwriteModels",
+            dependencies: [
+                "JSONCodable"
+            ]
+        ),
+        .target(
+            name: "JSONCodable"
         ),
         .testTarget(
             name: "AppwriteTests",

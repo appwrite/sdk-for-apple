@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Token
 public class Token {

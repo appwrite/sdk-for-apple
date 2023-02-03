@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Sessions List
 public class SessionList {

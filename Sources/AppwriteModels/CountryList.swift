@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Countries List
 public class CountryList {

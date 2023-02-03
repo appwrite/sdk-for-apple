@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Team
 public class Team {

@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Preferences
 public class Preferences<T : Codable> {

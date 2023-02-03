@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 import Foundation
 import NIO
+import JSONCodable
 import AppwriteModels
 
 /// The Avatars service aims to help you complete everyday tasks related to your app image, icons, and avatars.

@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Currencies List
 public class CurrencyList {
