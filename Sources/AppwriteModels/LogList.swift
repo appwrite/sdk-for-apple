@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Logs List
 public class LogList {

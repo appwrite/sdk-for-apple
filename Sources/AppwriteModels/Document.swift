@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Document
 public class Document<T : Codable> {

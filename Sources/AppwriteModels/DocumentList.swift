@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Documents List
 public class DocumentList<T : Codable> {

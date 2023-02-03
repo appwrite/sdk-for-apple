@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Continent
 public class Continent {

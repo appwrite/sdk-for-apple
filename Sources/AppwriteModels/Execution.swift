@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Execution
 public class Execution {

@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 import Foundation
 import NIO
+import JSONCodable
 import AppwriteModels
 
 /// The Locale service allows you to customize your app based on your users&#039; location.

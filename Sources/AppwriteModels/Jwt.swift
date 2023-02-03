@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// JWT
 public class Jwt {

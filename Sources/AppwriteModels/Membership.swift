@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Membership
 public class Membership {

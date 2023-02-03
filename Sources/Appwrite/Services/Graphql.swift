@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 import Foundation
 import NIO
+import JSONCodable
 import AppwriteModels
 
 /// The GraphQL API allows you to query and mutate your Appwrite server using GraphQL.
@@ -16,7 +17,7 @@ open class Graphql: Service {
     /// @return array
     ///
     open func query(
-        query: T
+        query: Any
     ) async throws -> Any {
         let path: String = "/graphql"
 
@@ -52,7 +53,7 @@ open class Graphql: Service {
     /// @return array
     ///
     open func mutation(
-        query: T
+        query: Any
     ) async throws -> Any {
         let path: String = "/graphql/mutation"
 

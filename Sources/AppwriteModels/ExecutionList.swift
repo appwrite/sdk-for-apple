@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// Executions List
 public class ExecutionList {

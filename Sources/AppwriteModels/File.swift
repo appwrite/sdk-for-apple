@@ -1,4 +1,5 @@
 import Foundation
+import JSONCodable
 
 /// File
 public class File {
