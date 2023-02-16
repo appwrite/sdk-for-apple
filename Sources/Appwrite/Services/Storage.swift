@@ -29,7 +29,8 @@ open class Storage: Service {
 
         let params: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -91,7 +92,8 @@ open class Storage: Service {
         var params: [String: Any?] = [
             "fileId": fileId,
             "file": file,
-            "permissions": permissions
+            "permissions": permissions,
+            "project": client.config["project"]
         ]
 
         var headers: [String: String] = [
@@ -175,7 +177,8 @@ open class Storage: Service {
             .replacingOccurrences(of: "{fileId}", with: fileId)
 
         let params: [String: Any?] = [
-            "permissions": permissions
+            "permissions": permissions,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -311,7 +314,8 @@ open class Storage: Service {
             "opacity": opacity,
             "rotation": rotation,
             "background": background,
-            "output": output
+            "output": output,
+            "project": client.config["project"]
         ]
 
         return try await client.call(

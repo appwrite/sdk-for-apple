@@ -22,7 +22,8 @@ open class Graphql: Service {
         let path: String = "/graphql"
 
         let params: [String: Any?] = [
-            "query": query
+            "query": query,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -58,7 +59,8 @@ open class Graphql: Service {
         let path: String = "/graphql/mutation"
 
         let params: [String: Any?] = [
-            "query": query
+            "query": query,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [

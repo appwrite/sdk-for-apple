@@ -29,7 +29,8 @@ open class Functions: Service {
 
         let params: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -73,7 +74,8 @@ open class Functions: Service {
 
         let params: [String: Any?] = [
             "data": data,
-            "async": async
+            "async": async,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [

@@ -30,7 +30,8 @@ open class Databases: Service {
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
         let params: [String: Any?] = [
-            "queries": queries
+            "queries": queries,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -106,7 +107,8 @@ open class Databases: Service {
         let params: [String: Any?] = [
             "documentId": documentId,
             "data": data,
-            "permissions": permissions
+            "permissions": permissions,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -255,7 +257,8 @@ open class Databases: Service {
 
         let params: [String: Any?] = [
             "data": data,
-            "permissions": permissions
+            "permissions": permissions,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [

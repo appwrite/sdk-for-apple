@@ -26,7 +26,8 @@ open class Teams: Service {
 
         let params: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -69,7 +70,8 @@ open class Teams: Service {
         let params: [String: Any?] = [
             "teamId": teamId,
             "name": name,
-            "roles": roles
+            "roles": roles,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -142,7 +144,8 @@ open class Teams: Service {
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any?] = [
-            "name": name
+            "name": name,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -213,7 +216,8 @@ open class Teams: Service {
 
         let params: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -274,7 +278,8 @@ open class Teams: Service {
             "email": email,
             "roles": roles,
             "url": url,
-            "name": name
+            "name": name,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -355,7 +360,8 @@ open class Teams: Service {
             .replacingOccurrences(of: "{membershipId}", with: membershipId)
 
         let params: [String: Any?] = [
-            "roles": roles
+            "roles": roles,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -438,7 +444,8 @@ open class Teams: Service {
 
         let params: [String: Any?] = [
             "userId": userId,
-            "secret": secret
+            "secret": secret,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [

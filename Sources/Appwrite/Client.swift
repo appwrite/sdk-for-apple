@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "1.2.2",
+        "x-sdk-version": "1.2.3",
         "X-Appwrite-Response-Format": "1.0.0"
     ]
 
@@ -582,10 +582,10 @@ extension Client {
         device = "\(info!.modelIdentifier) iOS/\(info!.systemVersion)"
         #elseif os(watchOS)
         let info = deviceInfo.watchOSInfo
-        device = "\(info!.systemInfo.machine) watchOS/\(info!.systemVersion)"
+        device = "\(info!.modelIdentifier) watchOS/\(info!.systemVersion)"
         #elseif os(tvOS)
-        let info = deviceInfo.tvOSInfo
-        device = "\(info!.systemInfo.machine) tvOS/\(info!.systemVersion)"
+        let info = deviceInfo.iOSInfo
+        device = "\(info!.modelIdentifier) tvOS/\(info!.systemVersion)"
         #elseif os(macOS)
         let info = deviceInfo.macOSInfo
         device = "(Macintosh; \(info!.model))"

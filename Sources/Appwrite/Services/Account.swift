@@ -84,7 +84,8 @@ open class Account: Service {
             "userId": userId,
             "email": email,
             "password": password,
-            "name": name
+            "name": name,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -162,7 +163,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "email": email,
-            "password": password
+            "password": password,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -261,7 +263,8 @@ open class Account: Service {
         let path: String = "/account/logs"
 
         let params: [String: Any?] = [
-            "queries": queries
+            "queries": queries,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -297,7 +300,8 @@ open class Account: Service {
         let path: String = "/account/name"
 
         let params: [String: Any?] = [
-            "name": name
+            "name": name,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -356,7 +360,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "password": password,
-            "oldPassword": oldPassword
+            "oldPassword": oldPassword,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -422,7 +427,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "phone": phone,
-            "password": password
+            "password": password,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -532,7 +538,8 @@ open class Account: Service {
         let path: String = "/account/prefs"
 
         let params: [String: Any?] = [
-            "prefs": prefs
+            "prefs": prefs,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -597,7 +604,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "email": email,
-            "url": url
+            "url": url,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -649,7 +657,8 @@ open class Account: Service {
             "userId": userId,
             "secret": secret,
             "password": password,
-            "passwordAgain": passwordAgain
+            "passwordAgain": passwordAgain,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -785,7 +794,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "email": email,
-            "password": password
+            "password": password,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -839,7 +849,8 @@ open class Account: Service {
         let params: [String: Any?] = [
             "userId": userId,
             "email": email,
-            "url": url
+            "url": url,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -887,7 +898,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "userId": userId,
-            "secret": secret
+            "secret": secret,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -946,7 +958,8 @@ open class Account: Service {
         let params: [String: Any?] = [
             "success": success,
             "failure": failure,
-            "scopes": scopes
+            "scopes": scopes,
+            "project": client.config["project"]
         ]
 
         let query = "?\(client.parametersToQueryString(params: params))"
@@ -990,7 +1003,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "userId": userId,
-            "phone": phone
+            "phone": phone,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -1032,7 +1046,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "userId": userId,
-            "secret": secret
+            "secret": secret,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -1234,7 +1249,8 @@ open class Account: Service {
         let path: String = "/account/verification"
 
         let params: [String: Any?] = [
-            "url": url
+            "url": url,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -1275,7 +1291,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "userId": userId,
-            "secret": secret
+            "secret": secret,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
@@ -1352,7 +1369,8 @@ open class Account: Service {
 
         let params: [String: Any?] = [
             "userId": userId,
-            "secret": secret
+            "secret": secret,
+            "project": client.config["project"]
         ]
 
         let headers: [String: String] = [
