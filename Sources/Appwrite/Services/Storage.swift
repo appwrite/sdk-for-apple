@@ -311,7 +311,8 @@ open class Storage: Service {
             "opacity": opacity,
             "rotation": rotation,
             "background": background,
-            "output": output
+            "output": output,
+            "project": client.config["project"]
         ]
 
         return try await client.call(

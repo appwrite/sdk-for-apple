@@ -946,7 +946,8 @@ open class Account: Service {
         let params: [String: Any?] = [
             "success": success,
             "failure": failure,
-            "scopes": scopes
+            "scopes": scopes,
+            "project": client.config["project"]
         ]
 
         let query = "?\(client.parametersToQueryString(params: params))"
