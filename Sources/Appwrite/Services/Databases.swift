@@ -168,6 +168,7 @@ open class Databases: Service {
     /// @param String databaseId
     /// @param String collectionId
     /// @param String documentId
+    /// @param [String] queries
     /// @throws Exception
     /// @return array
     ///
@@ -175,6 +176,7 @@ open class Databases: Service {
         databaseId: String,
         collectionId: String,
         documentId: String,
+        queries: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
         let path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
@@ -182,7 +184,9 @@ open class Databases: Service {
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
 
-        let params: [String: Any] = [:]
+        let params: [String: Any?] = [
+            "queries": queries
+        ]
 
         let headers: [String: String] = [
             "content-type": "application/json"
@@ -210,18 +214,21 @@ open class Databases: Service {
     /// @param String databaseId
     /// @param String collectionId
     /// @param String documentId
+    /// @param [String] queries
     /// @throws Exception
     /// @return array
     ///
     open func getDocument(
         databaseId: String,
         collectionId: String,
-        documentId: String
+        documentId: String,
+        queries: [String]? = nil
     ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
         return try await getDocument(
             databaseId: databaseId,
             collectionId: collectionId,
             documentId: documentId,
+            queries: queries,
             nestedType: [String: AnyCodable].self
         )
     }

@@ -1,8 +1,8 @@
 import Foundation
 import JSONCodable
 
-/// Account
-public class Account<T : Codable> {
+/// User
+public class User<T : Codable> {
 
     /// User ID.
     public let id: String
@@ -15,6 +15,15 @@ public class Account<T : Codable> {
 
     /// User name.
     public let name: String
+
+    /// Hashed user password.
+    public let password: String??
+
+    /// Password hashing algorithm.
+    public let hash: String??
+
+    /// Password hashing algorithm configuration.
+    public let hashOptions: Any??
 
     /// User registration date in ISO 8601 format.
     public let registration: String
@@ -46,6 +55,9 @@ public class Account<T : Codable> {
         createdAt: String,
         updatedAt: String,
         name: String,
+        password: String??,
+        hash: String??,
+        hashOptions: Any??,
         registration: String,
         status: Bool,
         passwordUpdate: String,
@@ -59,6 +71,9 @@ public class Account<T : Codable> {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.name = name
+        self.password = password
+        self.hash = hash
+        self.hashOptions = hashOptions
         self.registration = registration
         self.status = status
         self.passwordUpdate = passwordUpdate
@@ -75,6 +90,9 @@ public class Account<T : Codable> {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "name": name as Any,
+            "password": password as Any,
+            "hash": hash as Any,
+            "hashOptions": hashOptions as Any,
             "registration": registration as Any,
             "status": status as Any,
             "passwordUpdate": passwordUpdate as Any,
@@ -86,12 +104,15 @@ public class Account<T : Codable> {
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Account {
-        return Account(
+    public static func from(map: [String: Any] ) -> User {
+        return User(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
             name: map["name"] as! String,
+            password: map["password"] as? String?,
+            hash: map["hash"] as? String?,
+            hashOptions: map["hashOptions"] as? Any?,
             registration: map["registration"] as! String,
             status: map["status"] as! Bool,
             passwordUpdate: map["passwordUpdate"] as! String,

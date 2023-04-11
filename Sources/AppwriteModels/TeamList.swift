@@ -2,18 +2,18 @@ import Foundation
 import JSONCodable
 
 /// Teams List
-public class TeamList {
+public class TeamList<T : Codable> {
 
     /// Total number of teams documents that matched your query.
     public let total: Int
 
     /// List of teams.
-    public let teams: [Team]
+    public let teams: [Team<T>]
 
 
     init(
         total: Int,
-        teams: [Team]
+        teams: [Team<T>]
     ) {
         self.total = total
         self.teams = teams

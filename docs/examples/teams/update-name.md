@@ -6,7 +6,7 @@ let client = Client()
 
 let teams = Teams(client)
 
-let team = try await teams.update(
+let team = try await teams.updateName(
     teamId: "[TEAM_ID]",
     name: "[NAME]"
 )

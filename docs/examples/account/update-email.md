@@ -6,7 +6,7 @@ let client = Client()
 
 let account = Account(client)
 
-let account = try await account.updateEmail(
+let user = try await account.updateEmail(
     email: "email@example.com",
     password: "password"
 )

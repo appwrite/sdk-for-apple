@@ -6,7 +6,7 @@ let client = Client()
 
 let account = Account(client)
 
-let account = try await account.updatePhone(
+let user = try await account.updatePhone(
     phone: "+12065550100",
     password: "password"
 )

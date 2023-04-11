@@ -8,7 +8,6 @@ let teams = Teams(client)
 
 let membership = try await teams.createMembership(
     teamId: "[TEAM_ID]",
-    email: "email@example.com",
     roles: [],
     url: "https://example.com"
 )
