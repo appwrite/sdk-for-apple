@@ -6,9 +6,9 @@ let client = Client()
 
 let account = Account(client)
 
-let account = try await account.create(
+let user = try await account.create(
     userId: "[USER_ID]",
     email: "email@example.com",
-    password: "password"
+    password: ""
 )
 

@@ -6,7 +6,7 @@ let client = Client()
 
 let account = Account(client)
 
-let account = try await account.updatePassword(
-    password: "password"
+let user = try await account.updatePassword(
+    password: ""
 )
 

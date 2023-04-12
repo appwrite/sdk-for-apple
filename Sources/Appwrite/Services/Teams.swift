@@ -18,10 +18,11 @@ open class Teams: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func list(
+    open func list<T>(
         queries: [String]? = nil,
-        search: String? = nil
-    ) async throws -> AppwriteModels.TeamList {
+        search: String? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.TeamList<T> {
         let path: String = "/teams"
 
         let params: [String: Any?] = [
@@ -33,12 +34,78 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.TeamList = { response in
+        let converter: (Any) -> AppwriteModels.TeamList<T> = { response in
             return AppwriteModels.TeamList.from(map: response as! [String: Any])
         }
 
         return try await client.call(
             method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            converter: converter
+        )
+    }
+
+    ///
+    /// List Teams
+    ///
+    /// Get a list of all the teams in which the current user is a member. You can
+    /// use the parameters to filter your results.
+    ///
+    /// @param [String] queries
+    /// @param String search
+    /// @throws Exception
+    /// @return array
+    ///
+    open func list(
+        queries: [String]? = nil,
+        search: String? = nil
+    ) async throws -> AppwriteModels.TeamList<[String: AnyCodable]> {
+        return try await list(
+            queries: queries,
+            search: search,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// Create Team
+    ///
+    /// Create a new team. The user who creates the team will automatically be
+    /// assigned as the owner of the team. Only the users with the owner role can
+    /// invite new members, add new owners and delete or update the team.
+    ///
+    /// @param String teamId
+    /// @param String name
+    /// @param [String] roles
+    /// @throws Exception
+    /// @return array
+    ///
+    open func create<T>(
+        teamId: String,
+        name: String,
+        roles: [String]? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Team<T> {
+        let path: String = "/teams"
+
+        let params: [String: Any?] = [
+            "teamId": teamId,
+            "name": name,
+            "roles": roles
+        ]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Team<T> = { response in
+            return AppwriteModels.Team.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
             path: path,
             headers: headers,
             params: params,
@@ -63,25 +130,43 @@ open class Teams: Service {
         teamId: String,
         name: String,
         roles: [String]? = nil
-    ) async throws -> AppwriteModels.Team {
-        let path: String = "/teams"
+    ) async throws -> AppwriteModels.Team<[String: AnyCodable]> {
+        return try await create(
+            teamId: teamId,
+            name: name,
+            roles: roles,
+            nestedType: [String: AnyCodable].self
+        )
+    }
 
-        let params: [String: Any?] = [
-            "teamId": teamId,
-            "name": name,
-            "roles": roles
-        ]
+    ///
+    /// Get Team
+    ///
+    /// Get a team by its ID. All team members have read access for this resource.
+    ///
+    /// @param String teamId
+    /// @throws Exception
+    /// @return array
+    ///
+    open func get<T>(
+        teamId: String,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Team<T> {
+        let path: String = "/teams/{teamId}"
+            .replacingOccurrences(of: "{teamId}", with: teamId)
+
+        let params: [String: Any] = [:]
 
         let headers: [String: String] = [
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Team = { response in
+        let converter: (Any) -> AppwriteModels.Team<T> = { response in
             return AppwriteModels.Team.from(map: response as! [String: Any])
         }
 
         return try await client.call(
-            method: "POST",
+            method: "GET",
             path: path,
             headers: headers,
             params: params,
@@ -100,44 +185,28 @@ open class Teams: Service {
     ///
     open func get(
         teamId: String
-    ) async throws -> AppwriteModels.Team {
-        let path: String = "/teams/{teamId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-
-        let params: [String: Any] = [:]
-
-        let headers: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        let converter: (Any) -> AppwriteModels.Team = { response in
-            return AppwriteModels.Team.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "GET",
-            path: path,
-            headers: headers,
-            params: params,
-            converter: converter
+    ) async throws -> AppwriteModels.Team<[String: AnyCodable]> {
+        return try await get(
+            teamId: teamId,
+            nestedType: [String: AnyCodable].self
         )
     }
 
     ///
-    /// Update Team
+    /// Update Name
     ///
-    /// Update a team using its ID. Only members with the owner role can update the
-    /// team.
+    /// Update the team's name by its unique ID.
     ///
     /// @param String teamId
     /// @param String name
     /// @throws Exception
     /// @return array
     ///
-    open func update(
+    open func updateName<T>(
         teamId: String,
-        name: String
-    ) async throws -> AppwriteModels.Team {
+        name: String,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Team<T> {
         let path: String = "/teams/{teamId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
@@ -149,7 +218,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Team = { response in
+        let converter: (Any) -> AppwriteModels.Team<T> = { response in
             return AppwriteModels.Team.from(map: response as! [String: Any])
         }
 
@@ -159,6 +228,27 @@ open class Teams: Service {
             headers: headers,
             params: params,
             converter: converter
+        )
+    }
+
+    ///
+    /// Update Name
+    ///
+    /// Update the team's name by its unique ID.
+    ///
+    /// @param String teamId
+    /// @param String name
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updateName(
+        teamId: String,
+        name: String
+    ) async throws -> AppwriteModels.Team<[String: AnyCodable]> {
+        return try await updateName(
+            teamId: teamId,
+            name: name,
+            nestedType: [String: AnyCodable].self
         )
     }
 
@@ -236,35 +326,45 @@ open class Teams: Service {
     ///
     /// Create Team Membership
     ///
-    /// Invite a new member to join your team. If initiated from the client SDK, an
-    /// email with a link to join the team will be sent to the member's email
-    /// address and an account will be created for them should they not be signed
-    /// up already. If initiated from server-side SDKs, the new member will
-    /// automatically be added to the team.
+    /// Invite a new member to join your team. Provide an ID for existing users, or
+    /// invite unregistered users using an email or phone number. If initiated from
+    /// a Client SDK, Appwrite will send an email or sms with a link to join the
+    /// team to the invited user, and an account will be created for them if one
+    /// doesn't exist. If initiated from a Server SDK, the new member will be added
+    /// automatically to the team.
     /// 
-    /// Use the 'url' parameter to redirect the user from the invitation email back
-    /// to your app. When the user is redirected, use the [Update Team Membership
+    /// You only need to provide one of a user ID, email, or phone number. Appwrite
+    /// will prioritize accepting the user ID > email > phone number if you provide
+    /// more than one of these parameters.
+    /// 
+    /// Use the `url` parameter to redirect the user from the invitation email to
+    /// your app. After the user is redirected, use the [Update Team Membership
     /// Status](/docs/client/teams#teamsUpdateMembershipStatus) endpoint to allow
     /// the user to accept the invitation to the team. 
     /// 
     /// Please note that to avoid a [Redirect
     /// Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-    /// the only valid redirect URL's are the once from domains you have set when
-    /// adding your platforms in the console interface.
+    /// Appwrite will accept the only redirect URLs under the domains you have
+    /// added as a platform on the Appwrite Console.
+    /// 
     ///
     /// @param String teamId
-    /// @param String email
     /// @param [String] roles
     /// @param String url
+    /// @param String email
+    /// @param String userId
+    /// @param String phone
     /// @param String name
     /// @throws Exception
     /// @return array
     ///
     open func createMembership(
         teamId: String,
-        email: String,
         roles: [String],
         url: String,
+        email: String? = nil,
+        userId: String? = nil,
+        phone: String? = nil,
         name: String? = nil
     ) async throws -> AppwriteModels.Membership {
         let path: String = "/teams/{teamId}/memberships"
@@ -272,6 +372,8 @@ open class Teams: Service {
 
         let params: [String: Any?] = [
             "email": email,
+            "userId": userId,
+            "phone": phone,
             "roles": roles,
             "url": url,
             "name": name
@@ -455,6 +557,127 @@ open class Teams: Service {
             headers: headers,
             params: params,
             converter: converter
+        )
+    }
+
+    ///
+    /// Get Team Preferences
+    ///
+    /// Get the team's shared preferences by its unique ID. If a preference doesn't
+    /// need to be shared by all team members, prefer storing them in [user
+    /// preferences](/docs/client/account#accountGetPrefs).
+    ///
+    /// @param String teamId
+    /// @throws Exception
+    /// @return array
+    ///
+    open func getPrefs<T>(
+        teamId: String,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Preferences<T> {
+        let path: String = "/teams/{teamId}/prefs"
+            .replacingOccurrences(of: "{teamId}", with: teamId)
+
+        let params: [String: Any] = [:]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Preferences<T> = { response in
+            return AppwriteModels.Preferences.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: path,
+            headers: headers,
+            params: params,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get Team Preferences
+    ///
+    /// Get the team's shared preferences by its unique ID. If a preference doesn't
+    /// need to be shared by all team members, prefer storing them in [user
+    /// preferences](/docs/client/account#accountGetPrefs).
+    ///
+    /// @param String teamId
+    /// @throws Exception
+    /// @return array
+    ///
+    open func getPrefs(
+        teamId: String
+    ) async throws -> AppwriteModels.Preferences<[String: AnyCodable]> {
+        return try await getPrefs(
+            teamId: teamId,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// Update Preferences
+    ///
+    /// Update the team's preferences by its unique ID. The object you pass is
+    /// stored as is and replaces any previous value. The maximum allowed prefs
+    /// size is 64kB and throws an error if exceeded.
+    ///
+    /// @param String teamId
+    /// @param Any prefs
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updatePrefs<T>(
+        teamId: String,
+        prefs: Any,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Preferences<T> {
+        let path: String = "/teams/{teamId}/prefs"
+            .replacingOccurrences(of: "{teamId}", with: teamId)
+
+        let params: [String: Any?] = [
+            "prefs": prefs
+        ]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Preferences<T> = { response in
+            return AppwriteModels.Preferences.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: path,
+            headers: headers,
+            params: params,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Update Preferences
+    ///
+    /// Update the team's preferences by its unique ID. The object you pass is
+    /// stored as is and replaces any previous value. The maximum allowed prefs
+    /// size is 64kB and throws an error if exceeded.
+    ///
+    /// @param String teamId
+    /// @param Any prefs
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updatePrefs(
+        teamId: String,
+        prefs: Any
+    ) async throws -> AppwriteModels.Preferences<[String: AnyCodable]> {
+        return try await updatePrefs(
+            teamId: teamId,
+            prefs: prefs,
+            nestedType: [String: AnyCodable].self
         )
     }
 

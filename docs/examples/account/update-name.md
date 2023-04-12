@@ -6,7 +6,7 @@ let client = Client()
 
 let account = Account(client)
 
-let account = try await account.updateName(
+let user = try await account.updateName(
     name: "[NAME]"
 )
 

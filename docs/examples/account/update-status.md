@@ -6,5 +6,5 @@ let client = Client()
 
 let account = Account(client)
 
-let account = try await account.updateStatus()
+let user = try await account.updateStatus()
 

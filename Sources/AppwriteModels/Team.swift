@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// Team
-public class Team {
+public class Team<T : Codable> {
 
     /// Team ID.
     public let id: String
@@ -19,19 +19,24 @@ public class Team {
     /// Total number of team members.
     public let total: Int
 
+    /// Team preferences as a key-value object
+    public let prefs: Preferences<T>
+
 
     init(
         id: String,
         createdAt: String,
         updatedAt: String,
         name: String,
-        total: Int
+        total: Int,
+        prefs: Preferences<T>
     ) {
         self.id = id
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.name = name
         self.total = total
+        self.prefs = prefs
     }
 
     public func toMap() -> [String: Any] {
@@ -40,7 +45,8 @@ public class Team {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "name": name as Any,
-            "total": total as Any
+            "total": total as Any,
+            "prefs": prefs.toMap() as Any
         ]
     }
 
@@ -50,7 +56,8 @@ public class Team {
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
             name: map["name"] as! String,
-            total: map["total"] as! Int
+            total: map["total"] as! Int,
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any])
         )
     }
 }
