@@ -2,7 +2,7 @@
 
 ![Swift Package Manager](https://img.shields.io/github/v/release/appwrite/sdk-for-apple.svg?color=green&style=flat-square)
 ![License](https://img.shields.io/github/license/appwrite/sdk-for-apple.svg?style=flat-square)
-![Version](https://img.shields.io/badge/api%20version-1.2.1-blue.svg?style=flat-square)
+![Version](https://img.shields.io/badge/api%20version-1.3.0-blue.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/com/appwrite/sdk-generator?style=flat-square)](https://travis-ci.com/appwrite/sdk-generator)
 [![Twitter Account](https://img.shields.io/twitter/follow/appwrite?color=00acee&label=twitter&style=flat-square)](https://twitter.com/appwrite)
 [![Discord](https://img.shields.io/discord/564160730845151244?label=discord&style=flat-square)](https://appwrite.io/discord)
@@ -31,7 +31,7 @@ Add the package to your `Package.swift` dependencies:
 
 ```swift
     dependencies: [
-        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "1.3.0"),
+        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "2.0.0"),
     ],
 ```
 
