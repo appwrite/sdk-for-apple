@@ -31,6 +31,9 @@ public class User<T : Codable> {
     /// User status. Pass `true` for enabled and `false` for disabled.
     public let status: Bool
 
+    /// Labels for the user.
+    public let labels: [Any]
+
     /// Password update time in ISO 8601 format.
     public let passwordUpdate: String
 
@@ -49,6 +52,9 @@ public class User<T : Codable> {
     /// User preferences as a key-value object
     public let prefs: Preferences<T>
 
+    /// Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+    public let accessedAt: String
+
 
     init(
         id: String,
@@ -60,12 +66,14 @@ public class User<T : Codable> {
         hashOptions: Any??,
         registration: String,
         status: Bool,
+        labels: [Any],
         passwordUpdate: String,
         email: String,
         phone: String,
         emailVerification: Bool,
         phoneVerification: Bool,
-        prefs: Preferences<T>
+        prefs: Preferences<T>,
+        accessedAt: String
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -76,12 +84,14 @@ public class User<T : Codable> {
         self.hashOptions = hashOptions
         self.registration = registration
         self.status = status
+        self.labels = labels
         self.passwordUpdate = passwordUpdate
         self.email = email
         self.phone = phone
         self.emailVerification = emailVerification
         self.phoneVerification = phoneVerification
         self.prefs = prefs
+        self.accessedAt = accessedAt
     }
 
     public func toMap() -> [String: Any] {
@@ -95,12 +105,14 @@ public class User<T : Codable> {
             "hashOptions": hashOptions as Any,
             "registration": registration as Any,
             "status": status as Any,
+            "labels": labels as Any,
             "passwordUpdate": passwordUpdate as Any,
             "email": email as Any,
             "phone": phone as Any,
             "emailVerification": emailVerification as Any,
             "phoneVerification": phoneVerification as Any,
-            "prefs": prefs.toMap() as Any
+            "prefs": prefs.toMap() as Any,
+            "accessedAt": accessedAt as Any
         ]
     }
 
@@ -115,12 +127,14 @@ public class User<T : Codable> {
             hashOptions: map["hashOptions"] as? Any?,
             registration: map["registration"] as! String,
             status: map["status"] as! Bool,
+            labels: map["labels"] as! [Any],
             passwordUpdate: map["passwordUpdate"] as! String,
             email: map["email"] as! String,
             phone: map["phone"] as! String,
             emailVerification: map["emailVerification"] as! Bool,
             phoneVerification: map["phoneVerification"] as! Bool,
-            prefs: Preferences.from(map: map["prefs"] as! [String: Any])
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any]),
+            accessedAt: map["accessedAt"] as! String
         )
     }
 }

@@ -22,7 +22,7 @@ open class Locale: Service {
     ///
     open func get(
     ) async throws -> AppwriteModels.Locale {
-        let path: String = "/locale"
+        let api_path: String = "/locale"
 
         let params: [String: Any] = [:]
 
@@ -36,7 +36,39 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
+            headers: headers,
+            params: params,
+            converter: converter
+        )
+    }
+
+    ///
+    /// List Locale Codes
+    ///
+    /// List of all locale codes in [ISO
+    /// 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
+    ///
+    /// @throws Exception
+    /// @return array
+    ///
+    open func listCodes(
+    ) async throws -> AppwriteModels.LocaleCodeList {
+        let api_path: String = "/locale/codes"
+
+        let params: [String: Any] = [:]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.LocaleCodeList = { response in
+            return AppwriteModels.LocaleCodeList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -54,7 +86,7 @@ open class Locale: Service {
     ///
     open func listContinents(
     ) async throws -> AppwriteModels.ContinentList {
-        let path: String = "/locale/continents"
+        let api_path: String = "/locale/continents"
 
         let params: [String: Any] = [:]
 
@@ -68,7 +100,7 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -86,7 +118,7 @@ open class Locale: Service {
     ///
     open func listCountries(
     ) async throws -> AppwriteModels.CountryList {
-        let path: String = "/locale/countries"
+        let api_path: String = "/locale/countries"
 
         let params: [String: Any] = [:]
 
@@ -100,7 +132,7 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -118,7 +150,7 @@ open class Locale: Service {
     ///
     open func listCountriesEU(
     ) async throws -> AppwriteModels.CountryList {
-        let path: String = "/locale/countries/eu"
+        let api_path: String = "/locale/countries/eu"
 
         let params: [String: Any] = [:]
 
@@ -132,7 +164,7 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -150,7 +182,7 @@ open class Locale: Service {
     ///
     open func listCountriesPhones(
     ) async throws -> AppwriteModels.PhoneList {
-        let path: String = "/locale/countries/phones"
+        let api_path: String = "/locale/countries/phones"
 
         let params: [String: Any] = [:]
 
@@ -164,7 +196,7 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -183,7 +215,7 @@ open class Locale: Service {
     ///
     open func listCurrencies(
     ) async throws -> AppwriteModels.CurrencyList {
-        let path: String = "/locale/currencies"
+        let api_path: String = "/locale/currencies"
 
         let params: [String: Any] = [:]
 
@@ -197,7 +229,7 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -215,7 +247,7 @@ open class Locale: Service {
     ///
     open func listLanguages(
     ) async throws -> AppwriteModels.LanguageList {
-        let path: String = "/locale/languages"
+        let api_path: String = "/locale/languages"
 
         let params: [String: Any] = [:]
 
@@ -229,7 +261,7 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter

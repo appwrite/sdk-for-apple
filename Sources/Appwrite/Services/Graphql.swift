@@ -19,7 +19,7 @@ open class Graphql: Service {
     open func query(
         query: Any
     ) async throws -> Any {
-        let path: String = "/graphql"
+        let api_path: String = "/graphql"
 
         let params: [String: Any?] = [
             "query": query
@@ -36,7 +36,7 @@ open class Graphql: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -55,7 +55,7 @@ open class Graphql: Service {
     open func mutation(
         query: Any
     ) async throws -> Any {
-        let path: String = "/graphql/mutation"
+        let api_path: String = "/graphql/mutation"
 
         let params: [String: Any?] = [
             "query": query
@@ -72,7 +72,7 @@ open class Graphql: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter

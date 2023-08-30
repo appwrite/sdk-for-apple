@@ -25,19 +25,31 @@ public class Execution {
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
     public let status: String
 
-    /// The script status code.
-    public let statusCode: Int
+    /// HTTP request method type.
+    public let requestMethod: String
 
-    /// The script response output string. Logs the last 4,000 characters of the execution response output.
-    public let response: String
+    /// HTTP request path and query.
+    public let requestPath: String
 
-    /// The script stdout output string. Logs the last 4,000 characters of the execution stdout output. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
-    public let stdout: String
+    /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
+    public let requestHeaders: [Headers]
 
-    /// The script stderr output string. Logs the last 4,000 characters of the execution stderr output. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
-    public let stderr: String
+    /// HTTP response status code.
+    public let responseStatusCode: Int
 
-    /// The script execution duration in seconds.
+    /// HTTP response body. This will return empty unless execution is created as synchronous.
+    public let responseBody: String
+
+    /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
+    public let responseHeaders: [Headers]
+
+    /// Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+    public let logs: String
+
+    /// Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+    public let errors: String
+
+    /// Function execution duration in seconds.
     public let duration: Double
 
 
@@ -49,10 +61,14 @@ public class Execution {
         functionId: String,
         trigger: String,
         status: String,
-        statusCode: Int,
-        response: String,
-        stdout: String,
-        stderr: String,
+        requestMethod: String,
+        requestPath: String,
+        requestHeaders: [Headers],
+        responseStatusCode: Int,
+        responseBody: String,
+        responseHeaders: [Headers],
+        logs: String,
+        errors: String,
         duration: Double
     ) {
         self.id = id
@@ -62,10 +78,14 @@ public class Execution {
         self.functionId = functionId
         self.trigger = trigger
         self.status = status
-        self.statusCode = statusCode
-        self.response = response
-        self.stdout = stdout
-        self.stderr = stderr
+        self.requestMethod = requestMethod
+        self.requestPath = requestPath
+        self.requestHeaders = requestHeaders
+        self.responseStatusCode = responseStatusCode
+        self.responseBody = responseBody
+        self.responseHeaders = responseHeaders
+        self.logs = logs
+        self.errors = errors
         self.duration = duration
     }
 
@@ -78,10 +98,14 @@ public class Execution {
             "functionId": functionId as Any,
             "trigger": trigger as Any,
             "status": status as Any,
-            "statusCode": statusCode as Any,
-            "response": response as Any,
-            "stdout": stdout as Any,
-            "stderr": stderr as Any,
+            "requestMethod": requestMethod as Any,
+            "requestPath": requestPath as Any,
+            "requestHeaders": requestHeaders.map { $0.toMap() } as Any,
+            "responseStatusCode": responseStatusCode as Any,
+            "responseBody": responseBody as Any,
+            "responseHeaders": responseHeaders.map { $0.toMap() } as Any,
+            "logs": logs as Any,
+            "errors": errors as Any,
             "duration": duration as Any
         ]
     }
@@ -95,10 +119,14 @@ public class Execution {
             functionId: map["functionId"] as! String,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
-            statusCode: map["statusCode"] as! Int,
-            response: map["response"] as! String,
-            stdout: map["stdout"] as! String,
-            stderr: map["stderr"] as! String,
+            requestMethod: map["requestMethod"] as! String,
+            requestPath: map["requestPath"] as! String,
+            requestHeaders: (map["requestHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
+            responseStatusCode: map["responseStatusCode"] as! Int,
+            responseBody: map["responseBody"] as! String,
+            responseHeaders: (map["responseHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
+            logs: map["logs"] as! String,
+            errors: map["errors"] as! String,
             duration: map["duration"] as! Double
         )
     }

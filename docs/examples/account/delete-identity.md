@@ -4,9 +4,9 @@ let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
     .setProject("5df5acd0d48c2") // Your project ID
 
-let avatars = Avatars(client)
+let account = Account(client)
 
-let byteBuffer = try await avatars.getFavicon(
-    url: "https://example.com"
+let result = try await account.deleteIdentity(
+    identityId: "[IDENTITY_ID]"
 )
 
