@@ -10,7 +10,7 @@ open class Account: Service {
     ///
     /// Get Account
     ///
-    /// Get currently logged in user data as JSON object.
+    /// Get the currently logged in user.
     ///
     /// @throws Exception
     /// @return array
@@ -18,7 +18,7 @@ open class Account: Service {
     open func get<T>(
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account"
+        let api_path: String = "/account"
 
         let params: [String: Any] = [:]
 
@@ -32,7 +32,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -42,7 +42,7 @@ open class Account: Service {
     ///
     /// Get Account
     ///
-    /// Get currently logged in user data as JSON object.
+    /// Get the currently logged in user.
     ///
     /// @throws Exception
     /// @return array
@@ -78,7 +78,7 @@ open class Account: Service {
         name: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account"
+        let api_path: String = "/account"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -97,7 +97,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -158,7 +158,7 @@ open class Account: Service {
         password: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account/email"
+        let api_path: String = "/account/email"
 
         let params: [String: Any?] = [
             "email": email,
@@ -175,7 +175,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -211,6 +211,69 @@ open class Account: Service {
     }
 
     ///
+    /// List Identities
+    ///
+    /// Get the list of identities for the currently logged in user.
+    ///
+    /// @param String queries
+    /// @throws Exception
+    /// @return array
+    ///
+    open func listIdentities(
+        queries: String? = nil
+    ) async throws -> AppwriteModels.IdentityList {
+        let api_path: String = "/account/identities"
+
+        let params: [String: Any?] = [
+            "queries": queries
+        ]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.IdentityList = { response in
+            return AppwriteModels.IdentityList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: api_path,
+            headers: headers,
+            params: params,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Delete Identity
+    ///
+    /// Delete an identity by its unique ID.
+    ///
+    /// @param String identityId
+    /// @throws Exception
+    /// @return array
+    ///
+    open func deleteIdentity(
+        identityId: String
+    ) async throws -> Any {
+        let api_path: String = "/account/identities/{identityId}"
+            .replacingOccurrences(of: "{identityId}", with: identityId)
+
+        let params: [String: Any] = [:]
+
+        let headers: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: api_path,
+            headers: headers,
+            params: params        )
+    }
+
+    ///
     /// Create JWT
     ///
     /// Use this endpoint to create a JSON Web Token. You can use the resulting JWT
@@ -224,7 +287,7 @@ open class Account: Service {
     ///
     open func createJWT(
     ) async throws -> AppwriteModels.Jwt {
-        let path: String = "/account/jwt"
+        let api_path: String = "/account/jwt"
 
         let params: [String: Any] = [:]
 
@@ -238,7 +301,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -248,8 +311,8 @@ open class Account: Service {
     ///
     /// List Logs
     ///
-    /// Get currently logged in user list of latest security activity logs. Each
-    /// log returns user IP address, location and date and time of log.
+    /// Get the list of latest security activity logs for the currently logged in
+    /// user. Each log returns user IP address, location and date and time of log.
     ///
     /// @param [String] queries
     /// @throws Exception
@@ -258,7 +321,7 @@ open class Account: Service {
     open func listLogs(
         queries: [String]? = nil
     ) async throws -> AppwriteModels.LogList {
-        let path: String = "/account/logs"
+        let api_path: String = "/account/logs"
 
         let params: [String: Any?] = [
             "queries": queries
@@ -274,7 +337,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -294,7 +357,7 @@ open class Account: Service {
         name: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account/name"
+        let api_path: String = "/account/name"
 
         let params: [String: Any?] = [
             "name": name
@@ -310,7 +373,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -352,7 +415,7 @@ open class Account: Service {
         oldPassword: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account/password"
+        let api_path: String = "/account/password"
 
         let params: [String: Any?] = [
             "password": password,
@@ -369,7 +432,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -418,7 +481,7 @@ open class Account: Service {
         password: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account/phone"
+        let api_path: String = "/account/phone"
 
         let params: [String: Any?] = [
             "phone": phone,
@@ -435,7 +498,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -470,7 +533,7 @@ open class Account: Service {
     ///
     /// Get Account Preferences
     ///
-    /// Get currently logged in user preferences as a key-value object.
+    /// Get the preferences as a key-value object for the currently logged in user.
     ///
     /// @throws Exception
     /// @return array
@@ -478,7 +541,7 @@ open class Account: Service {
     open func getPrefs<T>(
         nestedType: T.Type
     ) async throws -> AppwriteModels.Preferences<T> {
-        let path: String = "/account/prefs"
+        let api_path: String = "/account/prefs"
 
         let params: [String: Any] = [:]
 
@@ -492,7 +555,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -502,7 +565,7 @@ open class Account: Service {
     ///
     /// Get Account Preferences
     ///
-    /// Get currently logged in user preferences as a key-value object.
+    /// Get the preferences as a key-value object for the currently logged in user.
     ///
     /// @throws Exception
     /// @return array
@@ -529,7 +592,7 @@ open class Account: Service {
         prefs: Any,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account/prefs"
+        let api_path: String = "/account/prefs"
 
         let params: [String: Any?] = [
             "prefs": prefs
@@ -545,7 +608,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -593,7 +656,7 @@ open class Account: Service {
         email: String,
         url: String
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/recovery"
+        let api_path: String = "/account/recovery"
 
         let params: [String: Any?] = [
             "email": email,
@@ -610,7 +673,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -643,7 +706,7 @@ open class Account: Service {
         password: String,
         passwordAgain: String
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/recovery"
+        let api_path: String = "/account/recovery"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -662,7 +725,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -672,15 +735,15 @@ open class Account: Service {
     ///
     /// List Sessions
     ///
-    /// Get currently logged in user list of active sessions across different
-    /// devices.
+    /// Get the list of active sessions across different devices for the currently
+    /// logged in user.
     ///
     /// @throws Exception
     /// @return array
     ///
     open func listSessions(
     ) async throws -> AppwriteModels.SessionList {
-        let path: String = "/account/sessions"
+        let api_path: String = "/account/sessions"
 
         let params: [String: Any] = [:]
 
@@ -694,7 +757,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -712,7 +775,7 @@ open class Account: Service {
     ///
     open func deleteSessions(
     ) async throws -> Any {
-        let path: String = "/account/sessions"
+        let api_path: String = "/account/sessions"
 
         let params: [String: Any] = [:]
 
@@ -722,7 +785,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "DELETE",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params        )
     }
@@ -742,7 +805,7 @@ open class Account: Service {
     ///
     open func createAnonymousSession(
     ) async throws -> AppwriteModels.Session {
-        let path: String = "/account/sessions/anonymous"
+        let api_path: String = "/account/sessions/anonymous"
 
         let params: [String: Any] = [:]
 
@@ -756,7 +819,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -781,7 +844,7 @@ open class Account: Service {
         email: String,
         password: String
     ) async throws -> AppwriteModels.Session {
-        let path: String = "/account/sessions/email"
+        let api_path: String = "/account/sessions/email"
 
         let params: [String: Any?] = [
             "email": email,
@@ -798,7 +861,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -809,7 +872,7 @@ open class Account: Service {
     /// Create Magic URL session
     ///
     /// Sends the user an email with a secret key for creating a session. If the
-    /// provided user ID has not be registered, a new user will be created. When
+    /// provided user ID has not been registered, a new user will be created. When
     /// the user clicks the link in the email, the user is redirected back to the
     /// URL you provided with the secret key and userId values attached to the URL
     /// query string. Use the query string parameters to submit a request to the
@@ -822,6 +885,7 @@ open class Account: Service {
     /// 
     /// A user is limited to 10 active sessions at a time by default. [Learn more
     /// about session limits](/docs/authentication-security#limits).
+    /// 
     ///
     /// @param String userId
     /// @param String email
@@ -834,7 +898,7 @@ open class Account: Service {
         email: String,
         url: String? = nil
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/sessions/magic-url"
+        let api_path: String = "/account/sessions/magic-url"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -852,7 +916,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -883,7 +947,7 @@ open class Account: Service {
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Session {
-        let path: String = "/account/sessions/magic-url"
+        let api_path: String = "/account/sessions/magic-url"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -900,7 +964,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -940,7 +1004,7 @@ open class Account: Service {
         failure: String? = nil,
         scopes: [String]? = nil
     ) throws -> Bool {
-        let path: String = "/account/sessions/oauth2/{provider}"
+        let api_path: String = "/account/sessions/oauth2/{provider}"
             .replacingOccurrences(of: "{provider}", with: provider)
 
         let params: [String: Any?] = [
@@ -951,7 +1015,7 @@ open class Account: Service {
         ]
 
         let query = "?\(client.parametersToQueryString(params: params))"
-        let url = URL(string: client.endPoint + path + query)!
+        let url = URL(string: client.endPoint + api_path + query)!
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
         let group = DispatchGroup()
 
@@ -987,7 +1051,7 @@ open class Account: Service {
         userId: String,
         phone: String
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/sessions/phone"
+        let api_path: String = "/account/sessions/phone"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -1004,7 +1068,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1029,7 +1093,7 @@ open class Account: Service {
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Session {
-        let path: String = "/account/sessions/phone"
+        let api_path: String = "/account/sessions/phone"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -1046,7 +1110,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1066,7 +1130,7 @@ open class Account: Service {
     open func getSession(
         sessionId: String
     ) async throws -> AppwriteModels.Session {
-        let path: String = "/account/sessions/{sessionId}"
+        let api_path: String = "/account/sessions/{sessionId}"
             .replacingOccurrences(of: "{sessionId}", with: sessionId)
 
         let params: [String: Any] = [:]
@@ -1081,7 +1145,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1102,7 +1166,7 @@ open class Account: Service {
     open func updateSession(
         sessionId: String
     ) async throws -> AppwriteModels.Session {
-        let path: String = "/account/sessions/{sessionId}"
+        let api_path: String = "/account/sessions/{sessionId}"
             .replacingOccurrences(of: "{sessionId}", with: sessionId)
 
         let params: [String: Any] = [:]
@@ -1117,7 +1181,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1127,10 +1191,10 @@ open class Account: Service {
     ///
     /// Delete Session
     ///
-    /// Use this endpoint to log out the currently logged in user from all their
-    /// account sessions across all of their different devices. When using the
-    /// Session ID argument, only the unique session ID provided is deleted.
-    /// 
+    /// Logout the user. Use 'current' as the session ID to logout on this device,
+    /// use a session ID to logout on another device. If you're looking to logout
+    /// the user on all devices, use [Delete
+    /// Sessions](/docs/client/account#accountDeleteSessions) instead.
     ///
     /// @param String sessionId
     /// @throws Exception
@@ -1139,7 +1203,7 @@ open class Account: Service {
     open func deleteSession(
         sessionId: String
     ) async throws -> Any {
-        let path: String = "/account/sessions/{sessionId}"
+        let api_path: String = "/account/sessions/{sessionId}"
             .replacingOccurrences(of: "{sessionId}", with: sessionId)
 
         let params: [String: Any] = [:]
@@ -1150,7 +1214,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "DELETE",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params        )
     }
@@ -1168,7 +1232,7 @@ open class Account: Service {
     open func updateStatus<T>(
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let path: String = "/account/status"
+        let api_path: String = "/account/status"
 
         let params: [String: Any] = [:]
 
@@ -1182,7 +1246,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1232,7 +1296,7 @@ open class Account: Service {
     open func createVerification(
         url: String
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/verification"
+        let api_path: String = "/account/verification"
 
         let params: [String: Any?] = [
             "url": url
@@ -1248,7 +1312,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1272,7 +1336,7 @@ open class Account: Service {
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/verification"
+        let api_path: String = "/account/verification"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -1289,7 +1353,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1311,7 +1375,7 @@ open class Account: Service {
     ///
     open func createPhoneVerification(
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/verification/phone"
+        let api_path: String = "/account/verification/phone"
 
         let params: [String: Any] = [:]
 
@@ -1325,7 +1389,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -1349,7 +1413,7 @@ open class Account: Service {
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Token {
-        let path: String = "/account/verification/phone"
+        let api_path: String = "/account/verification/phone"
 
         let params: [String: Any?] = [
             "userId": userId,
@@ -1366,7 +1430,7 @@ open class Account: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter

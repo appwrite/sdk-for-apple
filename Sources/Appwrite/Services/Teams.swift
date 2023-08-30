@@ -23,7 +23,7 @@ open class Teams: Service {
         search: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.TeamList<T> {
-        let path: String = "/teams"
+        let api_path: String = "/teams"
 
         let params: [String: Any?] = [
             "queries": queries,
@@ -40,7 +40,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -88,7 +88,7 @@ open class Teams: Service {
         roles: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Team<T> {
-        let path: String = "/teams"
+        let api_path: String = "/teams"
 
         let params: [String: Any?] = [
             "teamId": teamId,
@@ -106,7 +106,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -152,7 +152,7 @@ open class Teams: Service {
         teamId: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Team<T> {
-        let path: String = "/teams/{teamId}"
+        let api_path: String = "/teams/{teamId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any] = [:]
@@ -167,7 +167,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -207,7 +207,7 @@ open class Teams: Service {
         name: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Team<T> {
-        let path: String = "/teams/{teamId}"
+        let api_path: String = "/teams/{teamId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any?] = [
@@ -224,7 +224,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -265,7 +265,7 @@ open class Teams: Service {
     open func delete(
         teamId: String
     ) async throws -> Any {
-        let path: String = "/teams/{teamId}"
+        let api_path: String = "/teams/{teamId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any] = [:]
@@ -276,7 +276,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "DELETE",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params        )
     }
@@ -298,7 +298,7 @@ open class Teams: Service {
         queries: [String]? = nil,
         search: String? = nil
     ) async throws -> AppwriteModels.MembershipList {
-        let path: String = "/teams/{teamId}/memberships"
+        let api_path: String = "/teams/{teamId}/memberships"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any?] = [
@@ -316,7 +316,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -367,7 +367,7 @@ open class Teams: Service {
         phone: String? = nil,
         name: String? = nil
     ) async throws -> AppwriteModels.Membership {
-        let path: String = "/teams/{teamId}/memberships"
+        let api_path: String = "/teams/{teamId}/memberships"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any?] = [
@@ -389,7 +389,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -411,7 +411,7 @@ open class Teams: Service {
         teamId: String,
         membershipId: String
     ) async throws -> AppwriteModels.Membership {
-        let path: String = "/teams/{teamId}/memberships/{membershipId}"
+        let api_path: String = "/teams/{teamId}/memberships/{membershipId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
             .replacingOccurrences(of: "{membershipId}", with: membershipId)
 
@@ -427,7 +427,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -435,11 +435,12 @@ open class Teams: Service {
     }
 
     ///
-    /// Update Membership Roles
+    /// Update Membership
     ///
     /// Modify the roles of a team member. Only team members with the owner role
     /// have access to this endpoint. Learn more about [roles and
     /// permissions](/docs/permissions).
+    /// 
     ///
     /// @param String teamId
     /// @param String membershipId
@@ -447,12 +448,12 @@ open class Teams: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func updateMembershipRoles(
+    open func updateMembership(
         teamId: String,
         membershipId: String,
         roles: [String]
     ) async throws -> AppwriteModels.Membership {
-        let path: String = "/teams/{teamId}/memberships/{membershipId}"
+        let api_path: String = "/teams/{teamId}/memberships/{membershipId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
             .replacingOccurrences(of: "{membershipId}", with: membershipId)
 
@@ -470,7 +471,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -493,7 +494,7 @@ open class Teams: Service {
         teamId: String,
         membershipId: String
     ) async throws -> Any {
-        let path: String = "/teams/{teamId}/memberships/{membershipId}"
+        let api_path: String = "/teams/{teamId}/memberships/{membershipId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)
             .replacingOccurrences(of: "{membershipId}", with: membershipId)
 
@@ -505,7 +506,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "DELETE",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params        )
     }
@@ -534,7 +535,7 @@ open class Teams: Service {
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Membership {
-        let path: String = "/teams/{teamId}/memberships/{membershipId}/status"
+        let api_path: String = "/teams/{teamId}/memberships/{membershipId}/status"
             .replacingOccurrences(of: "{teamId}", with: teamId)
             .replacingOccurrences(of: "{membershipId}", with: membershipId)
 
@@ -553,7 +554,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -575,7 +576,7 @@ open class Teams: Service {
         teamId: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Preferences<T> {
-        let path: String = "/teams/{teamId}/prefs"
+        let api_path: String = "/teams/{teamId}/prefs"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any] = [:]
@@ -590,7 +591,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -634,7 +635,7 @@ open class Teams: Service {
         prefs: Any,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Preferences<T> {
-        let path: String = "/teams/{teamId}/prefs"
+        let api_path: String = "/teams/{teamId}/prefs"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let params: [String: Any?] = [
@@ -651,7 +652,7 @@ open class Teams: Service {
 
         return try await client.call(
             method: "PUT",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter

@@ -25,7 +25,7 @@ open class Databases: Service {
         queries: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
-        let path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
@@ -43,7 +43,7 @@ open class Databases: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -99,7 +99,7 @@ open class Databases: Service {
         permissions: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
@@ -119,7 +119,7 @@ open class Databases: Service {
 
         return try await client.call(
             method: "POST",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -179,7 +179,7 @@ open class Databases: Service {
         queries: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -198,7 +198,7 @@ open class Databases: Service {
 
         return try await client.call(
             method: "GET",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -255,7 +255,7 @@ open class Databases: Service {
         permissions: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -275,7 +275,7 @@ open class Databases: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params,
             converter: converter
@@ -329,7 +329,7 @@ open class Databases: Service {
         collectionId: String,
         documentId: String
     ) async throws -> Any {
-        let path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -342,7 +342,7 @@ open class Databases: Service {
 
         return try await client.call(
             method: "DELETE",
-            path: path,
+            path: api_path,
             headers: headers,
             params: params        )
     }
