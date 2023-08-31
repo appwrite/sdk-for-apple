@@ -22,11 +22,11 @@ open class Locale: Service {
     ///
     open func get(
     ) async throws -> AppwriteModels.Locale {
-        let api_path: String = "/locale"
+        let apiPath: String = "/locale"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -36,9 +36,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -54,11 +54,11 @@ open class Locale: Service {
     ///
     open func listCodes(
     ) async throws -> AppwriteModels.LocaleCodeList {
-        let api_path: String = "/locale/codes"
+        let apiPath: String = "/locale/codes"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -68,9 +68,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -86,11 +86,11 @@ open class Locale: Service {
     ///
     open func listContinents(
     ) async throws -> AppwriteModels.ContinentList {
-        let api_path: String = "/locale/continents"
+        let apiPath: String = "/locale/continents"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -100,9 +100,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -118,11 +118,11 @@ open class Locale: Service {
     ///
     open func listCountries(
     ) async throws -> AppwriteModels.CountryList {
-        let api_path: String = "/locale/countries"
+        let apiPath: String = "/locale/countries"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -132,9 +132,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -150,11 +150,11 @@ open class Locale: Service {
     ///
     open func listCountriesEU(
     ) async throws -> AppwriteModels.CountryList {
-        let api_path: String = "/locale/countries/eu"
+        let apiPath: String = "/locale/countries/eu"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -164,9 +164,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -182,11 +182,11 @@ open class Locale: Service {
     ///
     open func listCountriesPhones(
     ) async throws -> AppwriteModels.PhoneList {
-        let api_path: String = "/locale/countries/phones"
+        let apiPath: String = "/locale/countries/phones"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -196,9 +196,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -215,11 +215,11 @@ open class Locale: Service {
     ///
     open func listCurrencies(
     ) async throws -> AppwriteModels.CurrencyList {
-        let api_path: String = "/locale/currencies"
+        let apiPath: String = "/locale/currencies"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -229,9 +229,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -247,11 +247,11 @@ open class Locale: Service {
     ///
     open func listLanguages(
     ) async throws -> AppwriteModels.LanguageList {
-        let api_path: String = "/locale/languages"
+        let apiPath: String = "/locale/languages"
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -261,9 +261,9 @@ open class Locale: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }

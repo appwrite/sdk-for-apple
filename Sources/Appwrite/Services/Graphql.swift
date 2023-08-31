@@ -19,13 +19,13 @@ open class Graphql: Service {
     open func query(
         query: Any
     ) async throws -> Any {
-        let api_path: String = "/graphql"
+        let apiPath: String = "/graphql"
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "query": query
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "x-sdk-graphql": "true",
             "content-type": "application/json"
         ]
@@ -36,9 +36,9 @@ open class Graphql: Service {
 
         return try await client.call(
             method: "POST",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -55,13 +55,13 @@ open class Graphql: Service {
     open func mutation(
         query: Any
     ) async throws -> Any {
-        let api_path: String = "/graphql/mutation"
+        let apiPath: String = "/graphql/mutation"
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "query": query
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "x-sdk-graphql": "true",
             "content-type": "application/json"
         ]
@@ -72,9 +72,9 @@ open class Graphql: Service {
 
         return try await client.call(
             method: "POST",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }

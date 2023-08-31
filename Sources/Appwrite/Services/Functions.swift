@@ -24,15 +24,15 @@ open class Functions: Service {
         queries: [String]? = nil,
         search: String? = nil
     ) async throws -> AppwriteModels.ExecutionList {
-        let api_path: String = "/functions/{functionId}/executions"
+        let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "queries": queries,
             "search": search
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -42,9 +42,9 @@ open class Functions: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -74,10 +74,10 @@ open class Functions: Service {
         method: String? = nil,
         headers: Any? = nil
     ) async throws -> AppwriteModels.Execution {
-        let api_path: String = "/functions/{functionId}/executions"
+        let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "body": body,
             "async": async,
             "path": path,
@@ -85,7 +85,7 @@ open class Functions: Service {
             "headers": headers
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -95,9 +95,9 @@ open class Functions: Service {
 
         return try await client.call(
             method: "POST",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -116,13 +116,13 @@ open class Functions: Service {
         functionId: String,
         executionId: String
     ) async throws -> AppwriteModels.Execution {
-        let api_path: String = "/functions/{functionId}/executions/{executionId}"
+        let apiPath: String = "/functions/{functionId}/executions/{executionId}"
             .replacingOccurrences(of: "{functionId}", with: functionId)
             .replacingOccurrences(of: "{executionId}", with: executionId)
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -132,9 +132,9 @@ open class Functions: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
