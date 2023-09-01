@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "3.0.0",
+        "x-sdk-version": "3.0.1",
         "X-Appwrite-Response-Format": "1.4.0"
     ]
 
@@ -399,7 +399,7 @@ open class Client {
                     converter: { return $0 as! [String: Any] }
                 )
                 let chunksUploaded = map["chunksUploaded"] as! Int
-                offset = min(size, (chunksUploaded * Client.chunkSize))
+                offset = chunksUploaded * Client.chunkSize
             } catch {
                 // File does not exist yet, swallow exception
             }
@@ -410,7 +410,7 @@ open class Client {
                 ?? (input.data as! ByteBuffer).getSlice(at: offset, length: Int(size - offset))
             
             params[paramName] = InputFile.fromBuffer(slice!, filename: input.filename, mimeType: input.mimeType)
-            headers["content-range"] = "bytes \(offset)-\(min((offset + Client.chunkSize) - 1, size))/\(size)"
+            headers["content-range"] = "bytes \(offset)-\(min((offset + Client.chunkSize) - 1, size - 1))/\(size)"
 
             result = try await call(
                 method: "POST",

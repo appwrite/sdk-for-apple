@@ -25,15 +25,15 @@ open class Databases: Service {
         queries: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
-        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "queries": queries
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -43,9 +43,9 @@ open class Databases: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -99,17 +99,17 @@ open class Databases: Service {
         permissions: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "documentId": documentId,
             "data": data,
             "permissions": permissions
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -119,9 +119,9 @@ open class Databases: Service {
 
         return try await client.call(
             method: "POST",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -179,16 +179,16 @@ open class Databases: Service {
         queries: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "queries": queries
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -198,9 +198,9 @@ open class Databases: Service {
 
         return try await client.call(
             method: "GET",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -255,17 +255,17 @@ open class Databases: Service {
         permissions: [String]? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
 
-        let params: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "data": data,
             "permissions": permissions
         ]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
@@ -275,9 +275,9 @@ open class Databases: Service {
 
         return try await client.call(
             method: "PATCH",
-            path: api_path,
-            headers: headers,
-            params: params,
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
             converter: converter
         )
     }
@@ -329,22 +329,22 @@ open class Databases: Service {
         collectionId: String,
         documentId: String
     ) async throws -> Any {
-        let api_path: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
 
-        let params: [String: Any] = [:]
+        let apiParams: [String: Any] = [:]
 
-        let headers: [String: String] = [
+        let apiHeaders: [String: String] = [
             "content-type": "application/json"
         ]
 
         return try await client.call(
             method: "DELETE",
-            path: api_path,
-            headers: headers,
-            params: params        )
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
     }
 
 
