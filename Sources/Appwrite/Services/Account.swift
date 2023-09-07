@@ -1014,8 +1014,8 @@ open class Account: Service {
             "project": client.config["project"]
         ]
 
-        let query = "?\(client.parametersToQueryString(params: params))"
-        let url = URL(string: client.endPoint + api_path + query)!
+        let query = "?\(client.parametersToQueryString(params: apiParams))"
+        let url = URL(string: client.endPoint + apiPath + query)!
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
         let group = DispatchGroup()
 

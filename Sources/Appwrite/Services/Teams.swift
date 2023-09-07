@@ -350,10 +350,10 @@ open class Teams: Service {
     ///
     /// @param String teamId
     /// @param [String] roles
-    /// @param String url
     /// @param String email
     /// @param String userId
     /// @param String phone
+    /// @param String url
     /// @param String name
     /// @throws Exception
     /// @return array
@@ -361,10 +361,10 @@ open class Teams: Service {
     open func createMembership(
         teamId: String,
         roles: [String],
-        url: String,
         email: String? = nil,
         userId: String? = nil,
         phone: String? = nil,
+        url: String? = nil,
         name: String? = nil
     ) async throws -> AppwriteModels.Membership {
         let apiPath: String = "/teams/{teamId}/memberships"
