@@ -939,7 +939,7 @@ open class Account: Service {
         success: String? = nil,
         failure: String? = nil,
         scopes: [String]? = nil
-    ) throws -> Bool {
+    ) async throws -> Bool {
         let path: String = "/account/sessions/oauth2/{provider}"
             .replacingOccurrences(of: "{provider}", with: provider)
 
@@ -953,13 +953,12 @@ open class Account: Service {
         let query = "?\(client.parametersToQueryString(params: params))"
         let url = URL(string: client.endPoint + path + query)!
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
-        let group = DispatchGroup()
-
-        group.enter()
-        WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
-            group.leave()
+        
+        try await withCheckedThrowingContinuation { continuation in
+            WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
+                continuation.resume(with: result)
+            }
         }
-        group.wait()
         
         return true
 
