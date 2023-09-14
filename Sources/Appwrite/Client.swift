@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "4.0.0",
+        "x-sdk-version": "4.0.1",
         "X-Appwrite-Response-Format": "1.4.0"
     ]
 
@@ -321,18 +321,21 @@ open class Client {
             default:
                 var message = ""
                 var data = try await response.body.collect(upTo: Int.max)
+                var type = ""
                 
                 do {
                     let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
 
                     message = dict?["message"] as? String ?? response.status.reasonPhrase
+                    type = dict?["type"] as? String ?? ""
                 } catch {
                     message =  data.readString(length: data.readableBytes)!
                 }
 
                 throw AppwriteError(
                     message: message,
-                    code: Int(response.status.code)
+                    code: Int(response.status.code),
+                    type: type
                 )
             }
         }
