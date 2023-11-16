@@ -19,7 +19,7 @@ public class Document<T : Codable> {
     /// Document update date in ISO 8601 format.
     public let updatedAt: String
 
-    /// Document permissions. [Learn more about permissions](/docs/permissions).
+    /// Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     public let permissions: [Any]
 
     /// Additional properties
