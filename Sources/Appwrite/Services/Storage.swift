@@ -8,7 +8,7 @@ import AppwriteModels
 open class Storage: Service {
 
     ///
-    /// List Files
+    /// List files
     ///
     /// Get a list of all the user files. You can use the query params to filter
     /// your results.
@@ -50,12 +50,12 @@ open class Storage: Service {
     }
 
     ///
-    /// Create File
+    /// Create file
     ///
     /// Create a new file. Before using this route, you should create a new bucket
     /// resource using either a [server
-    /// integration](/docs/server/storage#storageCreateBucket) API or directly from
-    /// your Appwrite console.
+    /// integration](https://appwrite.io/docs/server/storage#storageCreateBucket)
+    /// API or directly from your Appwrite console.
     /// 
     /// Larger files should be uploaded using multiple requests with the
     /// [content-range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range)
@@ -116,7 +116,7 @@ open class Storage: Service {
     }
 
     ///
-    /// Get File
+    /// Get file
     ///
     /// Get a file by its unique ID. This endpoint response returns a JSON object
     /// with the file metadata.
@@ -154,7 +154,7 @@ open class Storage: Service {
     }
 
     ///
-    /// Update File
+    /// Update file
     ///
     /// Update a file by its unique ID. Only users with write permissions have
     /// access to update this resource.
@@ -231,7 +231,7 @@ open class Storage: Service {
     }
 
     ///
-    /// Get File for Download
+    /// Get file for download
     ///
     /// Get a file content by its unique ID. The endpoint response return with a
     /// 'Content-Disposition: attachment' header that tells the browser to start
@@ -260,7 +260,7 @@ open class Storage: Service {
     }
 
     ///
-    /// Get File Preview
+    /// Get file preview
     ///
     /// Get a file preview image. Currently, this method supports preview for image
     /// files (jpg, png, and gif), other supported formats, like pdf, docs, slides,
@@ -326,7 +326,7 @@ open class Storage: Service {
     }
 
     ///
-    /// Get File for View
+    /// Get file for view
     ///
     /// Get a file content by its unique ID. This endpoint is similar to the
     /// download method but returns with no  'Content-Disposition: attachment'

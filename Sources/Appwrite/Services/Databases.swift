@@ -8,7 +8,7 @@ import AppwriteModels
 open class Databases: Service {
 
     ///
-    /// List Documents
+    /// List documents
     ///
     /// Get a list of all the user's documents in a given collection. You can use
     /// the query params to filter your results.
@@ -51,7 +51,7 @@ open class Databases: Service {
     }
 
     ///
-    /// List Documents
+    /// List documents
     ///
     /// Get a list of all the user's documents in a given collection. You can use
     /// the query params to filter your results.
@@ -76,12 +76,12 @@ open class Databases: Service {
     }
 
     ///
-    /// Create Document
+    /// Create document
     ///
     /// Create a new Document. Before using this route, you should create a new
     /// collection resource using either a [server
-    /// integration](/docs/server/databases#databasesCreateCollection) API or
-    /// directly from your database console.
+    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// API or directly from your database console.
     ///
     /// @param String databaseId
     /// @param String collectionId
@@ -127,12 +127,12 @@ open class Databases: Service {
     }
 
     ///
-    /// Create Document
+    /// Create document
     ///
     /// Create a new Document. Before using this route, you should create a new
     /// collection resource using either a [server
-    /// integration](/docs/server/databases#databasesCreateCollection) API or
-    /// directly from your database console.
+    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// API or directly from your database console.
     ///
     /// @param String databaseId
     /// @param String collectionId
@@ -160,7 +160,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Get Document
+    /// Get document
     ///
     /// Get a document by its unique ID. This endpoint response returns a JSON
     /// object with the document data.
@@ -206,7 +206,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Get Document
+    /// Get document
     ///
     /// Get a document by its unique ID. This endpoint response returns a JSON
     /// object with the document data.
@@ -234,7 +234,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Update Document
+    /// Update document
     ///
     /// Update a document by its unique ID. Using the patch method you can pass
     /// only specific fields that will get updated.
@@ -283,7 +283,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Update Document
+    /// Update document
     ///
     /// Update a document by its unique ID. Using the patch method you can pass
     /// only specific fields that will get updated.
@@ -314,7 +314,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Delete Document
+    /// Delete document
     ///
     /// Delete a document by its unique ID.
     ///

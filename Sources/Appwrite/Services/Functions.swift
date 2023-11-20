@@ -8,7 +8,7 @@ import AppwriteModels
 open class Functions: Service {
 
     ///
-    /// List Executions
+    /// List executions
     ///
     /// Get a list of all the current user function execution logs. You can use the
     /// query params to filter your results.
@@ -50,7 +50,7 @@ open class Functions: Service {
     }
 
     ///
-    /// Create Execution
+    /// Create execution
     ///
     /// Trigger a function execution. The returned object will return you the
     /// current execution status. You can ping the `Get Execution` endpoint to get
@@ -103,7 +103,7 @@ open class Functions: Service {
     }
 
     ///
-    /// Get Execution
+    /// Get execution
     ///
     /// Get a function execution log by its unique ID.
     ///

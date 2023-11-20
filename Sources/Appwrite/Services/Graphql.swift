@@ -8,7 +8,7 @@ import AppwriteModels
 open class Graphql: Service {
 
     ///
-    /// GraphQL Endpoint
+    /// GraphQL endpoint
     ///
     /// Execute a GraphQL mutation.
     ///
@@ -44,7 +44,7 @@ open class Graphql: Service {
     }
 
     ///
-    /// GraphQL Endpoint
+    /// GraphQL endpoint
     ///
     /// Execute a GraphQL mutation.
     ///

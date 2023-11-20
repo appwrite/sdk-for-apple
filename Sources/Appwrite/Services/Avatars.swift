@@ -8,12 +8,13 @@ import AppwriteModels
 open class Avatars: Service {
 
     ///
-    /// Get Browser Icon
+    /// Get browser icon
     ///
     /// You can use this endpoint to show different browser icons to your users.
     /// The code argument receives the browser code as it appears in your user [GET
-    /// /account/sessions](/docs/client/account#accountGetSessions) endpoint. Use
-    /// width, height and quality arguments to change the output settings.
+    /// /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions)
+    /// endpoint. Use width, height and quality arguments to change the output
+    /// settings.
     /// 
     /// When one dimension is specified and the other is 0, the image is scaled
     /// with preserved aspect ratio. If both dimensions are 0, the API provides an
@@ -51,7 +52,7 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get Credit Card Icon
+    /// Get credit card icon
     ///
     /// The credit card endpoint will return you the icon of the credit card
     /// provider you need. Use width, height and quality arguments to change the
@@ -94,7 +95,7 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get Favicon
+    /// Get favicon
     ///
     /// Use this endpoint to fetch the favorite icon (AKA favicon) of any remote
     /// website URL.
@@ -122,12 +123,12 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get Country Flag
+    /// Get country flag
     ///
     /// You can use this endpoint to show different country flags icons to your
     /// users. The code argument receives the 2 letter country code. Use width,
     /// height and quality arguments to change the output settings. Country codes
-    /// follow the [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) standard.
+    /// follow the [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard.
     /// 
     /// When one dimension is specified and the other is 0, the image is scaled
     /// with preserved aspect ratio. If both dimensions are 0, the API provides an
@@ -166,7 +167,7 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get Image from URL
+    /// Get image from URL
     ///
     /// Use this endpoint to fetch a remote image URL and crop it to any image size
     /// you want. This endpoint is very useful if you need to crop and display
@@ -207,7 +208,7 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get User Initials
+    /// Get user initials
     ///
     /// Use this endpoint to show your user initials avatar icon on your website or
     /// app. By default, this route will try to print your logged-in user name or
@@ -257,7 +258,7 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get QR Code
+    /// Get QR code
     ///
     /// Converts a given plain text to a QR code image. You can use the query
     /// parameters to change the size and style of the resulting image.
