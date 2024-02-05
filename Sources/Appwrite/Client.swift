@@ -6,6 +6,8 @@ import Foundation
 import AsyncHTTPClient
 @_exported import AppwriteModels
 
+typealias CookieListener = (_ existing: [String], _ new: [String]) -> Void
+
 let DASHDASH = "--"
 let CRLF = "\r\n"
 
@@ -19,27 +21,27 @@ open class Client {
     open var endPointRealtime: String? = nil
 
     open var headers: [String: String] = [
-        "content-type": "",
+        "content-type": "application/json",
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "4.0.2",
-        "X-Appwrite-Response-Format": "1.4.0"
+        "x-sdk-version": "5.0.0-rc.1",
+        "x-appwrite-response-format": "1.4.0"
     ]
 
-    open var config: [String: String] = [:]
+    internal var config: [String: String] = [:]
 
-    open var selfSigned: Bool = false
+    internal var selfSigned: Bool = false
 
-    open var http: HTTPClient
+    internal var http: HTTPClient
 
-    private static let boundaryChars =
-        "abcdefghijklmnopqrstuvwxyz1234567890"
+    internal static var cookieListener: CookieListener? = nil
+
+    private static let boundaryChars = "abcdefghijklmnopqrstuvwxyz1234567890"
 
     private static let boundary = randomBoundary()
 
-    private static var eventLoopGroupProvider =
-        HTTPClient.EventLoopGroupProvider.createNew
+    private static var eventLoopGroupProvider = HTTPClient.EventLoopGroupProvider.singleton
 
     // MARK: Methods
 
@@ -47,6 +49,7 @@ open class Client {
         http = Client.createHTTP()
         addUserAgentHeader()
         addOriginHeader()
+        NotificationHandler.shared.client = self
     }
 
     private static func createHTTP(
@@ -134,6 +137,21 @@ open class Client {
         return self
     }
 
+    ///
+    /// Set Session
+    ///
+    /// The user session to authenticate with
+    ///
+    /// @param String value
+    ///
+    /// @return Client
+    ///
+    open func setSession(_ value: String) -> Client {
+        config["session"] = value
+        _ = addHeader(key: "X-Appwrite-Session", value: value)
+        return self
+    }
+
 
     ///
     /// Set self signed
@@ -177,6 +195,19 @@ open class Client {
     ///
     open func setEndpointRealtime(_ endPoint: String) -> Client {
         self.endPointRealtime = endPoint
+
+        return self
+    }
+
+    ///
+    /// Set push provider ID.
+    ///
+    /// @param String endpoint
+    ///
+    /// @return this
+    ///
+    open func setPushProviderId(_ providerId: String) -> Client {
+        NotificationHandler.shared.providerId = providerId
 
         return self
     }
@@ -295,64 +326,56 @@ open class Client {
         withSink bufferSink: ((ByteBuffer) -> Void)? = nil,
         converter: ((Any) -> T)? = nil
     ) async throws -> T {
-        func complete(with response: HTTPClientResponse) async throws -> T {
-            switch response.status.code {
-            case 0..<400:
-                if response.headers["Set-Cookie"].count > 0 {
-                    UserDefaults.standard.set(
-                        response.headers["Set-Cookie"],
-                        forKey: URL(string: request.url)!.host! + "-cookies"
-                    )
-                }
-                switch T.self {
-                case is Bool.Type:
-                    return true as! T
-                case is ByteBuffer.Type:
-                    return try await response.body.collect(upTo: Int.max) as! T
-                default:
-                    let data = try await response.body.collect(upTo: Int.max)
-                    if data.readableBytes == 0 {
-                        return true as! T
-                    }
-                    let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-
-                    return converter?(dict!) ?? dict! as! T
-                }
-            default:
-                var message = ""
-                var data = try await response.body.collect(upTo: Int.max)
-                var type = ""
-                
-                do {
-                    let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-
-                    message = dict?["message"] as? String ?? response.status.reasonPhrase
-                    type = dict?["type"] as? String ?? ""
-                } catch {
-                    message =  data.readString(length: data.readableBytes)!
-                }
-
-                throw AppwriteError(
-                    message: message,
-                    code: Int(response.status.code),
-                    type: type
-                )
-            }
-        }
-
-        if bufferSink == nil {
-            let response = try await http.execute(
-                request, 
-                timeout: .seconds(30)
-            )
-            return try await complete(with: response)
-        }
-
         let response = try await http.execute(
             request,
             timeout: .seconds(30)
         )
-        return try await complete(with: response)
+
+        switch response.status.code {
+        case 0..<400:
+            if response.headers["Set-Cookie"].count > 0 {
+                let domain = URL(string: request.url)!.host!
+                let existing = UserDefaults.standard.stringArray(forKey: domain)
+                let new = response.headers["Set-Cookie"]
+
+                Client.cookieListener?(existing ?? [], new)
+
+                UserDefaults.standard.set(new, forKey: domain)
+            }
+            switch T.self {
+            case is Bool.Type:
+                return true as! T
+            case is ByteBuffer.Type:
+                return try await response.body.collect(upTo: Int.max) as! T
+            default:
+                let data = try await response.body.collect(upTo: Int.max)
+                if data.readableBytes == 0 {
+                    return true as! T
+                }
+                let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+                return converter?(dict!) ?? dict! as! T
+            }
+        default:
+            var message = ""
+            var data = try await response.body.collect(upTo: Int.max)
+            var type = ""
+
+            do {
+                let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+
+                message = dict?["message"] as? String ?? response.status.reasonPhrase
+                type = dict?["type"] as? String ?? ""
+            } catch {
+                message =  data.readString(length: data.readableBytes)!
+            }
+
+            throw AppwriteError(
+                message: message,
+                code: Int(response.status.code),
+                type: type
+            )
+        }
     }
 
     func chunkedUpload<T>(
@@ -411,7 +434,7 @@ open class Client {
         while offset < size {
             let slice = (input.data as! ByteBuffer).getSlice(at: offset, length: Client.chunkSize)
                 ?? (input.data as! ByteBuffer).getSlice(at: offset, length: Int(size - offset))
-            
+
             params[paramName] = InputFile.fromBuffer(slice!, filename: input.filename, mimeType: input.mimeType)
             headers["content-range"] = "bytes \(offset)-\(min((offset + Client.chunkSize) - 1, size - 1))/\(size)"
 
@@ -466,7 +489,12 @@ open class Client {
                 || param is [Bool: Any] {
                 encodedParams[key] = param
             } else {
-                encodedParams[key] = try! (param as! Encodable).toJson()
+                let value = try! (param as! Encodable).toJson()
+
+                let range = value.index(value.startIndex, offsetBy: 1)..<value.index(value.endIndex, offsetBy: -1)
+                let substring = value[range]
+
+                encodedParams[key] = substring
             }
         }
 
@@ -601,26 +629,5 @@ extension Client {
         #endif
 
         return device
-    }
-}
-
-extension Client {
-
-    public enum HTTPStatus: Int {
-      case unknown = -1
-      case ok = 200
-      case created = 201
-      case accepted = 202
-      case movedPermanently = 301
-      case found = 302
-      case badRequest = 400
-      case notAuthorized = 401
-      case paymentRequired = 402
-      case forbidden = 403
-      case notFound = 404
-      case methodNotAllowed = 405
-      case notAcceptable = 406
-      case internalServerError = 500
-      case notImplemented = 501
     }
 }

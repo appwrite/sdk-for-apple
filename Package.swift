@@ -13,12 +13,18 @@ let package = Package(
     products: [
         .library(
             name: "Appwrite",
-            targets: ["Appwrite", "AppwriteModels", "JSONCodable"]
+            targets: [
+                "Appwrite",
+                "AppwriteEnums",
+                "AppwriteModels",
+                "JSONCodable"
+            ]
         ),
     ],
     dependencies: [
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.9.0"),
-        .package(url: "https://github.com/apple/swift-nio.git", from: "2.32.0")
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.32.0"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.4.0")
     ],
     targets: [
         .target(
@@ -26,7 +32,9 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOWebSocket", package: "swift-nio"),
+                .product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
                 "AppwriteModels",
+                "AppwriteEnums",
                 "JSONCodable"
             ]
         ),
@@ -35,6 +43,9 @@ let package = Package(
             dependencies: [
                 "JSONCodable"
             ]
+        ),
+        .target(
+            name: "AppwriteEnums"
         ),
         .target(
             name: "JSONCodable"

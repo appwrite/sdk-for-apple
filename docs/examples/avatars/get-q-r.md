@@ -6,7 +6,7 @@ let client = Client()
 
 let avatars = Avatars(client)
 
-let byteBuffer = try await avatars.getQR(
+let bytes = try await avatars.getQR(
     text: "[TEXT]"
 )
 

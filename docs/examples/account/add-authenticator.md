@@ -1,4 +1,5 @@
 import Appwrite
+import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
@@ -6,8 +7,7 @@ let client = Client()
 
 let account = Account(client)
 
-let token = try await account.createMagicURLSession(
-    userId: "[USER_ID]",
-    email: "email@example.com"
+let mfaProvider = try await account.addAuthenticator(
+    factor: .totp
 )
 
