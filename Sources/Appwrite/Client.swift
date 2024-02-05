@@ -49,6 +49,7 @@ open class Client {
         http = Client.createHTTP()
         addUserAgentHeader()
         addOriginHeader()
+
         NotificationHandler.shared.client = self
     }
 
