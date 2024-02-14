@@ -6,7 +6,7 @@ let client = Client()
 
 let storage = Storage(client)
 
-let bytes = try await storage.getFilePreview(
+let byteBuffer = try await storage.getFilePreview(
     bucketId: "[BUCKET_ID]",
     fileId: "[FILE_ID]"
 )

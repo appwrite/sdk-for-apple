@@ -49,17 +49,8 @@ public class User<T : Codable> {
     /// Phone verification status.
     public let phoneVerification: Bool
 
-    /// Multi factor authentication status.
-    public let mfa: Bool
-
-    /// TOTP status.
-    public let totp: Bool
-
     /// User preferences as a key-value object
     public let prefs: Preferences<T>
-
-    /// A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
-    public let targets: [Target]
 
     /// Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
     public let accessedAt: String
@@ -81,10 +72,7 @@ public class User<T : Codable> {
         phone: String,
         emailVerification: Bool,
         phoneVerification: Bool,
-        mfa: Bool,
-        totp: Bool,
         prefs: Preferences<T>,
-        targets: [Target],
         accessedAt: String
     ) {
         self.id = id
@@ -102,10 +90,7 @@ public class User<T : Codable> {
         self.phone = phone
         self.emailVerification = emailVerification
         self.phoneVerification = phoneVerification
-        self.mfa = mfa
-        self.totp = totp
         self.prefs = prefs
-        self.targets = targets
         self.accessedAt = accessedAt
     }
 
@@ -126,10 +111,7 @@ public class User<T : Codable> {
             "phone": phone as Any,
             "emailVerification": emailVerification as Any,
             "phoneVerification": phoneVerification as Any,
-            "mfa": mfa as Any,
-            "totp": totp as Any,
             "prefs": prefs.toMap() as Any,
-            "targets": targets.map { $0.toMap() } as Any,
             "accessedAt": accessedAt as Any
         ]
     }
@@ -151,10 +133,7 @@ public class User<T : Codable> {
             phone: map["phone"] as! String,
             emailVerification: map["emailVerification"] as! Bool,
             phoneVerification: map["phoneVerification"] as! Bool,
-            mfa: map["mfa"] as! Bool,
-            totp: map["totp"] as! Bool,
             prefs: Preferences.from(map: map["prefs"] as! [String: Any]),
-            targets: (map["targets"] as! [[String: Any]]).map { Target.from(map: $0) },
             accessedAt: map["accessedAt"] as! String
         )
     }

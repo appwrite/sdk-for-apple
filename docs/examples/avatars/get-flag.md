@@ -1,5 +1,4 @@
 import Appwrite
-import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
@@ -7,7 +6,7 @@ let client = Client()
 
 let avatars = Avatars(client)
 
-let bytes = try await avatars.getFlag(
-    code: .afghanistan
+let byteBuffer = try await avatars.getFlag(
+    code: "af"
 )
 

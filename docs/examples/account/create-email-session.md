@@ -1,5 +1,4 @@
 import Appwrite
-import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
@@ -7,8 +6,8 @@ let client = Client()
 
 let account = Account(client)
 
-let user = try await account.deleteAuthenticator(
-    provider: .totp,
-    otp: "[OTP]"
+let session = try await account.createEmailSession(
+    email: "email@example.com",
+    password: "password"
 )
 

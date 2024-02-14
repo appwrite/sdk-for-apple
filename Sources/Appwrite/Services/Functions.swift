@@ -2,7 +2,6 @@ import AsyncHTTPClient
 import Foundation
 import NIO
 import JSONCodable
-import AppwriteEnums
 import AppwriteModels
 
 /// The Functions Service allows you view, create and manage your Cloud Functions.
@@ -62,7 +61,7 @@ open class Functions: Service {
     /// @param String body
     /// @param Bool async
     /// @param String path
-    /// @param AppwriteEnums.ExecutionMethod method
+    /// @param String method
     /// @param Any headers
     /// @throws Exception
     /// @return array
@@ -72,7 +71,7 @@ open class Functions: Service {
         body: String? = nil,
         async: Bool? = nil,
         path: String? = nil,
-        method: AppwriteEnums.ExecutionMethod? = nil,
+        method: String? = nil,
         headers: Any? = nil
     ) async throws -> AppwriteModels.Execution {
         let apiPath: String = "/functions/{functionId}/executions"

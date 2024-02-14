@@ -37,9 +37,6 @@ public class Membership {
     /// User confirmation status, true if the user has joined the team or false otherwise.
     public let confirm: Bool
 
-    /// Multi factor authentication status, true if the user has MFA enabled or false otherwise.
-    public let mfa: Bool
-
     /// User list of roles
     public let roles: [Any]
 
@@ -56,7 +53,6 @@ public class Membership {
         invited: String,
         joined: String,
         confirm: Bool,
-        mfa: Bool,
         roles: [Any]
     ) {
         self.id = id
@@ -70,7 +66,6 @@ public class Membership {
         self.invited = invited
         self.joined = joined
         self.confirm = confirm
-        self.mfa = mfa
         self.roles = roles
     }
 
@@ -87,7 +82,6 @@ public class Membership {
             "invited": invited as Any,
             "joined": joined as Any,
             "confirm": confirm as Any,
-            "mfa": mfa as Any,
             "roles": roles as Any
         ]
     }
@@ -105,7 +99,6 @@ public class Membership {
             invited: map["invited"] as! String,
             joined: map["joined"] as! String,
             confirm: map["confirm"] as! Bool,
-            mfa: map["mfa"] as! Bool,
             roles: map["roles"] as! [Any]
         )
     }

@@ -79,12 +79,6 @@ public class Session {
     /// Returns true if this the current user session.
     public let current: Bool
 
-    /// Returns a list of active session factors.
-    public let factors: [Any]
-
-    /// Secret used to authenticate the user. Only included if the request was made with an API key
-    public let secret: String
-
 
     init(
         id: String,
@@ -111,9 +105,7 @@ public class Session {
         deviceModel: String,
         countryCode: String,
         countryName: String,
-        current: Bool,
-        factors: [Any],
-        secret: String
+        current: Bool
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -140,8 +132,6 @@ public class Session {
         self.countryCode = countryCode
         self.countryName = countryName
         self.current = current
-        self.factors = factors
-        self.secret = secret
     }
 
     public func toMap() -> [String: Any] {
@@ -170,9 +160,7 @@ public class Session {
             "deviceModel": deviceModel as Any,
             "countryCode": countryCode as Any,
             "countryName": countryName as Any,
-            "current": current as Any,
-            "factors": factors as Any,
-            "secret": secret as Any
+            "current": current as Any
         ]
     }
 
@@ -202,9 +190,7 @@ public class Session {
             deviceModel: map["deviceModel"] as! String,
             countryCode: map["countryCode"] as! String,
             countryName: map["countryName"] as! String,
-            current: map["current"] as! Bool,
-            factors: map["factors"] as! [Any],
-            secret: map["secret"] as! String
+            current: map["current"] as! Bool
         )
     }
 }

@@ -6,5 +6,8 @@ let client = Client()
 
 let account = Account(client)
 
-let mfaProviders = try await account.listFactors()
+let token = try await account.createPhoneSession(
+    userId: "[USER_ID]",
+    phone: "+12065550100"
+)
 

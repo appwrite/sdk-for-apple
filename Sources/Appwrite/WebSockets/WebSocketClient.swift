@@ -267,7 +267,7 @@ public class WebSocketClient {
         }
     }
 
-    @Sendable private func upgradePipelineHandler(channel: Channel, response: HTTPResponseHead) -> EventLoopFuture<Void> {
+    private func upgradePipelineHandler(channel: Channel, response: HTTPResponseHead) -> EventLoopFuture<Void> {
         let handler = MessageHandler(client: self)
         
         if response.status == .switchingProtocols {

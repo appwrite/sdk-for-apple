@@ -92,12 +92,7 @@ public class WebAuthComponent {
             cookie += "; secure"
         }
 
-        let existing = UserDefaults.standard.stringArray(forKey: domain)
-        let new = [cookie]
-
-        Client.cookieListener?(existing ?? [], new)
-
-        UserDefaults.standard.set(new, forKey: domain)
+        UserDefaults.standard.set([cookie], forKey: "\(domain)-cookies")
 
         WebAuthComponent.onCallback(
             scheme: components.scheme!,

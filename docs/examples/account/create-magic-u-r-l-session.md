@@ -6,8 +6,8 @@ let client = Client()
 
 let account = Account(client)
 
-let target = try await account.createPushTarget(
-    targetId: "[TARGET_ID]",
-    identifier: "[IDENTIFIER]"
+let token = try await account.createMagicURLSession(
+    userId: "[USER_ID]",
+    email: "email@example.com"
 )
 
