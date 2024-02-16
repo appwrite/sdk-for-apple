@@ -6,8 +6,8 @@ let client = Client()
 
 let account = Account(client)
 
-let session = try await account.updatePhoneSession(
-    userId: "[USER_ID]",
-    secret: "[SECRET]"
+let target = try await account.createPushTarget(
+    targetId: "[TARGET_ID]",
+    identifier: "[IDENTIFIER]"
 )
 

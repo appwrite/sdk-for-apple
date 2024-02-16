@@ -6,5 +6,5 @@ let client = Client()
 
 let avatars = Avatars(client)
 
-let byteBuffer = try await avatars.getInitials()
+let bytes = try await avatars.getInitials()
 

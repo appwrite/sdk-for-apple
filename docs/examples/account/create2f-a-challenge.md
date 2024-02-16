@@ -1,4 +1,5 @@
 import Appwrite
+import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
@@ -6,8 +7,7 @@ let client = Client()
 
 let account = Account(client)
 
-let token = try await account.createPhoneSession(
-    userId: "[USER_ID]",
-    phone: "+12065550100"
+let mfaChallenge = try await account.create2FAChallenge(
+    factor: .totp
 )
 

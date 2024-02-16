@@ -2,6 +2,7 @@ import AsyncHTTPClient
 import Foundation
 import NIO
 import JSONCodable
+import AppwriteEnums
 import AppwriteModels
 
 /// The Databases service allows you to create structured collections of documents, query and filter lists of documents

@@ -1,4 +1,5 @@
 import Appwrite
+import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
@@ -7,6 +8,6 @@ let client = Client()
 let account = Account(client)
 
 let success = try await account.createOAuth2Session(
-    provider: "amazon"
+    provider: .amazon
 )
 
