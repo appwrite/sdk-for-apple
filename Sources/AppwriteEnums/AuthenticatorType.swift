@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Type: String, Codable {
+public enum AuthenticatorType: String, Codable {
     case totp = "totp"
 
     public func encode(to encoder: Encoder) throws {

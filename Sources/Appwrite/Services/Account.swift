@@ -400,12 +400,12 @@ open class Account: Service {
     ///
     /// Create 2FA Challenge
     ///
-    /// @param AppwriteEnums.Factor factor
+    /// @param AppwriteEnums.AuthenticationFactor factor
     /// @throws Exception
     /// @return array
     ///
     open func create2FAChallenge(
-        factor: AppwriteEnums.Factor
+        factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
         let apiPath: String = "/account/mfa/challenge"
 
@@ -492,12 +492,12 @@ open class Account: Service {
     ///
     /// Add Authenticator
     ///
-    /// @param AppwriteEnums.Type type
+    /// @param AppwriteEnums.AuthenticatorType type
     /// @throws Exception
     /// @return array
     ///
     open func addAuthenticator(
-        type: AppwriteEnums.Type
+        type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
         let apiPath: String = "/account/mfa/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
@@ -524,13 +524,13 @@ open class Account: Service {
     ///
     /// Verify Authenticator
     ///
-    /// @param AppwriteEnums.Type type
+    /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
     /// @throws Exception
     /// @return array
     ///
     open func verifyAuthenticator<T>(
-        type: AppwriteEnums.Type,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
@@ -561,13 +561,13 @@ open class Account: Service {
     ///
     /// Verify Authenticator
     ///
-    /// @param AppwriteEnums.Type type
+    /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
     /// @throws Exception
     /// @return array
     ///
     open func verifyAuthenticator(
-        type: AppwriteEnums.Type,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
         return try await verifyAuthenticator(
@@ -580,13 +580,13 @@ open class Account: Service {
     ///
     /// Delete Authenticator
     ///
-    /// @param AppwriteEnums.Type type
+    /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
     /// @throws Exception
     /// @return array
     ///
     open func deleteAuthenticator<T>(
-        type: AppwriteEnums.Type,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
@@ -617,13 +617,13 @@ open class Account: Service {
     ///
     /// Delete Authenticator
     ///
-    /// @param AppwriteEnums.Type type
+    /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
     /// @throws Exception
     /// @return array
     ///
     open func deleteAuthenticator(
-        type: AppwriteEnums.Type,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
         return try await deleteAuthenticator(

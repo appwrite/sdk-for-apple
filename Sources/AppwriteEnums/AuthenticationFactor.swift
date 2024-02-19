@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Factor: String, Codable {
+public enum AuthenticationFactor: String, Codable {
     case totp = "totp"
     case phone = "phone"
     case email = "email"
