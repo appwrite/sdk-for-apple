@@ -39,7 +39,7 @@ open class Client {
     private static let boundary = randomBoundary()
 
     private static var eventLoopGroupProvider =
-        HTTPClient.EventLoopGroupProvider.createNew
+        HTTPClient.EventLoopGroupProvider.singleton
 
     // MARK: Methods
 

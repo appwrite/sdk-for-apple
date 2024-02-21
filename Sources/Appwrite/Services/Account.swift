@@ -1025,7 +1025,7 @@ open class Account: Service {
         let url = URL(string: client.endPoint + apiPath + query)!
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
 
-        try await withCheckedThrowingContinuation { continuation in
+        let _ = try await withCheckedThrowingContinuation { continuation in
             WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
                 continuation.resume(with: result)
             }
