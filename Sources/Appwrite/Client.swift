@@ -569,6 +569,8 @@ extension Client {
         return "tvos"
         #elseif os(macOS)
         return "macos"
+        #elseif os(visionOS)
+        return "visionos"
         #elseif os(Linux)
         return "linux"
         #elseif os(Windows)
@@ -592,6 +594,9 @@ extension Client {
         #elseif os(macOS)
         let info = deviceInfo.macOSInfo
         device = "(Macintosh; \(info!.model))"
+        #elseif os(visionOS)
+        let info = deviceInfo.iOSInfo
+        device = "\(info!.modelIdentifier) visionOS/\(info!.systemVersion)"
         #elseif os(Linux)
         let info = deviceInfo.linuxInfo
         device = "(Linux; U; \(info!.id) \(info!.version))"
