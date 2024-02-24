@@ -6,8 +6,6 @@ import Foundation
 import AsyncHTTPClient
 @_exported import AppwriteModels
 
-typealias CookieListener = (_ existing: [String], _ new: [String]) -> Void
-
 let DASHDASH = "--"
 let CRLF = "\r\n"
 
@@ -25,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "5.0.0-rc.4",
+        "x-sdk-version": "5.0.0-rc.5",
         "x-appwrite-response-format": "1.5.0"
     ]
 
@@ -35,7 +33,6 @@ open class Client {
 
     internal var http: HTTPClient
 
-    internal static var cookieListener: CookieListener? = nil
 
     private static let boundaryChars = "abcdefghijklmnopqrstuvwxyz1234567890"
 
@@ -322,8 +319,6 @@ open class Client {
                 let domain = URL(string: request.url)!.host!
                 let existing = UserDefaults.standard.stringArray(forKey: domain)
                 let new = response.headers["Set-Cookie"]
-
-                Client.cookieListener?(existing ?? [], new)
 
                 UserDefaults.standard.set(new, forKey: domain)
             }

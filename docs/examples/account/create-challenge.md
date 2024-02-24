@@ -7,8 +7,7 @@ let client = Client()
 
 let account = Account(client)
 
-let user = try await account.deleteAuthenticator(
-    type: .totp,
-    otp: "<OTP>"
+let mfaChallenge = try await account.createChallenge(
+    factor: .totp
 )
 

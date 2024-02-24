@@ -7,7 +7,10 @@ let client = Client()
 
 let account = Account(client)
 
-let mfaChallenge = try await account.create2FAChallenge(
-    factor: .totp
+let success = try await account.createOAuth2Token(
+    provider: .amazon,
+    success: "https://example.com", // optional
+    failure: "https://example.com", // optional
+    scopes: [] // optional
 )
 

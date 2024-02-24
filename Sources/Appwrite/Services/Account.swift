@@ -404,7 +404,7 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func create2FAChallenge(
+    open func createChallenge(
         factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
         let apiPath: String = "/account/mfa/challenge"
@@ -1220,7 +1220,6 @@ open class Account: Service {
     /// @param AppwriteEnums.OAuthProvider provider
     /// @param String success
     /// @param String failure
-    /// @param Bool token
     /// @param [String] scopes
     /// @throws Exception
     /// @return array
@@ -1230,7 +1229,6 @@ open class Account: Service {
         provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
-        token: Bool? = nil,
         scopes: [String]? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/sessions/oauth2/{provider}"
@@ -1239,7 +1237,6 @@ open class Account: Service {
         let apiParams: [String: Any?] = [
             "success": success,
             "failure": failure,
-            "token": token,
             "scopes": scopes,
             "project": client.config["project"]
         ]
@@ -1255,7 +1252,6 @@ open class Account: Service {
         }
         
         return true
-
     }
 
     ///
@@ -1659,6 +1655,61 @@ open class Account: Service {
             params: apiParams,
             converter: converter
         )
+    }
+
+    ///
+    /// Create OAuth2 token
+    ///
+    /// Allow the user to login to their account using the OAuth2 provider of their
+    /// choice. Each OAuth2 provider should be enabled from the Appwrite console
+    /// first. Use the success and failure arguments to provide a redirect URL's
+    /// back to your app when login is completed. 
+    /// 
+    /// If authentication succeeds, `userId` and `secret` of a token will be
+    /// appended to the success URL as query parameters. These can be used to
+    /// create a new session using the [Create
+    /// session](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
+    /// endpoint.
+    /// 
+    /// A user is limited to 10 active sessions at a time by default. [Learn more
+    /// about session
+    /// limits](https://appwrite.io/docs/authentication-security#limits).
+    ///
+    /// @param AppwriteEnums.OAuthProvider provider
+    /// @param String success
+    /// @param String failure
+    /// @param [String] scopes
+    /// @throws Exception
+    /// @return array
+    ///
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    open func createOAuth2Token(
+        provider: AppwriteEnums.OAuthProvider,
+        success: String? = nil,
+        failure: String? = nil,
+        scopes: [String]? = nil
+    ) async throws -> Bool {
+        let apiPath: String = "/account/tokens/oauth2/{provider}"
+            .replacingOccurrences(of: "{provider}", with: provider.rawValue)
+
+        let apiParams: [String: Any?] = [
+            "success": success,
+            "failure": failure,
+            "scopes": scopes,
+            "project": client.config["project"]
+        ]
+
+        let query = "?\(client.parametersToQueryString(params: apiParams))"
+        let url = URL(string: client.endPoint + apiPath + query)!
+        let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
+
+        _ = try await withCheckedThrowingContinuation { continuation in
+            WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
+                continuation.resume(with: result)
+            }
+        }
+        
+        return true
     }
 
     ///
