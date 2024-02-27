@@ -350,6 +350,8 @@ open class Account: Service {
     ///
     /// Update MFA
     ///
+    /// Enable or disable MFA on an account.
+    ///
     /// @param Bool mfa
     /// @throws Exception
     /// @return array
@@ -383,6 +385,8 @@ open class Account: Service {
 
     ///
     /// Update MFA
+    ///
+    /// Enable or disable MFA on an account.
     ///
     /// @param Bool mfa
     /// @throws Exception
@@ -433,6 +437,8 @@ open class Account: Service {
     ///
     /// Create MFA Challenge (confirmation)
     ///
+    /// Complete the MFA challenge by providing the one-time password.
+    ///
     /// @param String challengeId
     /// @param String otp
     /// @throws Exception
@@ -463,6 +469,8 @@ open class Account: Service {
     ///
     /// List Factors
     ///
+    /// List the factors available on the account to be used as a MFA challange.
+    ///
     /// @throws Exception
     /// @return array
     ///
@@ -491,6 +499,11 @@ open class Account: Service {
 
     ///
     /// Add Authenticator
+    ///
+    /// Add an authenticator app to be used as an MFA factor. Verify the
+    /// authenticator using the [verify
+    /// authenticator](/docs/references/cloud/client-web/account#verifyAuthenticator)
+    /// method.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @throws Exception
@@ -523,6 +536,10 @@ open class Account: Service {
 
     ///
     /// Verify Authenticator
+    ///
+    /// Verify an authenticator app after adding it using the [add
+    /// authenticator](/docs/references/cloud/client-web/account#addAuthenticator)
+    /// method.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
@@ -561,6 +578,10 @@ open class Account: Service {
     ///
     /// Verify Authenticator
     ///
+    /// Verify an authenticator app after adding it using the [add
+    /// authenticator](/docs/references/cloud/client-web/account#addAuthenticator)
+    /// method.
+    ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
     /// @throws Exception
@@ -579,6 +600,8 @@ open class Account: Service {
 
     ///
     /// Delete Authenticator
+    ///
+    /// Delete an authenticator for a user by ID.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
@@ -616,6 +639,8 @@ open class Account: Service {
 
     ///
     /// Delete Authenticator
+    ///
+    /// Delete an authenticator for a user by ID.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
@@ -1158,7 +1183,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create session (deprecated)
+    /// Update magic URL session
     ///
     /// Use this endpoint to create a session from token. Provide the **userId**
     /// and **secret** parameters from the successful response of authentication
@@ -1255,6 +1280,46 @@ open class Account: Service {
     }
 
     ///
+    /// Update phone session
+    ///
+    /// Use this endpoint to create a session from token. Provide the **userId**
+    /// and **secret** parameters from the successful response of authentication
+    /// flows initiated by token creation. For example, magic URL and phone login.
+    ///
+    /// @param String userId
+    /// @param String secret
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updatePhoneSession(
+        userId: String,
+        secret: String
+    ) async throws -> AppwriteModels.Session {
+        let apiPath: String = "/account/sessions/phone"
+
+        let apiParams: [String: Any?] = [
+            "userId": userId,
+            "secret": secret
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Session = { response in
+            return AppwriteModels.Session.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
     /// Create session
     ///
     /// Use this endpoint to create a session from token. Provide the **userId**
@@ -1330,7 +1395,7 @@ open class Account: Service {
     }
 
     ///
-    /// Update (or renew) a session
+    /// Update (or renew) session
     ///
     /// Extend session's expiry to increase it's lifespan. Extending a session is
     /// useful when session length is short such as 5 minutes.
@@ -1448,7 +1513,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create a push target
+    /// Create push target
     ///
     /// @param String targetId
     /// @param String identifier
@@ -1487,7 +1552,7 @@ open class Account: Service {
     }
 
     ///
-    /// Update a push target
+    /// Update push target
     ///
     /// @param String targetId
     /// @param String identifier
@@ -1523,7 +1588,7 @@ open class Account: Service {
     }
 
     ///
-    /// Delete a push target
+    /// Delete push target
     ///
     /// @param String targetId
     /// @throws Exception
