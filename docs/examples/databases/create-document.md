@@ -7,9 +7,10 @@ let client = Client()
 let databases = Databases(client)
 
 let document = try await databases.createDocument(
-    databaseId: "[DATABASE_ID]",
-    collectionId: "[COLLECTION_ID]",
-    documentId: "[DOCUMENT_ID]",
-    data: [:]
+    databaseId: "<DATABASE_ID>",
+    collectionId: "<COLLECTION_ID>",
+    documentId: "<DOCUMENT_ID>",
+    data: [:],
+    permissions: ["read("any")"] // optional
 )
 

@@ -6,8 +6,8 @@ let client = Client()
 
 let account = Account(client)
 
-let session = try await account.createEmailSession(
-    email: "email@example.com",
-    password: "password"
+let result = try await account.updateMfaChallenge(
+    challengeId: "<CHALLENGE_ID>",
+    otp: "<OTP>"
 )
 

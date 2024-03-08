@@ -1,4 +1,5 @@
 import Appwrite
+import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
@@ -6,7 +7,10 @@ let client = Client()
 
 let avatars = Avatars(client)
 
-let byteBuffer = try await avatars.getCreditCard(
-    code: "amex"
+let bytes = try await avatars.getCreditCard(
+    code: .americanExpress,
+    width: 0, // optional
+    height: 0, // optional
+    quality: 0 // optional
 )
 

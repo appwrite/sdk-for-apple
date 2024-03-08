@@ -6,7 +6,10 @@ let client = Client()
 
 let avatars = Avatars(client)
 
-let byteBuffer = try await avatars.getQR(
-    text: "[TEXT]"
+let bytes = try await avatars.getQR(
+    text: "<TEXT>",
+    size: 1, // optional
+    margin: 0, // optional
+    download: false // optional
 )
 

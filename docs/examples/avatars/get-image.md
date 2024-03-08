@@ -6,7 +6,9 @@ let client = Client()
 
 let avatars = Avatars(client)
 
-let byteBuffer = try await avatars.getImage(
-    url: "https://example.com"
+let bytes = try await avatars.getImage(
+    url: "https://example.com",
+    width: 0, // optional
+    height: 0 // optional
 )
 

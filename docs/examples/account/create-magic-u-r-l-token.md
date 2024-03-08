@@ -6,8 +6,10 @@ let client = Client()
 
 let account = Account(client)
 
-let token = try await account.createPhoneSession(
-    userId: "[USER_ID]",
-    phone: "+12065550100"
+let token = try await account.createMagicURLToken(
+    userId: "<USER_ID>",
+    email: "email@example.com",
+    url: "https://example.com", // optional
+    phrase: false // optional
 )
 

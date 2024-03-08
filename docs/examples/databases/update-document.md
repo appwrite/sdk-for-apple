@@ -7,8 +7,10 @@ let client = Client()
 let databases = Databases(client)
 
 let document = try await databases.updateDocument(
-    databaseId: "[DATABASE_ID]",
-    collectionId: "[COLLECTION_ID]",
-    documentId: "[DOCUMENT_ID]"
+    databaseId: "<DATABASE_ID>",
+    collectionId: "<COLLECTION_ID>",
+    documentId: "<DOCUMENT_ID>",
+    data: [:], // optional
+    permissions: ["read("any")"] // optional
 )
 
