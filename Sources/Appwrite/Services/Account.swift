@@ -402,102 +402,6 @@ open class Account: Service {
     }
 
     ///
-    /// Create 2FA Challenge
-    ///
-    /// @param AppwriteEnums.AuthenticationFactor factor
-    /// @throws Exception
-    /// @return array
-    ///
-    open func createChallenge(
-        factor: AppwriteEnums.AuthenticationFactor
-    ) async throws -> AppwriteModels.MfaChallenge {
-        let apiPath: String = "/account/mfa/challenge"
-
-        let apiParams: [String: Any?] = [
-            "factor": factor
-        ]
-
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        let converter: (Any) -> AppwriteModels.MfaChallenge = { response in
-            return AppwriteModels.MfaChallenge.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "POST",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-
-    ///
-    /// Create MFA Challenge (confirmation)
-    ///
-    /// Complete the MFA challenge by providing the one-time password.
-    ///
-    /// @param String challengeId
-    /// @param String otp
-    /// @throws Exception
-    /// @return array
-    ///
-    open func updateChallenge(
-        challengeId: String,
-        otp: String
-    ) async throws -> Any {
-        let apiPath: String = "/account/mfa/challenge"
-
-        let apiParams: [String: Any?] = [
-            "challengeId": challengeId,
-            "otp": otp
-        ]
-
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        return try await client.call(
-            method: "PUT",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams        )
-    }
-
-    ///
-    /// List Factors
-    ///
-    /// List the factors available on the account to be used as a MFA challange.
-    ///
-    /// @throws Exception
-    /// @return array
-    ///
-    open func listFactors(
-    ) async throws -> AppwriteModels.MfaFactors {
-        let apiPath: String = "/account/mfa/factors"
-
-        let apiParams: [String: Any] = [:]
-
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        let converter: (Any) -> AppwriteModels.MfaFactors = { response in
-            return AppwriteModels.MfaFactors.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "GET",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-
-    ///
     /// Add Authenticator
     ///
     /// Add an authenticator app to be used as an MFA factor. Verify the
@@ -509,10 +413,10 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func addAuthenticator(
+    open func createMfaAuthenticator(
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
-        let apiPath: String = "/account/mfa/{type}"
+        let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
 
         let apiParams: [String: Any] = [:]
@@ -546,12 +450,12 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func verifyAuthenticator<T>(
+    open func updateMfaAuthenticator<T>(
         type: AppwriteEnums.AuthenticatorType,
         otp: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let apiPath: String = "/account/mfa/{type}"
+        let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
 
         let apiParams: [String: Any?] = [
@@ -587,11 +491,11 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func verifyAuthenticator(
+    open func updateMfaAuthenticator(
         type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
-        return try await verifyAuthenticator(
+        return try await updateMfaAuthenticator(
             type: type,
             otp: otp,
             nestedType: [String: AnyCodable].self
@@ -608,12 +512,12 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteAuthenticator<T>(
+    open func deleteMfaAuthenticator<T>(
         type: AppwriteEnums.AuthenticatorType,
         otp: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
-        let apiPath: String = "/account/mfa/{type}"
+        let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
 
         let apiParams: [String: Any?] = [
@@ -647,14 +551,221 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteAuthenticator(
+    open func deleteMfaAuthenticator(
         type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
-        return try await deleteAuthenticator(
+        return try await deleteMfaAuthenticator(
             type: type,
             otp: otp,
             nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// Create 2FA Challenge
+    ///
+    /// Begin the process of MFA verification after sign-in. Finish the flow with
+    /// [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge)
+    /// method.
+    ///
+    /// @param AppwriteEnums.AuthenticationFactor factor
+    /// @throws Exception
+    /// @return array
+    ///
+    open func createMfaChallenge(
+        factor: AppwriteEnums.AuthenticationFactor
+    ) async throws -> AppwriteModels.MfaChallenge {
+        let apiPath: String = "/account/mfa/challenge"
+
+        let apiParams: [String: Any?] = [
+            "factor": factor
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaChallenge = { response in
+            return AppwriteModels.MfaChallenge.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Create MFA Challenge (confirmation)
+    ///
+    /// Complete the MFA challenge by providing the one-time password. Finish the
+    /// process of MFA verification by providing the one-time password. To begin
+    /// the flow, use
+    /// [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge)
+    /// method.
+    ///
+    /// @param String challengeId
+    /// @param String otp
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updateMfaChallenge(
+        challengeId: String,
+        otp: String
+    ) async throws -> Any {
+        let apiPath: String = "/account/mfa/challenge"
+
+        let apiParams: [String: Any?] = [
+            "challengeId": challengeId,
+            "otp": otp
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
+    }
+
+    ///
+    /// List Factors
+    ///
+    /// List the factors available on the account to be used as a MFA challange.
+    ///
+    /// @throws Exception
+    /// @return array
+    ///
+    open func listMfaFactors(
+    ) async throws -> AppwriteModels.MfaFactors {
+        let apiPath: String = "/account/mfa/factors"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaFactors = { response in
+            return AppwriteModels.MfaFactors.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get MFA Recovery Codes
+    ///
+    /// Get recovery codes that can be used as backup for MFA flow. Before getting
+    /// codes, they must be generated using
+    /// [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes)
+    /// method. An OTP challenge is required to read recovery codes.
+    ///
+    /// @throws Exception
+    /// @return array
+    ///
+    open func getMfaRecoveryCodes(
+    ) async throws -> AppwriteModels.MfaRecoveryCodes {
+        let apiPath: String = "/account/mfa/recovery-codes"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaRecoveryCodes = { response in
+            return AppwriteModels.MfaRecoveryCodes.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Create MFA Recovery Codes
+    ///
+    /// Generate recovery codes as backup for MFA flow. It's recommended to
+    /// generate and show then immediately after user successfully adds their
+    /// authehticator. Recovery codes can be used as a MFA verification type in
+    /// [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge)
+    /// method.
+    ///
+    /// @throws Exception
+    /// @return array
+    ///
+    open func createMfaRecoveryCodes(
+    ) async throws -> AppwriteModels.MfaRecoveryCodes {
+        let apiPath: String = "/account/mfa/recovery-codes"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaRecoveryCodes = { response in
+            return AppwriteModels.MfaRecoveryCodes.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Regenerate MFA Recovery Codes
+    ///
+    /// Regenerate recovery codes that can be used as backup for MFA flow. Before
+    /// regenerating codes, they must be first generated using
+    /// [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes)
+    /// method. An OTP challenge is required to regenreate recovery codes.
+    ///
+    /// @throws Exception
+    /// @return array
+    ///
+    open func updateMfaRecoveryCodes(
+    ) async throws -> AppwriteModels.MfaRecoveryCodes {
+        let apiPath: String = "/account/mfa/recovery-codes"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaRecoveryCodes = { response in
+            return AppwriteModels.MfaRecoveryCodes.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
         )
     }
 
@@ -1395,10 +1506,11 @@ open class Account: Service {
     }
 
     ///
-    /// Update (or renew) session
+    /// Update session
     ///
-    /// Extend session's expiry to increase it's lifespan. Extending a session is
-    /// useful when session length is short such as 5 minutes.
+    /// Use this endpoint to extend a session's length. Extending a session is
+    /// useful when session expiry is short. If the session was created using an
+    /// OAuth provider, this endpoint refreshes the access token from the provider.
     ///
     /// @param String sessionId
     /// @throws Exception

@@ -85,6 +85,9 @@ public class Session {
     /// Secret used to authenticate the user. Only included if the request was made with an API key
     public let secret: String
 
+    /// Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
+    public let mfaUpdatedAt: String
+
 
     init(
         id: String,
@@ -113,7 +116,8 @@ public class Session {
         countryName: String,
         current: Bool,
         factors: [Any],
-        secret: String
+        secret: String,
+        mfaUpdatedAt: String
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -142,6 +146,7 @@ public class Session {
         self.current = current
         self.factors = factors
         self.secret = secret
+        self.mfaUpdatedAt = mfaUpdatedAt
     }
 
     public func toMap() -> [String: Any] {
@@ -172,7 +177,8 @@ public class Session {
             "countryName": countryName as Any,
             "current": current as Any,
             "factors": factors as Any,
-            "secret": secret as Any
+            "secret": secret as Any,
+            "mfaUpdatedAt": mfaUpdatedAt as Any
         ]
     }
 
@@ -204,7 +210,8 @@ public class Session {
             countryName: map["countryName"] as! String,
             current: map["current"] as! Bool,
             factors: map["factors"] as! [Any],
-            secret: map["secret"] as! String
+            secret: map["secret"] as! String,
+            mfaUpdatedAt: map["mfaUpdatedAt"] as! String
         )
     }
 }

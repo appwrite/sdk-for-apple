@@ -2,14 +2,14 @@ import Foundation
 
 public enum ImageGravity: String, Codable {
     case center = "center"
-    case topleft = "top-left"
+    case topLeft = "top-left"
     case top = "top"
-    case topright = "top-right"
+    case topRight = "top-right"
     case `left` = "left"
     case `right` = "right"
-    case bottomleft = "bottom-left"
+    case bottomLeft = "bottom-left"
     case bottom = "bottom"
-    case bottomright = "bottom-right"
+    case bottomRight = "bottom-right"
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()

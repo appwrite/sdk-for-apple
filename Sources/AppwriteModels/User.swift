@@ -52,9 +52,6 @@ public class User<T : Codable> {
     /// Multi factor authentication status.
     public let mfa: Bool
 
-    /// TOTP status.
-    public let totp: Bool
-
     /// User preferences as a key-value object
     public let prefs: Preferences<T>
 
@@ -82,7 +79,6 @@ public class User<T : Codable> {
         emailVerification: Bool,
         phoneVerification: Bool,
         mfa: Bool,
-        totp: Bool,
         prefs: Preferences<T>,
         targets: [Target],
         accessedAt: String
@@ -103,7 +99,6 @@ public class User<T : Codable> {
         self.emailVerification = emailVerification
         self.phoneVerification = phoneVerification
         self.mfa = mfa
-        self.totp = totp
         self.prefs = prefs
         self.targets = targets
         self.accessedAt = accessedAt
@@ -127,7 +122,6 @@ public class User<T : Codable> {
             "emailVerification": emailVerification as Any,
             "phoneVerification": phoneVerification as Any,
             "mfa": mfa as Any,
-            "totp": totp as Any,
             "prefs": prefs.toMap() as Any,
             "targets": targets.map { $0.toMap() } as Any,
             "accessedAt": accessedAt as Any
@@ -152,7 +146,6 @@ public class User<T : Codable> {
             emailVerification: map["emailVerification"] as! Bool,
             phoneVerification: map["phoneVerification"] as! Bool,
             mfa: map["mfa"] as! Bool,
-            totp: map["totp"] as! Bool,
             prefs: Preferences.from(map: map["prefs"] as! [String: Any]),
             targets: (map["targets"] as! [[String: Any]]).map { Target.from(map: $0) },
             accessedAt: map["accessedAt"] as! String

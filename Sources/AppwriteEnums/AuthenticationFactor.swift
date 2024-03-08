@@ -1,9 +1,10 @@
 import Foundation
 
 public enum AuthenticationFactor: String, Codable {
-    case totp = "totp"
-    case phone = "phone"
     case email = "email"
+    case phone = "phone"
+    case totp = "totp"
+    case recoverycode = "recoverycode"
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
