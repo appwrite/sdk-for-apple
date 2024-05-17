@@ -4,7 +4,7 @@ public enum CreditCard: String, Codable {
     case americanExpress = "amex"
     case argencard = "argencard"
     case cabal = "cabal"
-    case consosud = "censosud"
+    case cencosud = "cencosud"
     case dinersClub = "diners"
     case discover = "discover"
     case elo = "elo"

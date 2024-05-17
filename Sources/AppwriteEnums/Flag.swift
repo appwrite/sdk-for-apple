@@ -142,6 +142,7 @@ public enum Flag: String, Codable {
     case palau = "pw"
     case papuaNewGuinea = "pg"
     case poland = "pl"
+    case frenchPolynesia = "pf"
     case northKorea = "kp"
     case portugal = "pt"
     case paraguay = "py"
