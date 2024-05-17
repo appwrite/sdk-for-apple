@@ -10,6 +10,9 @@ public class Session {
     /// Session creation date in ISO 8601 format.
     public let createdAt: String
 
+    /// Session update date in ISO 8601 format.
+    public let updatedAt: String
+
     /// User ID.
     public let userId: String
 
@@ -92,6 +95,7 @@ public class Session {
     init(
         id: String,
         createdAt: String,
+        updatedAt: String,
         userId: String,
         expire: String,
         provider: String,
@@ -121,6 +125,7 @@ public class Session {
     ) {
         self.id = id
         self.createdAt = createdAt
+        self.updatedAt = updatedAt
         self.userId = userId
         self.expire = expire
         self.provider = provider
@@ -153,6 +158,7 @@ public class Session {
         return [
             "$id": id as Any,
             "$createdAt": createdAt as Any,
+            "$updatedAt": updatedAt as Any,
             "userId": userId as Any,
             "expire": expire as Any,
             "provider": provider as Any,
@@ -186,6 +192,7 @@ public class Session {
         return Session(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
             userId: map["userId"] as! String,
             expire: map["expire"] as! String,
             provider: map["provider"] as! String,

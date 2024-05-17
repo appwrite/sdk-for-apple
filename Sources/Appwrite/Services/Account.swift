@@ -406,7 +406,7 @@ open class Account: Service {
     ///
     /// Add an authenticator app to be used as an MFA factor. Verify the
     /// authenticator using the [verify
-    /// authenticator](/docs/references/cloud/client-web/account#verifyAuthenticator)
+    /// authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator)
     /// method.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
@@ -442,8 +442,8 @@ open class Account: Service {
     /// Verify Authenticator
     ///
     /// Verify an authenticator app after adding it using the [add
-    /// authenticator](/docs/references/cloud/client-web/account#addAuthenticator)
-    /// method.
+    /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
+    /// method. add 
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
@@ -483,8 +483,8 @@ open class Account: Service {
     /// Verify Authenticator
     ///
     /// Verify an authenticator app after adding it using the [add
-    /// authenticator](/docs/references/cloud/client-web/account#addAuthenticator)
-    /// method.
+    /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
+    /// method. add 
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
@@ -512,11 +512,10 @@ open class Account: Service {
     /// @throws Exception
     /// @return array
     ///
-    open func deleteMfaAuthenticator<T>(
+    open func deleteMfaAuthenticator(
         type: AppwriteEnums.AuthenticatorType,
-        otp: String,
-        nestedType: T.Type
-    ) async throws -> AppwriteModels.User<T> {
+        otp: String
+    ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
 
@@ -528,38 +527,11 @@ open class Account: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.User<T> = { response in
-            return AppwriteModels.User.from(map: response as! [String: Any])
-        }
-
         return try await client.call(
             method: "DELETE",
             path: apiPath,
             headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-
-    ///
-    /// Delete Authenticator
-    ///
-    /// Delete an authenticator for a user by ID.
-    ///
-    /// @param AppwriteEnums.AuthenticatorType type
-    /// @param String otp
-    /// @throws Exception
-    /// @return array
-    ///
-    open func deleteMfaAuthenticator(
-        type: AppwriteEnums.AuthenticatorType,
-        otp: String
-    ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
-        return try await deleteMfaAuthenticator(
-            type: type,
-            otp: otp,
-            nestedType: [String: AnyCodable].self
-        )
+            params: apiParams        )
     }
 
     ///
