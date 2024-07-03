@@ -290,7 +290,7 @@ open class Account: Service {
     ///
     open func createJWT(
     ) async throws -> AppwriteModels.Jwt {
-        let apiPath: String = "/account/jwt"
+        let apiPath: String = "/account/jwts"
 
         let apiParams: [String: Any] = [:]
 
@@ -443,7 +443,7 @@ open class Account: Service {
     ///
     /// Verify an authenticator app after adding it using the [add
     /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
-    /// method. add 
+    /// method.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
@@ -484,7 +484,7 @@ open class Account: Service {
     ///
     /// Verify an authenticator app after adding it using the [add
     /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
-    /// method. add 
+    /// method.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
     /// @param String otp
