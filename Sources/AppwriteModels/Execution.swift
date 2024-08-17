@@ -52,6 +52,9 @@ public class Execution {
     /// Function execution duration in seconds.
     public let duration: Double
 
+    /// The scheduled time for execution. If left empty, execution will be queued immediately.
+    public let scheduledAt: String??
+
 
     init(
         id: String,
@@ -69,7 +72,8 @@ public class Execution {
         responseHeaders: [Headers],
         logs: String,
         errors: String,
-        duration: Double
+        duration: Double,
+        scheduledAt: String??
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -87,6 +91,7 @@ public class Execution {
         self.logs = logs
         self.errors = errors
         self.duration = duration
+        self.scheduledAt = scheduledAt
     }
 
     public func toMap() -> [String: Any] {
@@ -106,7 +111,8 @@ public class Execution {
             "responseHeaders": responseHeaders.map { $0.toMap() } as Any,
             "logs": logs as Any,
             "errors": errors as Any,
-            "duration": duration as Any
+            "duration": duration as Any,
+            "scheduledAt": scheduledAt as Any
         ]
     }
 
@@ -127,7 +133,8 @@ public class Execution {
             responseHeaders: (map["responseHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
             logs: map["logs"] as! String,
             errors: map["errors"] as! String,
-            duration: map["duration"] as! Double
+            duration: map["duration"] as! Double,
+            scheduledAt: map["scheduledAt"] as? String?
         )
     }
 }

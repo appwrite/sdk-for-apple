@@ -402,7 +402,7 @@ open class Account: Service {
     }
 
     ///
-    /// Add Authenticator
+    /// Create Authenticator
     ///
     /// Add an authenticator app to be used as an MFA factor. Verify the
     /// authenticator using the [verify
@@ -508,20 +508,16 @@ open class Account: Service {
     /// Delete an authenticator for a user by ID.
     ///
     /// @param AppwriteEnums.AuthenticatorType type
-    /// @param String otp
     /// @throws Exception
     /// @return array
     ///
     open func deleteMfaAuthenticator(
-        type: AppwriteEnums.AuthenticatorType,
-        otp: String
+        type: AppwriteEnums.AuthenticatorType
     ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
 
-        let apiParams: [String: Any?] = [
-            "otp": otp
-        ]
+        let apiParams: [String: Any] = [:]
 
         let apiHeaders: [String: String] = [
             "content-type": "application/json"
@@ -535,7 +531,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create 2FA Challenge
+    /// Create MFA Challenge
     ///
     /// Begin the process of MFA verification after sign-in. Finish the flow with
     /// [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge)
@@ -2037,7 +2033,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create phone verification (confirmation)
+    /// Update phone verification (confirmation)
     ///
     /// Use this endpoint to complete the user phone verification process. Use the
     /// **userId** and **secret** that were sent to your user's phone number to
