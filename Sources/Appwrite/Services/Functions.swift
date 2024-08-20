@@ -185,13 +185,12 @@ open class Functions: Service {
         path: String? = nil,
         method: AppwriteEnums.ExecutionMethod? = nil,
         headers: Any? = nil,
-        scheduledAt: String? = nil,
-        onProgress: ((UploadProgress) -> Void)? = nil
+        scheduledAt: String? = nil
     ) async throws -> AppwriteModels.Execution {
         let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
-        var apiParams: [String: Any?] = [
+        let apiParams: [String: Any?] = [
             "body": body,
             "async": async,
             "path": path,
@@ -200,23 +199,20 @@ open class Functions: Service {
             "scheduledAt": scheduledAt
         ]
 
-        var apiHeaders: [String: String] = [
-            "content-type": "multipart/form-data"
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
         ]
 
         let converter: (Any) -> AppwriteModels.Execution = { response in
             return AppwriteModels.Execution.from(map: response as! [String: Any])
         }
 
-        let idParamName: String? = nil
-        return try await client.chunkedUpload(
+        return try await client.call(
+            method: "POST",
             path: apiPath,
-            headers: &apiHeaders,
-            params: &apiParams,
-            paramName: paramName,
-            idParamName: idParamName,
-            converter: converter,
-            onProgress: onProgress
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
         )
     }
 
