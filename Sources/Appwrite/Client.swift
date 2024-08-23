@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "7.0.0-rc.3",
+        "x-sdk-version": "7.0.0",
         "x-appwrite-response-format": "1.6.0"
     ]
 
