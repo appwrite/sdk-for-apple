@@ -9,52 +9,6 @@ import AppwriteModels
 open class Functions: Service {
 
     ///
-    /// List function templates
-    ///
-    /// List available function templates. You can use template details in
-    /// [createFunction](/docs/references/cloud/server-nodejs/functions#create)
-    /// method.
-    ///
-    /// @param [String] runtimes
-    /// @param [String] useCases
-    /// @param Int limit
-    /// @param Int offset
-    /// @throws Exception
-    /// @return array
-    ///
-    open func listTemplates(
-        runtimes: [String]? = nil,
-        useCases: [String]? = nil,
-        limit: Int? = nil,
-        offset: Int? = nil
-    ) async throws -> AppwriteModels.TemplateFunctionList {
-        let apiPath: String = "/functions/templates"
-
-        let apiParams: [String: Any?] = [
-            "runtimes": runtimes,
-            "useCases": useCases,
-            "limit": limit,
-            "offset": offset
-        ]
-
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        let converter: (Any) -> AppwriteModels.TemplateFunctionList = { response in
-            return AppwriteModels.TemplateFunctionList.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "GET",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-
-    ///
     /// Get function template
     ///
     /// Get a function template using ID. You can use template details in
