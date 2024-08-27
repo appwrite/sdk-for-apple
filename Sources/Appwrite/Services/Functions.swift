@@ -64,6 +64,7 @@ open class Functions: Service {
     /// @param String path
     /// @param AppwriteEnums.ExecutionMethod method
     /// @param Any headers
+    /// @param String scheduledAt
     /// @throws Exception
     /// @return array
     ///
@@ -73,7 +74,8 @@ open class Functions: Service {
         async: Bool? = nil,
         path: String? = nil,
         method: AppwriteEnums.ExecutionMethod? = nil,
-        headers: Any? = nil
+        headers: Any? = nil,
+        scheduledAt: String? = nil
     ) async throws -> AppwriteModels.Execution {
         let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
@@ -83,7 +85,8 @@ open class Functions: Service {
             "async": async,
             "path": path,
             "method": method,
-            "headers": headers
+            "headers": headers,
+            "scheduledAt": scheduledAt
         ]
 
         let apiHeaders: [String: String] = [

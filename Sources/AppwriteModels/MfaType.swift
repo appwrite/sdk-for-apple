@@ -7,8 +7,10 @@ public class MfaType {
     /// Secret token used for TOTP factor.
     public let secret: String
 
+
     /// URI for authenticator apps.
     public let uri: String
+
 
 
     init(

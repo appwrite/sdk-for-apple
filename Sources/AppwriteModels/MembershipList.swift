@@ -7,8 +7,10 @@ public class MembershipList {
     /// Total number of memberships documents that matched your query.
     public let total: Int
 
+
     /// List of memberships.
     public let memberships: [Membership]
+
 
 
     init(

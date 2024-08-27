@@ -7,8 +7,10 @@ public class FileList {
     /// Total number of files documents that matched your query.
     public let total: Int
 
+
     /// List of files.
     public let files: [File]
+
 
 
     init(

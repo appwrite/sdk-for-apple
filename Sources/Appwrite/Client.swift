@@ -23,8 +23,8 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "6.0.0",
-        "x-appwrite-response-format": "1.5.0"
+        "x-sdk-version": "7.0.0",
+        "x-appwrite-response-format": "1.6.0"
     ]
 
     internal var config: [String: String] = [:]
@@ -312,6 +312,12 @@ open class Client {
             request,
             timeout: .seconds(30)
         )
+
+        if let warning = response.headers["x-appwrite-warning"].first {
+            warning.split(separator: ";").forEach { warning in
+                print("Warning: \(warning)")
+            }
+        }
 
         switch response.status.code {
         case 0..<400:

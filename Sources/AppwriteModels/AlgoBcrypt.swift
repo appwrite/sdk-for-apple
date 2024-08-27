@@ -8,6 +8,7 @@ public class AlgoBcrypt {
     public let type: String
 
 
+
     init(
         type: String
     ) {
