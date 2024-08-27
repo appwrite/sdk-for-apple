@@ -7,8 +7,10 @@ public class DocumentList<T : Codable> {
     /// Total number of documents documents that matched your query.
     public let total: Int
 
+
     /// List of documents.
     public let documents: [Document<T>]
+
 
 
     init(

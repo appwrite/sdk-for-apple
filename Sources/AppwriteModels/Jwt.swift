@@ -8,6 +8,7 @@ public class Jwt {
     public let jwt: String
 
 
+
     init(
         jwt: String
     ) {

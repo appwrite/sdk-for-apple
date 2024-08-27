@@ -7,11 +7,14 @@ public class Phone {
     /// Phone code.
     public let code: String
 
+
     /// Country two-character ISO 3166-1 alpha code.
     public let countryCode: String
 
+
     /// Country name.
     public let countryName: String
+
 
 
     init(

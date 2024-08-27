@@ -7,8 +7,10 @@ public class ContinentList {
     /// Total number of continents documents that matched your query.
     public let total: Int
 
+
     /// List of continents.
     public let continents: [Continent]
+
 
 
     init(
