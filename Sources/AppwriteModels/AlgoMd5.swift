@@ -8,7 +8,6 @@ public class AlgoMd5 {
     public let type: String
 
 
-
     init(
         type: String
     ) {

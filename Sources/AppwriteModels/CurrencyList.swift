@@ -7,10 +7,8 @@ public class CurrencyList {
     /// Total number of currencies documents that matched your query.
     public let total: Int
 
-
     /// List of currencies.
     public let currencies: [Currency]
-
 
 
     init(

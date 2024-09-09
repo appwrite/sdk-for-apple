@@ -7,10 +7,8 @@ public class TeamList<T : Codable> {
     /// Total number of teams documents that matched your query.
     public let total: Int
 
-
     /// List of teams.
     public let teams: [Team<T>]
-
 
 
     init(

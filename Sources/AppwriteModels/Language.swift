@@ -7,14 +7,11 @@ public class Language {
     /// Language name.
     public let name: String
 
-
     /// Language two-character ISO 639-1 codes.
     public let code: String
 
-
     /// Language native name.
     public let nativeName: String
-
 
 
     init(

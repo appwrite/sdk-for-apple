@@ -7,10 +7,8 @@ public class IdentityList {
     /// Total number of identities documents that matched your query.
     public let total: Int
 
-
     /// List of identities.
     public let identities: [Identity]
-
 
 
     init(

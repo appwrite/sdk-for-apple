@@ -7,10 +7,8 @@ public class LocaleCodeList {
     /// Total number of localeCodes documents that matched your query.
     public let total: Int
 
-
     /// List of localeCodes.
     public let localeCodes: [LocaleCode]
-
 
 
     init(

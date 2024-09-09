@@ -8,7 +8,6 @@ public class AlgoSha {
     public let type: String
 
 
-
     init(
         type: String
     ) {

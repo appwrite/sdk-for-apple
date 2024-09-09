@@ -7,118 +7,89 @@ public class Session {
     /// Session ID.
     public let id: String
 
-
     /// Session creation date in ISO 8601 format.
     public let createdAt: String
-
 
     /// Session update date in ISO 8601 format.
     public let updatedAt: String
 
-
     /// User ID.
     public let userId: String
-
 
     /// Session expiration date in ISO 8601 format.
     public let expire: String
 
-
     /// Session Provider.
     public let provider: String
-
 
     /// Session Provider User ID.
     public let providerUid: String
 
-
     /// Session Provider Access Token.
     public let providerAccessToken: String
-
 
     /// The date of when the access token expires in ISO 8601 format.
     public let providerAccessTokenExpiry: String
 
-
     /// Session Provider Refresh Token.
     public let providerRefreshToken: String
-
 
     /// IP in use when the session was created.
     public let ip: String
 
-
     /// Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
     public let osCode: String
-
 
     /// Operating system name.
     public let osName: String
 
-
     /// Operating system version.
     public let osVersion: String
-
 
     /// Client type.
     public let clientType: String
 
-
     /// Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
     public let clientCode: String
-
 
     /// Client name.
     public let clientName: String
 
-
     /// Client version.
     public let clientVersion: String
-
 
     /// Client engine name.
     public let clientEngine: String
 
-
     /// Client engine name.
     public let clientEngineVersion: String
-
 
     /// Device name.
     public let deviceName: String
 
-
     /// Device brand name.
     public let deviceBrand: String
-
 
     /// Device model name.
     public let deviceModel: String
 
-
     /// Country two-character ISO 3166-1 alpha code.
     public let countryCode: String
-
 
     /// Country name.
     public let countryName: String
 
-
     /// Returns true if this the current user session.
     public let current: Bool
-
 
     /// Returns a list of active session factors.
     public let factors: [Any]
 
-
     /// Secret used to authenticate the user. Only included if the request was made with an API key
     public let secret: String
 
-
     /// Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
     public let mfaUpdatedAt: String
-
 
 
     init(
