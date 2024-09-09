@@ -7,46 +7,35 @@ public class File {
     /// File ID.
     public let id: String
 
-
     /// Bucket ID.
     public let bucketId: String
-
 
     /// File creation date in ISO 8601 format.
     public let createdAt: String
 
-
     /// File update date in ISO 8601 format.
     public let updatedAt: String
-
 
     /// File permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     public let permissions: [Any]
 
-
     /// File name.
     public let name: String
-
 
     /// File MD5 signature.
     public let signature: String
 
-
     /// File mime type.
     public let mimeType: String
-
 
     /// File original size in bytes.
     public let sizeOriginal: Int
 
-
     /// Total number of chunks available
     public let chunksTotal: Int
 
-
     /// Total number of chunks uploaded
     public let chunksUploaded: Int
-
 
 
     init(

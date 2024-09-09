@@ -7,10 +7,8 @@ public class PhoneList {
     /// Total number of phones documents that matched your query.
     public let total: Int
 
-
     /// List of phones.
     public let phones: [Phone]
-
 
 
     init(

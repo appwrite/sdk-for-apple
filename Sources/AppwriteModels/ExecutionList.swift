@@ -7,10 +7,8 @@ public class ExecutionList {
     /// Total number of executions documents that matched your query.
     public let total: Int
 
-
     /// List of executions.
     public let executions: [Execution]
-
 
 
     init(

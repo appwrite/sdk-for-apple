@@ -7,38 +7,29 @@ public class Subscriber {
     /// Subscriber ID.
     public let id: String
 
-
     /// Subscriber creation time in ISO 8601 format.
     public let createdAt: String
-
 
     /// Subscriber update date in ISO 8601 format.
     public let updatedAt: String
 
-
     /// Target ID.
     public let targetId: String
-
 
     /// Target.
     public let target: Target
 
-
     /// Topic ID.
     public let userId: String
-
 
     /// User Name.
     public let userName: String
 
-
     /// Topic ID.
     public let topicId: String
 
-
     /// The target provider type. Can be one of the following: `email`, `sms` or `push`.
     public let providerType: String
-
 
 
     init(

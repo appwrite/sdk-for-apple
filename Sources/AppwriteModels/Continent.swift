@@ -7,10 +7,8 @@ public class Continent {
     /// Continent name.
     public let name: String
 
-
     /// Continent two letter code.
     public let code: String
-
 
 
     init(

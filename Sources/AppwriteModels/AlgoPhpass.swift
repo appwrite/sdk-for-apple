@@ -8,7 +8,6 @@ public class AlgoPhpass {
     public let type: String
 
 
-
     init(
         type: String
     ) {

@@ -7,10 +7,8 @@ public class LanguageList {
     /// Total number of languages documents that matched your query.
     public let total: Int
 
-
     /// List of languages.
     public let languages: [Language]
-
 
 
     init(

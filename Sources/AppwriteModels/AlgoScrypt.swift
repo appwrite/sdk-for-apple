@@ -7,22 +7,17 @@ public class AlgoScrypt {
     /// Algo type.
     public let type: String
 
-
     /// CPU complexity of computed hash.
     public let costCpu: Int
-
 
     /// Memory complexity of computed hash.
     public let costMemory: Int
 
-
     /// Parallelization of computed hash.
     public let costParallel: Int
 
-
     /// Length used to compute hash.
     public let length: Int
-
 
 
     init(

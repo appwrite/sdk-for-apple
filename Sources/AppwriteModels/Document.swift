@@ -7,26 +7,20 @@ public class Document<T : Codable> {
     /// Document ID.
     public let id: String
 
-
     /// Collection ID.
     public let collectionId: String
-
 
     /// Database ID.
     public let databaseId: String
 
-
     /// Document creation date in ISO 8601 format.
     public let createdAt: String
-
 
     /// Document update date in ISO 8601 format.
     public let updatedAt: String
 
-
     /// Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     public let permissions: [Any]
-
 
     /// Additional properties
     public let data: T
