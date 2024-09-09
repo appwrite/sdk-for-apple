@@ -7,59 +7,78 @@ public class User<T : Codable> {
     /// User ID.
     public let id: String
 
+
     /// User creation date in ISO 8601 format.
     public let createdAt: String
+
 
     /// User update date in ISO 8601 format.
     public let updatedAt: String
 
+
     /// User name.
     public let name: String
 
+
     /// Hashed user password.
-    public let password: String??
+    public let password: String?
+
 
     /// Password hashing algorithm.
-    public let hash: String??
+    public let hash: String?
+
 
     /// Password hashing algorithm configuration.
-    public let hashOptions: Any??
+    public let hashOptions: Any?
+
 
     /// User registration date in ISO 8601 format.
     public let registration: String
 
+
     /// User status. Pass `true` for enabled and `false` for disabled.
     public let status: Bool
+
 
     /// Labels for the user.
     public let labels: [Any]
 
+
     /// Password update time in ISO 8601 format.
     public let passwordUpdate: String
+
 
     /// User email address.
     public let email: String
 
+
     /// User phone number in E.164 format.
     public let phone: String
+
 
     /// Email verification status.
     public let emailVerification: Bool
 
+
     /// Phone verification status.
     public let phoneVerification: Bool
+
 
     /// Multi factor authentication status.
     public let mfa: Bool
 
+
     /// User preferences as a key-value object
     public let prefs: Preferences<T>
+
 
     /// A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
     public let targets: [Target]
 
+
     /// Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
     public let accessedAt: String
+
 
 
     init(
@@ -67,9 +86,9 @@ public class User<T : Codable> {
         createdAt: String,
         updatedAt: String,
         name: String,
-        password: String??,
-        hash: String??,
-        hashOptions: Any??,
+        password: String?,
+        hash: String?,
+        hashOptions: Any?,
         registration: String,
         status: Bool,
         labels: [Any],

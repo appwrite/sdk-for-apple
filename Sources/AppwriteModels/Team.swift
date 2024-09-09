@@ -7,20 +7,26 @@ public class Team<T : Codable> {
     /// Team ID.
     public let id: String
 
+
     /// Team creation date in ISO 8601 format.
     public let createdAt: String
+
 
     /// Team update date in ISO 8601 format.
     public let updatedAt: String
 
+
     /// Team name.
     public let name: String
+
 
     /// Total number of team members.
     public let total: Int
 
+
     /// Team preferences as a key-value object
     public let prefs: Preferences<T>
+
 
 
     init(

@@ -7,26 +7,34 @@ public class Target {
     /// Target ID.
     public let id: String
 
+
     /// Target creation time in ISO 8601 format.
     public let createdAt: String
+
 
     /// Target update date in ISO 8601 format.
     public let updatedAt: String
 
+
     /// Target Name.
     public let name: String
+
 
     /// User ID.
     public let userId: String
 
+
     /// Provider ID.
-    public let providerId: String??
+    public let providerId: String?
+
 
     /// The target provider type. Can be one of the following: `email`, `sms` or `push`.
     public let providerType: String
 
+
     /// The target identifier.
     public let identifier: String
+
 
 
     init(
@@ -35,7 +43,7 @@ public class Target {
         updatedAt: String,
         name: String,
         userId: String,
-        providerId: String??,
+        providerId: String?,
         providerType: String,
         identifier: String
     ) {

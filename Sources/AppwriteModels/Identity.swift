@@ -7,32 +7,42 @@ public class Identity {
     /// Identity ID.
     public let id: String
 
+
     /// Identity creation date in ISO 8601 format.
     public let createdAt: String
+
 
     /// Identity update date in ISO 8601 format.
     public let updatedAt: String
 
+
     /// User ID.
     public let userId: String
+
 
     /// Identity Provider.
     public let provider: String
 
+
     /// ID of the User in the Identity Provider.
     public let providerUid: String
+
 
     /// Email of the User in the Identity Provider.
     public let providerEmail: String
 
+
     /// Identity Provider Access Token.
     public let providerAccessToken: String
+
 
     /// The date of when the access token expires in ISO 8601 format.
     public let providerAccessTokenExpiry: String
 
+
     /// Identity Provider Refresh Token.
     public let providerRefreshToken: String
+
 
 
     init(

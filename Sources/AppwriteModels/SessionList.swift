@@ -7,8 +7,10 @@ public class SessionList {
     /// Total number of sessions documents that matched your query.
     public let total: Int
 
+
     /// List of sessions.
     public let sessions: [Session]
+
 
 
     init(

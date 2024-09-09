@@ -7,8 +7,10 @@ public class CountryList {
     /// Total number of countries documents that matched your query.
     public let total: Int
 
+
     /// List of countries.
     public let countries: [Country]
+
 
 
     init(

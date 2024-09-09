@@ -7,50 +7,70 @@ public class Execution {
     /// Execution ID.
     public let id: String
 
+
     /// Execution creation date in ISO 8601 format.
     public let createdAt: String
+
 
     /// Execution upate date in ISO 8601 format.
     public let updatedAt: String
 
+
     /// Execution roles.
     public let permissions: [Any]
+
 
     /// Function ID.
     public let functionId: String
 
+
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: String
+
 
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
     public let status: String
 
+
     /// HTTP request method type.
     public let requestMethod: String
+
 
     /// HTTP request path and query.
     public let requestPath: String
 
+
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let requestHeaders: [Headers]
+
 
     /// HTTP response status code.
     public let responseStatusCode: Int
 
+
     /// HTTP response body. This will return empty unless execution is created as synchronous.
     public let responseBody: String
+
 
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let responseHeaders: [Headers]
 
+
     /// Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let logs: String
+
 
     /// Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let errors: String
 
+
     /// Function execution duration in seconds.
     public let duration: Double
+
+
+    /// The scheduled time for execution. If left empty, execution will be queued immediately.
+    public let scheduledAt: String?
+
 
 
     init(
@@ -69,7 +89,8 @@ public class Execution {
         responseHeaders: [Headers],
         logs: String,
         errors: String,
-        duration: Double
+        duration: Double,
+        scheduledAt: String?
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -87,6 +108,7 @@ public class Execution {
         self.logs = logs
         self.errors = errors
         self.duration = duration
+        self.scheduledAt = scheduledAt
     }
 
     public func toMap() -> [String: Any] {
@@ -106,7 +128,8 @@ public class Execution {
             "responseHeaders": responseHeaders.map { $0.toMap() } as Any,
             "logs": logs as Any,
             "errors": errors as Any,
-            "duration": duration as Any
+            "duration": duration as Any,
+            "scheduledAt": scheduledAt as Any
         ]
     }
 
@@ -127,7 +150,8 @@ public class Execution {
             responseHeaders: (map["responseHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
             logs: map["logs"] as! String,
             errors: map["errors"] as! String,
-            duration: map["duration"] as! Double
+            duration: map["duration"] as! Double,
+            scheduledAt: map["scheduledAt"] as? String?
         )
     }
 }
