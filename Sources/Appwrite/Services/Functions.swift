@@ -59,7 +59,7 @@ open class Functions: Service {
     /// function execution process will start asynchronously.
     ///
     /// @param String functionId
-    /// @param String body
+    /// @param payload body
     /// @param Bool async
     /// @param String path
     /// @param AppwriteEnums.ExecutionMethod method
@@ -70,17 +70,18 @@ open class Functions: Service {
     ///
     open func createExecution(
         functionId: String,
-        body: String? = nil,
+        body: payload? = nil,
         async: Bool? = nil,
         path: String? = nil,
         method: AppwriteEnums.ExecutionMethod? = nil,
         headers: Any? = nil,
-        scheduledAt: String? = nil
+        scheduledAt: String? = nil,
+        onProgress: ((UploadProgress) -> Void)? = nil
     ) async throws -> AppwriteModels.Execution {
         let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
-        let apiParams: [String: Any?] = [
+        var apiParams: [String: Any?] = [
             "body": body,
             "async": async,
             "path": path,
@@ -89,20 +90,23 @@ open class Functions: Service {
             "scheduledAt": scheduledAt
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+        var apiHeaders: [String: String] = [
+            "content-type": "multipart/form-data"
         ]
 
         let converter: (Any) -> AppwriteModels.Execution = { response in
             return AppwriteModels.Execution.from(map: response as! [String: Any])
         }
 
-        return try await client.call(
-            method: "POST",
+        let idParamName: String? = nil
+        return try await client.chunkedUpload(
             path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
+            headers: &apiHeaders,
+            params: &apiParams,
+            paramName: paramName,
+            idParamName: idParamName,
+            converter: converter,
+            onProgress: onProgress
         )
     }
 

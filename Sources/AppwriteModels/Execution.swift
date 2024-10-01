@@ -38,7 +38,7 @@ public class Execution {
     public let responseStatusCode: Int
 
     /// HTTP response body. This will return empty unless execution is created as synchronous.
-    public let responseBody: String
+    public let responseBody: payload
 
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let responseHeaders: [Headers]
@@ -68,7 +68,7 @@ public class Execution {
         requestPath: String,
         requestHeaders: [Headers],
         responseStatusCode: Int,
-        responseBody: String,
+        responseBody: payload,
         responseHeaders: [Headers],
         logs: String,
         errors: String,
@@ -129,7 +129,7 @@ public class Execution {
             requestPath: map["requestPath"] as! String,
             requestHeaders: (map["requestHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
             responseStatusCode: map["responseStatusCode"] as! Int,
-            responseBody: map["responseBody"] as! String,
+            responseBody: map["responseBody"] as! payload,
             responseHeaders: (map["responseHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
             logs: map["logs"] as! String,
             errors: map["errors"] as! String,

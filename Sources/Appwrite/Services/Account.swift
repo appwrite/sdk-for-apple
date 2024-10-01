@@ -214,7 +214,7 @@ open class Account: Service {
     }
 
     ///
-    /// List Identities
+    /// List identities
     ///
     /// Get the list of identities for the currently logged in user.
     ///
@@ -402,7 +402,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create Authenticator
+    /// Create authenticator
     ///
     /// Add an authenticator app to be used as an MFA factor. Verify the
     /// authenticator using the [verify
@@ -439,7 +439,7 @@ open class Account: Service {
     }
 
     ///
-    /// Verify Authenticator
+    /// Verify authenticator
     ///
     /// Verify an authenticator app after adding it using the [add
     /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
@@ -480,7 +480,7 @@ open class Account: Service {
     }
 
     ///
-    /// Verify Authenticator
+    /// Verify authenticator
     ///
     /// Verify an authenticator app after adding it using the [add
     /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
@@ -503,7 +503,7 @@ open class Account: Service {
     }
 
     ///
-    /// Delete Authenticator
+    /// Delete authenticator
     ///
     /// Delete an authenticator for a user by ID.
     ///
@@ -531,7 +531,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create MFA Challenge
+    /// Create MFA challenge
     ///
     /// Begin the process of MFA verification after sign-in. Finish the flow with
     /// [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge)
@@ -568,7 +568,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create MFA Challenge (confirmation)
+    /// Create MFA challenge (confirmation)
     ///
     /// Complete the MFA challenge by providing the one-time password. Finish the
     /// process of MFA verification by providing the one-time password. To begin
@@ -604,7 +604,7 @@ open class Account: Service {
     }
 
     ///
-    /// List Factors
+    /// List factors
     ///
     /// List the factors available on the account to be used as a MFA challange.
     ///
@@ -635,7 +635,7 @@ open class Account: Service {
     }
 
     ///
-    /// Get MFA Recovery Codes
+    /// Get MFA recovery codes
     ///
     /// Get recovery codes that can be used as backup for MFA flow. Before getting
     /// codes, they must be generated using
@@ -669,7 +669,7 @@ open class Account: Service {
     }
 
     ///
-    /// Create MFA Recovery Codes
+    /// Create MFA recovery codes
     ///
     /// Generate recovery codes as backup for MFA flow. It's recommended to
     /// generate and show then immediately after user successfully adds their
@@ -704,7 +704,7 @@ open class Account: Service {
     }
 
     ///
-    /// Regenerate MFA Recovery Codes
+    /// Regenerate MFA recovery codes
     ///
     /// Regenerate recovery codes that can be used as backup for MFA flow. Before
     /// regenerating codes, they must be first generated using
