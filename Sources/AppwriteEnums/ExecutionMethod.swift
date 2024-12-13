@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ExecutionMethod: String, Codable {
+public enum ExecutionMethod: String, CustomStringConvertible {
     case gET = "GET"
     case pOST = "POST"
     case pUT = "PUT"
@@ -8,8 +8,7 @@ public enum ExecutionMethod: String, Codable {
     case dELETE = "DELETE"
     case oPTIONS = "OPTIONS"
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+    public var description: String {
+        return rawValue
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum OAuthProvider: String, Codable {
+public enum OAuthProvider: String, CustomStringConvertible {
     case amazon = "amazon"
     case apple = "apple"
     case auth0 = "auth0"
@@ -41,8 +41,7 @@ public enum OAuthProvider: String, Codable {
     case zoom = "zoom"
     case mock = "mock"
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+    public var description: String {
+        return rawValue
     }
 }

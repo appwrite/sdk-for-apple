@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ImageFormat: String, Codable {
+public enum ImageFormat: String, CustomStringConvertible {
     case jpg = "jpg"
     case jpeg = "jpeg"
     case gif = "gif"
@@ -8,8 +8,7 @@ public enum ImageFormat: String, Codable {
     case webp = "webp"
     case avif = "avif"
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+    public var description: String {
+        return rawValue
     }
 }

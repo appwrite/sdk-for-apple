@@ -41,7 +41,7 @@ public class Membership {
     public let mfa: Bool
 
     /// User list of roles
-    public let roles: [Any]
+    public let roles: [String]
 
 
     init(
@@ -57,7 +57,7 @@ public class Membership {
         joined: String,
         confirm: Bool,
         mfa: Bool,
-        roles: [Any]
+        roles: [String]
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -106,7 +106,7 @@ public class Membership {
             joined: map["joined"] as! String,
             confirm: map["confirm"] as! Bool,
             mfa: map["mfa"] as! Bool,
-            roles: map["roles"] as! [Any]
+            roles: map["roles"] as! [String]
         )
     }
 }

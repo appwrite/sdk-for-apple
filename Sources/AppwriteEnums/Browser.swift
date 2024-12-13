@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Browser: String, Codable {
+public enum Browser: String, CustomStringConvertible {
     case avantBrowser = "aa"
     case androidWebViewBeta = "an"
     case googleChrome = "ch"
@@ -16,8 +16,7 @@ public enum Browser: String, Codable {
     case opera = "op"
     case operaNext = "on"
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+    public var description: String {
+        return rawValue
     }
 }

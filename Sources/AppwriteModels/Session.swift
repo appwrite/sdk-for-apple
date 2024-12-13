@@ -83,7 +83,7 @@ public class Session {
     public let current: Bool
 
     /// Returns a list of active session factors.
-    public let factors: [Any]
+    public let factors: [String]
 
     /// Secret used to authenticate the user. Only included if the request was made with an API key
     public let secret: String
@@ -119,7 +119,7 @@ public class Session {
         countryCode: String,
         countryName: String,
         current: Bool,
-        factors: [Any],
+        factors: [String],
         secret: String,
         mfaUpdatedAt: String
     ) {
@@ -216,7 +216,7 @@ public class Session {
             countryCode: map["countryCode"] as! String,
             countryName: map["countryName"] as! String,
             current: map["current"] as! Bool,
-            factors: map["factors"] as! [Any],
+            factors: map["factors"] as! [String],
             secret: map["secret"] as! String,
             mfaUpdatedAt: map["mfaUpdatedAt"] as! String
         )

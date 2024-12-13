@@ -1350,12 +1350,16 @@ open class Account: Service {
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
 
         _ = try await withCheckedThrowingContinuation { continuation in
-            WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
-                continuation.resume(with: result)
+            /// main thread for PresentationContextProvider
+            DispatchQueue.main.async {
+                WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
+                    continuation.resume(with: result)
+                }
             }
         }
-        
+
         return true
+
     }
 
     ///
@@ -1849,12 +1853,16 @@ open class Account: Service {
         let callbackScheme = "appwrite-callback-\(client.config["project"] ?? "")"
 
         _ = try await withCheckedThrowingContinuation { continuation in
-            WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
-                continuation.resume(with: result)
+            /// main thread for PresentationContextProvider
+            DispatchQueue.main.async {
+                WebAuthComponent.authenticate(url: url, callbackScheme: callbackScheme) { result in
+                    continuation.resume(with: result)
+                }
             }
         }
-        
+
         return true
+
     }
 
     ///

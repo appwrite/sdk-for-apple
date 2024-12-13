@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CreditCard: String, Codable {
+public enum CreditCard: String, CustomStringConvertible {
     case americanExpress = "amex"
     case argencard = "argencard"
     case cabal = "cabal"
@@ -18,8 +18,7 @@ public enum CreditCard: String, Codable {
     case mIR = "mir"
     case maestro = "maestro"
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+    public var description: String {
+        return rawValue
     }
 }

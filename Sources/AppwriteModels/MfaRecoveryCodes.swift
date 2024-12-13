@@ -5,11 +5,11 @@ import JSONCodable
 public class MfaRecoveryCodes {
 
     /// Recovery codes.
-    public let recoveryCodes: [Any]
+    public let recoveryCodes: [String]
 
 
     init(
-        recoveryCodes: [Any]
+        recoveryCodes: [String]
     ) {
         self.recoveryCodes = recoveryCodes
     }
@@ -22,7 +22,7 @@ public class MfaRecoveryCodes {
 
     public static func from(map: [String: Any] ) -> MfaRecoveryCodes {
         return MfaRecoveryCodes(
-            recoveryCodes: map["recoveryCodes"] as! [Any]
+            recoveryCodes: map["recoveryCodes"] as! [String]
         )
     }
 }

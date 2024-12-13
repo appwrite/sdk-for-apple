@@ -14,7 +14,7 @@ public class Execution {
     public let updatedAt: String
 
     /// Execution roles.
-    public let permissions: [Any]
+    public let permissions: [String]
 
     /// Function ID.
     public let functionId: String
@@ -38,7 +38,7 @@ public class Execution {
     public let responseStatusCode: Int
 
     /// HTTP response body. This will return empty unless execution is created as synchronous.
-    public let responseBody: payload
+    public let responseBody: String
 
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let responseHeaders: [Headers]
@@ -60,7 +60,7 @@ public class Execution {
         id: String,
         createdAt: String,
         updatedAt: String,
-        permissions: [Any],
+        permissions: [String],
         functionId: String,
         trigger: String,
         status: String,
@@ -68,7 +68,7 @@ public class Execution {
         requestPath: String,
         requestHeaders: [Headers],
         responseStatusCode: Int,
-        responseBody: payload,
+        responseBody: String,
         responseHeaders: [Headers],
         logs: String,
         errors: String,
@@ -121,7 +121,7 @@ public class Execution {
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
+            permissions: map["$permissions"] as! [String],
             functionId: map["functionId"] as! String,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
@@ -129,7 +129,7 @@ public class Execution {
             requestPath: map["requestPath"] as! String,
             requestHeaders: (map["requestHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
             responseStatusCode: map["responseStatusCode"] as! Int,
-            responseBody: map["responseBody"] as! payload,
+            responseBody: map["responseBody"] as! String,
             responseHeaders: (map["responseHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
             logs: map["logs"] as! String,
             errors: map["errors"] as! String,
