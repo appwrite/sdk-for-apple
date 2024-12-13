@@ -286,7 +286,8 @@ open class Teams: Service {
     /// List team memberships
     ///
     /// Use this endpoint to list a team's members using the team's ID. All team
-    /// members have read access to this endpoint.
+    /// members have read access to this endpoint. Hide sensitive attributes from
+    /// the response by toggling membership privacy in the Console.
     ///
     /// @param String teamId
     /// @param [String] queries
@@ -401,7 +402,8 @@ open class Teams: Service {
     /// Get team membership
     ///
     /// Get a team member by the membership unique id. All team members have read
-    /// access for this resource.
+    /// access for this resource. Hide sensitive attributes from the response by
+    /// toggling membership privacy in the Console.
     ///
     /// @param String teamId
     /// @param String membershipId
