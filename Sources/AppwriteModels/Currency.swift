@@ -7,30 +7,23 @@ public class Currency {
     /// Currency symbol.
     public let symbol: String
 
-
     /// Currency name.
     public let name: String
-
 
     /// Currency native symbol.
     public let symbolNative: String
 
-
     /// Number of decimal digits.
     public let decimalDigits: Int
-
 
     /// Currency digit rounding.
     public let rounding: Double
 
-
     /// Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format.
     public let code: String
 
-
     /// Currency plural name
     public let namePlural: String
-
 
 
     init(

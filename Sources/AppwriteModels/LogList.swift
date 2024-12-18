@@ -7,10 +7,8 @@ public class LogList {
     /// Total number of logs documents that matched your query.
     public let total: Int
 
-
     /// List of logs.
     public let logs: [Log]
-
 
 
     init(

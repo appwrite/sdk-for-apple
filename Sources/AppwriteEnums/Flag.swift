@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Flag: String, Codable {
+public enum Flag: String, CustomStringConvertible {
     case afghanistan = "af"
     case angola = "ao"
     case albania = "al"
@@ -197,8 +197,7 @@ public enum Flag: String, Codable {
     case zambia = "zm"
     case zimbabwe = "zw"
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(rawValue)
+    public var description: String {
+        return rawValue
     }
 }

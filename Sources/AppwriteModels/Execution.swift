@@ -7,77 +7,60 @@ public class Execution {
     /// Execution ID.
     public let id: String
 
-
     /// Execution creation date in ISO 8601 format.
     public let createdAt: String
-
 
     /// Execution upate date in ISO 8601 format.
     public let updatedAt: String
 
-
     /// Execution roles.
-    public let permissions: [Any]
-
+    public let permissions: [String]
 
     /// Function ID.
     public let functionId: String
 
-
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: String
-
 
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
     public let status: String
 
-
     /// HTTP request method type.
     public let requestMethod: String
-
 
     /// HTTP request path and query.
     public let requestPath: String
 
-
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let requestHeaders: [Headers]
-
 
     /// HTTP response status code.
     public let responseStatusCode: Int
 
-
     /// HTTP response body. This will return empty unless execution is created as synchronous.
     public let responseBody: String
-
 
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let responseHeaders: [Headers]
 
-
     /// Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let logs: String
-
 
     /// Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let errors: String
 
-
     /// Function execution duration in seconds.
     public let duration: Double
 
-
     /// The scheduled time for execution. If left empty, execution will be queued immediately.
     public let scheduledAt: String?
-
 
 
     init(
         id: String,
         createdAt: String,
         updatedAt: String,
-        permissions: [Any],
+        permissions: [String],
         functionId: String,
         trigger: String,
         status: String,
@@ -138,7 +121,7 @@ public class Execution {
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
+            permissions: map["$permissions"] as! [String],
             functionId: map["functionId"] as! String,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
@@ -151,7 +134,7 @@ public class Execution {
             logs: map["logs"] as! String,
             errors: map["errors"] as! String,
             duration: map["duration"] as! Double,
-            scheduledAt: map["scheduledAt"] as? String?
+            scheduledAt: map["scheduledAt"] as? String
         )
     }
 }

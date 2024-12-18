@@ -7,18 +7,14 @@ public class MfaChallenge {
     /// Token ID.
     public let id: String
 
-
     /// Token creation date in ISO 8601 format.
     public let createdAt: String
-
 
     /// User ID.
     public let userId: String
 
-
     /// Token expiration date in ISO 8601 format.
     public let expire: String
-
 
 
     init(

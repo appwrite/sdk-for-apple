@@ -7,86 +7,65 @@ public class Log {
     /// Event name.
     public let event: String
 
-
     /// User ID.
     public let userId: String
-
 
     /// User Email.
     public let userEmail: String
 
-
     /// User Name.
     public let userName: String
-
 
     /// API mode when event triggered.
     public let mode: String
 
-
     /// IP session in use when the session was created.
     public let ip: String
-
 
     /// Log creation date in ISO 8601 format.
     public let time: String
 
-
     /// Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
     public let osCode: String
-
 
     /// Operating system name.
     public let osName: String
 
-
     /// Operating system version.
     public let osVersion: String
-
 
     /// Client type.
     public let clientType: String
 
-
     /// Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
     public let clientCode: String
-
 
     /// Client name.
     public let clientName: String
 
-
     /// Client version.
     public let clientVersion: String
-
 
     /// Client engine name.
     public let clientEngine: String
 
-
     /// Client engine name.
     public let clientEngineVersion: String
-
 
     /// Device name.
     public let deviceName: String
 
-
     /// Device brand name.
     public let deviceBrand: String
-
 
     /// Device model name.
     public let deviceModel: String
 
-
     /// Country two-character ISO 3166-1 alpha code.
     public let countryCode: String
 
-
     /// Country name.
     public let countryName: String
-
 
 
     init(
