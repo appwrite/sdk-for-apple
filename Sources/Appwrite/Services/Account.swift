@@ -584,7 +584,7 @@ open class Account: Service {
     open func updateMfaChallenge(
         challengeId: String,
         otp: String
-    ) async throws -> Any {
+    ) async throws -> AppwriteModels.Session {
         let apiPath: String = "/account/mfa/challenge"
 
         let apiParams: [String: Any?] = [
@@ -596,11 +596,17 @@ open class Account: Service {
             "content-type": "application/json"
         ]
 
+        let converter: (Any) -> AppwriteModels.Session = { response in
+            return AppwriteModels.Session.from(map: response as! [String: Any])
+        }
+
         return try await client.call(
             method: "PUT",
             path: apiPath,
             headers: apiHeaders,
-            params: apiParams        )
+            params: apiParams,
+            converter: converter
+        )
     }
 
     ///
@@ -1599,6 +1605,12 @@ open class Account: Service {
     ///
     /// Create push target
     ///
+    /// Use this endpoint to register a device for push notifications. Provide a
+    /// target ID (custom or generated using ID.unique()), a device identifier
+    /// (usually a device token), and optionally specify which provider should send
+    /// notifications to this target. The target is automatically linked to the
+    /// current session and includes device information like brand and model.
+    ///
     /// @param String targetId
     /// @param String identifier
     /// @param String providerId
@@ -1638,6 +1650,12 @@ open class Account: Service {
     ///
     /// Update push target
     ///
+    /// Update the currently logged in user's push notification target. You can
+    /// modify the target's identifier (device token) and provider ID (token,
+    /// email, phone etc.). The target must exist and belong to the current user.
+    /// If you change the provider ID, notifications will be sent through the new
+    /// messaging provider instead.
+    ///
     /// @param String targetId
     /// @param String identifier
     /// @throws Exception
@@ -1673,6 +1691,10 @@ open class Account: Service {
 
     ///
     /// Delete push target
+    ///
+    /// Delete a push notification target for the currently logged in user. After
+    /// deletion, the device will no longer receive push notifications. The target
+    /// must exist and belong to the current user.
     ///
     /// @param String targetId
     /// @throws Exception
@@ -1758,9 +1780,7 @@ open class Account: Service {
     /// [POST
     /// /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
     /// endpoint to complete the login process. The link sent to the user's email
-    /// address is valid for 1 hour. If you are on a mobile device you can leave
-    /// the URL parameter empty, so that the login completion will be handled by
-    /// your Appwrite instance by default.
+    /// address is valid for 1 hour.
     /// 
     /// A user is limited to 10 active sessions at a time by default. [Learn more
     /// about session

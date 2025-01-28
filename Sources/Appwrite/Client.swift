@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "7.1.0",
+        "x-sdk-version": "7.1.1",
         "x-appwrite-response-format": "1.6.0"
     ]
 
@@ -422,7 +422,7 @@ open class Client {
         var offset = 0
         var result = [String:Any]()
 
-        if idParamName != nil && params[idParamName!] as! String != "unique()" {
+        if idParamName != nil {
             // Make a request to check if a file already exists
             do {
                 let map = try await call(
