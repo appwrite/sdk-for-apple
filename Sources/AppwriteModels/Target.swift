@@ -28,6 +28,9 @@ public class Target {
     /// The target identifier.
     public let identifier: String
 
+    /// Is the target expired.
+    public let expired: Bool
+
 
     init(
         id: String,
@@ -37,7 +40,8 @@ public class Target {
         userId: String,
         providerId: String?,
         providerType: String,
-        identifier: String
+        identifier: String,
+        expired: Bool
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -47,6 +51,7 @@ public class Target {
         self.providerId = providerId
         self.providerType = providerType
         self.identifier = identifier
+        self.expired = expired
     }
 
     public func toMap() -> [String: Any] {
@@ -58,7 +63,8 @@ public class Target {
             "userId": userId as Any,
             "providerId": providerId as Any,
             "providerType": providerType as Any,
-            "identifier": identifier as Any
+            "identifier": identifier as Any,
+            "expired": expired as Any
         ]
     }
 
@@ -71,7 +77,8 @@ public class Target {
             userId: map["userId"] as! String,
             providerId: map["providerId"] as? String,
             providerType: map["providerType"] as! String,
-            identifier: map["identifier"] as! String
+            identifier: map["identifier"] as! String,
+            expired: map["expired"] as! Bool
         )
     }
 }

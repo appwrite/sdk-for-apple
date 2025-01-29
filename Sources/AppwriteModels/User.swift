@@ -32,7 +32,7 @@ public class User<T : Codable> {
     public let status: Bool
 
     /// Labels for the user.
-    public let labels: [Any]
+    public let labels: [String]
 
     /// Password update time in ISO 8601 format.
     public let passwordUpdate: String
@@ -72,7 +72,7 @@ public class User<T : Codable> {
         hashOptions: Any?,
         registration: String,
         status: Bool,
-        labels: [Any],
+        labels: [String],
         passwordUpdate: String,
         email: String,
         phone: String,
@@ -139,7 +139,7 @@ public class User<T : Codable> {
             hashOptions: map["hashOptions"] as? Any,
             registration: map["registration"] as! String,
             status: map["status"] as! Bool,
-            labels: map["labels"] as! [Any],
+            labels: map["labels"] as! [String],
             passwordUpdate: map["passwordUpdate"] as! String,
             email: map["email"] as! String,
             phone: map["phone"] as! String,

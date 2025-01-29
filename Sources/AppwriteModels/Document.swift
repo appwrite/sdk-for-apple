@@ -20,7 +20,7 @@ public class Document<T : Codable> {
     public let updatedAt: String
 
     /// Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-    public let permissions: [Any]
+    public let permissions: [String]
 
     /// Additional properties
     public let data: T
@@ -31,7 +31,7 @@ public class Document<T : Codable> {
         databaseId: String,
         createdAt: String,
         updatedAt: String,
-        permissions: [Any],
+        permissions: [String],
         data: T
     ) {
         self.id = id
@@ -62,7 +62,7 @@ public class Document<T : Codable> {
             databaseId: map["$databaseId"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
+            permissions: map["$permissions"] as! [String],
             data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
         )
     }

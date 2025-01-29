@@ -14,7 +14,7 @@ public class Execution {
     public let updatedAt: String
 
     /// Execution roles.
-    public let permissions: [Any]
+    public let permissions: [String]
 
     /// Function ID.
     public let functionId: String
@@ -60,7 +60,7 @@ public class Execution {
         id: String,
         createdAt: String,
         updatedAt: String,
-        permissions: [Any],
+        permissions: [String],
         functionId: String,
         trigger: String,
         status: String,
@@ -121,7 +121,7 @@ public class Execution {
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
+            permissions: map["$permissions"] as! [String],
             functionId: map["functionId"] as! String,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,

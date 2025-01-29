@@ -17,7 +17,7 @@ public class File {
     public let updatedAt: String
 
     /// File permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-    public let permissions: [Any]
+    public let permissions: [String]
 
     /// File name.
     public let name: String
@@ -43,7 +43,7 @@ public class File {
         bucketId: String,
         createdAt: String,
         updatedAt: String,
-        permissions: [Any],
+        permissions: [String],
         name: String,
         signature: String,
         mimeType: String,
@@ -86,7 +86,7 @@ public class File {
             bucketId: map["bucketId"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [Any],
+            permissions: map["$permissions"] as! [String],
             name: map["name"] as! String,
             signature: map["signature"] as! String,
             mimeType: map["mimeType"] as! String,
