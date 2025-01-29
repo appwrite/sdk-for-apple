@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "7.1.0",
+        "x-sdk-version": "8.0.0",
         "x-appwrite-response-format": "1.6.0"
     ]
 
@@ -250,6 +250,26 @@ open class Client {
    }
 
     ///
+    /// Sends a "ping" request to Appwrite to verify connectivity.
+    ///
+    /// @return String
+    /// @throws Exception
+    ///
+   open func ping() async throws -> String {
+       let apiPath: String = "/ping"
+
+       let apiHeaders: [String: String] = [
+           "content-type": "application/json"
+       ]
+
+       return try await call(
+           method: "GET",
+           path: apiPath,
+           headers: apiHeaders
+       )
+    }
+
+    ///
     /// Make an API call
     ///
     /// @param String method
@@ -319,6 +339,8 @@ open class Client {
             }
         }
 
+        var data = try await response.body.collect(upTo: Int.max)
+
         switch response.status.code {
         case 0..<400:
             if response.headers["Set-Cookie"].count > 0 {
@@ -331,10 +353,11 @@ open class Client {
             switch T.self {
             case is Bool.Type:
                 return true as! T
+            case is String.Type:
+                return (data.readString(length: data.readableBytes) ?? "") as! T
             case is ByteBuffer.Type:
-                return try await response.body.collect(upTo: Int.max) as! T
+                return data as! T
             default:
-                let data = try await response.body.collect(upTo: Int.max)
                 if data.readableBytes == 0 {
                     return true as! T
                 }
@@ -344,7 +367,6 @@ open class Client {
             }
         default:
             var message = ""
-            var data = try await response.body.collect(upTo: Int.max)
             var type = ""
 
             do {
@@ -400,7 +422,7 @@ open class Client {
         var offset = 0
         var result = [String:Any]()
 
-        if idParamName != nil && params[idParamName!] as! String != "unique()" {
+        if idParamName != nil {
             // Make a request to check if a file already exists
             do {
                 let map = try await call(
