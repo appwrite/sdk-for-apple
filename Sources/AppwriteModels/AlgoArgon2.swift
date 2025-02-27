@@ -2,7 +2,14 @@ import Foundation
 import JSONCodable
 
 /// AlgoArgon2
-public class AlgoArgon2 {
+open class AlgoArgon2: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case type = "type"
+        case memoryCost = "memoryCost"
+        case timeCost = "timeCost"
+        case threads = "threads"
+    }
 
     /// Algo type.
     public let type: String
@@ -27,6 +34,24 @@ public class AlgoArgon2 {
         self.memoryCost = memoryCost
         self.timeCost = timeCost
         self.threads = threads
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.type = try container.decode(String.self, forKey: .type)
+        self.memoryCost = try container.decode(Int.self, forKey: .memoryCost)
+        self.timeCost = try container.decode(Int.self, forKey: .timeCost)
+        self.threads = try container.decode(Int.self, forKey: .threads)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(type, forKey: .type)
+        try container.encode(memoryCost, forKey: .memoryCost)
+        try container.encode(timeCost, forKey: .timeCost)
+        try container.encode(threads, forKey: .threads)
     }
 
     public func toMap() -> [String: Any] {

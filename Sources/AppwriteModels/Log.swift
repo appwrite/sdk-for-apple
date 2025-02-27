@@ -2,7 +2,31 @@ import Foundation
 import JSONCodable
 
 /// Log
-public class Log {
+open class Log: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case event = "event"
+        case userId = "userId"
+        case userEmail = "userEmail"
+        case userName = "userName"
+        case mode = "mode"
+        case ip = "ip"
+        case time = "time"
+        case osCode = "osCode"
+        case osName = "osName"
+        case osVersion = "osVersion"
+        case clientType = "clientType"
+        case clientCode = "clientCode"
+        case clientName = "clientName"
+        case clientVersion = "clientVersion"
+        case clientEngine = "clientEngine"
+        case clientEngineVersion = "clientEngineVersion"
+        case deviceName = "deviceName"
+        case deviceBrand = "deviceBrand"
+        case deviceModel = "deviceModel"
+        case countryCode = "countryCode"
+        case countryName = "countryName"
+    }
 
     /// Event name.
     public let event: String
@@ -112,6 +136,58 @@ public class Log {
         self.deviceModel = deviceModel
         self.countryCode = countryCode
         self.countryName = countryName
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.event = try container.decode(String.self, forKey: .event)
+        self.userId = try container.decode(String.self, forKey: .userId)
+        self.userEmail = try container.decode(String.self, forKey: .userEmail)
+        self.userName = try container.decode(String.self, forKey: .userName)
+        self.mode = try container.decode(String.self, forKey: .mode)
+        self.ip = try container.decode(String.self, forKey: .ip)
+        self.time = try container.decode(String.self, forKey: .time)
+        self.osCode = try container.decode(String.self, forKey: .osCode)
+        self.osName = try container.decode(String.self, forKey: .osName)
+        self.osVersion = try container.decode(String.self, forKey: .osVersion)
+        self.clientType = try container.decode(String.self, forKey: .clientType)
+        self.clientCode = try container.decode(String.self, forKey: .clientCode)
+        self.clientName = try container.decode(String.self, forKey: .clientName)
+        self.clientVersion = try container.decode(String.self, forKey: .clientVersion)
+        self.clientEngine = try container.decode(String.self, forKey: .clientEngine)
+        self.clientEngineVersion = try container.decode(String.self, forKey: .clientEngineVersion)
+        self.deviceName = try container.decode(String.self, forKey: .deviceName)
+        self.deviceBrand = try container.decode(String.self, forKey: .deviceBrand)
+        self.deviceModel = try container.decode(String.self, forKey: .deviceModel)
+        self.countryCode = try container.decode(String.self, forKey: .countryCode)
+        self.countryName = try container.decode(String.self, forKey: .countryName)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(event, forKey: .event)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(userEmail, forKey: .userEmail)
+        try container.encode(userName, forKey: .userName)
+        try container.encode(mode, forKey: .mode)
+        try container.encode(ip, forKey: .ip)
+        try container.encode(time, forKey: .time)
+        try container.encode(osCode, forKey: .osCode)
+        try container.encode(osName, forKey: .osName)
+        try container.encode(osVersion, forKey: .osVersion)
+        try container.encode(clientType, forKey: .clientType)
+        try container.encode(clientCode, forKey: .clientCode)
+        try container.encode(clientName, forKey: .clientName)
+        try container.encode(clientVersion, forKey: .clientVersion)
+        try container.encode(clientEngine, forKey: .clientEngine)
+        try container.encode(clientEngineVersion, forKey: .clientEngineVersion)
+        try container.encode(deviceName, forKey: .deviceName)
+        try container.encode(deviceBrand, forKey: .deviceBrand)
+        try container.encode(deviceModel, forKey: .deviceModel)
+        try container.encode(countryCode, forKey: .countryCode)
+        try container.encode(countryName, forKey: .countryName)
     }
 
     public func toMap() -> [String: Any] {

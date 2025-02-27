@@ -2,7 +2,17 @@ import Foundation
 import JSONCodable
 
 /// Currency
-public class Currency {
+open class Currency: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case symbol = "symbol"
+        case name = "name"
+        case symbolNative = "symbolNative"
+        case decimalDigits = "decimalDigits"
+        case rounding = "rounding"
+        case code = "code"
+        case namePlural = "namePlural"
+    }
 
     /// Currency symbol.
     public let symbol: String
@@ -42,6 +52,30 @@ public class Currency {
         self.rounding = rounding
         self.code = code
         self.namePlural = namePlural
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.symbol = try container.decode(String.self, forKey: .symbol)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.symbolNative = try container.decode(String.self, forKey: .symbolNative)
+        self.decimalDigits = try container.decode(Int.self, forKey: .decimalDigits)
+        self.rounding = try container.decode(Double.self, forKey: .rounding)
+        self.code = try container.decode(String.self, forKey: .code)
+        self.namePlural = try container.decode(String.self, forKey: .namePlural)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(symbol, forKey: .symbol)
+        try container.encode(name, forKey: .name)
+        try container.encode(symbolNative, forKey: .symbolNative)
+        try container.encode(decimalDigits, forKey: .decimalDigits)
+        try container.encode(rounding, forKey: .rounding)
+        try container.encode(code, forKey: .code)
+        try container.encode(namePlural, forKey: .namePlural)
     }
 
     public func toMap() -> [String: Any] {

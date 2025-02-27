@@ -2,7 +2,12 @@ import Foundation
 import JSONCodable
 
 /// Headers
-public class Headers {
+open class Headers: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case value = "value"
+    }
 
     /// Header name.
     public let name: String
@@ -17,6 +22,20 @@ public class Headers {
     ) {
         self.name = name
         self.value = value
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.name = try container.decode(String.self, forKey: .name)
+        self.value = try container.decode(String.self, forKey: .value)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(name, forKey: .name)
+        try container.encode(value, forKey: .value)
     }
 
     public func toMap() -> [String: Any] {

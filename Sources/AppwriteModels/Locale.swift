@@ -2,7 +2,17 @@ import Foundation
 import JSONCodable
 
 /// Locale
-public class Locale {
+open class Locale: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case ip = "ip"
+        case countryCode = "countryCode"
+        case country = "country"
+        case continentCode = "continentCode"
+        case continent = "continent"
+        case eu = "eu"
+        case currency = "currency"
+    }
 
     /// User IP address.
     public let ip: String
@@ -42,6 +52,30 @@ public class Locale {
         self.continent = continent
         self.eu = eu
         self.currency = currency
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.ip = try container.decode(String.self, forKey: .ip)
+        self.countryCode = try container.decode(String.self, forKey: .countryCode)
+        self.country = try container.decode(String.self, forKey: .country)
+        self.continentCode = try container.decode(String.self, forKey: .continentCode)
+        self.continent = try container.decode(String.self, forKey: .continent)
+        self.eu = try container.decode(Bool.self, forKey: .eu)
+        self.currency = try container.decode(String.self, forKey: .currency)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(ip, forKey: .ip)
+        try container.encode(countryCode, forKey: .countryCode)
+        try container.encode(country, forKey: .country)
+        try container.encode(continentCode, forKey: .continentCode)
+        try container.encode(continent, forKey: .continent)
+        try container.encode(eu, forKey: .eu)
+        try container.encode(currency, forKey: .currency)
     }
 
     public func toMap() -> [String: Any] {
