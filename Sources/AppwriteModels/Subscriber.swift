@@ -2,7 +2,19 @@ import Foundation
 import JSONCodable
 
 /// Subscriber
-public class Subscriber {
+open class Subscriber: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case targetId = "targetId"
+        case target = "target"
+        case userId = "userId"
+        case userName = "userName"
+        case topicId = "topicId"
+        case providerType = "providerType"
+    }
 
     /// Subscriber ID.
     public let id: String
@@ -52,6 +64,34 @@ public class Subscriber {
         self.userName = userName
         self.topicId = topicId
         self.providerType = providerType
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.targetId = try container.decode(String.self, forKey: .targetId)
+        self.target = try container.decode(Target.self, forKey: .target)
+        self.userId = try container.decode(String.self, forKey: .userId)
+        self.userName = try container.decode(String.self, forKey: .userName)
+        self.topicId = try container.decode(String.self, forKey: .topicId)
+        self.providerType = try container.decode(String.self, forKey: .providerType)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(targetId, forKey: .targetId)
+        try container.encode(target, forKey: .target)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(userName, forKey: .userName)
+        try container.encode(topicId, forKey: .topicId)
+        try container.encode(providerType, forKey: .providerType)
     }
 
     public func toMap() -> [String: Any] {

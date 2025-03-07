@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "8.0.0",
+        "x-sdk-version": "9.0.0",
         "x-appwrite-response-format": "1.6.0"
     ]
 
@@ -345,7 +345,6 @@ open class Client {
         case 0..<400:
             if response.headers["Set-Cookie"].count > 0 {
                 let domain = URL(string: request.url)!.host!
-                let existing = UserDefaults.standard.stringArray(forKey: domain)
                 let new = response.headers["Set-Cookie"]
 
                 UserDefaults.standard.set(new, forKey: domain)
@@ -368,20 +367,24 @@ open class Client {
         default:
             var message = ""
             var type = ""
+            var responseString = ""
 
             do {
                 let dict = try JSONSerialization.jsonObject(with: data) as? [String: Any]
 
                 message = dict?["message"] as? String ?? response.status.reasonPhrase
                 type = dict?["type"] as? String ?? ""
+                responseString = String(decoding: data.readableBytesView, as: UTF8.self)
             } catch {
                 message =  data.readString(length: data.readableBytes)!
+                responseString = message
             }
 
             throw AppwriteError(
                 message: message,
                 code: Int(response.status.code),
-                type: type
+                type: type,
+                response: responseString
             )
         }
     }

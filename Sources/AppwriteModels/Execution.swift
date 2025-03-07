@@ -2,7 +2,27 @@ import Foundation
 import JSONCodable
 
 /// Execution
-public class Execution {
+open class Execution: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case permissions = "$permissions"
+        case functionId = "functionId"
+        case trigger = "trigger"
+        case status = "status"
+        case requestMethod = "requestMethod"
+        case requestPath = "requestPath"
+        case requestHeaders = "requestHeaders"
+        case responseStatusCode = "responseStatusCode"
+        case responseBody = "responseBody"
+        case responseHeaders = "responseHeaders"
+        case logs = "logs"
+        case errors = "errors"
+        case duration = "duration"
+        case scheduledAt = "scheduledAt"
+    }
 
     /// Execution ID.
     public let id: String
@@ -92,6 +112,50 @@ public class Execution {
         self.errors = errors
         self.duration = duration
         self.scheduledAt = scheduledAt
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.permissions = try container.decode([String].self, forKey: .permissions)
+        self.functionId = try container.decode(String.self, forKey: .functionId)
+        self.trigger = try container.decode(String.self, forKey: .trigger)
+        self.status = try container.decode(String.self, forKey: .status)
+        self.requestMethod = try container.decode(String.self, forKey: .requestMethod)
+        self.requestPath = try container.decode(String.self, forKey: .requestPath)
+        self.requestHeaders = try container.decode([Headers].self, forKey: .requestHeaders)
+        self.responseStatusCode = try container.decode(Int.self, forKey: .responseStatusCode)
+        self.responseBody = try container.decode(String.self, forKey: .responseBody)
+        self.responseHeaders = try container.decode([Headers].self, forKey: .responseHeaders)
+        self.logs = try container.decode(String.self, forKey: .logs)
+        self.errors = try container.decode(String.self, forKey: .errors)
+        self.duration = try container.decode(Double.self, forKey: .duration)
+        self.scheduledAt = try container.decodeIfPresent(String.self, forKey: .scheduledAt)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(permissions, forKey: .permissions)
+        try container.encode(functionId, forKey: .functionId)
+        try container.encode(trigger, forKey: .trigger)
+        try container.encode(status, forKey: .status)
+        try container.encode(requestMethod, forKey: .requestMethod)
+        try container.encode(requestPath, forKey: .requestPath)
+        try container.encode(requestHeaders, forKey: .requestHeaders)
+        try container.encode(responseStatusCode, forKey: .responseStatusCode)
+        try container.encode(responseBody, forKey: .responseBody)
+        try container.encode(responseHeaders, forKey: .responseHeaders)
+        try container.encode(logs, forKey: .logs)
+        try container.encode(errors, forKey: .errors)
+        try container.encode(duration, forKey: .duration)
+        try container.encodeIfPresent(scheduledAt, forKey: .scheduledAt)
     }
 
     public func toMap() -> [String: Any] {

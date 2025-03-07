@@ -9,8 +9,6 @@ import AppwriteModels
 open class Graphql: Service {
 
     ///
-    /// GraphQL endpoint
-    ///
     /// Execute a GraphQL mutation.
     ///
     /// @param Any query
@@ -44,8 +42,6 @@ open class Graphql: Service {
         )
     }
 
-    ///
-    /// GraphQL endpoint
     ///
     /// Execute a GraphQL mutation.
     ///

@@ -2,7 +2,12 @@ import Foundation
 import JSONCodable
 
 /// MFAType
-public class MfaType {
+open class MfaType: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case secret = "secret"
+        case uri = "uri"
+    }
 
     /// Secret token used for TOTP factor.
     public let secret: String
@@ -17,6 +22,20 @@ public class MfaType {
     ) {
         self.secret = secret
         self.uri = uri
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.secret = try container.decode(String.self, forKey: .secret)
+        self.uri = try container.decode(String.self, forKey: .uri)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(secret, forKey: .secret)
+        try container.encode(uri, forKey: .uri)
     }
 
     public func toMap() -> [String: Any] {

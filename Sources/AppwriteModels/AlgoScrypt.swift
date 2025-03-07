@@ -2,7 +2,15 @@ import Foundation
 import JSONCodable
 
 /// AlgoScrypt
-public class AlgoScrypt {
+open class AlgoScrypt: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case type = "type"
+        case costCpu = "costCpu"
+        case costMemory = "costMemory"
+        case costParallel = "costParallel"
+        case length = "length"
+    }
 
     /// Algo type.
     public let type: String
@@ -32,6 +40,26 @@ public class AlgoScrypt {
         self.costMemory = costMemory
         self.costParallel = costParallel
         self.length = length
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.type = try container.decode(String.self, forKey: .type)
+        self.costCpu = try container.decode(Int.self, forKey: .costCpu)
+        self.costMemory = try container.decode(Int.self, forKey: .costMemory)
+        self.costParallel = try container.decode(Int.self, forKey: .costParallel)
+        self.length = try container.decode(Int.self, forKey: .length)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(type, forKey: .type)
+        try container.encode(costCpu, forKey: .costCpu)
+        try container.encode(costMemory, forKey: .costMemory)
+        try container.encode(costParallel, forKey: .costParallel)
+        try container.encode(length, forKey: .length)
     }
 
     public func toMap() -> [String: Any] {

@@ -2,7 +2,21 @@ import Foundation
 import JSONCodable
 
 /// File
-public class File {
+open class File: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case bucketId = "bucketId"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case permissions = "$permissions"
+        case name = "name"
+        case signature = "signature"
+        case mimeType = "mimeType"
+        case sizeOriginal = "sizeOriginal"
+        case chunksTotal = "chunksTotal"
+        case chunksUploaded = "chunksUploaded"
+    }
 
     /// File ID.
     public let id: String
@@ -62,6 +76,38 @@ public class File {
         self.sizeOriginal = sizeOriginal
         self.chunksTotal = chunksTotal
         self.chunksUploaded = chunksUploaded
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.bucketId = try container.decode(String.self, forKey: .bucketId)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.permissions = try container.decode([String].self, forKey: .permissions)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.signature = try container.decode(String.self, forKey: .signature)
+        self.mimeType = try container.decode(String.self, forKey: .mimeType)
+        self.sizeOriginal = try container.decode(Int.self, forKey: .sizeOriginal)
+        self.chunksTotal = try container.decode(Int.self, forKey: .chunksTotal)
+        self.chunksUploaded = try container.decode(Int.self, forKey: .chunksUploaded)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(bucketId, forKey: .bucketId)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(permissions, forKey: .permissions)
+        try container.encode(name, forKey: .name)
+        try container.encode(signature, forKey: .signature)
+        try container.encode(mimeType, forKey: .mimeType)
+        try container.encode(sizeOriginal, forKey: .sizeOriginal)
+        try container.encode(chunksTotal, forKey: .chunksTotal)
+        try container.encode(chunksUploaded, forKey: .chunksUploaded)
     }
 
     public func toMap() -> [String: Any] {

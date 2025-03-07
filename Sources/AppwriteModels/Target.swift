@@ -2,7 +2,19 @@ import Foundation
 import JSONCodable
 
 /// Target
-public class Target {
+open class Target: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case name = "name"
+        case userId = "userId"
+        case providerId = "providerId"
+        case providerType = "providerType"
+        case identifier = "identifier"
+        case expired = "expired"
+    }
 
     /// Target ID.
     public let id: String
@@ -52,6 +64,34 @@ public class Target {
         self.providerType = providerType
         self.identifier = identifier
         self.expired = expired
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.userId = try container.decode(String.self, forKey: .userId)
+        self.providerId = try container.decodeIfPresent(String.self, forKey: .providerId)
+        self.providerType = try container.decode(String.self, forKey: .providerType)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.expired = try container.decode(Bool.self, forKey: .expired)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(name, forKey: .name)
+        try container.encode(userId, forKey: .userId)
+        try container.encodeIfPresent(providerId, forKey: .providerId)
+        try container.encode(providerType, forKey: .providerType)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(expired, forKey: .expired)
     }
 
     public func toMap() -> [String: Any] {

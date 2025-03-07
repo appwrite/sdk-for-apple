@@ -2,7 +2,17 @@ import Foundation
 import JSONCodable
 
 /// Document
-public class Document<T : Codable> {
+open class Document<T : Codable>: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case collectionId = "$collectionId"
+        case databaseId = "$databaseId"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case permissions = "$permissions"
+        case data
+    }
 
     /// Document ID.
     public let id: String
@@ -41,6 +51,30 @@ public class Document<T : Codable> {
         self.updatedAt = updatedAt
         self.permissions = permissions
         self.data = data
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.collectionId = try container.decode(String.self, forKey: .collectionId)
+        self.databaseId = try container.decode(String.self, forKey: .databaseId)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.permissions = try container.decode([String].self, forKey: .permissions)
+        self.data = try container.decode(T.self, forKey: .data)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(collectionId, forKey: .collectionId)
+        try container.encode(databaseId, forKey: .databaseId)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(permissions, forKey: .permissions)
+        try container.encode(data, forKey: .data)
     }
 
     public func toMap() -> [String: Any] {

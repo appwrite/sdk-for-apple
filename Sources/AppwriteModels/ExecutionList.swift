@@ -2,7 +2,12 @@ import Foundation
 import JSONCodable
 
 /// Executions List
-public class ExecutionList {
+open class ExecutionList: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case total = "total"
+        case executions = "executions"
+    }
 
     /// Total number of executions documents that matched your query.
     public let total: Int
@@ -17,6 +22,20 @@ public class ExecutionList {
     ) {
         self.total = total
         self.executions = executions
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.total = try container.decode(Int.self, forKey: .total)
+        self.executions = try container.decode([Execution].self, forKey: .executions)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(total, forKey: .total)
+        try container.encode(executions, forKey: .executions)
     }
 
     public func toMap() -> [String: Any] {

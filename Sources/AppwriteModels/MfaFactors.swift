@@ -2,7 +2,14 @@ import Foundation
 import JSONCodable
 
 /// MFAFactors
-public class MfaFactors {
+open class MfaFactors: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case totp = "totp"
+        case phone = "phone"
+        case email = "email"
+        case recoveryCode = "recoveryCode"
+    }
 
     /// Can TOTP be used for MFA challenge for this account.
     public let totp: Bool
@@ -27,6 +34,24 @@ public class MfaFactors {
         self.phone = phone
         self.email = email
         self.recoveryCode = recoveryCode
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.totp = try container.decode(Bool.self, forKey: .totp)
+        self.phone = try container.decode(Bool.self, forKey: .phone)
+        self.email = try container.decode(Bool.self, forKey: .email)
+        self.recoveryCode = try container.decode(Bool.self, forKey: .recoveryCode)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(totp, forKey: .totp)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(email, forKey: .email)
+        try container.encode(recoveryCode, forKey: .recoveryCode)
     }
 
     public func toMap() -> [String: Any] {

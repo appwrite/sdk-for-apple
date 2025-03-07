@@ -2,7 +2,12 @@ import Foundation
 import JSONCodable
 
 /// Continent
-public class Continent {
+open class Continent: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case code = "code"
+    }
 
     /// Continent name.
     public let name: String
@@ -17,6 +22,20 @@ public class Continent {
     ) {
         self.name = name
         self.code = code
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.name = try container.decode(String.self, forKey: .name)
+        self.code = try container.decode(String.self, forKey: .code)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(name, forKey: .name)
+        try container.encode(code, forKey: .code)
     }
 
     public func toMap() -> [String: Any] {

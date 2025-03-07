@@ -2,7 +2,16 @@ import Foundation
 import JSONCodable
 
 /// Token
-public class Token {
+open class Token: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case createdAt = "$createdAt"
+        case userId = "userId"
+        case secret = "secret"
+        case expire = "expire"
+        case phrase = "phrase"
+    }
 
     /// Token ID.
     public let id: String
@@ -37,6 +46,28 @@ public class Token {
         self.secret = secret
         self.expire = expire
         self.phrase = phrase
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.userId = try container.decode(String.self, forKey: .userId)
+        self.secret = try container.decode(String.self, forKey: .secret)
+        self.expire = try container.decode(String.self, forKey: .expire)
+        self.phrase = try container.decode(String.self, forKey: .phrase)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(secret, forKey: .secret)
+        try container.encode(expire, forKey: .expire)
+        try container.encode(phrase, forKey: .phrase)
     }
 
     public func toMap() -> [String: Any] {

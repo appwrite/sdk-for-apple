@@ -2,7 +2,29 @@ import Foundation
 import JSONCodable
 
 /// User
-public class User<T : Codable> {
+open class User<T : Codable>: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case name = "name"
+        case password = "password"
+        case hash = "hash"
+        case hashOptions = "hashOptions"
+        case registration = "registration"
+        case status = "status"
+        case labels = "labels"
+        case passwordUpdate = "passwordUpdate"
+        case email = "email"
+        case phone = "phone"
+        case emailVerification = "emailVerification"
+        case phoneVerification = "phoneVerification"
+        case mfa = "mfa"
+        case prefs = "prefs"
+        case targets = "targets"
+        case accessedAt = "accessedAt"
+    }
 
     /// User ID.
     public let id: String
@@ -23,7 +45,7 @@ public class User<T : Codable> {
     public let hash: String?
 
     /// Password hashing algorithm configuration.
-    public let hashOptions: Any?
+    public let hashOptions: [String: AnyCodable]?
 
     /// User registration date in ISO 8601 format.
     public let registration: String
@@ -69,7 +91,7 @@ public class User<T : Codable> {
         name: String,
         password: String?,
         hash: String?,
-        hashOptions: Any?,
+        hashOptions: [String: AnyCodable]?,
         registration: String,
         status: Bool,
         labels: [String],
@@ -104,6 +126,54 @@ public class User<T : Codable> {
         self.accessedAt = accessedAt
     }
 
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.password = try container.decodeIfPresent(String.self, forKey: .password)
+        self.hash = try container.decodeIfPresent(String.self, forKey: .hash)
+        self.hashOptions = try container.decodeIfPresent([String: AnyCodable].self, forKey: .hashOptions)
+        self.registration = try container.decode(String.self, forKey: .registration)
+        self.status = try container.decode(Bool.self, forKey: .status)
+        self.labels = try container.decode([String].self, forKey: .labels)
+        self.passwordUpdate = try container.decode(String.self, forKey: .passwordUpdate)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.phone = try container.decode(String.self, forKey: .phone)
+        self.emailVerification = try container.decode(Bool.self, forKey: .emailVerification)
+        self.phoneVerification = try container.decode(Bool.self, forKey: .phoneVerification)
+        self.mfa = try container.decode(Bool.self, forKey: .mfa)
+        self.prefs = try container.decode(Preferences<T>.self, forKey: .prefs)
+        self.targets = try container.decode([Target].self, forKey: .targets)
+        self.accessedAt = try container.decode(String.self, forKey: .accessedAt)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(password, forKey: .password)
+        try container.encodeIfPresent(hash, forKey: .hash)
+        try container.encodeIfPresent(hashOptions, forKey: .hashOptions)
+        try container.encode(registration, forKey: .registration)
+        try container.encode(status, forKey: .status)
+        try container.encode(labels, forKey: .labels)
+        try container.encode(passwordUpdate, forKey: .passwordUpdate)
+        try container.encode(email, forKey: .email)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(emailVerification, forKey: .emailVerification)
+        try container.encode(phoneVerification, forKey: .phoneVerification)
+        try container.encode(mfa, forKey: .mfa)
+        try container.encode(prefs, forKey: .prefs)
+        try container.encode(targets, forKey: .targets)
+        try container.encode(accessedAt, forKey: .accessedAt)
+    }
+
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
@@ -136,7 +206,7 @@ public class User<T : Codable> {
             name: map["name"] as! String,
             password: map["password"] as? String,
             hash: map["hash"] as? String,
-            hashOptions: map["hashOptions"] as? Any,
+            hashOptions: map["hashOptions"] as? [String: AnyCodable],
             registration: map["registration"] as! String,
             status: map["status"] as! Bool,
             labels: map["labels"] as! [String],

@@ -9,8 +9,6 @@ import AppwriteModels
 open class Messaging: Service {
 
     ///
-    /// Create subscriber
-    ///
     /// Create a new subscriber.
     ///
     /// @param String topicId
@@ -49,8 +47,6 @@ open class Messaging: Service {
         )
     }
 
-    ///
-    /// Delete subscriber
     ///
     /// Delete a subscriber by its unique ID.
     ///

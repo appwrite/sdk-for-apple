@@ -9,8 +9,6 @@ import AppwriteModels
 open class Avatars: Service {
 
     ///
-    /// Get browser icon
-    ///
     /// You can use this endpoint to show different browser icons to your users.
     /// The code argument receives the browser code as it appears in your user [GET
     /// /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions)
@@ -53,8 +51,6 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get credit card icon
-    ///
     /// The credit card endpoint will return you the icon of the credit card
     /// provider you need. Use width, height and quality arguments to change the
     /// output settings.
@@ -96,8 +92,6 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get favicon
-    ///
     /// Use this endpoint to fetch the favorite icon (AKA favicon) of any remote
     /// website URL.
     /// 
@@ -124,8 +118,6 @@ open class Avatars: Service {
         )
     }
 
-    ///
-    /// Get country flag
     ///
     /// You can use this endpoint to show different country flags icons to your
     /// users. The code argument receives the 2 letter country code. Use width,
@@ -169,8 +161,6 @@ open class Avatars: Service {
     }
 
     ///
-    /// Get image from URL
-    ///
     /// Use this endpoint to fetch a remote image URL and crop it to any image size
     /// you want. This endpoint is very useful if you need to crop and display
     /// remote images in your app or in case you want to make sure a 3rd party
@@ -210,8 +200,6 @@ open class Avatars: Service {
         )
     }
 
-    ///
-    /// Get user initials
     ///
     /// Use this endpoint to show your user initials avatar icon on your website or
     /// app. By default, this route will try to print your logged-in user name or
@@ -260,8 +248,6 @@ open class Avatars: Service {
         )
     }
 
-    ///
-    /// Get QR code
     ///
     /// Converts a given plain text to a QR code image. You can use the query
     /// parameters to change the size and style of the resulting image.
