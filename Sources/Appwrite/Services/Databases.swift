@@ -32,9 +32,7 @@ open class Databases: Service {
             "queries": queries
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.DocumentList<T> = { response in
             return AppwriteModels.DocumentList.from(map: response as! [String: Any])
@@ -77,6 +75,7 @@ open class Databases: Service {
     /// collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
+    /// 
     ///
     /// @param String databaseId
     /// @param String collectionId
@@ -126,6 +125,7 @@ open class Databases: Service {
     /// collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
+    /// 
     ///
     /// @param String databaseId
     /// @param String collectionId
@@ -179,9 +179,7 @@ open class Databases: Service {
             "queries": queries
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])

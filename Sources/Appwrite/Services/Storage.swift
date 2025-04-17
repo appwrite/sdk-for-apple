@@ -31,9 +31,7 @@ open class Storage: Service {
             "search": search
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.FileList = { response in
             return AppwriteModels.FileList.from(map: response as! [String: Any])
@@ -131,9 +129,7 @@ open class Storage: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.File = { response in
             return AppwriteModels.File.from(map: response as! [String: Any])

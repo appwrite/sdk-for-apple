@@ -29,9 +29,7 @@ open class Teams: Service {
             "search": search
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.TeamList<T> = { response in
             return AppwriteModels.TeamList.from(map: response as! [String: Any])
@@ -148,9 +146,7 @@ open class Teams: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.Team<T> = { response in
             return AppwriteModels.Team.from(map: response as! [String: Any])
@@ -288,9 +284,7 @@ open class Teams: Service {
             "search": search
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.MembershipList = { response in
             return AppwriteModels.MembershipList.from(map: response as! [String: Any])
@@ -396,9 +390,7 @@ open class Teams: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.Membership = { response in
             return AppwriteModels.Membership.from(map: response as! [String: Any])
@@ -552,9 +544,7 @@ open class Teams: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.Preferences<T> = { response in
             return AppwriteModels.Preferences.from(map: response as! [String: Any])

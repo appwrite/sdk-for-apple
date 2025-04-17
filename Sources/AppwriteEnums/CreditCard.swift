@@ -17,6 +17,7 @@ public enum CreditCard: String, CustomStringConvertible {
     case visa = "visa"
     case mIR = "mir"
     case maestro = "maestro"
+    case rupay = "rupay"
 
     public var description: String {
         return rawValue
