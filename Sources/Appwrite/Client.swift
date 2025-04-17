@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "9.0.0",
+        "x-sdk-version": "9.0.1",
         "x-appwrite-response-format": "1.6.0"
     ]
 
@@ -170,13 +170,14 @@ open class Client {
     /// @return Client
     ///
     open func setEndpoint(_ endPoint: String) -> Client {
-        self.endPoint = endPoint
-
-        if (self.endPointRealtime == nil && endPoint.starts(with: "http")) {
-            self.endPointRealtime = endPoint
-                .replacingOccurrences(of: "http://", with: "ws://")
-                .replacingOccurrences(of: "https://", with: "wss://")
+        if !endPoint.hasPrefix("http://") && !endPoint.hasPrefix("https://") {
+            fatalError("Invalid endpoint URL: \(endPoint)")
         }
+
+        self.endPoint = endPoint
+        self.endPointRealtime = endPoint
+            .replacingOccurrences(of: "http://", with: "ws://")
+            .replacingOccurrences(of: "https://", with: "wss://")
 
         return self
     }
@@ -189,8 +190,11 @@ open class Client {
     /// @return Client
     ///
     open func setEndpointRealtime(_ endPoint: String) -> Client {
-        self.endPointRealtime = endPoint
+        if !endPoint.hasPrefix("ws://") && !endPoint.hasPrefix("wss://") {
+            fatalError("Invalid realtime endpoint URL: \(endPoint)")
+        }
 
+        self.endPointRealtime = endPoint
         return self
     }
 

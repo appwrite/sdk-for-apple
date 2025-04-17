@@ -15,6 +15,7 @@ public enum OAuthProvider: String, CustomStringConvertible {
     case dropbox = "dropbox"
     case etsy = "etsy"
     case facebook = "facebook"
+    case figma = "figma"
     case github = "github"
     case gitlab = "gitlab"
     case google = "google"

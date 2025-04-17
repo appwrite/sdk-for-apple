@@ -31,9 +31,7 @@ open class Functions: Service {
             "search": search
         ]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.ExecutionList = { response in
             return AppwriteModels.ExecutionList.from(map: response as! [String: Any])
@@ -120,9 +118,7 @@ open class Functions: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
+        let apiHeaders: [String: String] = [:]
 
         let converter: (Any) -> AppwriteModels.Execution = { response in
             return AppwriteModels.Execution.from(map: response as! [String: Any])
