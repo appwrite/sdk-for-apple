@@ -118,7 +118,7 @@ open class Target: Codable {
             providerId: map["providerId"] as? String,
             providerType: map["providerType"] as! String,
             identifier: map["identifier"] as! String,
-            expired: map["expired"] as! Bool
+            expired: map["expired"] as? Bool ?? false // expired: map["expired"] as! Bool 
         )
     }
 }
