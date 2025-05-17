@@ -69,7 +69,7 @@ open class Execution: Codable {
     /// Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let errors: String
 
-    /// Function execution duration in seconds.
+    /// Resource(function/site) execution duration in seconds.
     public let duration: Double
 
     /// The scheduled time for execution. If left empty, execution will be queued immediately.
