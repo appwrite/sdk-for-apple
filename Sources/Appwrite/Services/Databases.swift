@@ -75,7 +75,6 @@ open class Databases: Service {
     /// collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
-    /// 
     ///
     /// @param String databaseId
     /// @param String collectionId
@@ -125,7 +124,6 @@ open class Databases: Service {
     /// collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
-    /// 
     ///
     /// @param String databaseId
     /// @param String collectionId

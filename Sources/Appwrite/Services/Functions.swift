@@ -14,21 +14,18 @@ open class Functions: Service {
     ///
     /// @param String functionId
     /// @param [String] queries
-    /// @param String search
     /// @throws Exception
     /// @return array
     ///
     open func listExecutions(
         functionId: String,
-        queries: [String]? = nil,
-        search: String? = nil
+        queries: [String]? = nil
     ) async throws -> AppwriteModels.ExecutionList {
         let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
         let apiParams: [String: Any?] = [
-            "queries": queries,
-            "search": search
+            "queries": queries
         ]
 
         let apiHeaders: [String: String] = [:]

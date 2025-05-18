@@ -224,18 +224,23 @@ open class Storage: Service {
     ///
     /// @param String bucketId
     /// @param String fileId
+    /// @param String token
     /// @throws Exception
     /// @return array
     ///
     open func getFileDownload(
         bucketId: String,
-        fileId: String
+        fileId: String,
+        token: String? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/download"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "token": token,
+            "project": client.config["project"]
+        ]
 
         return try await client.call(
             method: "GET",
@@ -264,6 +269,7 @@ open class Storage: Service {
     /// @param Int rotation
     /// @param String background
     /// @param AppwriteEnums.ImageFormat output
+    /// @param String token
     /// @throws Exception
     /// @return array
     ///
@@ -280,7 +286,8 @@ open class Storage: Service {
         opacity: Double? = nil,
         rotation: Int? = nil,
         background: String? = nil,
-        output: AppwriteEnums.ImageFormat? = nil
+        output: AppwriteEnums.ImageFormat? = nil,
+        token: String? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/preview"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
@@ -298,6 +305,7 @@ open class Storage: Service {
             "rotation": rotation,
             "background": background,
             "output": output,
+            "token": token,
             "project": client.config["project"]
         ]
 
@@ -315,18 +323,23 @@ open class Storage: Service {
     ///
     /// @param String bucketId
     /// @param String fileId
+    /// @param String token
     /// @throws Exception
     /// @return array
     ///
     open func getFileView(
         bucketId: String,
-        fileId: String
+        fileId: String,
+        token: String? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/view"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "token": token,
+            "project": client.config["project"]
+        ]
 
         return try await client.call(
             method: "GET",
