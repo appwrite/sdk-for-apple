@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "10.0.0",
+        "x-sdk-version": "10.1.0",
         "x-appwrite-response-format": "1.7.0"
     ]
 
@@ -144,6 +144,21 @@ open class Client {
     open func setSession(_ value: String) -> Client {
         config["session"] = value
         _ = addHeader(key: "X-Appwrite-Session", value: value)
+        return self
+    }
+
+    ///
+    /// Set DevKey
+    ///
+    /// Your secret dev API key
+    ///
+    /// @param String value
+    ///
+    /// @return Client
+    ///
+    open func setDevKey(_ value: String) -> Client {
+        config["devkey"] = value
+        _ = addHeader(key: "X-Appwrite-Dev-Key", value: value)
         return self
     }
 

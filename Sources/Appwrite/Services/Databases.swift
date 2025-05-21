@@ -219,6 +219,86 @@ open class Databases: Service {
     }
 
     ///
+    /// Create or update a Document. Before using this route, you should create a
+    /// new collection resource using either a [server
+    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// API or directly from your database console.
+    ///
+    /// @param String databaseId
+    /// @param String collectionId
+    /// @param String documentId
+    /// @param Any data
+    /// @param [String] permissions
+    /// @throws Exception
+    /// @return array
+    ///
+    open func upsertDocument<T>(
+        databaseId: String,
+        collectionId: String,
+        documentId: String,
+        data: Any,
+        permissions: [String]? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Document<T> {
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{collectionId}", with: collectionId)
+            .replacingOccurrences(of: "{documentId}", with: documentId)
+
+        let apiParams: [String: Any?] = [
+            "data": data,
+            "permissions": permissions
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+            return AppwriteModels.Document.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Create or update a Document. Before using this route, you should create a
+    /// new collection resource using either a [server
+    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// API or directly from your database console.
+    ///
+    /// @param String databaseId
+    /// @param String collectionId
+    /// @param String documentId
+    /// @param Any data
+    /// @param [String] permissions
+    /// @throws Exception
+    /// @return array
+    ///
+    open func upsertDocument(
+        databaseId: String,
+        collectionId: String,
+        documentId: String,
+        data: Any,
+        permissions: [String]? = nil
+    ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
+        return try await upsertDocument(
+            databaseId: databaseId,
+            collectionId: collectionId,
+            documentId: documentId,
+            data: data,
+            permissions: permissions,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
     /// Update a document by its unique ID. Using the patch method you can pass
     /// only specific fields that will get updated.
     ///
