@@ -147,6 +147,21 @@ open class Client {
         return self
     }
 
+    ///
+    /// Set DevKey
+    ///
+    /// Your secret dev API key
+    ///
+    /// @param String value
+    ///
+    /// @return Client
+    ///
+    open func setDevKey(_ value: String) -> Client {
+        config["devkey"] = value
+        _ = addHeader(key: "X-Appwrite-Dev-Key", value: value)
+        return self
+    }
+
 
     ///
     /// Set self signed
