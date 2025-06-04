@@ -219,6 +219,10 @@ open class Databases: Service {
     }
 
     ///
+    /// **WARNING: Experimental Feature** - This endpoint is experimental and not
+    /// yet officially supported. It may be subject to breaking changes or removal
+    /// in future versions.
+    /// 
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
@@ -268,6 +272,10 @@ open class Databases: Service {
     }
 
     ///
+    /// **WARNING: Experimental Feature** - This endpoint is experimental and not
+    /// yet officially supported. It may be subject to breaking changes or removal
+    /// in future versions.
+    /// 
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)

@@ -23,7 +23,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "10.1.0",
+        "x-sdk-version": "10.1.1",
         "x-appwrite-response-format": "1.7.0"
     ]
 
@@ -265,7 +265,7 @@ open class Client {
 
        return output.addingPercentEncoding(
            withAllowedCharacters: .urlHostAllowed
-       ) ?? ""
+       )?.replacingOccurrences(of: "+", with: "%2B") ?? "" // since urlHostAllowed doesn't include +
    }
 
     ///
