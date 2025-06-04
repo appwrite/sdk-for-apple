@@ -47,8 +47,8 @@ open class MembershipList: Codable {
 
     public static func from(map: [String: Any] ) -> MembershipList {
         return MembershipList(
-            total: map["total"] as! Int,
-            memberships: (map["memberships"] as! [[String: Any]]).map { Membership.from(map: $0) }
+            total: map["total"] as? Int ?? 0,
+            memberships: (map["memberships"] as? [[String: Any]] ?? []).map { Membership.from(map: $0) }
         )
     }
 }

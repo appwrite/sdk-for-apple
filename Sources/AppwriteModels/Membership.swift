@@ -146,19 +146,19 @@ open class Membership: Codable {
 
     public static func from(map: [String: Any] ) -> Membership {
         return Membership(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            userId: map["userId"] as! String,
-            userName: map["userName"] as! String,
-            userEmail: map["userEmail"] as! String,
-            teamId: map["teamId"] as! String,
-            teamName: map["teamName"] as! String,
-            invited: map["invited"] as! String,
-            joined: map["joined"] as! String,
-            confirm: map["confirm"] as! Bool,
-            mfa: map["mfa"] as! Bool,
-            roles: map["roles"] as! [String]
+            id: map["$id"] as? String ?? "",
+            createdAt: map["$createdAt"] as? String ?? "",
+            updatedAt: map["$updatedAt"] as? String ?? "",
+            userId: map["userId"] as? String ?? "",
+            userName: map["userName"] as? String ?? "",
+            userEmail: map["userEmail"] as? String ?? "",
+            teamId: map["teamId"] as? String ?? "",
+            teamName: map["teamName"] as? String ?? "",
+            invited: map["invited"] as? String ?? "",
+            joined: map["joined"] as? String ?? "",
+            confirm: map["confirm"] as? Bool ?? false,
+            mfa: map["mfa"] as? Bool ?? false,
+            roles: map["roles"] as? [String] ?? []
         )
     }
 }

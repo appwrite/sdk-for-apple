@@ -91,13 +91,13 @@ open class Document<T : Codable>: Codable {
 
     public static func from(map: [String: Any] ) -> Document {
         return Document(
-            id: map["$id"] as! String,
-            collectionId: map["$collectionId"] as! String,
-            databaseId: map["$databaseId"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [String],
-            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
+            id: map["$id"] as? String ?? "",
+            collectionId: map["$collectionId"] as? String ?? "",
+            databaseId: map["$databaseId"] as? String ?? "",
+            createdAt: map["$createdAt"] as? String ?? "",
+            updatedAt: map["$updatedAt"] as? String ?? "",
+            permissions: map["$permissions"] as? [String] ?? [],
+            data: map["data"] != nil ? try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["data"]!, options: [])) : try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
         )
     }
 }

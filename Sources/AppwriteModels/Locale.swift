@@ -92,13 +92,13 @@ open class Locale: Codable {
 
     public static func from(map: [String: Any] ) -> Locale {
         return Locale(
-            ip: map["ip"] as! String,
-            countryCode: map["countryCode"] as! String,
-            country: map["country"] as! String,
-            continentCode: map["continentCode"] as! String,
-            continent: map["continent"] as! String,
-            eu: map["eu"] as! Bool,
-            currency: map["currency"] as! String
+            ip: map["ip"] as? String ?? "",
+            countryCode: map["countryCode"] as? String ?? "",
+            country: map["country"] as? String ?? "",
+            continentCode: map["continentCode"] as? String ?? "",
+            continent: map["continent"] as? String ?? "",
+            eu: map["eu"] as? Bool ?? false,
+            currency: map["currency"] as? String ?? ""
         )
     }
 }

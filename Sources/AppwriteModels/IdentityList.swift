@@ -47,8 +47,8 @@ open class IdentityList: Codable {
 
     public static func from(map: [String: Any] ) -> IdentityList {
         return IdentityList(
-            total: map["total"] as! Int,
-            identities: (map["identities"] as! [[String: Any]]).map { Identity.from(map: $0) }
+            total: map["total"] as? Int ?? 0,
+            identities: (map["identities"] as? [[String: Any]] ?? []).map { Identity.from(map: $0) }
         )
     }
 }

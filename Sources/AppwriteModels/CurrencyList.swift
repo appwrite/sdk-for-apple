@@ -47,8 +47,8 @@ open class CurrencyList: Codable {
 
     public static func from(map: [String: Any] ) -> CurrencyList {
         return CurrencyList(
-            total: map["total"] as! Int,
-            currencies: (map["currencies"] as! [[String: Any]]).map { Currency.from(map: $0) }
+            total: map["total"] as? Int ?? 0,
+            currencies: (map["currencies"] as? [[String: Any]] ?? []).map { Currency.from(map: $0) }
         )
     }
 }

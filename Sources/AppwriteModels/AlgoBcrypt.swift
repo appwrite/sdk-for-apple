@@ -38,7 +38,7 @@ open class AlgoBcrypt: Codable {
 
     public static func from(map: [String: Any] ) -> AlgoBcrypt {
         return AlgoBcrypt(
-            type: map["type"] as! String
+            type: map["type"] as? String ?? ""
         )
     }
 }

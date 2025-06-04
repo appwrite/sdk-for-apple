@@ -37,7 +37,7 @@ open class Preferences<T : Codable>: Codable {
 
     public static func from(map: [String: Any] ) -> Preferences {
         return Preferences(
-            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
+            data: map["data"] != nil ? try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["data"]!, options: [])) : try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
         )
     }
 }

@@ -182,22 +182,22 @@ open class Execution: Codable {
 
     public static func from(map: [String: Any] ) -> Execution {
         return Execution(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            permissions: map["$permissions"] as! [String],
-            functionId: map["functionId"] as! String,
-            trigger: map["trigger"] as! String,
-            status: map["status"] as! String,
-            requestMethod: map["requestMethod"] as! String,
-            requestPath: map["requestPath"] as! String,
-            requestHeaders: (map["requestHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
-            responseStatusCode: map["responseStatusCode"] as! Int,
-            responseBody: map["responseBody"] as! String,
-            responseHeaders: (map["responseHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },
-            logs: map["logs"] as! String,
-            errors: map["errors"] as! String,
-            duration: map["duration"] as! Double,
+            id: map["$id"] as? String ?? "",
+            createdAt: map["$createdAt"] as? String ?? "",
+            updatedAt: map["$updatedAt"] as? String ?? "",
+            permissions: map["$permissions"] as? [String] ?? [],
+            functionId: map["functionId"] as? String ?? "",
+            trigger: map["trigger"] as? String ?? "",
+            status: map["status"] as? String ?? "",
+            requestMethod: map["requestMethod"] as? String ?? "",
+            requestPath: map["requestPath"] as? String ?? "",
+            requestHeaders: (map["requestHeaders"] as? [[String: Any]] ?? []).map { Headers.from(map: $0) },
+            responseStatusCode: map["responseStatusCode"] as? Int ?? 0,
+            responseBody: map["responseBody"] as? String ?? "",
+            responseHeaders: (map["responseHeaders"] as? [[String: Any]] ?? []).map { Headers.from(map: $0) },
+            logs: map["logs"] as? String ?? "",
+            errors: map["errors"] as? String ?? "",
+            duration: map["duration"] as? Double ?? 0.0,
             scheduledAt: map["scheduledAt"] as? String
         )
     }

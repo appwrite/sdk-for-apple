@@ -38,7 +38,7 @@ open class MfaRecoveryCodes: Codable {
 
     public static func from(map: [String: Any] ) -> MfaRecoveryCodes {
         return MfaRecoveryCodes(
-            recoveryCodes: map["recoveryCodes"] as! [String]
+            recoveryCodes: map["recoveryCodes"] as? [String] ?? []
         )
     }
 }

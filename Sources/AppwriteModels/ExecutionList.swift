@@ -47,8 +47,8 @@ open class ExecutionList: Codable {
 
     public static func from(map: [String: Any] ) -> ExecutionList {
         return ExecutionList(
-            total: map["total"] as! Int,
-            executions: (map["executions"] as! [[String: Any]]).map { Execution.from(map: $0) }
+            total: map["total"] as? Int ?? 0,
+            executions: (map["executions"] as? [[String: Any]] ?? []).map { Execution.from(map: $0) }
         )
     }
 }

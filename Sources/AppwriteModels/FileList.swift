@@ -47,8 +47,8 @@ open class FileList: Codable {
 
     public static func from(map: [String: Any] ) -> FileList {
         return FileList(
-            total: map["total"] as! Int,
-            files: (map["files"] as! [[String: Any]]).map { File.from(map: $0) }
+            total: map["total"] as? Int ?? 0,
+            files: (map["files"] as? [[String: Any]] ?? []).map { File.from(map: $0) }
         )
     }
 }

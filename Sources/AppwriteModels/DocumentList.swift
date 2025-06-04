@@ -47,8 +47,8 @@ open class DocumentList<T : Codable>: Codable {
 
     public static func from(map: [String: Any] ) -> DocumentList {
         return DocumentList(
-            total: map["total"] as! Int,
-            documents: (map["documents"] as! [[String: Any]]).map { Document.from(map: $0) }
+            total: map["total"] as? Int ?? 0,
+            documents: (map["documents"] as? [[String: Any]] ?? []).map { Document.from(map: $0) }
         )
     }
 }

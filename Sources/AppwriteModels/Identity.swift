@@ -119,16 +119,16 @@ open class Identity: Codable {
 
     public static func from(map: [String: Any] ) -> Identity {
         return Identity(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            userId: map["userId"] as! String,
-            provider: map["provider"] as! String,
-            providerUid: map["providerUid"] as! String,
-            providerEmail: map["providerEmail"] as! String,
-            providerAccessToken: map["providerAccessToken"] as! String,
-            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! String,
-            providerRefreshToken: map["providerRefreshToken"] as! String
+            id: map["$id"] as? String ?? "",
+            createdAt: map["$createdAt"] as? String ?? "",
+            updatedAt: map["$updatedAt"] as? String ?? "",
+            userId: map["userId"] as? String ?? "",
+            provider: map["provider"] as? String ?? "",
+            providerUid: map["providerUid"] as? String ?? "",
+            providerEmail: map["providerEmail"] as? String ?? "",
+            providerAccessToken: map["providerAccessToken"] as? String ?? "",
+            providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as? String ?? "",
+            providerRefreshToken: map["providerRefreshToken"] as? String ?? ""
         )
     }
 }

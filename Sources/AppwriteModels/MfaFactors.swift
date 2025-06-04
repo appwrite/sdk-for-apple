@@ -65,10 +65,10 @@ open class MfaFactors: Codable {
 
     public static func from(map: [String: Any] ) -> MfaFactors {
         return MfaFactors(
-            totp: map["totp"] as! Bool,
-            phone: map["phone"] as! Bool,
-            email: map["email"] as! Bool,
-            recoveryCode: map["recoveryCode"] as! Bool
+            totp: map["totp"] as? Bool ?? false,
+            phone: map["phone"] as? Bool ?? false,
+            email: map["email"] as? Bool ?? false,
+            recoveryCode: map["recoveryCode"] as? Bool ?? false
         )
     }
 }

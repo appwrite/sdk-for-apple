@@ -65,10 +65,10 @@ open class MfaChallenge: Codable {
 
     public static func from(map: [String: Any] ) -> MfaChallenge {
         return MfaChallenge(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            userId: map["userId"] as! String,
-            expire: map["expire"] as! String
+            id: map["$id"] as? String ?? "",
+            createdAt: map["$createdAt"] as? String ?? "",
+            userId: map["userId"] as? String ?? "",
+            expire: map["expire"] as? String ?? ""
         )
     }
 }

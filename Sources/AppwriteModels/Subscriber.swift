@@ -110,15 +110,15 @@ open class Subscriber: Codable {
 
     public static func from(map: [String: Any] ) -> Subscriber {
         return Subscriber(
-            id: map["$id"] as! String,
-            createdAt: map["$createdAt"] as! String,
-            updatedAt: map["$updatedAt"] as! String,
-            targetId: map["targetId"] as! String,
-            target: Target.from(map: map["target"] as! [String: Any]),
-            userId: map["userId"] as! String,
-            userName: map["userName"] as! String,
-            topicId: map["topicId"] as! String,
-            providerType: map["providerType"] as! String
+            id: map["$id"] as? String ?? "",
+            createdAt: map["$createdAt"] as? String ?? "",
+            updatedAt: map["$updatedAt"] as? String ?? "",
+            targetId: map["targetId"] as? String ?? "",
+            target: map["target"] != nil ? Target.from(map: map["target"] as! [String: Any]) : Target(),
+            userId: map["userId"] as? String ?? "",
+            userName: map["userName"] as? String ?? "",
+            topicId: map["topicId"] as? String ?? "",
+            providerType: map["providerType"] as? String ?? ""
         )
     }
 }
