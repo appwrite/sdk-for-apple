@@ -47,8 +47,8 @@ open class TeamList<T : Codable>: Codable {
 
     public static func from(map: [String: Any] ) -> TeamList {
         return TeamList(
-            total: map["total"] as? Int ?? 0,
-            teams: (map["teams"] as? [[String: Any]] ?? []).map { Team.from(map: $0) }
+            total: map["total"] as! Int,
+            teams: (map["teams"] as! [[String: Any]]).map { Team.from(map: $0) }
         )
     }
 }

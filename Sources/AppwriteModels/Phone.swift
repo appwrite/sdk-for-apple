@@ -56,9 +56,9 @@ open class Phone: Codable {
 
     public static func from(map: [String: Any] ) -> Phone {
         return Phone(
-            code: map["code"] as? String ?? "",
-            countryCode: map["countryCode"] as? String ?? "",
-            countryName: map["countryName"] as? String ?? ""
+            code: map["code"] as! String,
+            countryCode: map["countryCode"] as! String,
+            countryName: map["countryName"] as! String
         )
     }
 }

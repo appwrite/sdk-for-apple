@@ -47,8 +47,8 @@ open class LocaleCode: Codable {
 
     public static func from(map: [String: Any] ) -> LocaleCode {
         return LocaleCode(
-            code: map["code"] as? String ?? "",
-            name: map["name"] as? String ?? ""
+            code: map["code"] as! String,
+            name: map["name"] as! String
         )
     }
 }

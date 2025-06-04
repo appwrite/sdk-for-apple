@@ -47,8 +47,8 @@ open class Headers: Codable {
 
     public static func from(map: [String: Any] ) -> Headers {
         return Headers(
-            name: map["name"] as? String ?? "",
-            value: map["value"] as? String ?? ""
+            name: map["name"] as! String,
+            value: map["value"] as! String
         )
     }
 }

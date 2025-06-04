@@ -83,12 +83,12 @@ open class Token: Codable {
 
     public static func from(map: [String: Any] ) -> Token {
         return Token(
-            id: map["$id"] as? String ?? "",
-            createdAt: map["$createdAt"] as? String ?? "",
-            userId: map["userId"] as? String ?? "",
-            secret: map["secret"] as? String ?? "",
-            expire: map["expire"] as? String ?? "",
-            phrase: map["phrase"] as? String ?? ""
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            userId: map["userId"] as! String,
+            secret: map["secret"] as! String,
+            expire: map["expire"] as! String,
+            phrase: map["phrase"] as! String
         )
     }
 }

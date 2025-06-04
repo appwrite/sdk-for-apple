@@ -47,8 +47,8 @@ open class LanguageList: Codable {
 
     public static func from(map: [String: Any] ) -> LanguageList {
         return LanguageList(
-            total: map["total"] as? Int ?? 0,
-            languages: (map["languages"] as? [[String: Any]] ?? []).map { Language.from(map: $0) }
+            total: map["total"] as! Int,
+            languages: (map["languages"] as! [[String: Any]]).map { Language.from(map: $0) }
         )
     }
 }

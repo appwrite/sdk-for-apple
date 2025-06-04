@@ -128,17 +128,17 @@ open class File: Codable {
 
     public static func from(map: [String: Any] ) -> File {
         return File(
-            id: map["$id"] as? String ?? "",
-            bucketId: map["bucketId"] as? String ?? "",
-            createdAt: map["$createdAt"] as? String ?? "",
-            updatedAt: map["$updatedAt"] as? String ?? "",
-            permissions: map["$permissions"] as? [String] ?? [],
-            name: map["name"] as? String ?? "",
-            signature: map["signature"] as? String ?? "",
-            mimeType: map["mimeType"] as? String ?? "",
-            sizeOriginal: map["sizeOriginal"] as? Int ?? 0,
-            chunksTotal: map["chunksTotal"] as? Int ?? 0,
-            chunksUploaded: map["chunksUploaded"] as? Int ?? 0
+            id: map["$id"] as! String,
+            bucketId: map["bucketId"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            permissions: map["$permissions"] as! [String],
+            name: map["name"] as! String,
+            signature: map["signature"] as! String,
+            mimeType: map["mimeType"] as! String,
+            sizeOriginal: map["sizeOriginal"] as! Int,
+            chunksTotal: map["chunksTotal"] as! Int,
+            chunksUploaded: map["chunksUploaded"] as! Int
         )
     }
 }

@@ -47,8 +47,8 @@ open class SessionList: Codable {
 
     public static func from(map: [String: Any] ) -> SessionList {
         return SessionList(
-            total: map["total"] as? Int ?? 0,
-            sessions: (map["sessions"] as? [[String: Any]] ?? []).map { Session.from(map: $0) }
+            total: map["total"] as! Int,
+            sessions: (map["sessions"] as! [[String: Any]]).map { Session.from(map: $0) }
         )
     }
 }

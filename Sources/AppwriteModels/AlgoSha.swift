@@ -38,7 +38,7 @@ open class AlgoSha: Codable {
 
     public static func from(map: [String: Any] ) -> AlgoSha {
         return AlgoSha(
-            type: map["type"] as? String ?? ""
+            type: map["type"] as! String
         )
     }
 }

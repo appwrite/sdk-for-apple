@@ -110,15 +110,15 @@ open class Target: Codable {
 
     public static func from(map: [String: Any] ) -> Target {
         return Target(
-            id: map["$id"] as? String ?? "",
-            createdAt: map["$createdAt"] as? String ?? "",
-            updatedAt: map["$updatedAt"] as? String ?? "",
-            name: map["name"] as? String ?? "",
-            userId: map["userId"] as? String ?? "",
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            name: map["name"] as! String,
+            userId: map["userId"] as! String,
             providerId: map["providerId"] as? String,
-            providerType: map["providerType"] as? String ?? "",
-            identifier: map["identifier"] as? String ?? "",
-            expired: map["expired"] as? Bool ?? false
+            providerType: map["providerType"] as! String,
+            identifier: map["identifier"] as! String,
+            expired: map["expired"] as! Bool
         )
     }
 }

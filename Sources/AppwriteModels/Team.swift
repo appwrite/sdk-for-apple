@@ -83,12 +83,12 @@ open class Team<T : Codable>: Codable {
 
     public static func from(map: [String: Any] ) -> Team {
         return Team(
-            id: map["$id"] as? String ?? "",
-            createdAt: map["$createdAt"] as? String ?? "",
-            updatedAt: map["$updatedAt"] as? String ?? "",
-            name: map["name"] as? String ?? "",
-            total: map["total"] as? Int ?? 0,
-            prefs: map["prefs"] != nil ? Preferences.from(map: map["prefs"] as! [String: Any]) : Preferences()
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            name: map["name"] as! String,
+            total: map["total"] as! Int,
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any])
         )
     }
 }

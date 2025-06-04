@@ -200,25 +200,25 @@ open class User<T : Codable>: Codable {
 
     public static func from(map: [String: Any] ) -> User {
         return User(
-            id: map["$id"] as? String ?? "",
-            createdAt: map["$createdAt"] as? String ?? "",
-            updatedAt: map["$updatedAt"] as? String ?? "",
-            name: map["name"] as? String ?? "",
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            name: map["name"] as! String,
             password: map["password"] as? String,
             hash: map["hash"] as? String,
             hashOptions: map["hashOptions"] as? [String: AnyCodable],
-            registration: map["registration"] as? String ?? "",
-            status: map["status"] as? Bool ?? false,
-            labels: map["labels"] as? [String] ?? [],
-            passwordUpdate: map["passwordUpdate"] as? String ?? "",
-            email: map["email"] as? String ?? "",
-            phone: map["phone"] as? String ?? "",
-            emailVerification: map["emailVerification"] as? Bool ?? false,
-            phoneVerification: map["phoneVerification"] as? Bool ?? false,
-            mfa: map["mfa"] as? Bool ?? false,
-            prefs: map["prefs"] != nil ? Preferences.from(map: map["prefs"] as! [String: Any]) : Preferences(),
-            targets: (map["targets"] as? [[String: Any]] ?? []).map { Target.from(map: $0) },
-            accessedAt: map["accessedAt"] as? String ?? ""
+            registration: map["registration"] as! String,
+            status: map["status"] as! Bool,
+            labels: map["labels"] as! [String],
+            passwordUpdate: map["passwordUpdate"] as! String,
+            email: map["email"] as! String,
+            phone: map["phone"] as! String,
+            emailVerification: map["emailVerification"] as! Bool,
+            phoneVerification: map["phoneVerification"] as! Bool,
+            mfa: map["mfa"] as! Bool,
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any]),
+            targets: (map["targets"] as! [[String: Any]]).map { Target.from(map: $0) },
+            accessedAt: map["accessedAt"] as! String
         )
     }
 }

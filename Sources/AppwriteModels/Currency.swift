@@ -92,13 +92,13 @@ open class Currency: Codable {
 
     public static func from(map: [String: Any] ) -> Currency {
         return Currency(
-            symbol: map["symbol"] as? String ?? "",
-            name: map["name"] as? String ?? "",
-            symbolNative: map["symbolNative"] as? String ?? "",
-            decimalDigits: map["decimalDigits"] as? Int ?? 0,
-            rounding: map["rounding"] as? Double ?? 0.0,
-            code: map["code"] as? String ?? "",
-            namePlural: map["namePlural"] as? String ?? ""
+            symbol: map["symbol"] as! String,
+            name: map["name"] as! String,
+            symbolNative: map["symbolNative"] as! String,
+            decimalDigits: map["decimalDigits"] as! Int,
+            rounding: map["rounding"] as! Double,
+            code: map["code"] as! String,
+            namePlural: map["namePlural"] as! String
         )
     }
 }

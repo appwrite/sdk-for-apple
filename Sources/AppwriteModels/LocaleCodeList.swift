@@ -47,8 +47,8 @@ open class LocaleCodeList: Codable {
 
     public static func from(map: [String: Any] ) -> LocaleCodeList {
         return LocaleCodeList(
-            total: map["total"] as? Int ?? 0,
-            localeCodes: (map["localeCodes"] as? [[String: Any]] ?? []).map { LocaleCode.from(map: $0) }
+            total: map["total"] as! Int,
+            localeCodes: (map["localeCodes"] as! [[String: Any]]).map { LocaleCode.from(map: $0) }
         )
     }
 }

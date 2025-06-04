@@ -47,8 +47,8 @@ open class MfaType: Codable {
 
     public static func from(map: [String: Any] ) -> MfaType {
         return MfaType(
-            secret: map["secret"] as? String ?? "",
-            uri: map["uri"] as? String ?? ""
+            secret: map["secret"] as! String,
+            uri: map["uri"] as! String
         )
     }
 }

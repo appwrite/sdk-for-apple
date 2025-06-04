@@ -56,9 +56,9 @@ open class Language: Codable {
 
     public static func from(map: [String: Any] ) -> Language {
         return Language(
-            name: map["name"] as? String ?? "",
-            code: map["code"] as? String ?? "",
-            nativeName: map["nativeName"] as? String ?? ""
+            name: map["name"] as! String,
+            code: map["code"] as! String,
+            nativeName: map["nativeName"] as! String
         )
     }
 }

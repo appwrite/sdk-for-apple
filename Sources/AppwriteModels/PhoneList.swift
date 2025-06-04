@@ -47,8 +47,8 @@ open class PhoneList: Codable {
 
     public static func from(map: [String: Any] ) -> PhoneList {
         return PhoneList(
-            total: map["total"] as? Int ?? 0,
-            phones: (map["phones"] as? [[String: Any]] ?? []).map { Phone.from(map: $0) }
+            total: map["total"] as! Int,
+            phones: (map["phones"] as! [[String: Any]]).map { Phone.from(map: $0) }
         )
     }
 }
