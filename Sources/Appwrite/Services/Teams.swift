@@ -12,10 +12,11 @@ open class Teams: Service {
     /// Get a list of all the teams in which the current user is a member. You can
     /// use the parameters to filter your results.
     ///
-    /// @param [String] queries
-    /// @param String search
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - queries: [String] (optional)
+    ///   - search: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.TeamList<T>
     ///
     open func list<T>(
         queries: [String]? = nil,
@@ -48,10 +49,11 @@ open class Teams: Service {
     /// Get a list of all the teams in which the current user is a member. You can
     /// use the parameters to filter your results.
     ///
-    /// @param [String] queries
-    /// @param String search
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - queries: [String] (optional)
+    ///   - search: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.TeamList<T>
     ///
     open func list(
         queries: [String]? = nil,
@@ -69,11 +71,12 @@ open class Teams: Service {
     /// assigned as the owner of the team. Only the users with the owner role can
     /// invite new members, add new owners and delete or update the team.
     ///
-    /// @param String teamId
-    /// @param String name
-    /// @param [String] roles
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - name: String
+    ///   - roles: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Team<T>
     ///
     open func create<T>(
         teamId: String,
@@ -111,11 +114,12 @@ open class Teams: Service {
     /// assigned as the owner of the team. Only the users with the owner role can
     /// invite new members, add new owners and delete or update the team.
     ///
-    /// @param String teamId
-    /// @param String name
-    /// @param [String] roles
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - name: String
+    ///   - roles: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Team<T>
     ///
     open func create(
         teamId: String,
@@ -133,9 +137,10 @@ open class Teams: Service {
     ///
     /// Get a team by its ID. All team members have read access for this resource.
     ///
-    /// @param String teamId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Team<T>
     ///
     open func get<T>(
         teamId: String,
@@ -164,9 +169,10 @@ open class Teams: Service {
     ///
     /// Get a team by its ID. All team members have read access for this resource.
     ///
-    /// @param String teamId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Team<T>
     ///
     open func get(
         teamId: String
@@ -180,10 +186,11 @@ open class Teams: Service {
     ///
     /// Update the team's name by its unique ID.
     ///
-    /// @param String teamId
-    /// @param String name
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - name: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Team<T>
     ///
     open func updateName<T>(
         teamId: String,
@@ -217,10 +224,11 @@ open class Teams: Service {
     ///
     /// Update the team's name by its unique ID.
     ///
-    /// @param String teamId
-    /// @param String name
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - name: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Team<T>
     ///
     open func updateName(
         teamId: String,
@@ -237,9 +245,10 @@ open class Teams: Service {
     /// Delete a team using its ID. Only team members with the owner role can
     /// delete the team.
     ///
-    /// @param String teamId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
     ///
     open func delete(
         teamId: String
@@ -265,11 +274,12 @@ open class Teams: Service {
     /// members have read access to this endpoint. Hide sensitive attributes from
     /// the response by toggling membership privacy in the Console.
     ///
-    /// @param String teamId
-    /// @param [String] queries
-    /// @param String search
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - queries: [String] (optional)
+    ///   - search: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MembershipList
     ///
     open func listMemberships(
         teamId: String,
@@ -322,15 +332,16 @@ open class Teams: Service {
     /// added as a platform on the Appwrite Console.
     /// 
     ///
-    /// @param String teamId
-    /// @param [String] roles
-    /// @param String email
-    /// @param String userId
-    /// @param String phone
-    /// @param String url
-    /// @param String name
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - roles: [String]
+    ///   - email: String (optional)
+    ///   - userId: String (optional)
+    ///   - phone: String (optional)
+    ///   - url: String (optional)
+    ///   - name: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Membership
     ///
     open func createMembership(
         teamId: String,
@@ -375,10 +386,11 @@ open class Teams: Service {
     /// access for this resource. Hide sensitive attributes from the response by
     /// toggling membership privacy in the Console.
     ///
-    /// @param String teamId
-    /// @param String membershipId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - membershipId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Membership
     ///
     open func getMembership(
         teamId: String,
@@ -411,11 +423,12 @@ open class Teams: Service {
     /// permissions](https://appwrite.io/docs/permissions).
     /// 
     ///
-    /// @param String teamId
-    /// @param String membershipId
-    /// @param [String] roles
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - membershipId: String
+    ///   - roles: [String]
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Membership
     ///
     open func updateMembership(
         teamId: String,
@@ -452,10 +465,11 @@ open class Teams: Service {
     /// the membership of any other team member. You can also use this endpoint to
     /// delete a user membership even if it is not accepted.
     ///
-    /// @param String teamId
-    /// @param String membershipId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - membershipId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
     ///
     open func deleteMembership(
         teamId: String,
@@ -487,12 +501,13 @@ open class Teams: Service {
     /// created.
     /// 
     ///
-    /// @param String teamId
-    /// @param String membershipId
-    /// @param String userId
-    /// @param String secret
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - membershipId: String
+    ///   - userId: String
+    ///   - secret: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Membership
     ///
     open func updateMembershipStatus(
         teamId: String,
@@ -531,9 +546,10 @@ open class Teams: Service {
     /// need to be shared by all team members, prefer storing them in [user
     /// preferences](https://appwrite.io/docs/references/cloud/client-web/account#getPrefs).
     ///
-    /// @param String teamId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Preferences<T>
     ///
     open func getPrefs<T>(
         teamId: String,
@@ -564,9 +580,10 @@ open class Teams: Service {
     /// need to be shared by all team members, prefer storing them in [user
     /// preferences](https://appwrite.io/docs/references/cloud/client-web/account#getPrefs).
     ///
-    /// @param String teamId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Preferences<T>
     ///
     open func getPrefs(
         teamId: String
@@ -582,10 +599,11 @@ open class Teams: Service {
     /// stored as is and replaces any previous value. The maximum allowed prefs
     /// size is 64kB and throws an error if exceeded.
     ///
-    /// @param String teamId
-    /// @param Any prefs
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - prefs: Any
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Preferences<T>
     ///
     open func updatePrefs<T>(
         teamId: String,
@@ -621,10 +639,11 @@ open class Teams: Service {
     /// stored as is and replaces any previous value. The maximum allowed prefs
     /// size is 64kB and throws an error if exceeded.
     ///
-    /// @param String teamId
-    /// @param Any prefs
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - teamId: String
+    ///   - prefs: Any
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Preferences<T>
     ///
     open func updatePrefs(
         teamId: String,

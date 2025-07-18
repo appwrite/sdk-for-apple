@@ -11,11 +11,12 @@ open class Messaging: Service {
     ///
     /// Create a new subscriber.
     ///
-    /// @param String topicId
-    /// @param String subscriberId
-    /// @param String targetId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - topicId: String
+    ///   - subscriberId: String
+    ///   - targetId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Subscriber
     ///
     open func createSubscriber(
         topicId: String,
@@ -50,10 +51,11 @@ open class Messaging: Service {
     ///
     /// Delete a subscriber by its unique ID.
     ///
-    /// @param String topicId
-    /// @param String subscriberId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - topicId: String
+    ///   - subscriberId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
     ///
     open func deleteSubscriber(
         topicId: String,

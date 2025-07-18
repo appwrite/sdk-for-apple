@@ -16,8 +16,8 @@ open class Locale: Service {
     /// 
     /// ([IP Geolocation by DB-IP](https://db-ip.com))
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Locale
     ///
     open func get(
     ) async throws -> AppwriteModels.Locale {
@@ -44,8 +44,8 @@ open class Locale: Service {
     /// List of all locale codes in [ISO
     /// 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.LocaleCodeList
     ///
     open func listCodes(
     ) async throws -> AppwriteModels.LocaleCodeList {
@@ -72,8 +72,8 @@ open class Locale: Service {
     /// List of all continents. You can use the locale header to get the data in a
     /// supported language.
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.ContinentList
     ///
     open func listContinents(
     ) async throws -> AppwriteModels.ContinentList {
@@ -100,8 +100,8 @@ open class Locale: Service {
     /// List of all countries. You can use the locale header to get the data in a
     /// supported language.
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.CountryList
     ///
     open func listCountries(
     ) async throws -> AppwriteModels.CountryList {
@@ -128,8 +128,8 @@ open class Locale: Service {
     /// List of all countries that are currently members of the EU. You can use the
     /// locale header to get the data in a supported language.
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.CountryList
     ///
     open func listCountriesEU(
     ) async throws -> AppwriteModels.CountryList {
@@ -156,8 +156,8 @@ open class Locale: Service {
     /// List of all countries phone codes. You can use the locale header to get the
     /// data in a supported language.
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PhoneList
     ///
     open func listCountriesPhones(
     ) async throws -> AppwriteModels.PhoneList {
@@ -185,8 +185,8 @@ open class Locale: Service {
     /// decimal digits for all major and minor currencies. You can use the locale
     /// header to get the data in a supported language.
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.CurrencyList
     ///
     open func listCurrencies(
     ) async throws -> AppwriteModels.CurrencyList {
@@ -213,8 +213,8 @@ open class Locale: Service {
     /// List of all languages classified by ISO 639-1 including 2-letter code, name
     /// in English, and name in the respective language.
     ///
-    /// @throws Exception
-    /// @return array
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.LanguageList
     ///
     open func listLanguages(
     ) async throws -> AppwriteModels.LanguageList {

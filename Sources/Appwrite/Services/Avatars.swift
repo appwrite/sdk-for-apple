@@ -20,12 +20,13 @@ open class Avatars: Service {
     /// image at source quality. If dimensions are not specified, the default size
     /// of image returned is 100x100px.
     ///
-    /// @param AppwriteEnums.Browser code
-    /// @param Int width
-    /// @param Int height
-    /// @param Int quality
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - code: AppwriteEnums.Browser
+    ///   - width: Int (optional)
+    ///   - height: Int (optional)
+    ///   - quality: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getBrowser(
         code: AppwriteEnums.Browser,
@@ -61,12 +62,13 @@ open class Avatars: Service {
     /// of image returned is 100x100px.
     /// 
     ///
-    /// @param AppwriteEnums.CreditCard code
-    /// @param Int width
-    /// @param Int height
-    /// @param Int quality
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - code: AppwriteEnums.CreditCard
+    ///   - width: Int (optional)
+    ///   - height: Int (optional)
+    ///   - quality: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getCreditCard(
         code: AppwriteEnums.CreditCard,
@@ -97,9 +99,10 @@ open class Avatars: Service {
     /// 
     /// This endpoint does not follow HTTP redirects.
     ///
-    /// @param String url
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - url: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getFavicon(
         url: String
@@ -130,12 +133,13 @@ open class Avatars: Service {
     /// of image returned is 100x100px.
     /// 
     ///
-    /// @param AppwriteEnums.Flag code
-    /// @param Int width
-    /// @param Int height
-    /// @param Int quality
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - code: AppwriteEnums.Flag
+    ///   - width: Int (optional)
+    ///   - height: Int (optional)
+    ///   - quality: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getFlag(
         code: AppwriteEnums.Flag,
@@ -173,11 +177,12 @@ open class Avatars: Service {
     /// 
     /// This endpoint does not follow HTTP redirects.
     ///
-    /// @param String url
-    /// @param Int width
-    /// @param Int height
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - url: String
+    ///   - width: Int (optional)
+    ///   - height: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getImage(
         url: String,
@@ -218,12 +223,13 @@ open class Avatars: Service {
     /// of image returned is 100x100px.
     /// 
     ///
-    /// @param String name
-    /// @param Int width
-    /// @param Int height
-    /// @param String background
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - name: String (optional)
+    ///   - width: Int (optional)
+    ///   - height: Int (optional)
+    ///   - background: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getInitials(
         name: String? = nil,
@@ -253,12 +259,13 @@ open class Avatars: Service {
     /// parameters to change the size and style of the resulting image.
     /// 
     ///
-    /// @param String text
-    /// @param Int size
-    /// @param Int margin
-    /// @param Bool download
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - text: String
+    ///   - size: Int (optional)
+    ///   - margin: Int (optional)
+    ///   - download: Bool (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
     ///
     open func getQR(
         text: String,

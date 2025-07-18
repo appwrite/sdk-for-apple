@@ -7,6 +7,7 @@ public enum ImageFormat: String, CustomStringConvertible {
     case webp = "webp"
     case heic = "heic"
     case avif = "avif"
+    case gif = "gif"
 
     public var description: String {
         return rawValue

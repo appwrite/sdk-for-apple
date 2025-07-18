@@ -6,6 +6,7 @@ open class Document<T : Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id = "$id"
+        case sequence = "$sequence"
         case collectionId = "$collectionId"
         case databaseId = "$databaseId"
         case createdAt = "$createdAt"
@@ -16,6 +17,9 @@ open class Document<T : Codable>: Codable {
 
     /// Document ID.
     public let id: String
+
+    /// Document automatically incrementing ID.
+    public let sequence: Int
 
     /// Collection ID.
     public let collectionId: String
@@ -37,6 +41,7 @@ open class Document<T : Codable>: Codable {
 
     init(
         id: String,
+        sequence: Int,
         collectionId: String,
         databaseId: String,
         createdAt: String,
@@ -45,6 +50,7 @@ open class Document<T : Codable>: Codable {
         data: T
     ) {
         self.id = id
+        self.sequence = sequence
         self.collectionId = collectionId
         self.databaseId = databaseId
         self.createdAt = createdAt
@@ -57,6 +63,7 @@ open class Document<T : Codable>: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.id = try container.decode(String.self, forKey: .id)
+        self.sequence = try container.decode(Int.self, forKey: .sequence)
         self.collectionId = try container.decode(String.self, forKey: .collectionId)
         self.databaseId = try container.decode(String.self, forKey: .databaseId)
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
@@ -69,6 +76,7 @@ open class Document<T : Codable>: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(id, forKey: .id)
+        try container.encode(sequence, forKey: .sequence)
         try container.encode(collectionId, forKey: .collectionId)
         try container.encode(databaseId, forKey: .databaseId)
         try container.encode(createdAt, forKey: .createdAt)
@@ -80,6 +88,7 @@ open class Document<T : Codable>: Codable {
     public func toMap() -> [String: Any] {
         return [
             "$id": id as Any,
+            "$sequence": sequence as Any,
             "$collectionId": collectionId as Any,
             "$databaseId": databaseId as Any,
             "$createdAt": createdAt as Any,
@@ -92,6 +101,7 @@ open class Document<T : Codable>: Codable {
     public static func from(map: [String: Any] ) -> Document {
         return Document(
             id: map["$id"] as? String ?? "",
+            sequence: map["$sequence"] as? Int ?? 0,
             collectionId: map["$collectionId"] as? String ?? "",
             databaseId: map["$databaseId"] as? String ?? "",
             createdAt: map["$createdAt"] as? String ?? "",
