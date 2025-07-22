@@ -9,7 +9,7 @@ open class SessionList: Codable {
         case sessions = "sessions"
     }
 
-    /// Total number of sessions documents that matched your query.
+    /// Total number of sessions rows that matched your query.
     public let total: Int
 
     /// List of sessions.

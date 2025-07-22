@@ -9,7 +9,7 @@ open class LogList: Codable {
         case logs = "logs"
     }
 
-    /// Total number of logs documents that matched your query.
+    /// Total number of logs rows that matched your query.
     public let total: Int
 
     /// List of logs.

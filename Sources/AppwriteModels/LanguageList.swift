@@ -9,7 +9,7 @@ open class LanguageList: Codable {
         case languages = "languages"
     }
 
-    /// Total number of languages documents that matched your query.
+    /// Total number of languages rows that matched your query.
     public let total: Int
 
     /// List of languages.

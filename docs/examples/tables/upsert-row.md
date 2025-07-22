@@ -6,13 +6,11 @@ let client = Client()
     .setKey("") // 
     .setJWT("<YOUR_JWT>") // Your secret JSON Web Token
 
-let databases = Databases(client)
+let tables = Tables(client)
 
-let document = try await databases.createDocument(
+let row = try await tables.upsertRow(
     databaseId: "<DATABASE_ID>",
-    collectionId: "<COLLECTION_ID>",
-    documentId: "<DOCUMENT_ID>",
-    data: [:],
-    permissions: ["read("any")"] // optional
+    tableId: "<TABLE_ID>",
+    rowId: "<ROW_ID>"
 )
 

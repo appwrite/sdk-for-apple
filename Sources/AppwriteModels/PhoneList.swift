@@ -9,7 +9,7 @@ open class PhoneList: Codable {
         case phones = "phones"
     }
 
-    /// Total number of phones documents that matched your query.
+    /// Total number of phones rows that matched your query.
     public let total: Int
 
     /// List of phones.
