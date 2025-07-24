@@ -9,7 +9,7 @@ open class ContinentList: Codable {
         case continents = "continents"
     }
 
-    /// Total number of continents rows that matched your query.
+    /// Total number of continents documents that matched your query.
     public let total: Int
 
     /// List of continents.

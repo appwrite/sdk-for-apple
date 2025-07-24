@@ -1214,7 +1214,6 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
-    @available(*, deprecated, message: "This API has been deprecated.")
     open func updateMagicURLSession(
         userId: String,
         secret: String
@@ -1314,7 +1313,6 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
-    @available(*, deprecated, message: "This API has been deprecated.")
     open func updatePhoneSession(
         userId: String,
         secret: String

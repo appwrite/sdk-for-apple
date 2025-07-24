@@ -6,11 +6,12 @@ let client = Client()
 
 let databases = Databases(client)
 
-let document = try await databases.upsertDocument(
+let document = try await databases.decrementDocumentAttribute(
     databaseId: "<DATABASE_ID>",
     collectionId: "<COLLECTION_ID>",
     documentId: "<DOCUMENT_ID>",
-    data: [:],
-    permissions: ["read("any")"] // optional
+    attribute: "",
+    value: 0, // optional
+    min: 0 // optional
 )
 
