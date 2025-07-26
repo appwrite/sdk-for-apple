@@ -31,7 +31,7 @@ Add the package to your `Package.swift` dependencies:
 
 ```swift
     dependencies: [
-        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "10.1.1"),
+        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "10.2.0"),
     ],
 ```
 
@@ -161,6 +161,63 @@ func main() {
         print(error.localizedDescription)
     }
 }
+```
+
+### Type Safety with Models
+
+The Appwrite Apple SDK provides type safety when working with database documents through generic methods. Methods like `listDocuments`, `getDocument`, and others accept a `nestedType` parameter that allows you to specify your custom model type for full type safety.
+
+```swift
+struct Book: Codable {
+    let name: String
+    let author: String
+    let releaseYear: String?
+    let category: String?
+    let genre: [String]?
+    let isCheckedOut: Bool
+}
+
+let databases = Databases(client)
+
+do {
+    let documents = try await databases.listDocuments(
+        databaseId: "your-database-id",
+        collectionId: "your-collection-id",
+        nestedType: Book.self // Pass in your custom model type
+    )
+    
+    for book in documents.documents {
+        print("Book: \(book.name) by \(book.author)") // Now you have full type safety
+    }
+} catch {
+    print(error.localizedDescription)
+}
+```
+
+**Tip**: You can use the `appwrite types` command to automatically generate model definitions based on your Appwrite database schema. Learn more about [type generation](https://appwrite.io/docs/products/databases/type-generation).
+
+### Working with Model Methods
+
+All Appwrite models come with built-in methods for data conversion and manipulation:
+
+**`toMap()`** - Converts a model instance to a dictionary format, useful for debugging or manual data manipulation:
+```swift
+let user = try await account.get()
+let userMap = user.toMap()
+print(userMap) // Prints all user properties as a dictionary
+```
+
+**`from(map:)`** - Creates a model instance from a dictionary, useful when working with raw data:
+```swift
+let userData: [String: Any] = ["$id": "123", "name": "John", "email": "john@example.com"]
+let user = User.from(map: userData)
+```
+
+**`encode(to:)`** - Encodes the model to JSON format (part of Swift's Codable protocol), useful for serialization:
+```swift
+let user = try await account.get()
+let jsonData = try JSONEncoder().encode(user)
+let jsonString = String(data: jsonData, encoding: .utf8)
 ```
 
 ### Error Handling

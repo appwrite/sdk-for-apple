@@ -11,9 +11,10 @@ open class Graphql: Service {
     ///
     /// Execute a GraphQL mutation.
     ///
-    /// @param Any query
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - query: Any
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
     ///
     open func query(
         query: Any
@@ -45,9 +46,10 @@ open class Graphql: Service {
     ///
     /// Execute a GraphQL mutation.
     ///
-    /// @param Any query
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - query: Any
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
     ///
     open func mutation(
         query: Any

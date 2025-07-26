@@ -12,10 +12,11 @@ open class Functions: Service {
     /// Get a list of all the current user function execution logs. You can use the
     /// query params to filter your results.
     ///
-    /// @param String functionId
-    /// @param [String] queries
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - functionId: String
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.ExecutionList
     ///
     open func listExecutions(
         functionId: String,
@@ -49,15 +50,16 @@ open class Functions: Service {
     /// updates on the current execution status. Once this endpoint is called, your
     /// function execution process will start asynchronously.
     ///
-    /// @param String functionId
-    /// @param String body
-    /// @param Bool async
-    /// @param String path
-    /// @param AppwriteEnums.ExecutionMethod method
-    /// @param Any headers
-    /// @param String scheduledAt
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - functionId: String
+    ///   - body: String (optional)
+    ///   - async: Bool (optional)
+    ///   - path: String (optional)
+    ///   - method: AppwriteEnums.ExecutionMethod (optional)
+    ///   - headers: Any (optional)
+    ///   - scheduledAt: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Execution
     ///
     open func createExecution(
         functionId: String,
@@ -100,10 +102,11 @@ open class Functions: Service {
     ///
     /// Get a function execution log by its unique ID.
     ///
-    /// @param String functionId
-    /// @param String executionId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - functionId: String
+    ///   - executionId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Execution
     ///
     open func getExecution(
         functionId: String,

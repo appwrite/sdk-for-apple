@@ -12,11 +12,12 @@ open class Databases: Service {
     /// Get a list of all the user's documents in a given collection. You can use
     /// the query params to filter your results.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param [String] queries
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.DocumentList<T>
     ///
     open func listDocuments<T>(
         databaseId: String,
@@ -51,11 +52,12 @@ open class Databases: Service {
     /// Get a list of all the user's documents in a given collection. You can use
     /// the query params to filter your results.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param [String] queries
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.DocumentList<T>
     ///
     open func listDocuments(
         databaseId: String,
@@ -76,13 +78,14 @@ open class Databases: Service {
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param Any data
-    /// @param [String] permissions
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - data: Any
+    ///   - permissions: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func createDocument<T>(
         databaseId: String,
@@ -125,13 +128,14 @@ open class Databases: Service {
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param Any data
-    /// @param [String] permissions
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - data: Any
+    ///   - permissions: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func createDocument(
         databaseId: String,
@@ -154,12 +158,13 @@ open class Databases: Service {
     /// Get a document by its unique ID. This endpoint response returns a JSON
     /// object with the document data.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param [String] queries
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func getDocument<T>(
         databaseId: String,
@@ -196,12 +201,13 @@ open class Databases: Service {
     /// Get a document by its unique ID. This endpoint response returns a JSON
     /// object with the document data.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param [String] queries
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func getDocument(
         databaseId: String,
@@ -228,13 +234,14 @@ open class Databases: Service {
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param Any data
-    /// @param [String] permissions
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - data: Any
+    ///   - permissions: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func upsertDocument<T>(
         databaseId: String,
@@ -281,13 +288,14 @@ open class Databases: Service {
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
     /// API or directly from your database console.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param Any data
-    /// @param [String] permissions
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - data: Any
+    ///   - permissions: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func upsertDocument(
         databaseId: String,
@@ -310,13 +318,14 @@ open class Databases: Service {
     /// Update a document by its unique ID. Using the patch method you can pass
     /// only specific fields that will get updated.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param Any data
-    /// @param [String] permissions
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - data: Any (optional)
+    ///   - permissions: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func updateDocument<T>(
         databaseId: String,
@@ -357,13 +366,14 @@ open class Databases: Service {
     /// Update a document by its unique ID. Using the patch method you can pass
     /// only specific fields that will get updated.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @param Any data
-    /// @param [String] permissions
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - data: Any (optional)
+    ///   - permissions: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
     ///
     open func updateDocument(
         databaseId: String,
@@ -385,11 +395,12 @@ open class Databases: Service {
     ///
     /// Delete a document by its unique ID.
     ///
-    /// @param String databaseId
-    /// @param String collectionId
-    /// @param String documentId
-    /// @throws Exception
-    /// @return array
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
     ///
     open func deleteDocument(
         databaseId: String,
@@ -412,6 +423,170 @@ open class Databases: Service {
             path: apiPath,
             headers: apiHeaders,
             params: apiParams        )
+    }
+
+    ///
+    /// Decrement a specific attribute of a document by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - attribute: String
+    ///   - value: Double (optional)
+    ///   - min: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
+    ///
+    open func decrementDocumentAttribute<T>(
+        databaseId: String,
+        collectionId: String,
+        documentId: String,
+        attribute: String,
+        value: Double? = nil,
+        min: Double? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Document<T> {
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{collectionId}", with: collectionId)
+            .replacingOccurrences(of: "{documentId}", with: documentId)
+            .replacingOccurrences(of: "{attribute}", with: attribute)
+
+        let apiParams: [String: Any?] = [
+            "value": value,
+            "min": min
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+            return AppwriteModels.Document.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Decrement a specific attribute of a document by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - attribute: String
+    ///   - value: Double (optional)
+    ///   - min: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
+    ///
+    open func decrementDocumentAttribute(
+        databaseId: String,
+        collectionId: String,
+        documentId: String,
+        attribute: String,
+        value: Double? = nil,
+        min: Double? = nil
+    ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
+        return try await decrementDocumentAttribute(
+            databaseId: databaseId,
+            collectionId: collectionId,
+            documentId: documentId,
+            attribute: attribute,
+            value: value,
+            min: min,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// Increment a specific attribute of a document by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - attribute: String
+    ///   - value: Double (optional)
+    ///   - max: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
+    ///
+    open func incrementDocumentAttribute<T>(
+        databaseId: String,
+        collectionId: String,
+        documentId: String,
+        attribute: String,
+        value: Double? = nil,
+        max: Double? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Document<T> {
+        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{collectionId}", with: collectionId)
+            .replacingOccurrences(of: "{documentId}", with: documentId)
+            .replacingOccurrences(of: "{attribute}", with: attribute)
+
+        let apiParams: [String: Any?] = [
+            "value": value,
+            "max": max
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+            return AppwriteModels.Document.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Increment a specific attribute of a document by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - documentId: String
+    ///   - attribute: String
+    ///   - value: Double (optional)
+    ///   - max: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Document<T>
+    ///
+    open func incrementDocumentAttribute(
+        databaseId: String,
+        collectionId: String,
+        documentId: String,
+        attribute: String,
+        value: Double? = nil,
+        max: Double? = nil
+    ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
+        return try await incrementDocumentAttribute(
+            databaseId: databaseId,
+            collectionId: collectionId,
+            documentId: documentId,
+            attribute: attribute,
+            value: value,
+            max: max,
+            nestedType: [String: AnyCodable].self
+        )
     }
 
 
