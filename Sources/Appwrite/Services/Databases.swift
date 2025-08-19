@@ -19,6 +19,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.listRows` instead.")
     open func listDocuments<T>(
         databaseId: String,
         collectionId: String,
@@ -59,6 +60,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.listRows` instead.")
     open func listDocuments(
         databaseId: String,
         collectionId: String,
@@ -87,6 +89,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.createRow` instead.")
     open func createDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -137,6 +140,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.createRow` instead.")
     open func createDocument(
         databaseId: String,
         collectionId: String,
@@ -166,6 +170,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.getRow` instead.")
     open func getDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -209,6 +214,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.getRow` instead.")
     open func getDocument(
         databaseId: String,
         collectionId: String,
@@ -225,10 +231,6 @@ open class Databases: Service {
     }
 
     ///
-    /// **WARNING: Experimental Feature** - This endpoint is experimental and not
-    /// yet officially supported. It may be subject to breaking changes or removal
-    /// in future versions.
-    /// 
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
@@ -243,6 +245,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.upsertRow` instead.")
     open func upsertDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -279,10 +282,6 @@ open class Databases: Service {
     }
 
     ///
-    /// **WARNING: Experimental Feature** - This endpoint is experimental and not
-    /// yet officially supported. It may be subject to breaking changes or removal
-    /// in future versions.
-    /// 
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
@@ -297,6 +296,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.upsertRow` instead.")
     open func upsertDocument(
         databaseId: String,
         collectionId: String,
@@ -327,6 +327,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.updateRow` instead.")
     open func updateDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -375,6 +376,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.updateRow` instead.")
     open func updateDocument(
         databaseId: String,
         collectionId: String,
@@ -402,6 +404,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDb.deleteRow` instead.")
     open func deleteDocument(
         databaseId: String,
         collectionId: String,
@@ -423,170 +426,6 @@ open class Databases: Service {
             path: apiPath,
             headers: apiHeaders,
             params: apiParams        )
-    }
-
-    ///
-    /// Decrement a specific attribute of a document by a given value.
-    ///
-    /// - Parameters:
-    ///   - databaseId: String
-    ///   - collectionId: String
-    ///   - documentId: String
-    ///   - attribute: String
-    ///   - value: Double (optional)
-    ///   - min: Double (optional)
-    /// - Throws: Exception if the request fails
-    /// - Returns: AppwriteModels.Document<T>
-    ///
-    open func decrementDocumentAttribute<T>(
-        databaseId: String,
-        collectionId: String,
-        documentId: String,
-        attribute: String,
-        value: Double? = nil,
-        min: Double? = nil,
-        nestedType: T.Type
-    ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement"
-            .replacingOccurrences(of: "{databaseId}", with: databaseId)
-            .replacingOccurrences(of: "{collectionId}", with: collectionId)
-            .replacingOccurrences(of: "{documentId}", with: documentId)
-            .replacingOccurrences(of: "{attribute}", with: attribute)
-
-        let apiParams: [String: Any?] = [
-            "value": value,
-            "min": min
-        ]
-
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
-            return AppwriteModels.Document.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "PATCH",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-
-    ///
-    /// Decrement a specific attribute of a document by a given value.
-    ///
-    /// - Parameters:
-    ///   - databaseId: String
-    ///   - collectionId: String
-    ///   - documentId: String
-    ///   - attribute: String
-    ///   - value: Double (optional)
-    ///   - min: Double (optional)
-    /// - Throws: Exception if the request fails
-    /// - Returns: AppwriteModels.Document<T>
-    ///
-    open func decrementDocumentAttribute(
-        databaseId: String,
-        collectionId: String,
-        documentId: String,
-        attribute: String,
-        value: Double? = nil,
-        min: Double? = nil
-    ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
-        return try await decrementDocumentAttribute(
-            databaseId: databaseId,
-            collectionId: collectionId,
-            documentId: documentId,
-            attribute: attribute,
-            value: value,
-            min: min,
-            nestedType: [String: AnyCodable].self
-        )
-    }
-
-    ///
-    /// Increment a specific attribute of a document by a given value.
-    ///
-    /// - Parameters:
-    ///   - databaseId: String
-    ///   - collectionId: String
-    ///   - documentId: String
-    ///   - attribute: String
-    ///   - value: Double (optional)
-    ///   - max: Double (optional)
-    /// - Throws: Exception if the request fails
-    /// - Returns: AppwriteModels.Document<T>
-    ///
-    open func incrementDocumentAttribute<T>(
-        databaseId: String,
-        collectionId: String,
-        documentId: String,
-        attribute: String,
-        value: Double? = nil,
-        max: Double? = nil,
-        nestedType: T.Type
-    ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment"
-            .replacingOccurrences(of: "{databaseId}", with: databaseId)
-            .replacingOccurrences(of: "{collectionId}", with: collectionId)
-            .replacingOccurrences(of: "{documentId}", with: documentId)
-            .replacingOccurrences(of: "{attribute}", with: attribute)
-
-        let apiParams: [String: Any?] = [
-            "value": value,
-            "max": max
-        ]
-
-        let apiHeaders: [String: String] = [
-            "content-type": "application/json"
-        ]
-
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
-            return AppwriteModels.Document.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "PATCH",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-
-    ///
-    /// Increment a specific attribute of a document by a given value.
-    ///
-    /// - Parameters:
-    ///   - databaseId: String
-    ///   - collectionId: String
-    ///   - documentId: String
-    ///   - attribute: String
-    ///   - value: Double (optional)
-    ///   - max: Double (optional)
-    /// - Throws: Exception if the request fails
-    /// - Returns: AppwriteModels.Document<T>
-    ///
-    open func incrementDocumentAttribute(
-        databaseId: String,
-        collectionId: String,
-        documentId: String,
-        attribute: String,
-        value: Double? = nil,
-        max: Double? = nil
-    ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
-        return try await incrementDocumentAttribute(
-            databaseId: databaseId,
-            collectionId: collectionId,
-            documentId: documentId,
-            attribute: attribute,
-            value: value,
-            max: max,
-            nestedType: [String: AnyCodable].self
-        )
     }
 
 
