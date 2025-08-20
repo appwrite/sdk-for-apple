@@ -417,5 +417,169 @@ open class TablesDb: Service {
             params: apiParams        )
     }
 
+    ///
+    /// Decrement a specific column of a row by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - tableId: String
+    ///   - rowId: String
+    ///   - column: String
+    ///   - value: Double (optional)
+    ///   - min: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Row<T>
+    ///
+    open func decrementRowColumn<T>(
+        databaseId: String,
+        tableId: String,
+        rowId: String,
+        column: String,
+        value: Double? = nil,
+        min: Double? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Row<T> {
+        let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/decrement"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{tableId}", with: tableId)
+            .replacingOccurrences(of: "{rowId}", with: rowId)
+            .replacingOccurrences(of: "{column}", with: column)
+
+        let apiParams: [String: Any?] = [
+            "value": value,
+            "min": min
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+            return AppwriteModels.Row.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Decrement a specific column of a row by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - tableId: String
+    ///   - rowId: String
+    ///   - column: String
+    ///   - value: Double (optional)
+    ///   - min: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Row<T>
+    ///
+    open func decrementRowColumn(
+        databaseId: String,
+        tableId: String,
+        rowId: String,
+        column: String,
+        value: Double? = nil,
+        min: Double? = nil
+    ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
+        return try await decrementRowColumn(
+            databaseId: databaseId,
+            tableId: tableId,
+            rowId: rowId,
+            column: column,
+            value: value,
+            min: min,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// Increment a specific column of a row by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - tableId: String
+    ///   - rowId: String
+    ///   - column: String
+    ///   - value: Double (optional)
+    ///   - max: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Row<T>
+    ///
+    open func incrementRowColumn<T>(
+        databaseId: String,
+        tableId: String,
+        rowId: String,
+        column: String,
+        value: Double? = nil,
+        max: Double? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.Row<T> {
+        let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/increment"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{tableId}", with: tableId)
+            .replacingOccurrences(of: "{rowId}", with: rowId)
+            .replacingOccurrences(of: "{column}", with: column)
+
+        let apiParams: [String: Any?] = [
+            "value": value,
+            "max": max
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+            return AppwriteModels.Row.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Increment a specific column of a row by a given value.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - tableId: String
+    ///   - rowId: String
+    ///   - column: String
+    ///   - value: Double (optional)
+    ///   - max: Double (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Row<T>
+    ///
+    open func incrementRowColumn(
+        databaseId: String,
+        tableId: String,
+        rowId: String,
+        column: String,
+        value: Double? = nil,
+        max: Double? = nil
+    ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
+        return try await incrementRowColumn(
+            databaseId: databaseId,
+            tableId: tableId,
+            rowId: rowId,
+            column: column,
+            value: value,
+            max: max,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
 
 }
