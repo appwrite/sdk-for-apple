@@ -9,7 +9,7 @@ open class TeamList<T : Codable>: Codable {
         case teams = "teams"
     }
 
-    /// Total number of teams rows that matched your query.
+    /// Total number of teams that matched your query.
     public let total: Int
 
     /// List of teams.

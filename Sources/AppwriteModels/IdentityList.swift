@@ -9,7 +9,7 @@ open class IdentityList: Codable {
         case identities = "identities"
     }
 
-    /// Total number of identities rows that matched your query.
+    /// Total number of identities that matched your query.
     public let total: Int
 
     /// List of identities.

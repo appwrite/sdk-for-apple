@@ -9,7 +9,7 @@ open class FileList: Codable {
         case files = "files"
     }
 
-    /// Total number of files rows that matched your query.
+    /// Total number of files that matched your query.
     public let total: Int
 
     /// List of files.

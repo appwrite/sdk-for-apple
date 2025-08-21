@@ -6,7 +6,7 @@ import AppwriteEnums
 import AppwriteModels
 
 /// 
-open class TablesDb: Service {
+open class TablesDB: Service {
 
     ///
     /// Get a list of all the user's rows in a given table. You can use the query
@@ -75,7 +75,7 @@ open class TablesDb: Service {
     ///
     /// Create a new Row. Before using this route, you should create a new table
     /// resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateTable)
+    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -125,7 +125,7 @@ open class TablesDb: Service {
     ///
     /// Create a new Row. Before using this route, you should create a new table
     /// resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateTable)
+    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -227,7 +227,7 @@ open class TablesDb: Service {
     ///
     /// Create or update a Row. Before using this route, you should create a new
     /// table resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateTable)
+    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -277,7 +277,7 @@ open class TablesDb: Service {
     ///
     /// Create or update a Row. Before using this route, you should create a new
     /// table resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateTable)
+    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:

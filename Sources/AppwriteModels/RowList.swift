@@ -9,7 +9,7 @@ open class RowList<T : Codable>: Codable {
         case rows = "rows"
     }
 
-    /// Total number of rows rows that matched your query.
+    /// Total number of rows that matched your query.
     public let total: Int
 
     /// List of rows.

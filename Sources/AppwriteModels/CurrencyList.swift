@@ -9,7 +9,7 @@ open class CurrencyList: Codable {
         case currencies = "currencies"
     }
 
-    /// Total number of currencies rows that matched your query.
+    /// Total number of currencies that matched your query.
     public let total: Int
 
     /// List of currencies.
