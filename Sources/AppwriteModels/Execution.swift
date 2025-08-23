@@ -10,6 +10,7 @@ open class Execution: Codable {
         case updatedAt = "$updatedAt"
         case permissions = "$permissions"
         case functionId = "functionId"
+        case deploymentId = "deploymentId"
         case trigger = "trigger"
         case status = "status"
         case requestMethod = "requestMethod"
@@ -38,6 +39,9 @@ open class Execution: Codable {
 
     /// Function ID.
     public let functionId: String
+
+    /// Function&#039;s deployment ID used to create the execution.
+    public let deploymentId: String
 
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: String
@@ -82,6 +86,7 @@ open class Execution: Codable {
         updatedAt: String,
         permissions: [String],
         functionId: String,
+        deploymentId: String,
         trigger: String,
         status: String,
         requestMethod: String,
@@ -100,6 +105,7 @@ open class Execution: Codable {
         self.updatedAt = updatedAt
         self.permissions = permissions
         self.functionId = functionId
+        self.deploymentId = deploymentId
         self.trigger = trigger
         self.status = status
         self.requestMethod = requestMethod
@@ -122,6 +128,7 @@ open class Execution: Codable {
         self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
         self.permissions = try container.decode([String].self, forKey: .permissions)
         self.functionId = try container.decode(String.self, forKey: .functionId)
+        self.deploymentId = try container.decode(String.self, forKey: .deploymentId)
         self.trigger = try container.decode(String.self, forKey: .trigger)
         self.status = try container.decode(String.self, forKey: .status)
         self.requestMethod = try container.decode(String.self, forKey: .requestMethod)
@@ -144,6 +151,7 @@ open class Execution: Codable {
         try container.encode(updatedAt, forKey: .updatedAt)
         try container.encode(permissions, forKey: .permissions)
         try container.encode(functionId, forKey: .functionId)
+        try container.encode(deploymentId, forKey: .deploymentId)
         try container.encode(trigger, forKey: .trigger)
         try container.encode(status, forKey: .status)
         try container.encode(requestMethod, forKey: .requestMethod)
@@ -165,6 +173,7 @@ open class Execution: Codable {
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
             "functionId": functionId as Any,
+            "deploymentId": deploymentId as Any,
             "trigger": trigger as Any,
             "status": status as Any,
             "requestMethod": requestMethod as Any,
@@ -187,6 +196,7 @@ open class Execution: Codable {
             updatedAt: map["$updatedAt"] as! String,
             permissions: map["$permissions"] as! [String],
             functionId: map["functionId"] as! String,
+            deploymentId: map["deploymentId"] as! String,
             trigger: map["trigger"] as! String,
             status: map["status"] as! String,
             requestMethod: map["requestMethod"] as! String,
