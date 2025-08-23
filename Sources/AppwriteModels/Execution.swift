@@ -31,7 +31,7 @@ open class Execution: Codable {
     /// Execution creation date in ISO 8601 format.
     public let createdAt: String
 
-    /// Execution upate date in ISO 8601 format.
+    /// Execution update date in ISO 8601 format.
     public let updatedAt: String
 
     /// Execution roles.
