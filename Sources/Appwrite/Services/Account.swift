@@ -391,7 +391,44 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaType
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.createMFAAuthenticator` instead.")
     open func createMfaAuthenticator(
+        type: AppwriteEnums.AuthenticatorType
+    ) async throws -> AppwriteModels.MfaType {
+        let apiPath: String = "/account/mfa/authenticators/{type}"
+            .replacingOccurrences(of: "{type}", with: type.rawValue)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaType = { response in
+            return AppwriteModels.MfaType.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Add an authenticator app to be used as an MFA factor. Verify the
+    /// authenticator using the [verify
+    /// authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator)
+    /// method.
+    ///
+    /// - Parameters:
+    ///   - type: AppwriteEnums.AuthenticatorType
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MfaType
+    ///
+    open func createMFAAuthenticator(
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
         let apiPath: String = "/account/mfa/authenticators/{type}"
@@ -427,6 +464,7 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.User<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateMFAAuthenticator` instead.")
     open func updateMfaAuthenticator<T>(
         type: AppwriteEnums.AuthenticatorType,
         otp: String,
@@ -467,11 +505,74 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.User<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateMFAAuthenticator` instead.")
     open func updateMfaAuthenticator(
         type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
         return try await updateMfaAuthenticator(
+            type: type,
+            otp: otp,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// Verify an authenticator app after adding it using the [add
+    /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
+    /// method.
+    ///
+    /// - Parameters:
+    ///   - type: AppwriteEnums.AuthenticatorType
+    ///   - otp: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.User<T>
+    ///
+    open func updateMFAAuthenticator<T>(
+        type: AppwriteEnums.AuthenticatorType,
+        otp: String,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.User<T> {
+        let apiPath: String = "/account/mfa/authenticators/{type}"
+            .replacingOccurrences(of: "{type}", with: type.rawValue)
+
+        let apiParams: [String: Any?] = [
+            "otp": otp
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.User<T> = { response in
+            return AppwriteModels.User.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Verify an authenticator app after adding it using the [add
+    /// authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
+    /// method.
+    ///
+    /// - Parameters:
+    ///   - type: AppwriteEnums.AuthenticatorType
+    ///   - otp: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.User<T>
+    ///
+    open func updateMFAAuthenticator(
+        type: AppwriteEnums.AuthenticatorType,
+        otp: String
+    ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
+        return try await updateMFAAuthenticator(
             type: type,
             otp: otp,
             nestedType: [String: AnyCodable].self
@@ -486,7 +587,35 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.deleteMFAAuthenticator` instead.")
     open func deleteMfaAuthenticator(
+        type: AppwriteEnums.AuthenticatorType
+    ) async throws -> Any {
+        let apiPath: String = "/account/mfa/authenticators/{type}"
+            .replacingOccurrences(of: "{type}", with: type.rawValue)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
+    }
+
+    ///
+    /// Delete an authenticator for a user by ID.
+    ///
+    /// - Parameters:
+    ///   - type: AppwriteEnums.AuthenticatorType
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deleteMFAAuthenticator(
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
@@ -515,7 +644,44 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaChallenge
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.createMFAChallenge` instead.")
     open func createMfaChallenge(
+        factor: AppwriteEnums.AuthenticationFactor
+    ) async throws -> AppwriteModels.MfaChallenge {
+        let apiPath: String = "/account/mfa/challenge"
+
+        let apiParams: [String: Any?] = [
+            "factor": factor
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaChallenge = { response in
+            return AppwriteModels.MfaChallenge.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Begin the process of MFA verification after sign-in. Finish the flow with
+    /// [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge)
+    /// method.
+    ///
+    /// - Parameters:
+    ///   - factor: AppwriteEnums.AuthenticationFactor
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MfaChallenge
+    ///
+    open func createMFAChallenge(
         factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
         let apiPath: String = "/account/mfa/challenge"
@@ -554,7 +720,49 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateMFAChallenge` instead.")
     open func updateMfaChallenge(
+        challengeId: String,
+        otp: String
+    ) async throws -> AppwriteModels.Session {
+        let apiPath: String = "/account/mfa/challenge"
+
+        let apiParams: [String: Any?] = [
+            "challengeId": challengeId,
+            "otp": otp
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Session = { response in
+            return AppwriteModels.Session.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Complete the MFA challenge by providing the one-time password. Finish the
+    /// process of MFA verification by providing the one-time password. To begin
+    /// the flow, use
+    /// [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge)
+    /// method.
+    ///
+    /// - Parameters:
+    ///   - challengeId: String
+    ///   - otp: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Session
+    ///
+    open func updateMFAChallenge(
         challengeId: String,
         otp: String
     ) async throws -> AppwriteModels.Session {
@@ -588,7 +796,35 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaFactors
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.listMFAFactors` instead.")
     open func listMfaFactors(
+    ) async throws -> AppwriteModels.MfaFactors {
+        let apiPath: String = "/account/mfa/factors"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.MfaFactors = { response in
+            return AppwriteModels.MfaFactors.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// List the factors available on the account to be used as a MFA challange.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MfaFactors
+    ///
+    open func listMFAFactors(
     ) async throws -> AppwriteModels.MfaFactors {
         let apiPath: String = "/account/mfa/factors"
 
@@ -618,7 +854,38 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaRecoveryCodes
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.getMFARecoveryCodes` instead.")
     open func getMfaRecoveryCodes(
+    ) async throws -> AppwriteModels.MfaRecoveryCodes {
+        let apiPath: String = "/account/mfa/recovery-codes"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.MfaRecoveryCodes = { response in
+            return AppwriteModels.MfaRecoveryCodes.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get recovery codes that can be used as backup for MFA flow. Before getting
+    /// codes, they must be generated using
+    /// [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes)
+    /// method. An OTP challenge is required to read recovery codes.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MfaRecoveryCodes
+    ///
+    open func getMFARecoveryCodes(
     ) async throws -> AppwriteModels.MfaRecoveryCodes {
         let apiPath: String = "/account/mfa/recovery-codes"
 
@@ -649,7 +916,41 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaRecoveryCodes
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.createMFARecoveryCodes` instead.")
     open func createMfaRecoveryCodes(
+    ) async throws -> AppwriteModels.MfaRecoveryCodes {
+        let apiPath: String = "/account/mfa/recovery-codes"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaRecoveryCodes = { response in
+            return AppwriteModels.MfaRecoveryCodes.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Generate recovery codes as backup for MFA flow. It's recommended to
+    /// generate and show then immediately after user successfully adds their
+    /// authehticator. Recovery codes can be used as a MFA verification type in
+    /// [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge)
+    /// method.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MfaRecoveryCodes
+    ///
+    open func createMFARecoveryCodes(
     ) async throws -> AppwriteModels.MfaRecoveryCodes {
         let apiPath: String = "/account/mfa/recovery-codes"
 
@@ -681,7 +982,40 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaRecoveryCodes
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateMFARecoveryCodes` instead.")
     open func updateMfaRecoveryCodes(
+    ) async throws -> AppwriteModels.MfaRecoveryCodes {
+        let apiPath: String = "/account/mfa/recovery-codes"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.MfaRecoveryCodes = { response in
+            return AppwriteModels.MfaRecoveryCodes.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Regenerate recovery codes that can be used as backup for MFA flow. Before
+    /// regenerating codes, they must be first generated using
+    /// [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes)
+    /// method. An OTP challenge is required to regenreate recovery codes.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.MfaRecoveryCodes
+    ///
+    open func updateMFARecoveryCodes(
     ) async throws -> AppwriteModels.MfaRecoveryCodes {
         let apiPath: String = "/account/mfa/recovery-codes"
 
@@ -1214,6 +1548,7 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
+    @available(*, deprecated, message: "This API has been deprecated.")
     open func updateMagicURLSession(
         userId: String,
         secret: String
@@ -1313,6 +1648,7 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
+    @available(*, deprecated, message: "This API has been deprecated.")
     open func updatePhoneSession(
         userId: String,
         secret: String
@@ -1641,8 +1977,11 @@ open class Account: Service {
 
     ///
     /// Sends the user an email with a secret key for creating a session. If the
-    /// provided user ID has not be registered, a new user will be created. Use the
-    /// returned user ID and secret and submit a request to the [POST
+    /// email address has never been used, a **new account is created** using the
+    /// provided `userId`. Otherwise, if the email address is already attached to
+    /// an account, the **user ID is ignored**. Then, the user will receive an
+    /// email with the one-time password. Use the returned user ID and secret and
+    /// submit a request to the [POST
     /// /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
     /// endpoint to complete the login process. The secret sent to the user's email
     /// is valid for 15 minutes.
@@ -1650,6 +1989,7 @@ open class Account: Service {
     /// A user is limited to 10 active sessions at a time by default. [Learn more
     /// about session
     /// limits](https://appwrite.io/docs/authentication-security#limits).
+    /// 
     ///
     /// - Parameters:
     ///   - userId: String

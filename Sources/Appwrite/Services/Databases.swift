@@ -19,6 +19,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.listRows` instead.")
     open func listDocuments<T>(
         databaseId: String,
         collectionId: String,
@@ -59,6 +60,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.listRows` instead.")
     open func listDocuments(
         databaseId: String,
         collectionId: String,
@@ -87,6 +89,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.createRow` instead.")
     open func createDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -137,6 +140,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.createRow` instead.")
     open func createDocument(
         databaseId: String,
         collectionId: String,
@@ -166,6 +170,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.getRow` instead.")
     open func getDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -209,6 +214,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.getRow` instead.")
     open func getDocument(
         databaseId: String,
         collectionId: String,
@@ -225,10 +231,6 @@ open class Databases: Service {
     }
 
     ///
-    /// **WARNING: Experimental Feature** - This endpoint is experimental and not
-    /// yet officially supported. It may be subject to breaking changes or removal
-    /// in future versions.
-    /// 
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
@@ -243,6 +245,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRow` instead.")
     open func upsertDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -279,10 +282,6 @@ open class Databases: Service {
     }
 
     ///
-    /// **WARNING: Experimental Feature** - This endpoint is experimental and not
-    /// yet officially supported. It may be subject to breaking changes or removal
-    /// in future versions.
-    /// 
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
     /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
@@ -297,6 +296,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRow` instead.")
     open func upsertDocument(
         databaseId: String,
         collectionId: String,
@@ -327,6 +327,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.updateRow` instead.")
     open func updateDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -375,6 +376,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.updateRow` instead.")
     open func updateDocument(
         databaseId: String,
         collectionId: String,
@@ -402,6 +404,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.deleteRow` instead.")
     open func deleteDocument(
         databaseId: String,
         collectionId: String,
@@ -438,6 +441,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.decrementRowColumn` instead.")
     open func decrementDocumentAttribute<T>(
         databaseId: String,
         collectionId: String,
@@ -488,6 +492,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.decrementRowColumn` instead.")
     open func decrementDocumentAttribute(
         databaseId: String,
         collectionId: String,
@@ -520,6 +525,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.incrementRowColumn` instead.")
     open func incrementDocumentAttribute<T>(
         databaseId: String,
         collectionId: String,
@@ -570,6 +576,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.incrementRowColumn` instead.")
     open func incrementDocumentAttribute(
         databaseId: String,
         collectionId: String,

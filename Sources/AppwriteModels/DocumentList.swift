@@ -9,7 +9,7 @@ open class DocumentList<T : Codable>: Codable {
         case documents = "documents"
     }
 
-    /// Total number of documents documents that matched your query.
+    /// Total number of documents that matched your query.
     public let total: Int
 
     /// List of documents.

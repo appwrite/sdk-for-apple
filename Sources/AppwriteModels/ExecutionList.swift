@@ -9,7 +9,7 @@ open class ExecutionList: Codable {
         case executions = "executions"
     }
 
-    /// Total number of executions documents that matched your query.
+    /// Total number of executions that matched your query.
     public let total: Int
 
     /// List of executions.

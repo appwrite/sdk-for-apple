@@ -9,7 +9,7 @@ open class MembershipList: Codable {
         case memberships = "memberships"
     }
 
-    /// Total number of memberships documents that matched your query.
+    /// Total number of memberships that matched your query.
     public let total: Int
 
     /// List of memberships.

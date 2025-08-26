@@ -9,7 +9,7 @@ open class LocaleCodeList: Codable {
         case localeCodes = "localeCodes"
     }
 
-    /// Total number of localeCodes documents that matched your query.
+    /// Total number of localeCodes that matched your query.
     public let total: Int
 
     /// List of localeCodes.

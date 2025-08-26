@@ -9,7 +9,7 @@ open class CountryList: Codable {
         case countries = "countries"
     }
 
-    /// Total number of countries documents that matched your query.
+    /// Total number of countries that matched your query.
     public let total: Int
 
     /// List of countries.

@@ -1,54 +1,54 @@
 import Foundation
 import JSONCodable
 
-/// Continents List
-open class ContinentList: Codable {
+/// Rows List
+open class RowList<T : Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
         case total = "total"
-        case continents = "continents"
+        case rows = "rows"
     }
 
-    /// Total number of continents that matched your query.
+    /// Total number of rows that matched your query.
     public let total: Int
 
-    /// List of continents.
-    public let continents: [Continent]
+    /// List of rows.
+    public let rows: [Row<T>]
 
 
     init(
         total: Int,
-        continents: [Continent]
+        rows: [Row<T>]
     ) {
         self.total = total
-        self.continents = continents
+        self.rows = rows
     }
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.total = try container.decode(Int.self, forKey: .total)
-        self.continents = try container.decode([Continent].self, forKey: .continents)
+        self.rows = try container.decode([Row<T>].self, forKey: .rows)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(total, forKey: .total)
-        try container.encode(continents, forKey: .continents)
+        try container.encode(rows, forKey: .rows)
     }
 
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
-            "continents": continents.map { $0.toMap() } as Any
+            "rows": rows.map { $0.toMap() } as Any
         ]
     }
 
-    public static func from(map: [String: Any] ) -> ContinentList {
-        return ContinentList(
+    public static func from(map: [String: Any] ) -> RowList {
+        return RowList(
             total: map["total"] as! Int,
-            continents: (map["continents"] as! [[String: Any]]).map { Continent.from(map: $0) }
+            rows: (map["rows"] as! [[String: Any]]).map { Row.from(map: $0) }
         )
     }
 }
