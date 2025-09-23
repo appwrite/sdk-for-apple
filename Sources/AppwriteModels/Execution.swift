@@ -55,7 +55,7 @@ open class Execution: Codable {
     /// HTTP request path and query.
     public let requestPath: String
 
-    /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
+    /// HTTP request headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let requestHeaders: [Headers]
 
     /// HTTP response status code.
