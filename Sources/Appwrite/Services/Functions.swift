@@ -55,7 +55,7 @@ open class Functions: Service {
     ///   - body: String (optional)
     ///   - async: Bool (optional)
     ///   - path: String (optional)
-    ///   - method: AppwriteEnums.ExecutionMethod (optional)
+    ///   - method: ExecutionMethod (optional)
     ///   - headers: Any (optional)
     ///   - scheduledAt: String (optional)
     /// - Throws: Exception if the request fails
@@ -66,7 +66,7 @@ open class Functions: Service {
         body: String? = nil,
         async: Bool? = nil,
         path: String? = nil,
-        method: AppwriteEnums.ExecutionMethod? = nil,
+        method: ExecutionMethod? = nil,
         headers: Any? = nil,
         scheduledAt: String? = nil
     ) async throws -> AppwriteModels.Execution {

@@ -21,7 +21,7 @@ open class Avatars: Service {
     /// of image returned is 100x100px.
     ///
     /// - Parameters:
-    ///   - code: AppwriteEnums.Browser
+    ///   - code: Browser
     ///   - width: Int (optional)
     ///   - height: Int (optional)
     ///   - quality: Int (optional)
@@ -29,7 +29,7 @@ open class Avatars: Service {
     /// - Returns: ByteBuffer
     ///
     open func getBrowser(
-        code: AppwriteEnums.Browser,
+        code: Browser,
         width: Int? = nil,
         height: Int? = nil,
         quality: Int? = nil
@@ -63,7 +63,7 @@ open class Avatars: Service {
     /// 
     ///
     /// - Parameters:
-    ///   - code: AppwriteEnums.CreditCard
+    ///   - code: CreditCard
     ///   - width: Int (optional)
     ///   - height: Int (optional)
     ///   - quality: Int (optional)
@@ -71,7 +71,7 @@ open class Avatars: Service {
     /// - Returns: ByteBuffer
     ///
     open func getCreditCard(
-        code: AppwriteEnums.CreditCard,
+        code: CreditCard,
         width: Int? = nil,
         height: Int? = nil,
         quality: Int? = nil
@@ -134,7 +134,7 @@ open class Avatars: Service {
     /// 
     ///
     /// - Parameters:
-    ///   - code: AppwriteEnums.Flag
+    ///   - code: Flag
     ///   - width: Int (optional)
     ///   - height: Int (optional)
     ///   - quality: Int (optional)
@@ -142,7 +142,7 @@ open class Avatars: Service {
     /// - Returns: ByteBuffer
     ///
     open func getFlag(
-        code: AppwriteEnums.Flag,
+        code: Flag,
         width: Int? = nil,
         height: Int? = nil,
         quality: Int? = nil

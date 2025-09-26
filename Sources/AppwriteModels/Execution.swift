@@ -1,5 +1,6 @@
 import Foundation
 import JSONCodable
+import AppwriteEnums
 
 /// Execution
 open class Execution: Codable {
@@ -44,10 +45,10 @@ open class Execution: Codable {
     public let deploymentId: String
 
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
-    public let trigger: String
+    public let trigger: ExecutionTrigger
 
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
-    public let status: String
+    public let status: ExecutionStatus
 
     /// HTTP request method type.
     public let requestMethod: String
@@ -87,8 +88,8 @@ open class Execution: Codable {
         permissions: [String],
         functionId: String,
         deploymentId: String,
-        trigger: String,
-        status: String,
+        trigger: ExecutionTrigger,
+        status: ExecutionStatus,
         requestMethod: String,
         requestPath: String,
         requestHeaders: [Headers],
@@ -129,8 +130,8 @@ open class Execution: Codable {
         self.permissions = try container.decode([String].self, forKey: .permissions)
         self.functionId = try container.decode(String.self, forKey: .functionId)
         self.deploymentId = try container.decode(String.self, forKey: .deploymentId)
-        self.trigger = try container.decode(String.self, forKey: .trigger)
-        self.status = try container.decode(String.self, forKey: .status)
+        self.trigger = ExecutionTrigger(rawValue: try container.decode(String.self, forKey: .trigger))!
+        self.status = ExecutionStatus(rawValue: try container.decode(String.self, forKey: .status))!
         self.requestMethod = try container.decode(String.self, forKey: .requestMethod)
         self.requestPath = try container.decode(String.self, forKey: .requestPath)
         self.requestHeaders = try container.decode([Headers].self, forKey: .requestHeaders)
@@ -152,8 +153,8 @@ open class Execution: Codable {
         try container.encode(permissions, forKey: .permissions)
         try container.encode(functionId, forKey: .functionId)
         try container.encode(deploymentId, forKey: .deploymentId)
-        try container.encode(trigger, forKey: .trigger)
-        try container.encode(status, forKey: .status)
+        try container.encode(trigger.rawValue, forKey: .trigger)
+        try container.encode(status.rawValue, forKey: .status)
         try container.encode(requestMethod, forKey: .requestMethod)
         try container.encode(requestPath, forKey: .requestPath)
         try container.encode(requestHeaders, forKey: .requestHeaders)
@@ -174,8 +175,8 @@ open class Execution: Codable {
             "$permissions": permissions as Any,
             "functionId": functionId as Any,
             "deploymentId": deploymentId as Any,
-            "trigger": trigger as Any,
-            "status": status as Any,
+            "trigger": trigger.rawValue as Any,
+            "status": status.rawValue as Any,
             "requestMethod": requestMethod as Any,
             "requestPath": requestPath as Any,
             "requestHeaders": requestHeaders.map { $0.toMap() } as Any,
@@ -197,8 +198,8 @@ open class Execution: Codable {
             permissions: map["$permissions"] as! [String],
             functionId: map["functionId"] as! String,
             deploymentId: map["deploymentId"] as! String,
-            trigger: map["trigger"] as! String,
-            status: map["status"] as! String,
+            trigger: ExecutionTrigger(rawValue: map["trigger"] as! String)!,
+            status: ExecutionStatus(rawValue: map["status"] as! String)!,
             requestMethod: map["requestMethod"] as! String,
             requestPath: map["requestPath"] as! String,
             requestHeaders: (map["requestHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },

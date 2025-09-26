@@ -280,12 +280,6 @@ public struct Query : Codable, CustomStringConvertible {
         ).description
     }
 
-    public static func orderRandom() -> String {
-        return Query(
-            method: "orderRandom"
-        ).description
-    }
-
     public static func cursorBefore(_ id: String) -> String {
         return Query(
             method: "cursorBefore",

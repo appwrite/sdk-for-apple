@@ -267,7 +267,7 @@ open class Storage: Service {
     ///   - fileId: String
     ///   - width: Int (optional)
     ///   - height: Int (optional)
-    ///   - gravity: AppwriteEnums.ImageGravity (optional)
+    ///   - gravity: ImageGravity (optional)
     ///   - quality: Int (optional)
     ///   - borderWidth: Int (optional)
     ///   - borderColor: String (optional)
@@ -275,7 +275,7 @@ open class Storage: Service {
     ///   - opacity: Double (optional)
     ///   - rotation: Int (optional)
     ///   - background: String (optional)
-    ///   - output: AppwriteEnums.ImageFormat (optional)
+    ///   - output: ImageFormat (optional)
     ///   - token: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: ByteBuffer
@@ -285,7 +285,7 @@ open class Storage: Service {
         fileId: String,
         width: Int? = nil,
         height: Int? = nil,
-        gravity: AppwriteEnums.ImageGravity? = nil,
+        gravity: ImageGravity? = nil,
         quality: Int? = nil,
         borderWidth: Int? = nil,
         borderColor: String? = nil,
@@ -293,7 +293,7 @@ open class Storage: Service {
         opacity: Double? = nil,
         rotation: Int? = nil,
         background: String? = nil,
-        output: AppwriteEnums.ImageFormat? = nil,
+        output: ImageFormat? = nil,
         token: String? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/preview"
