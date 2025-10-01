@@ -107,7 +107,7 @@ open class Document<T : Codable>: Codable {
             createdAt: map["$createdAt"] as? String ?? "",
             updatedAt: map["$updatedAt"] as? String ?? "",
             permissions: map["$permissions"] as? [String] ?? [],
-            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map, options: []))
+            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["data"] as? [String: Any] ?? map, options: []))
         )
     }
 }

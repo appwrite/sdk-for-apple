@@ -354,7 +354,7 @@ open class Client {
 
         if let warning = response.headers["x-appwrite-warning"].first {
             warning.split(separator: ";").forEach { warning in
-                print("Warning: \(warning)")
+                fputs("Warning: \(warning)\n", stderr)
             }
         }
 

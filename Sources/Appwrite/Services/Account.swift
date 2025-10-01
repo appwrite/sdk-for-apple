@@ -387,13 +387,13 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaType
     ///
     @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.createMFAAuthenticator` instead.")
     open func createMfaAuthenticator(
-        type: AuthenticatorType
+        type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
         let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
@@ -424,12 +424,12 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaType
     ///
     open func createMFAAuthenticator(
-        type: AuthenticatorType
+        type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
         let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
@@ -459,14 +459,14 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     ///   - otp: String
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.User<T>
     ///
     @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateMFAAuthenticator` instead.")
     open func updateMfaAuthenticator<T>(
-        type: AuthenticatorType,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
@@ -500,14 +500,14 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     ///   - otp: String
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.User<T>
     ///
     @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateMFAAuthenticator` instead.")
     open func updateMfaAuthenticator(
-        type: AuthenticatorType,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
         return try await updateMfaAuthenticator(
@@ -523,13 +523,13 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     ///   - otp: String
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.User<T>
     ///
     open func updateMFAAuthenticator<T>(
-        type: AuthenticatorType,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String,
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
@@ -563,13 +563,13 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     ///   - otp: String
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.User<T>
     ///
     open func updateMFAAuthenticator(
-        type: AuthenticatorType,
+        type: AppwriteEnums.AuthenticatorType,
         otp: String
     ) async throws -> AppwriteModels.User<[String: AnyCodable]> {
         return try await updateMFAAuthenticator(
@@ -583,13 +583,13 @@ open class Account: Service {
     /// Delete an authenticator for a user by ID.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
     @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.deleteMFAAuthenticator` instead.")
     open func deleteMfaAuthenticator(
-        type: AuthenticatorType
+        type: AppwriteEnums.AuthenticatorType
     ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
@@ -611,12 +611,12 @@ open class Account: Service {
     /// Delete an authenticator for a user by ID.
     ///
     /// - Parameters:
-    ///   - type: AuthenticatorType
+    ///   - type: AppwriteEnums.AuthenticatorType
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
     open func deleteMFAAuthenticator(
-        type: AuthenticatorType
+        type: AppwriteEnums.AuthenticatorType
     ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
             .replacingOccurrences(of: "{type}", with: type.rawValue)
@@ -640,13 +640,13 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - factor: AuthenticationFactor
+    ///   - factor: AppwriteEnums.AuthenticationFactor
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaChallenge
     ///
     @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.createMFAChallenge` instead.")
     open func createMfaChallenge(
-        factor: AuthenticationFactor
+        factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
         let apiPath: String = "/account/mfa/challenge"
 
@@ -677,12 +677,12 @@ open class Account: Service {
     /// method.
     ///
     /// - Parameters:
-    ///   - factor: AuthenticationFactor
+    ///   - factor: AppwriteEnums.AuthenticationFactor
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MfaChallenge
     ///
     open func createMFAChallenge(
-        factor: AuthenticationFactor
+        factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
         let apiPath: String = "/account/mfa/challenge"
 
@@ -1596,7 +1596,7 @@ open class Account: Service {
     /// 
     ///
     /// - Parameters:
-    ///   - provider: OAuthProvider
+    ///   - provider: AppwriteEnums.OAuthProvider
     ///   - success: String (optional)
     ///   - failure: String (optional)
     ///   - scopes: [String] (optional)
@@ -1605,7 +1605,7 @@ open class Account: Service {
     ///
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
     open func createOAuth2Session(
-        provider: OAuthProvider,
+        provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
         scopes: [String]? = nil
@@ -2101,7 +2101,7 @@ open class Account: Service {
     /// limits](https://appwrite.io/docs/authentication-security#limits).
     ///
     /// - Parameters:
-    ///   - provider: OAuthProvider
+    ///   - provider: AppwriteEnums.OAuthProvider
     ///   - success: String (optional)
     ///   - failure: String (optional)
     ///   - scopes: [String] (optional)
@@ -2110,7 +2110,7 @@ open class Account: Service {
     ///
     @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
     open func createOAuth2Token(
-        provider: OAuthProvider,
+        provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
         scopes: [String]? = nil

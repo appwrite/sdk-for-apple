@@ -45,10 +45,10 @@ open class Execution: Codable {
     public let deploymentId: String
 
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
-    public let trigger: ExecutionTrigger
+    public let trigger: AppwriteEnums.ExecutionTrigger
 
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
-    public let status: ExecutionStatus
+    public let status: AppwriteEnums.ExecutionStatus
 
     /// HTTP request method type.
     public let requestMethod: String
@@ -88,8 +88,8 @@ open class Execution: Codable {
         permissions: [String],
         functionId: String,
         deploymentId: String,
-        trigger: ExecutionTrigger,
-        status: ExecutionStatus,
+        trigger: AppwriteEnums.ExecutionTrigger,
+        status: AppwriteEnums.ExecutionStatus,
         requestMethod: String,
         requestPath: String,
         requestHeaders: [Headers],
@@ -130,8 +130,8 @@ open class Execution: Codable {
         self.permissions = try container.decode([String].self, forKey: .permissions)
         self.functionId = try container.decode(String.self, forKey: .functionId)
         self.deploymentId = try container.decode(String.self, forKey: .deploymentId)
-        self.trigger = ExecutionTrigger(rawValue: try container.decode(String.self, forKey: .trigger))!
-        self.status = ExecutionStatus(rawValue: try container.decode(String.self, forKey: .status))!
+        self.trigger = AppwriteEnums.ExecutionTrigger(rawValue: try container.decode(String.self, forKey: .trigger))!
+        self.status = AppwriteEnums.ExecutionStatus(rawValue: try container.decode(String.self, forKey: .status))!
         self.requestMethod = try container.decode(String.self, forKey: .requestMethod)
         self.requestPath = try container.decode(String.self, forKey: .requestPath)
         self.requestHeaders = try container.decode([Headers].self, forKey: .requestHeaders)
