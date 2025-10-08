@@ -2210,10 +2210,59 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Token
     ///
+    open func createEmailVerification(
+        url: String
+    ) async throws -> AppwriteModels.Token {
+        let apiPath: String = "/account/verifications/email"
+
+        let apiParams: [String: Any?] = [
+            "url": url
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Token = { response in
+            return AppwriteModels.Token.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Use this endpoint to send a verification message to your user email address
+    /// to confirm they are the valid owners of that address. Both the **userId**
+    /// and **secret** arguments will be passed as query parameters to the URL you
+    /// have provided to be attached to the verification email. The provided URL
+    /// should redirect the user back to your app and allow you to complete the
+    /// verification process by verifying both the **userId** and **secret**
+    /// parameters. Learn more about how to [complete the verification
+    /// process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification).
+    /// The verification link sent to the user's email address is valid for 7 days.
+    /// 
+    /// Please note that in order to avoid a [Redirect
+    /// Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md),
+    /// the only valid redirect URLs are the ones from domains you have set when
+    /// adding your platforms in the console interface.
+    /// 
+    ///
+    /// - Parameters:
+    ///   - url: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Token
+    ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.createEmailVerification` instead.")
     open func createVerification(
         url: String
     ) async throws -> AppwriteModels.Token {
-        let apiPath: String = "/account/verification"
+        let apiPath: String = "/account/verifications/email"
 
         let apiParams: [String: Any?] = [
             "url": url
@@ -2248,11 +2297,52 @@ open class Account: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Token
     ///
+    open func updateEmailVerification(
+        userId: String,
+        secret: String
+    ) async throws -> AppwriteModels.Token {
+        let apiPath: String = "/account/verifications/email"
+
+        let apiParams: [String: Any?] = [
+            "userId": userId,
+            "secret": secret
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Token = { response in
+            return AppwriteModels.Token.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Use this endpoint to complete the user email verification process. Use both
+    /// the **userId** and **secret** parameters that were attached to your app URL
+    /// to verify the user email ownership. If confirmed this route will return a
+    /// 200 status code.
+    ///
+    /// - Parameters:
+    ///   - userId: String
+    ///   - secret: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Token
+    ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `Account.updateEmailVerification` instead.")
     open func updateVerification(
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Token {
-        let apiPath: String = "/account/verification"
+        let apiPath: String = "/account/verifications/email"
 
         let apiParams: [String: Any?] = [
             "userId": userId,
@@ -2291,7 +2381,7 @@ open class Account: Service {
     ///
     open func createPhoneVerification(
     ) async throws -> AppwriteModels.Token {
-        let apiPath: String = "/account/verification/phone"
+        let apiPath: String = "/account/verifications/phone"
 
         let apiParams: [String: Any] = [:]
 
@@ -2328,7 +2418,7 @@ open class Account: Service {
         userId: String,
         secret: String
     ) async throws -> AppwriteModels.Token {
-        let apiPath: String = "/account/verification/phone"
+        let apiPath: String = "/account/verifications/phone"
 
         let apiParams: [String: Any?] = [
             "userId": userId,

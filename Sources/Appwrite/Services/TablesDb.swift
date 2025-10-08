@@ -75,7 +75,7 @@ open class TablesDB: Service {
     ///
     /// Create a new Row. Before using this route, you should create a new table
     /// resource using either a [server
-    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
+    /// integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -125,7 +125,7 @@ open class TablesDB: Service {
     ///
     /// Create a new Row. Before using this route, you should create a new table
     /// resource using either a [server
-    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
+    /// integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -227,7 +227,7 @@ open class TablesDB: Service {
     ///
     /// Create or update a Row. Before using this route, you should create a new
     /// table resource using either a [server
-    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
+    /// integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -277,7 +277,7 @@ open class TablesDB: Service {
     ///
     /// Create or update a Row. Before using this route, you should create a new
     /// table resource using either a [server
-    /// integration](https://appwrite.io/docs/server/tablesdb#tablesDBCreateTable)
+    /// integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable)
     /// API or directly from your database console.
     ///
     /// - Parameters:
