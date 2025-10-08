@@ -1,6 +1,6 @@
 # Change Log
 
-## 13.0.1
+## 13.1.0
 
 * Deprecate `createVerification` method in `Account` service
 * Add `createEmailVerification` method in `Account` service
