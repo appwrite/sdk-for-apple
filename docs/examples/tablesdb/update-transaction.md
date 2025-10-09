@@ -6,10 +6,9 @@ let client = Client()
 
 let tablesDB = TablesDB(client)
 
-let result = try await tablesDB.deleteRow(
-    databaseId: "<DATABASE_ID>",
-    tableId: "<TABLE_ID>",
-    rowId: "<ROW_ID>",
-    transactionId: "<TRANSACTION_ID>" // optional
+let transaction = try await tablesDB.updateTransaction(
+    transactionId: "<TRANSACTION_ID>",
+    commit: false, // optional
+    rollback: false // optional
 )
 

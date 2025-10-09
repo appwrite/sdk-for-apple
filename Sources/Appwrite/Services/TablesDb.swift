@@ -9,6 +9,207 @@ import AppwriteModels
 open class TablesDB: Service {
 
     ///
+    /// List transactions across all databases.
+    ///
+    /// - Parameters:
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.TransactionList
+    ///
+    open func listTransactions(
+        queries: [String]? = nil
+    ) async throws -> AppwriteModels.TransactionList {
+        let apiPath: String = "/tablesdb/transactions"
+
+        let apiParams: [String: Any?] = [
+            "queries": queries
+        ]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.TransactionList = { response in
+            return AppwriteModels.TransactionList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Create a new transaction.
+    ///
+    /// - Parameters:
+    ///   - ttl: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Transaction
+    ///
+    open func createTransaction(
+        ttl: Int? = nil
+    ) async throws -> AppwriteModels.Transaction {
+        let apiPath: String = "/tablesdb/transactions"
+
+        let apiParams: [String: Any?] = [
+            "ttl": ttl
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Transaction = { response in
+            return AppwriteModels.Transaction.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get a transaction by its unique ID.
+    ///
+    /// - Parameters:
+    ///   - transactionId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Transaction
+    ///
+    open func getTransaction(
+        transactionId: String
+    ) async throws -> AppwriteModels.Transaction {
+        let apiPath: String = "/tablesdb/transactions/{transactionId}"
+            .replacingOccurrences(of: "{transactionId}", with: transactionId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.Transaction = { response in
+            return AppwriteModels.Transaction.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Update a transaction, to either commit or roll back its operations.
+    ///
+    /// - Parameters:
+    ///   - transactionId: String
+    ///   - commit: Bool (optional)
+    ///   - rollback: Bool (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Transaction
+    ///
+    open func updateTransaction(
+        transactionId: String,
+        commit: Bool? = nil,
+        rollback: Bool? = nil
+    ) async throws -> AppwriteModels.Transaction {
+        let apiPath: String = "/tablesdb/transactions/{transactionId}"
+            .replacingOccurrences(of: "{transactionId}", with: transactionId)
+
+        let apiParams: [String: Any?] = [
+            "commit": commit,
+            "rollback": rollback
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Transaction = { response in
+            return AppwriteModels.Transaction.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Delete a transaction by its unique ID.
+    ///
+    /// - Parameters:
+    ///   - transactionId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deleteTransaction(
+        transactionId: String
+    ) async throws -> Any {
+        let apiPath: String = "/tablesdb/transactions/{transactionId}"
+            .replacingOccurrences(of: "{transactionId}", with: transactionId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
+    }
+
+    ///
+    /// Create multiple operations in a single transaction.
+    ///
+    /// - Parameters:
+    ///   - transactionId: String
+    ///   - operations: [Any] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Transaction
+    ///
+    open func createOperations(
+        transactionId: String,
+        operations: [Any]? = nil
+    ) async throws -> AppwriteModels.Transaction {
+        let apiPath: String = "/tablesdb/transactions/{transactionId}/operations"
+            .replacingOccurrences(of: "{transactionId}", with: transactionId)
+
+        let apiParams: [String: Any?] = [
+            "operations": operations
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Transaction = { response in
+            return AppwriteModels.Transaction.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
     /// Get a list of all the user's rows in a given table. You can use the query
     /// params to filter your results.
     ///
@@ -16,6 +217,7 @@ open class TablesDB: Service {
     ///   - databaseId: String
     ///   - tableId: String
     ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.RowList<T>
     ///
@@ -23,6 +225,7 @@ open class TablesDB: Service {
         databaseId: String,
         tableId: String,
         queries: [String]? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.RowList<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows"
@@ -30,7 +233,8 @@ open class TablesDB: Service {
             .replacingOccurrences(of: "{tableId}", with: tableId)
 
         let apiParams: [String: Any?] = [
-            "queries": queries
+            "queries": queries,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [:]
@@ -56,18 +260,21 @@ open class TablesDB: Service {
     ///   - databaseId: String
     ///   - tableId: String
     ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.RowList<T>
     ///
     open func listRows(
         databaseId: String,
         tableId: String,
-        queries: [String]? = nil
+        queries: [String]? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.RowList<[String: AnyCodable]> {
         return try await listRows(
             databaseId: databaseId,
             tableId: tableId,
             queries: queries,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -84,6 +291,7 @@ open class TablesDB: Service {
     ///   - rowId: String
     ///   - data: Any
     ///   - permissions: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -93,6 +301,7 @@ open class TablesDB: Service {
         rowId: String,
         data: Any,
         permissions: [String]? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Row<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows"
@@ -102,7 +311,8 @@ open class TablesDB: Service {
         let apiParams: [String: Any?] = [
             "rowId": rowId,
             "data": data,
-            "permissions": permissions
+            "permissions": permissions,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [
@@ -134,6 +344,7 @@ open class TablesDB: Service {
     ///   - rowId: String
     ///   - data: Any
     ///   - permissions: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -142,7 +353,8 @@ open class TablesDB: Service {
         tableId: String,
         rowId: String,
         data: Any,
-        permissions: [String]? = nil
+        permissions: [String]? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
         return try await createRow(
             databaseId: databaseId,
@@ -150,6 +362,7 @@ open class TablesDB: Service {
             rowId: rowId,
             data: data,
             permissions: permissions,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -163,6 +376,7 @@ open class TablesDB: Service {
     ///   - tableId: String
     ///   - rowId: String
     ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -171,6 +385,7 @@ open class TablesDB: Service {
         tableId: String,
         rowId: String,
         queries: [String]? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Row<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}"
@@ -179,7 +394,8 @@ open class TablesDB: Service {
             .replacingOccurrences(of: "{rowId}", with: rowId)
 
         let apiParams: [String: Any?] = [
-            "queries": queries
+            "queries": queries,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [:]
@@ -206,6 +422,7 @@ open class TablesDB: Service {
     ///   - tableId: String
     ///   - rowId: String
     ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -213,13 +430,15 @@ open class TablesDB: Service {
         databaseId: String,
         tableId: String,
         rowId: String,
-        queries: [String]? = nil
+        queries: [String]? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
         return try await getRow(
             databaseId: databaseId,
             tableId: tableId,
             rowId: rowId,
             queries: queries,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -236,6 +455,7 @@ open class TablesDB: Service {
     ///   - rowId: String
     ///   - data: Any (optional)
     ///   - permissions: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -245,6 +465,7 @@ open class TablesDB: Service {
         rowId: String,
         data: Any? = nil,
         permissions: [String]? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Row<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}"
@@ -254,7 +475,8 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any?] = [
             "data": data,
-            "permissions": permissions
+            "permissions": permissions,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [
@@ -286,6 +508,7 @@ open class TablesDB: Service {
     ///   - rowId: String
     ///   - data: Any (optional)
     ///   - permissions: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -294,7 +517,8 @@ open class TablesDB: Service {
         tableId: String,
         rowId: String,
         data: Any? = nil,
-        permissions: [String]? = nil
+        permissions: [String]? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
         return try await upsertRow(
             databaseId: databaseId,
@@ -302,6 +526,7 @@ open class TablesDB: Service {
             rowId: rowId,
             data: data,
             permissions: permissions,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -316,6 +541,7 @@ open class TablesDB: Service {
     ///   - rowId: String
     ///   - data: Any (optional)
     ///   - permissions: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -325,6 +551,7 @@ open class TablesDB: Service {
         rowId: String,
         data: Any? = nil,
         permissions: [String]? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Row<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}"
@@ -334,7 +561,8 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any?] = [
             "data": data,
-            "permissions": permissions
+            "permissions": permissions,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [
@@ -364,6 +592,7 @@ open class TablesDB: Service {
     ///   - rowId: String
     ///   - data: Any (optional)
     ///   - permissions: [String] (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -372,7 +601,8 @@ open class TablesDB: Service {
         tableId: String,
         rowId: String,
         data: Any? = nil,
-        permissions: [String]? = nil
+        permissions: [String]? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
         return try await updateRow(
             databaseId: databaseId,
@@ -380,6 +610,7 @@ open class TablesDB: Service {
             rowId: rowId,
             data: data,
             permissions: permissions,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -391,20 +622,24 @@ open class TablesDB: Service {
     ///   - databaseId: String
     ///   - tableId: String
     ///   - rowId: String
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
     open func deleteRow(
         databaseId: String,
         tableId: String,
-        rowId: String
+        rowId: String,
+        transactionId: String? = nil
     ) async throws -> Any {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{tableId}", with: tableId)
             .replacingOccurrences(of: "{rowId}", with: rowId)
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "transactionId": transactionId
+        ]
 
         let apiHeaders: [String: String] = [
             "content-type": "application/json"
@@ -427,6 +662,7 @@ open class TablesDB: Service {
     ///   - column: String
     ///   - value: Double (optional)
     ///   - min: Double (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -437,6 +673,7 @@ open class TablesDB: Service {
         column: String,
         value: Double? = nil,
         min: Double? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Row<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/decrement"
@@ -447,7 +684,8 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any?] = [
             "value": value,
-            "min": min
+            "min": min,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [
@@ -477,6 +715,7 @@ open class TablesDB: Service {
     ///   - column: String
     ///   - value: Double (optional)
     ///   - min: Double (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -486,7 +725,8 @@ open class TablesDB: Service {
         rowId: String,
         column: String,
         value: Double? = nil,
-        min: Double? = nil
+        min: Double? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
         return try await decrementRowColumn(
             databaseId: databaseId,
@@ -495,6 +735,7 @@ open class TablesDB: Service {
             column: column,
             value: value,
             min: min,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -509,6 +750,7 @@ open class TablesDB: Service {
     ///   - column: String
     ///   - value: Double (optional)
     ///   - max: Double (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -519,6 +761,7 @@ open class TablesDB: Service {
         column: String,
         value: Double? = nil,
         max: Double? = nil,
+        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Row<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/increment"
@@ -529,7 +772,8 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any?] = [
             "value": value,
-            "max": max
+            "max": max,
+            "transactionId": transactionId
         ]
 
         let apiHeaders: [String: String] = [
@@ -559,6 +803,7 @@ open class TablesDB: Service {
     ///   - column: String
     ///   - value: Double (optional)
     ///   - max: Double (optional)
+    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Row<T>
     ///
@@ -568,7 +813,8 @@ open class TablesDB: Service {
         rowId: String,
         column: String,
         value: Double? = nil,
-        max: Double? = nil
+        max: Double? = nil,
+        transactionId: String? = nil
     ) async throws -> AppwriteModels.Row<[String: AnyCodable]> {
         return try await incrementRowColumn(
             databaseId: databaseId,
@@ -577,6 +823,7 @@ open class TablesDB: Service {
             column: column,
             value: value,
             max: max,
+            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
