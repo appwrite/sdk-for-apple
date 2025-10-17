@@ -39,6 +39,7 @@ let package = Package(
         .target(
             name: "AppwriteModels",
             dependencies: [
+                "AppwriteEnums",
                 "JSONCodable"
             ]
         ),
