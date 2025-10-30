@@ -5,6 +5,7 @@ public enum ExecutionStatus: String, CustomStringConvertible {
     case processing = "processing"
     case completed = "completed"
     case failed = "failed"
+    case scheduled = "scheduled"
 
     public var description: String {
         return rawValue

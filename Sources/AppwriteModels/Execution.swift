@@ -47,7 +47,7 @@ open class Execution: Codable {
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: AppwriteEnums.ExecutionTrigger
 
-    /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
+    /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
     public let status: AppwriteEnums.ExecutionStatus
 
     /// HTTP request method type.
