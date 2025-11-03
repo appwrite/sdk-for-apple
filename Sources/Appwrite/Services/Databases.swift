@@ -218,6 +218,7 @@ open class Databases: Service {
     ///   - collectionId: String
     ///   - queries: [String] (optional)
     ///   - transactionId: String (optional)
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
@@ -227,6 +228,7 @@ open class Databases: Service {
         collectionId: String,
         queries: [String]? = nil,
         transactionId: String? = nil,
+        total: Bool? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
         let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents"
@@ -235,7 +237,8 @@ open class Databases: Service {
 
         let apiParams: [String: Any?] = [
             "queries": queries,
-            "transactionId": transactionId
+            "transactionId": transactionId,
+            "total": total
         ]
 
         let apiHeaders: [String: String] = [:]
@@ -262,6 +265,7 @@ open class Databases: Service {
     ///   - collectionId: String
     ///   - queries: [String] (optional)
     ///   - transactionId: String (optional)
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
@@ -270,13 +274,15 @@ open class Databases: Service {
         databaseId: String,
         collectionId: String,
         queries: [String]? = nil,
-        transactionId: String? = nil
+        transactionId: String? = nil,
+        total: Bool? = nil
     ) async throws -> AppwriteModels.DocumentList<[String: AnyCodable]> {
         return try await listDocuments(
             databaseId: databaseId,
             collectionId: collectionId,
             queries: queries,
             transactionId: transactionId,
+            total: total,
             nestedType: [String: AnyCodable].self
         )
     }

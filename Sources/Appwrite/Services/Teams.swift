@@ -15,19 +15,22 @@ open class Teams: Service {
     /// - Parameters:
     ///   - queries: [String] (optional)
     ///   - search: String (optional)
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.TeamList<T>
     ///
     open func list<T>(
         queries: [String]? = nil,
         search: String? = nil,
+        total: Bool? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.TeamList<T> {
         let apiPath: String = "/teams"
 
         let apiParams: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "total": total
         ]
 
         let apiHeaders: [String: String] = [:]
@@ -52,16 +55,19 @@ open class Teams: Service {
     /// - Parameters:
     ///   - queries: [String] (optional)
     ///   - search: String (optional)
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.TeamList<T>
     ///
     open func list(
         queries: [String]? = nil,
-        search: String? = nil
+        search: String? = nil,
+        total: Bool? = nil
     ) async throws -> AppwriteModels.TeamList<[String: AnyCodable]> {
         return try await list(
             queries: queries,
             search: search,
+            total: total,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -278,20 +284,23 @@ open class Teams: Service {
     ///   - teamId: String
     ///   - queries: [String] (optional)
     ///   - search: String (optional)
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.MembershipList
     ///
     open func listMemberships(
         teamId: String,
         queries: [String]? = nil,
-        search: String? = nil
+        search: String? = nil,
+        total: Bool? = nil
     ) async throws -> AppwriteModels.MembershipList {
         let apiPath: String = "/teams/{teamId}/memberships"
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let apiParams: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "total": total
         ]
 
         let apiHeaders: [String: String] = [:]
