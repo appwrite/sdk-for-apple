@@ -31,7 +31,7 @@ Add the package to your `Package.swift` dependencies:
 
 ```swift
     dependencies: [
-        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "13.3.1"),
+        .package(url: "git@github.com:appwrite/sdk-for-apple.git", from: "13.4.0"),
     ],
 ```
 

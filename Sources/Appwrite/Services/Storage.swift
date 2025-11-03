@@ -16,20 +16,23 @@ open class Storage: Service {
     ///   - bucketId: String
     ///   - queries: [String] (optional)
     ///   - search: String (optional)
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.FileList
     ///
     open func listFiles(
         bucketId: String,
         queries: [String]? = nil,
-        search: String? = nil
+        search: String? = nil,
+        total: Bool? = nil
     ) async throws -> AppwriteModels.FileList {
         let apiPath: String = "/storage/buckets/{bucketId}/files"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
 
         let apiParams: [String: Any?] = [
             "queries": queries,
-            "search": search
+            "search": search,
+            "total": total
         ]
 
         let apiHeaders: [String: String] = [:]
