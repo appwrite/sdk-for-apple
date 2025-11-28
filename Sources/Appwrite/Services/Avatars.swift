@@ -290,5 +290,96 @@ open class Avatars: Service {
         )
     }
 
+    ///
+    /// Use this endpoint to capture a screenshot of any website URL. This endpoint
+    /// uses a headless browser to render the webpage and capture it as an image.
+    /// 
+    /// You can configure the browser viewport size, theme, user agent,
+    /// geolocation, permissions, and more. Capture either just the viewport or the
+    /// full page scroll.
+    /// 
+    /// When width and height are specified, the image is resized accordingly. If
+    /// both dimensions are 0, the API provides an image at original size. If
+    /// dimensions are not specified, the default viewport size is 1280x720px.
+    ///
+    /// - Parameters:
+    ///   - url: String
+    ///   - headers: Any (optional)
+    ///   - viewportWidth: Int (optional)
+    ///   - viewportHeight: Int (optional)
+    ///   - scale: Double (optional)
+    ///   - theme: AppwriteEnums.Theme (optional)
+    ///   - userAgent: String (optional)
+    ///   - fullpage: Bool (optional)
+    ///   - locale: String (optional)
+    ///   - timezone: AppwriteEnums.Timezone (optional)
+    ///   - latitude: Double (optional)
+    ///   - longitude: Double (optional)
+    ///   - accuracy: Double (optional)
+    ///   - touch: Bool (optional)
+    ///   - permissions: [String] (optional)
+    ///   - sleep: Int (optional)
+    ///   - width: Int (optional)
+    ///   - height: Int (optional)
+    ///   - quality: Int (optional)
+    ///   - output: AppwriteEnums.Output (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: ByteBuffer
+    ///
+    open func getScreenshot(
+        url: String,
+        headers: Any? = nil,
+        viewportWidth: Int? = nil,
+        viewportHeight: Int? = nil,
+        scale: Double? = nil,
+        theme: AppwriteEnums.Theme? = nil,
+        userAgent: String? = nil,
+        fullpage: Bool? = nil,
+        locale: String? = nil,
+        timezone: AppwriteEnums.Timezone? = nil,
+        latitude: Double? = nil,
+        longitude: Double? = nil,
+        accuracy: Double? = nil,
+        touch: Bool? = nil,
+        permissions: [String]? = nil,
+        sleep: Int? = nil,
+        width: Int? = nil,
+        height: Int? = nil,
+        quality: Int? = nil,
+        output: AppwriteEnums.Output? = nil
+    ) async throws -> ByteBuffer {
+        let apiPath: String = "/avatars/screenshots"
+
+        let apiParams: [String: Any?] = [
+            "url": url,
+            "headers": headers,
+            "viewportWidth": viewportWidth,
+            "viewportHeight": viewportHeight,
+            "scale": scale,
+            "theme": theme,
+            "userAgent": userAgent,
+            "fullpage": fullpage,
+            "locale": locale,
+            "timezone": timezone,
+            "latitude": latitude,
+            "longitude": longitude,
+            "accuracy": accuracy,
+            "touch": touch,
+            "permissions": permissions,
+            "sleep": sleep,
+            "width": width,
+            "height": height,
+            "quality": quality,
+            "output": output,
+            "project": client.config["project"]
+        ]
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            params: apiParams
+        )
+    }
+
 
 }
