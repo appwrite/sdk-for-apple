@@ -5,6 +5,7 @@ import NIOSSL
 import Foundation
 import AsyncHTTPClient
 @_exported import AppwriteModels
+@_exported import JSONCodable
 
 let DASHDASH = "--"
 let CRLF = "\r\n"
@@ -23,7 +24,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "13.4.0",
+        "x-sdk-version": "13.5.0",
         "x-appwrite-response-format": "1.8.0"
     ]
 

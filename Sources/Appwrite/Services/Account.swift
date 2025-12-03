@@ -654,7 +654,7 @@ open class Account: Service {
     open func createMfaChallenge(
         factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
-        let apiPath: String = "/account/mfa/challenge"
+        let apiPath: String = "/account/mfa/challenges"
 
         let apiParams: [String: Any?] = [
             "factor": factor
@@ -690,7 +690,7 @@ open class Account: Service {
     open func createMFAChallenge(
         factor: AppwriteEnums.AuthenticationFactor
     ) async throws -> AppwriteModels.MfaChallenge {
-        let apiPath: String = "/account/mfa/challenge"
+        let apiPath: String = "/account/mfa/challenges"
 
         let apiParams: [String: Any?] = [
             "factor": factor
@@ -731,7 +731,7 @@ open class Account: Service {
         challengeId: String,
         otp: String
     ) async throws -> AppwriteModels.Session {
-        let apiPath: String = "/account/mfa/challenge"
+        let apiPath: String = "/account/mfa/challenges"
 
         let apiParams: [String: Any?] = [
             "challengeId": challengeId,
@@ -772,7 +772,7 @@ open class Account: Service {
         challengeId: String,
         otp: String
     ) async throws -> AppwriteModels.Session {
-        let apiPath: String = "/account/mfa/challenge"
+        let apiPath: String = "/account/mfa/challenges"
 
         let apiParams: [String: Any?] = [
             "challengeId": challengeId,
