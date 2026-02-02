@@ -13,16 +13,12 @@ open class AlgoArgon2: Codable {
 
     /// Algo type.
     public let type: String
-
     /// Memory used to compute hash.
     public let memoryCost: Int
-
     /// Amount of time consumed to compute hash
     public let timeCost: Int
-
     /// Number of threads used to compute hash.
     public let threads: Int
-
 
     init(
         type: String,

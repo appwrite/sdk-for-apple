@@ -11,10 +11,8 @@ open class ExecutionList: Codable {
 
     /// Total number of executions that matched your query.
     public let total: Int
-
     /// List of executions.
     public let executions: [Execution]
-
 
     init(
         total: Int,

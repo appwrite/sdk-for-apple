@@ -11,10 +11,8 @@ open class MembershipList: Codable {
 
     /// Total number of memberships that matched your query.
     public let total: Int
-
     /// List of memberships.
     public let memberships: [Membership]
-
 
     init(
         total: Int,

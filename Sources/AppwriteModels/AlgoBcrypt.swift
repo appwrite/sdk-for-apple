@@ -11,7 +11,6 @@ open class AlgoBcrypt: Codable {
     /// Algo type.
     public let type: String
 
-
     init(
         type: String
     ) {

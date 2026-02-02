@@ -11,10 +11,8 @@ open class Country: Codable {
 
     /// Country name.
     public let name: String
-
     /// Country two-character ISO 3166-1 alpha code.
     public let code: String
-
 
     init(
         name: String,

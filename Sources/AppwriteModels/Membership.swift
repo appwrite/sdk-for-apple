@@ -22,43 +22,30 @@ open class Membership: Codable {
 
     /// Membership ID.
     public let id: String
-
     /// Membership creation date in ISO 8601 format.
     public let createdAt: String
-
     /// Membership update date in ISO 8601 format.
     public let updatedAt: String
-
     /// User ID.
     public let userId: String
-
     /// User name. Hide this attribute by toggling membership privacy in the Console.
     public let userName: String
-
     /// User email address. Hide this attribute by toggling membership privacy in the Console.
     public let userEmail: String
-
     /// Team ID.
     public let teamId: String
-
     /// Team name.
     public let teamName: String
-
     /// Date, the user has been invited to join the team in ISO 8601 format.
     public let invited: String
-
     /// Date, the user has accepted the invitation to join the team in ISO 8601 format.
     public let joined: String
-
     /// User confirmation status, true if the user has joined the team or false otherwise.
     public let confirm: Bool
-
     /// Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
     public let mfa: Bool
-
     /// User list of roles
     public let roles: [String]
-
 
     init(
         id: String,

@@ -11,7 +11,6 @@ open class Jwt: Codable {
     /// JWT encoded string.
     public let jwt: String
 
-
     init(
         jwt: String
     ) {

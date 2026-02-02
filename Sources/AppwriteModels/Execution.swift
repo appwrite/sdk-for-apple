@@ -28,58 +28,40 @@ open class Execution: Codable {
 
     /// Execution ID.
     public let id: String
-
     /// Execution creation date in ISO 8601 format.
     public let createdAt: String
-
     /// Execution update date in ISO 8601 format.
     public let updatedAt: String
-
     /// Execution roles.
     public let permissions: [String]
-
     /// Function ID.
     public let functionId: String
-
     /// Function&#039;s deployment ID used to create the execution.
     public let deploymentId: String
-
     /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: AppwriteEnums.ExecutionTrigger
-
     /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
     public let status: AppwriteEnums.ExecutionStatus
-
     /// HTTP request method type.
     public let requestMethod: String
-
     /// HTTP request path and query.
     public let requestPath: String
-
     /// HTTP request headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let requestHeaders: [Headers]
-
     /// HTTP response status code.
     public let responseStatusCode: Int
-
     /// HTTP response body. This will return empty unless execution is created as synchronous.
     public let responseBody: String
-
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let responseHeaders: [Headers]
-
     /// Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let logs: String
-
     /// Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let errors: String
-
     /// Resource(function/site) execution duration in seconds.
     public let duration: Double
-
     /// The scheduled time for execution. If left empty, execution will be queued immediately.
     public let scheduledAt: String?
-
 
     init(
         id: String,

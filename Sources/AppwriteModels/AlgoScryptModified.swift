@@ -13,16 +13,12 @@ open class AlgoScryptModified: Codable {
 
     /// Algo type.
     public let type: String
-
     /// Salt used to compute hash.
     public let salt: String
-
     /// Separator used to compute hash.
     public let saltSeparator: String
-
     /// Key used to compute hash.
     public let signerKey: String
-
 
     init(
         type: String,

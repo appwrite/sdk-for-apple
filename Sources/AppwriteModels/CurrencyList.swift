@@ -11,10 +11,8 @@ open class CurrencyList: Codable {
 
     /// Total number of currencies that matched your query.
     public let total: Int
-
     /// List of currencies.
     public let currencies: [Currency]
-
 
     init(
         total: Int,

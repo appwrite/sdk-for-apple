@@ -11,10 +11,8 @@ open class LocaleCodeList: Codable {
 
     /// Total number of localeCodes that matched your query.
     public let total: Int
-
     /// List of localeCodes.
     public let localeCodes: [LocaleCode]
-
 
     init(
         total: Int,

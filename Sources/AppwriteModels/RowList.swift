@@ -11,10 +11,8 @@ open class RowList<T : Codable>: Codable {
 
     /// Total number of rows that matched your query.
     public let total: Int
-
     /// List of rows.
     public let rows: [Row<T>]
-
 
     init(
         total: Int,

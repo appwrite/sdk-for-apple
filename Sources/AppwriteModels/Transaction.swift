@@ -15,22 +15,16 @@ open class Transaction: Codable {
 
     /// Transaction ID.
     public let id: String
-
     /// Transaction creation time in ISO 8601 format.
     public let createdAt: String
-
     /// Transaction update date in ISO 8601 format.
     public let updatedAt: String
-
     /// Current status of the transaction. One of: pending, committing, committed, rolled_back, failed.
     public let status: String
-
     /// Number of operations in the transaction.
     public let operations: Int
-
     /// Expiration time in ISO 8601 format.
     public let expiresAt: String
-
 
     init(
         id: String,

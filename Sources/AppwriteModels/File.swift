@@ -16,41 +16,36 @@ open class File: Codable {
         case sizeOriginal = "sizeOriginal"
         case chunksTotal = "chunksTotal"
         case chunksUploaded = "chunksUploaded"
+        case encryption = "encryption"
+        case compression = "compression"
     }
 
     /// File ID.
     public let id: String
-
     /// Bucket ID.
     public let bucketId: String
-
     /// File creation date in ISO 8601 format.
     public let createdAt: String
-
     /// File update date in ISO 8601 format.
     public let updatedAt: String
-
     /// File permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     public let permissions: [String]
-
     /// File name.
     public let name: String
-
     /// File MD5 signature.
     public let signature: String
-
     /// File mime type.
     public let mimeType: String
-
     /// File original size in bytes.
     public let sizeOriginal: Int
-
     /// Total number of chunks available
     public let chunksTotal: Int
-
     /// Total number of chunks uploaded
     public let chunksUploaded: Int
-
+    /// Whether file contents are encrypted at rest.
+    public let encryption: Bool
+    /// Compression algorithm used for the file. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
+    public let compression: String
 
     init(
         id: String,
@@ -63,7 +58,9 @@ open class File: Codable {
         mimeType: String,
         sizeOriginal: Int,
         chunksTotal: Int,
-        chunksUploaded: Int
+        chunksUploaded: Int,
+        encryption: Bool,
+        compression: String
     ) {
         self.id = id
         self.bucketId = bucketId
@@ -76,6 +73,8 @@ open class File: Codable {
         self.sizeOriginal = sizeOriginal
         self.chunksTotal = chunksTotal
         self.chunksUploaded = chunksUploaded
+        self.encryption = encryption
+        self.compression = compression
     }
 
     public required init(from decoder: Decoder) throws {
@@ -92,6 +91,8 @@ open class File: Codable {
         self.sizeOriginal = try container.decode(Int.self, forKey: .sizeOriginal)
         self.chunksTotal = try container.decode(Int.self, forKey: .chunksTotal)
         self.chunksUploaded = try container.decode(Int.self, forKey: .chunksUploaded)
+        self.encryption = try container.decode(Bool.self, forKey: .encryption)
+        self.compression = try container.decode(String.self, forKey: .compression)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -108,6 +109,8 @@ open class File: Codable {
         try container.encode(sizeOriginal, forKey: .sizeOriginal)
         try container.encode(chunksTotal, forKey: .chunksTotal)
         try container.encode(chunksUploaded, forKey: .chunksUploaded)
+        try container.encode(encryption, forKey: .encryption)
+        try container.encode(compression, forKey: .compression)
     }
 
     public func toMap() -> [String: Any] {
@@ -122,7 +125,9 @@ open class File: Codable {
             "mimeType": mimeType as Any,
             "sizeOriginal": sizeOriginal as Any,
             "chunksTotal": chunksTotal as Any,
-            "chunksUploaded": chunksUploaded as Any
+            "chunksUploaded": chunksUploaded as Any,
+            "encryption": encryption as Any,
+            "compression": compression as Any
         ]
     }
 
@@ -138,7 +143,9 @@ open class File: Codable {
             mimeType: map["mimeType"] as! String,
             sizeOriginal: map["sizeOriginal"] as! Int,
             chunksTotal: map["chunksTotal"] as! Int,
-            chunksUploaded: map["chunksUploaded"] as! Int
+            chunksUploaded: map["chunksUploaded"] as! Int,
+            encryption: map["encryption"] as! Bool,
+            compression: map["compression"] as! String
         )
     }
 }

@@ -11,10 +11,8 @@ open class LanguageList: Codable {
 
     /// Total number of languages that matched your query.
     public let total: Int
-
     /// List of languages.
     public let languages: [Language]
-
 
     init(
         total: Int,

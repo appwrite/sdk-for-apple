@@ -11,10 +11,8 @@ open class Continent: Codable {
 
     /// Continent name.
     public let name: String
-
     /// Continent two letter code.
     public let code: String
-
 
     init(
         name: String,

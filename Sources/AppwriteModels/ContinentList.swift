@@ -11,10 +11,8 @@ open class ContinentList: Codable {
 
     /// Total number of continents that matched your query.
     public let total: Int
-
     /// List of continents.
     public let continents: [Continent]
-
 
     init(
         total: Int,

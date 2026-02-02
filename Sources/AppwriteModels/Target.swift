@@ -18,31 +18,22 @@ open class Target: Codable {
 
     /// Target ID.
     public let id: String
-
     /// Target creation time in ISO 8601 format.
     public let createdAt: String
-
     /// Target update date in ISO 8601 format.
     public let updatedAt: String
-
     /// Target Name.
     public let name: String
-
     /// User ID.
     public let userId: String
-
     /// Provider ID.
     public let providerId: String?
-
     /// The target provider type. Can be one of the following: `email`, `sms` or `push`.
     public let providerType: String
-
     /// The target identifier.
     public let identifier: String
-
     /// Is the target expired.
     public let expired: Bool
-
 
     init(
         id: String,
