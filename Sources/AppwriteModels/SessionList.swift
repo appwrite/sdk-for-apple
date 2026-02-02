@@ -11,10 +11,8 @@ open class SessionList: Codable {
 
     /// Total number of sessions that matched your query.
     public let total: Int
-
     /// List of sessions.
     public let sessions: [Session]
-
 
     init(
         total: Int,

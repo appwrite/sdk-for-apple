@@ -11,7 +11,6 @@ open class AlgoPhpass: Codable {
     /// Algo type.
     public let type: String
 
-
     init(
         type: String
     ) {

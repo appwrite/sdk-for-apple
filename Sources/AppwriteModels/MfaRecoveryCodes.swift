@@ -11,7 +11,6 @@ open class MfaRecoveryCodes: Codable {
     /// Recovery codes.
     public let recoveryCodes: [String]
 
-
     init(
         recoveryCodes: [String]
     ) {

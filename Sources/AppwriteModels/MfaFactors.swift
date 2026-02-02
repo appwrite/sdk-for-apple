@@ -13,16 +13,12 @@ open class MfaFactors: Codable {
 
     /// Can TOTP be used for MFA challenge for this account.
     public let totp: Bool
-
     /// Can phone (SMS) be used for MFA challenge for this account.
     public let phone: Bool
-
     /// Can email be used for MFA challenge for this account.
     public let email: Bool
-
     /// Can recovery code be used for MFA challenge for this account.
     public let recoveryCode: Bool
-
 
     init(
         totp: Bool,

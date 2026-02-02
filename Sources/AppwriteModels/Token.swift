@@ -15,22 +15,16 @@ open class Token: Codable {
 
     /// Token ID.
     public let id: String
-
     /// Token creation date in ISO 8601 format.
     public let createdAt: String
-
     /// User ID.
     public let userId: String
-
     /// Token secret key. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let secret: String
-
     /// Token expiration date in ISO 8601 format.
     public let expire: String
-
     /// Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
     public let phrase: String
-
 
     init(
         id: String,

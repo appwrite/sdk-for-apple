@@ -11,10 +11,8 @@ open class TransactionList: Codable {
 
     /// Total number of transactions that matched your query.
     public let total: Int
-
     /// List of transactions.
     public let transactions: [Transaction]
-
 
     init(
         total: Int,

@@ -465,7 +465,7 @@ open class Databases: Service {
     ///   - databaseId: String
     ///   - collectionId: String
     ///   - documentId: String
-    ///   - data: Any
+    ///   - data: Any (optional)
     ///   - permissions: [String] (optional)
     ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
@@ -476,7 +476,7 @@ open class Databases: Service {
         databaseId: String,
         collectionId: String,
         documentId: String,
-        data: Any,
+        data: Any? = nil,
         permissions: [String]? = nil,
         transactionId: String? = nil,
         nestedType: T.Type
@@ -519,7 +519,7 @@ open class Databases: Service {
     ///   - databaseId: String
     ///   - collectionId: String
     ///   - documentId: String
-    ///   - data: Any
+    ///   - data: Any (optional)
     ///   - permissions: [String] (optional)
     ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
@@ -530,7 +530,7 @@ open class Databases: Service {
         databaseId: String,
         collectionId: String,
         documentId: String,
-        data: Any,
+        data: Any? = nil,
         permissions: [String]? = nil,
         transactionId: String? = nil
     ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {

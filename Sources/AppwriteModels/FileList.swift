@@ -11,10 +11,8 @@ open class FileList: Codable {
 
     /// Total number of files that matched your query.
     public let total: Int
-
     /// List of files.
     public let files: [File]
-
 
     init(
         total: Int,

@@ -11,10 +11,8 @@ open class TeamList<T : Codable>: Codable {
 
     /// Total number of teams that matched your query.
     public let total: Int
-
     /// List of teams.
     public let teams: [Team<T>]
-
 
     init(
         total: Int,

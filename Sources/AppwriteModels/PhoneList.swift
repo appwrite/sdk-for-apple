@@ -11,10 +11,8 @@ open class PhoneList: Codable {
 
     /// Total number of phones that matched your query.
     public let total: Int
-
     /// List of phones.
     public let phones: [Phone]
-
 
     init(
         total: Int,

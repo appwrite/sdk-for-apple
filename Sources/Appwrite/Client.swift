@@ -24,7 +24,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "13.5.0",
+        "x-sdk-version": "14.0.0",
         "x-appwrite-response-format": "1.8.0"
     ]
 
@@ -33,7 +33,6 @@ open class Client {
     internal var selfSigned: Bool = false
 
     internal var http: HTTPClient
-
 
     private static let boundaryChars = "abcdefghijklmnopqrstuvwxyz1234567890"
 
@@ -315,7 +314,6 @@ open class Client {
 
         var request = HTTPClientRequest(url: endPoint + path + queryParameters)
         request.method = .RAW(value: method)
-
 
         for (key, value) in self.headers.merging(headers, uniquingKeysWith: { $1 }) {
             request.headers.add(name: key, value: value)

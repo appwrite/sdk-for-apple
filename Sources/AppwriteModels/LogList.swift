@@ -11,10 +11,8 @@ open class LogList: Codable {
 
     /// Total number of logs that matched your query.
     public let total: Int
-
     /// List of logs.
     public let logs: [Log]
-
 
     init(
         total: Int,

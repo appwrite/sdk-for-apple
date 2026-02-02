@@ -11,10 +11,8 @@ open class DocumentList<T : Codable>: Codable {
 
     /// Total number of documents that matched your query.
     public let total: Int
-
     /// List of documents.
     public let documents: [Document<T>]
-
 
     init(
         total: Int,

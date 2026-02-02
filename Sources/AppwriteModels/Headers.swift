@@ -11,10 +11,8 @@ open class Headers: Codable {
 
     /// Header name.
     public let name: String
-
     /// Header value.
     public let value: String
-
 
     init(
         name: String,

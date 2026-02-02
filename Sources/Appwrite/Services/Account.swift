@@ -272,14 +272,19 @@ open class Account: Service {
     /// from its creation and will be invalid if the user will logout in that time
     /// frame.
     ///
+    /// - Parameters:
+    ///   - duration: Int (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Jwt
     ///
     open func createJWT(
+        duration: Int? = nil
     ) async throws -> AppwriteModels.Jwt {
         let apiPath: String = "/account/jwts"
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "duration": duration
+        ]
 
         let apiHeaders: [String: String] = [
             "content-type": "application/json"

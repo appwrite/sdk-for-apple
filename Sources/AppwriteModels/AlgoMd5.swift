@@ -11,7 +11,6 @@ open class AlgoMd5: Codable {
     /// Algo type.
     public let type: String
 
-
     init(
         type: String
     ) {

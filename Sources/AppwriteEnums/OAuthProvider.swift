@@ -40,7 +40,6 @@ public enum OAuthProvider: String, CustomStringConvertible {
     case yandex = "yandex"
     case zoho = "zoho"
     case zoom = "zoom"
-    case mock = "mock"
 
     public var description: String {
         return rawValue

@@ -17,25 +17,18 @@ open class Row<T : Codable>: Codable {
 
     /// Row ID.
     public let id: String
-
     /// Row automatically incrementing ID.
     public let sequence: Int
-
     /// Table ID.
     public let tableId: String
-
     /// Database ID.
     public let databaseId: String
-
     /// Row creation date in ISO 8601 format.
     public let createdAt: String
-
     /// Row update date in ISO 8601 format.
     public let updatedAt: String
-
     /// Row permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
     public let permissions: [String]
-
     /// Additional properties
     public let data: T
 

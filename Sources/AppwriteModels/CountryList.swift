@@ -11,10 +11,8 @@ open class CountryList: Codable {
 
     /// Total number of countries that matched your query.
     public let total: Int
-
     /// List of countries.
     public let countries: [Country]
-
 
     init(
         total: Int,

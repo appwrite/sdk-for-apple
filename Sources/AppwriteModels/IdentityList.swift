@@ -11,10 +11,8 @@ open class IdentityList: Codable {
 
     /// Total number of identities that matched your query.
     public let total: Int
-
     /// List of identities.
     public let identities: [Identity]
-
 
     init(
         total: Int,
