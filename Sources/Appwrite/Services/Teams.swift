@@ -343,7 +343,7 @@ open class Teams: Service {
     ///
     /// - Parameters:
     ///   - teamId: String
-    ///   - roles: [AppwriteEnums.Roles]
+    ///   - roles: [String]
     ///   - email: String (optional)
     ///   - userId: String (optional)
     ///   - phone: String (optional)
@@ -354,7 +354,7 @@ open class Teams: Service {
     ///
     open func createMembership(
         teamId: String,
-        roles: [AppwriteEnums.Roles],
+        roles: [String],
         email: String? = nil,
         userId: String? = nil,
         phone: String? = nil,
@@ -435,14 +435,14 @@ open class Teams: Service {
     /// - Parameters:
     ///   - teamId: String
     ///   - membershipId: String
-    ///   - roles: [AppwriteEnums.Roles]
+    ///   - roles: [String]
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Membership
     ///
     open func updateMembership(
         teamId: String,
         membershipId: String,
-        roles: [AppwriteEnums.Roles]
+        roles: [String]
     ) async throws -> AppwriteModels.Membership {
         let apiPath: String = "/teams/{teamId}/memberships/{membershipId}"
             .replacingOccurrences(of: "{teamId}", with: teamId)

@@ -1,5 +1,5 @@
+```swift
 import Appwrite
-import AppwriteEnums
 
 let client = Client()
     .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
@@ -9,7 +9,7 @@ let teams = Teams(client)
 
 let membership = try await teams.createMembership(
     teamId: "<TEAM_ID>",
-    roles: [.admin],
+    roles: [],
     email: "email@example.com", // optional
     userId: "<USER_ID>", // optional
     phone: "+12065550100", // optional
@@ -17,3 +17,4 @@ let membership = try await teams.createMembership(
     name: "<NAME>" // optional
 )
 
+```
