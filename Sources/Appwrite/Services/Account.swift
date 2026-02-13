@@ -132,6 +132,197 @@ open class Account: Service {
     }
 
     ///
+    /// List all billing addresses for a user.
+    ///
+    /// - Parameters:
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.BillingAddressList
+    ///
+    open func listBillingAddresses(
+        queries: [String]? = nil
+    ) async throws -> AppwriteModels.BillingAddressList {
+        let apiPath: String = "/account/billing-addresses"
+
+        let apiParams: [String: Any?] = [
+            "queries": queries
+        ]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.BillingAddressList = { response in
+            return AppwriteModels.BillingAddressList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Add a new billing address to a user's account.
+    ///
+    /// - Parameters:
+    ///   - country: String
+    ///   - city: String
+    ///   - streetAddress: String
+    ///   - addressLine2: String (optional)
+    ///   - state: String (optional)
+    ///   - postalCode: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.BillingAddress
+    ///
+    open func createBillingAddress(
+        country: String,
+        city: String,
+        streetAddress: String,
+        addressLine2: String? = nil,
+        state: String? = nil,
+        postalCode: String? = nil
+    ) async throws -> AppwriteModels.BillingAddress {
+        let apiPath: String = "/account/billing-addresses"
+
+        let apiParams: [String: Any?] = [
+            "country": country,
+            "city": city,
+            "streetAddress": streetAddress,
+            "addressLine2": addressLine2,
+            "state": state,
+            "postalCode": postalCode
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.BillingAddress = { response in
+            return AppwriteModels.BillingAddress.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get a specific billing address for a user using it's ID.
+    ///
+    /// - Parameters:
+    ///   - billingAddressId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.BillingAddress
+    ///
+    open func getBillingAddress(
+        billingAddressId: String
+    ) async throws -> AppwriteModels.BillingAddress {
+        let apiPath: String = "/account/billing-addresses/{billingAddressId}"
+            .replacingOccurrences(of: "{billingAddressId}", with: billingAddressId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.BillingAddress = { response in
+            return AppwriteModels.BillingAddress.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Update a specific billing address using it's ID.
+    ///
+    /// - Parameters:
+    ///   - billingAddressId: String
+    ///   - country: String
+    ///   - city: String
+    ///   - streetAddress: String
+    ///   - addressLine2: String (optional)
+    ///   - state: String (optional)
+    ///   - postalCode: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.BillingAddress
+    ///
+    open func updateBillingAddress(
+        billingAddressId: String,
+        country: String,
+        city: String,
+        streetAddress: String,
+        addressLine2: String? = nil,
+        state: String? = nil,
+        postalCode: String? = nil
+    ) async throws -> AppwriteModels.BillingAddress {
+        let apiPath: String = "/account/billing-addresses/{billingAddressId}"
+            .replacingOccurrences(of: "{billingAddressId}", with: billingAddressId)
+
+        let apiParams: [String: Any?] = [
+            "country": country,
+            "city": city,
+            "streetAddress": streetAddress,
+            "addressLine2": addressLine2,
+            "state": state,
+            "postalCode": postalCode
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.BillingAddress = { response in
+            return AppwriteModels.BillingAddress.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Delete a specific billing address using it's ID.
+    ///
+    /// - Parameters:
+    ///   - billingAddressId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deleteBillingAddress(
+        billingAddressId: String
+    ) async throws -> Any {
+        let apiPath: String = "/account/billing-addresses/{billingAddressId}"
+            .replacingOccurrences(of: "{billingAddressId}", with: billingAddressId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
+    }
+
+    ///
     /// Update currently logged in user account email address. After changing user
     /// address, the user confirmation status will get reset. A new confirmation
     /// email is not sent automatically however you can use the send confirmation
@@ -301,6 +492,182 @@ open class Account: Service {
             params: apiParams,
             converter: converter
         )
+    }
+
+    ///
+    /// Get a list of all API keys from the current account. 
+    ///
+    /// - Parameters:
+    ///   - total: Bool (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.KeyList
+    ///
+    open func listKeys(
+        total: Bool? = nil
+    ) async throws -> AppwriteModels.KeyList {
+        let apiPath: String = "/account/keys"
+
+        let apiParams: [String: Any?] = [
+            "total": total
+        ]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.KeyList = { response in
+            return AppwriteModels.KeyList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Create a new account API key.
+    ///
+    /// - Parameters:
+    ///   - name: String
+    ///   - scopes: [AppwriteEnums.Scopes]
+    ///   - expire: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Key
+    ///
+    open func createKey(
+        name: String,
+        scopes: [AppwriteEnums.Scopes],
+        expire: String? = nil
+    ) async throws -> AppwriteModels.Key {
+        let apiPath: String = "/account/keys"
+
+        let apiParams: [String: Any?] = [
+            "name": name,
+            "scopes": scopes,
+            "expire": expire
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Key = { response in
+            return AppwriteModels.Key.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get a key by its unique ID. This endpoint returns details about a specific
+    /// API key in your account including it's scopes.
+    ///
+    /// - Parameters:
+    ///   - keyId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Key
+    ///
+    open func getKey(
+        keyId: String
+    ) async throws -> AppwriteModels.Key {
+        let apiPath: String = "/account/keys/{keyId}"
+            .replacingOccurrences(of: "{keyId}", with: keyId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.Key = { response in
+            return AppwriteModels.Key.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Update a key by its unique ID. Use this endpoint to update the name,
+    /// scopes, or expiration time of an API key.
+    ///
+    /// - Parameters:
+    ///   - keyId: String
+    ///   - name: String
+    ///   - scopes: [AppwriteEnums.Scopes]
+    ///   - expire: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Key
+    ///
+    open func updateKey(
+        keyId: String,
+        name: String,
+        scopes: [AppwriteEnums.Scopes],
+        expire: String? = nil
+    ) async throws -> AppwriteModels.Key {
+        let apiPath: String = "/account/keys/{keyId}"
+            .replacingOccurrences(of: "{keyId}", with: keyId)
+
+        let apiParams: [String: Any?] = [
+            "name": name,
+            "scopes": scopes,
+            "expire": expire
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.Key = { response in
+            return AppwriteModels.Key.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Delete a key by its unique ID. Once deleted, the key can no longer be used
+    /// to authenticate API calls.
+    ///
+    /// - Parameters:
+    ///   - keyId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deleteKey(
+        keyId: String
+    ) async throws -> Any {
+        let apiPath: String = "/account/keys/{keyId}"
+            .replacingOccurrences(of: "{keyId}", with: keyId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
     }
 
     ///
@@ -1160,6 +1527,244 @@ open class Account: Service {
             password: password,
             oldPassword: oldPassword,
             nestedType: [String: AnyCodable].self
+        )
+    }
+
+    ///
+    /// List payment methods for this account.
+    ///
+    /// - Parameters:
+    ///   - queries: [String] (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PaymentMethodList
+    ///
+    open func listPaymentMethods(
+        queries: [String]? = nil
+    ) async throws -> AppwriteModels.PaymentMethodList {
+        let apiPath: String = "/account/payment-methods"
+
+        let apiParams: [String: Any?] = [
+            "queries": queries
+        ]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.PaymentMethodList = { response in
+            return AppwriteModels.PaymentMethodList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Create a new payment method for the current user account.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PaymentMethod
+    ///
+    open func createPaymentMethod(
+    ) async throws -> AppwriteModels.PaymentMethod {
+        let apiPath: String = "/account/payment-methods"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.PaymentMethod = { response in
+            return AppwriteModels.PaymentMethod.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get a specific payment method for the user.
+    ///
+    /// - Parameters:
+    ///   - paymentMethodId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PaymentMethod
+    ///
+    open func getPaymentMethod(
+        paymentMethodId: String
+    ) async throws -> AppwriteModels.PaymentMethod {
+        let apiPath: String = "/account/payment-methods/{paymentMethodId}"
+            .replacingOccurrences(of: "{paymentMethodId}", with: paymentMethodId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [:]
+
+        let converter: (Any) -> AppwriteModels.PaymentMethod = { response in
+            return AppwriteModels.PaymentMethod.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Update a new payment method for the current user account.
+    ///
+    /// - Parameters:
+    ///   - paymentMethodId: String
+    ///   - expiryMonth: Int
+    ///   - expiryYear: Int
+    ///   - state: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PaymentMethod
+    ///
+    open func updatePaymentMethod(
+        paymentMethodId: String,
+        expiryMonth: Int,
+        expiryYear: Int,
+        state: String? = nil
+    ) async throws -> AppwriteModels.PaymentMethod {
+        let apiPath: String = "/account/payment-methods/{paymentMethodId}"
+            .replacingOccurrences(of: "{paymentMethodId}", with: paymentMethodId)
+
+        let apiParams: [String: Any?] = [
+            "expiryMonth": expiryMonth,
+            "expiryYear": expiryYear,
+            "state": state
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.PaymentMethod = { response in
+            return AppwriteModels.PaymentMethod.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Delete a specific payment method from a user's account.
+    ///
+    /// - Parameters:
+    ///   - paymentMethodId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deletePaymentMethod(
+        paymentMethodId: String
+    ) async throws -> Any {
+        let apiPath: String = "/account/payment-methods/{paymentMethodId}"
+            .replacingOccurrences(of: "{paymentMethodId}", with: paymentMethodId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams        )
+    }
+
+    ///
+    /// Update payment method provider.
+    ///
+    /// - Parameters:
+    ///   - paymentMethodId: String
+    ///   - providerMethodId: String
+    ///   - name: String
+    ///   - state: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PaymentMethod
+    ///
+    open func updatePaymentMethodProvider(
+        paymentMethodId: String,
+        providerMethodId: String,
+        name: String,
+        state: String? = nil
+    ) async throws -> AppwriteModels.PaymentMethod {
+        let apiPath: String = "/account/payment-methods/{paymentMethodId}/provider"
+            .replacingOccurrences(of: "{paymentMethodId}", with: paymentMethodId)
+
+        let apiParams: [String: Any?] = [
+            "providerMethodId": providerMethodId,
+            "name": name,
+            "state": state
+        ]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.PaymentMethod = { response in
+            return AppwriteModels.PaymentMethod.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Update payment method mandate options.
+    ///
+    /// - Parameters:
+    ///   - paymentMethodId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PaymentMethod
+    ///
+    open func updatePaymentMethodMandateOptions(
+        paymentMethodId: String
+    ) async throws -> AppwriteModels.PaymentMethod {
+        let apiPath: String = "/account/payment-methods/{paymentMethodId}/setup"
+            .replacingOccurrences(of: "{paymentMethodId}", with: paymentMethodId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "content-type": "application/json"
+        ]
+
+        let converter: (Any) -> AppwriteModels.PaymentMethod = { response in
+            return AppwriteModels.PaymentMethod.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
         )
     }
 
