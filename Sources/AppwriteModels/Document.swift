@@ -17,7 +17,7 @@ open class Document<T : Codable>: Codable {
 
     /// Document ID.
     public let id: String
-    /// Document automatically incrementing ID.
+    /// Document sequence ID.
     public let sequence: Int
     /// Collection ID.
     public let collectionId: String
