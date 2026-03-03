@@ -17,7 +17,7 @@ open class Row<T : Codable>: Codable {
 
     /// Row ID.
     public let id: String
-    /// Row automatically incrementing ID.
+    /// Row sequence ID.
     public let sequence: Int
     /// Table ID.
     public let tableId: String

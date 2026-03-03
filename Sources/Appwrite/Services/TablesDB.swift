@@ -219,6 +219,7 @@ open class TablesDB: Service {
     ///   - queries: [String] (optional)
     ///   - transactionId: String (optional)
     ///   - total: Bool (optional)
+    ///   - ttl: Int (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.RowList<T>
     ///
@@ -228,6 +229,7 @@ open class TablesDB: Service {
         queries: [String]? = nil,
         transactionId: String? = nil,
         total: Bool? = nil,
+        ttl: Int? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.RowList<T> {
         let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows"
@@ -237,7 +239,8 @@ open class TablesDB: Service {
         let apiParams: [String: Any?] = [
             "queries": queries,
             "transactionId": transactionId,
-            "total": total
+            "total": total,
+            "ttl": ttl
         ]
 
         let apiHeaders: [String: String] = [:]
@@ -265,6 +268,7 @@ open class TablesDB: Service {
     ///   - queries: [String] (optional)
     ///   - transactionId: String (optional)
     ///   - total: Bool (optional)
+    ///   - ttl: Int (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.RowList<T>
     ///
@@ -273,7 +277,8 @@ open class TablesDB: Service {
         tableId: String,
         queries: [String]? = nil,
         transactionId: String? = nil,
-        total: Bool? = nil
+        total: Bool? = nil,
+        ttl: Int? = nil
     ) async throws -> AppwriteModels.RowList<[String: AnyCodable]> {
         return try await listRows(
             databaseId: databaseId,
@@ -281,6 +286,7 @@ open class TablesDB: Service {
             queries: queries,
             transactionId: transactionId,
             total: total,
+            ttl: ttl,
             nestedType: [String: AnyCodable].self
         )
     }
