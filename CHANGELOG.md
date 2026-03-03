@@ -1,5 +1,12 @@
 # Change Log
 
+## 15.0.0
+
+* Breaking: RealtimeChannel API required explicit IDs and threw errors.
+* Added ttl parameter to listDocuments and listRows.
+* Updated compatibility notes to latest server and SDK version.
+* Updated Document and Row comments for clarity.
+
 ## 14.1.0
 
 * Add `queries` parameter to Realtime subscriptions for filtering events
