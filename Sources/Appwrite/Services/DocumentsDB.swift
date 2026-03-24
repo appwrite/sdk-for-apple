@@ -5,11 +5,9 @@ import JSONCodable
 import AppwriteEnums
 import AppwriteModels
 
-/// The Databases service allows you to create structured collections of documents, query and filter lists of documents
-open class Databases: Service {
+/// 
+open class DocumentsDB: Service {
 
-    ///
-    /// List transactions across all databases.
     ///
     /// - Parameters:
     ///   - queries: [String] (optional)
@@ -19,7 +17,7 @@ open class Databases: Service {
     open func listTransactions(
         queries: [String]? = nil
     ) async throws -> AppwriteModels.TransactionList {
-        let apiPath: String = "/databases/transactions"
+        let apiPath: String = "/documentsdb/transactions"
 
         let apiParams: [String: Any?] = [
             "queries": queries
@@ -41,8 +39,6 @@ open class Databases: Service {
     }
 
     ///
-    /// Create a new transaction.
-    ///
     /// - Parameters:
     ///   - ttl: Int (optional)
     /// - Throws: Exception if the request fails
@@ -51,7 +47,7 @@ open class Databases: Service {
     open func createTransaction(
         ttl: Int? = nil
     ) async throws -> AppwriteModels.Transaction {
-        let apiPath: String = "/databases/transactions"
+        let apiPath: String = "/documentsdb/transactions"
 
         let apiParams: [String: Any?] = [
             "ttl": ttl
@@ -75,8 +71,6 @@ open class Databases: Service {
     }
 
     ///
-    /// Get a transaction by its unique ID.
-    ///
     /// - Parameters:
     ///   - transactionId: String
     /// - Throws: Exception if the request fails
@@ -85,7 +79,7 @@ open class Databases: Service {
     open func getTransaction(
         transactionId: String
     ) async throws -> AppwriteModels.Transaction {
-        let apiPath: String = "/databases/transactions/{transactionId}"
+        let apiPath: String = "/documentsdb/transactions/{transactionId}"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
         let apiParams: [String: Any] = [:]
@@ -106,8 +100,6 @@ open class Databases: Service {
     }
 
     ///
-    /// Update a transaction, to either commit or roll back its operations.
-    ///
     /// - Parameters:
     ///   - transactionId: String
     ///   - commit: Bool (optional)
@@ -120,7 +112,7 @@ open class Databases: Service {
         commit: Bool? = nil,
         rollback: Bool? = nil
     ) async throws -> AppwriteModels.Transaction {
-        let apiPath: String = "/databases/transactions/{transactionId}"
+        let apiPath: String = "/documentsdb/transactions/{transactionId}"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
         let apiParams: [String: Any?] = [
@@ -146,8 +138,6 @@ open class Databases: Service {
     }
 
     ///
-    /// Delete a transaction by its unique ID.
-    ///
     /// - Parameters:
     ///   - transactionId: String
     /// - Throws: Exception if the request fails
@@ -156,7 +146,7 @@ open class Databases: Service {
     open func deleteTransaction(
         transactionId: String
     ) async throws -> Any {
-        let apiPath: String = "/databases/transactions/{transactionId}"
+        let apiPath: String = "/documentsdb/transactions/{transactionId}"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
         let apiParams: [String: Any] = [:]
@@ -173,8 +163,6 @@ open class Databases: Service {
     }
 
     ///
-    /// Create multiple operations in a single transaction.
-    ///
     /// - Parameters:
     ///   - transactionId: String
     ///   - operations: [Any] (optional)
@@ -185,7 +173,7 @@ open class Databases: Service {
         transactionId: String,
         operations: [Any]? = nil
     ) async throws -> AppwriteModels.Transaction {
-        let apiPath: String = "/databases/transactions/{transactionId}/operations"
+        let apiPath: String = "/documentsdb/transactions/{transactionId}/operations"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
         let apiParams: [String: Any?] = [
@@ -223,7 +211,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.listRows` instead.")
     open func listDocuments<T>(
         databaseId: String,
         collectionId: String,
@@ -233,7 +220,7 @@ open class Databases: Service {
         ttl: Int? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
@@ -273,7 +260,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.listRows` instead.")
     open func listDocuments(
         databaseId: String,
         collectionId: String,
@@ -296,7 +282,7 @@ open class Databases: Service {
     ///
     /// Create a new Document. Before using this route, you should create a new
     /// collection resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -305,29 +291,25 @@ open class Databases: Service {
     ///   - documentId: String
     ///   - data: Any
     ///   - permissions: [String] (optional)
-    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.createRow` instead.")
     open func createDocument<T>(
         databaseId: String,
         collectionId: String,
         documentId: String,
         data: Any,
         permissions: [String]? = nil,
-        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
         let apiParams: [String: Any?] = [
             "documentId": documentId,
             "data": data,
-            "permissions": permissions,
-            "transactionId": transactionId
+            "permissions": permissions
         ]
 
         let apiHeaders: [String: String] = [
@@ -350,7 +332,7 @@ open class Databases: Service {
     ///
     /// Create a new Document. Before using this route, you should create a new
     /// collection resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -359,18 +341,15 @@ open class Databases: Service {
     ///   - documentId: String
     ///   - data: Any
     ///   - permissions: [String] (optional)
-    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.createRow` instead.")
     open func createDocument(
         databaseId: String,
         collectionId: String,
         documentId: String,
         data: Any,
-        permissions: [String]? = nil,
-        transactionId: String? = nil
+        permissions: [String]? = nil
     ) async throws -> AppwriteModels.Document<[String: AnyCodable]> {
         return try await createDocument(
             databaseId: databaseId,
@@ -378,41 +357,35 @@ open class Databases: Service {
             documentId: documentId,
             data: data,
             permissions: permissions,
-            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
 
     ///
-    /// Create or update Documents. Before using this route, you should create a
-    /// new collection resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// Create new Documents. Before using this route, you should create a new
+    /// collection resource using either a [server
+    /// integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection)
     /// API or directly from your database console.
-    /// 
     ///
     /// - Parameters:
     ///   - databaseId: String
     ///   - collectionId: String
     ///   - documents: [Any]
-    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRows` instead.")
-    open func upsertDocuments<T>(
+    open func createDocuments<T>(
         databaseId: String,
         collectionId: String,
         documents: [Any],
-        transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
 
         let apiParams: [String: Any?] = [
-            "documents": documents,
-            "transactionId": transactionId
+            "documents": documents
         ]
 
         let apiHeaders: [String: String] = [
@@ -424,7 +397,7 @@ open class Databases: Service {
         }
 
         return try await client.call(
-            method: "PUT",
+            method: "POST",
             path: apiPath,
             headers: apiHeaders,
             params: apiParams,
@@ -433,32 +406,27 @@ open class Databases: Service {
     }
 
     ///
-    /// Create or update Documents. Before using this route, you should create a
-    /// new collection resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// Create new Documents. Before using this route, you should create a new
+    /// collection resource using either a [server
+    /// integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection)
     /// API or directly from your database console.
-    /// 
     ///
     /// - Parameters:
     ///   - databaseId: String
     ///   - collectionId: String
     ///   - documents: [Any]
-    ///   - transactionId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.DocumentList<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRows` instead.")
-    open func upsertDocuments(
+    open func createDocuments(
         databaseId: String,
         collectionId: String,
-        documents: [Any],
-        transactionId: String? = nil
+        documents: [Any]
     ) async throws -> AppwriteModels.DocumentList<[String: AnyCodable]> {
-        return try await upsertDocuments(
+        return try await createDocuments(
             databaseId: databaseId,
             collectionId: collectionId,
             documents: documents,
-            transactionId: transactionId,
             nestedType: [String: AnyCodable].self
         )
     }
@@ -476,7 +444,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.getRow` instead.")
     open func getDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -485,7 +452,7 @@ open class Databases: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -523,7 +490,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.getRow` instead.")
     open func getDocument(
         databaseId: String,
         collectionId: String,
@@ -544,7 +510,7 @@ open class Databases: Service {
     ///
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -557,7 +523,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRow` instead.")
     open func upsertDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -567,7 +532,7 @@ open class Databases: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -598,7 +563,7 @@ open class Databases: Service {
     ///
     /// Create or update a Document. Before using this route, you should create a
     /// new collection resource using either a [server
-    /// integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+    /// integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection)
     /// API or directly from your database console.
     ///
     /// - Parameters:
@@ -611,7 +576,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRow` instead.")
     open func upsertDocument(
         databaseId: String,
         collectionId: String,
@@ -645,7 +609,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.updateRow` instead.")
     open func updateDocument<T>(
         databaseId: String,
         collectionId: String,
@@ -655,7 +618,7 @@ open class Databases: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -697,7 +660,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.updateRow` instead.")
     open func updateDocument(
         databaseId: String,
         collectionId: String,
@@ -728,14 +690,13 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.deleteRow` instead.")
     open func deleteDocument(
         databaseId: String,
         collectionId: String,
         documentId: String,
         transactionId: String? = nil
     ) async throws -> Any {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -756,7 +717,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Decrement a specific attribute of a document by a given value.
+    /// Decrement a specific column of a row by a given value.
     ///
     /// - Parameters:
     ///   - databaseId: String
@@ -769,7 +730,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.decrementRowColumn` instead.")
     open func decrementDocumentAttribute<T>(
         databaseId: String,
         collectionId: String,
@@ -780,7 +740,7 @@ open class Databases: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -810,7 +770,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Decrement a specific attribute of a document by a given value.
+    /// Decrement a specific column of a row by a given value.
     ///
     /// - Parameters:
     ///   - databaseId: String
@@ -823,7 +783,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.decrementRowColumn` instead.")
     open func decrementDocumentAttribute(
         databaseId: String,
         collectionId: String,
@@ -846,7 +805,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Increment a specific attribute of a document by a given value.
+    /// Increment a specific column of a row by a given value.
     ///
     /// - Parameters:
     ///   - databaseId: String
@@ -859,7 +818,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.incrementRowColumn` instead.")
     open func incrementDocumentAttribute<T>(
         databaseId: String,
         collectionId: String,
@@ -870,7 +828,7 @@ open class Databases: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
-        let apiPath: String = "/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment"
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
             .replacingOccurrences(of: "{documentId}", with: documentId)
@@ -900,7 +858,7 @@ open class Databases: Service {
     }
 
     ///
-    /// Increment a specific attribute of a document by a given value.
+    /// Increment a specific column of a row by a given value.
     ///
     /// - Parameters:
     ///   - databaseId: String
@@ -913,7 +871,6 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Document<T>
     ///
-    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.incrementRowColumn` instead.")
     open func incrementDocumentAttribute(
         databaseId: String,
         collectionId: String,

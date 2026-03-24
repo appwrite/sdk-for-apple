@@ -1,11 +1,13 @@
 # Change Log
 
-## 15.0.0
+## 14.2.0
 
-* Breaking: RealtimeChannel API required explicit IDs and threw errors.
-* Added ttl parameter to listDocuments and listRows.
-* Updated compatibility notes to latest server and SDK version.
-* Updated Document and Row comments for clarity.
+* Added impersonation helpers to set impersonation headers.
+* Added `DocumentsDB` service with documents and transactions APIs.
+* Added `upsertDocuments` overloads supporting generic document types.
+* Deprecated old `upsertDocuments` in favor of generic variant.
+* Updated API version badge to 1.9.0 in README.
+* Updated compatibility note to server version 1.9.x in README.
 
 ## 14.1.0
 
