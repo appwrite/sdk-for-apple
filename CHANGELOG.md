@@ -1,9 +1,9 @@
 # Change Log
 
-## 14.2.0
+## 15.0.0
 
+* [BREAKING] Changed `$sequence` type from `int` to `string` for rows and documents
 * Added impersonation helpers to set impersonation headers.
-* Added `DocumentsDB` service with documents and transactions APIs.
 * Added `upsertDocuments` overloads supporting generic document types.
 * Deprecated old `upsertDocuments` in favor of generic variant.
 * Updated API version badge to 1.9.0 in README.
