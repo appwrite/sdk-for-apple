@@ -1,6 +1,6 @@
 # Change Log
 
-## 15.0.0
+## 16.0.0
 
 * [BREAKING] Changed `$sequence` type from `Int` to `String` for `Row` and `Document` models
 * Added impersonation support: `setImpersonateUserId()`, `setImpersonateUserEmail()`, `setImpersonateUserPhone()` on `Client`
@@ -11,6 +11,13 @@
 * Fixed `ByteBuffer(data:)` calls replaced with `ByteBuffer(bytes:)` for file/data loading
 * Updated `X-Appwrite-Response-Format` header to `1.9.0`
 * Updated API version badge to `1.9.0` and compatibility note to server version `1.9.x` in README
+
+## 15.0.0
+
+* Breaking: RealtimeChannel API required explicit IDs and threw errors.
+* Added ttl parameter to listDocuments and listRows.
+* Updated compatibility notes to latest server and SDK version.
+* Updated Document and Row comments for clarity.
 
 ## 14.1.0
 
