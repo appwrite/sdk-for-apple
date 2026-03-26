@@ -18,7 +18,7 @@ open class Row<T : Codable>: Codable {
     /// Row ID.
     public let id: String
     /// Row sequence ID.
-    public let sequence: Int
+    public let sequence: String
     /// Table ID.
     public let tableId: String
     /// Database ID.
@@ -34,7 +34,7 @@ open class Row<T : Codable>: Codable {
 
     init(
         id: String,
-        sequence: Int,
+        sequence: String,
         tableId: String,
         databaseId: String,
         createdAt: String,
@@ -56,7 +56,7 @@ open class Row<T : Codable>: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.id = try container.decode(String.self, forKey: .id)
-        self.sequence = try container.decode(Int.self, forKey: .sequence)
+        self.sequence = try container.decode(String.self, forKey: .sequence)
         self.tableId = try container.decode(String.self, forKey: .tableId)
         self.databaseId = try container.decode(String.self, forKey: .databaseId)
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
@@ -94,7 +94,7 @@ open class Row<T : Codable>: Codable {
     public static func from(map: [String: Any] ) -> Row {
         return Row(
             id: map["$id"] as! String,
-            sequence: map["$sequence"] as! Int,
+            sequence: map["$sequence"] as! String,
             tableId: map["$tableId"] as! String,
             databaseId: map["$databaseId"] as! String,
             createdAt: map["$createdAt"] as! String,

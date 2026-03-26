@@ -24,6 +24,8 @@ open class User<T : Codable>: Codable {
         case prefs = "prefs"
         case targets = "targets"
         case accessedAt = "accessedAt"
+        case impersonator = "impersonator"
+        case impersonatorUserId = "impersonatorUserId"
     }
 
     /// User ID.
@@ -64,6 +66,10 @@ open class User<T : Codable>: Codable {
     public let targets: [Target]
     /// Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
     public let accessedAt: String
+    /// Whether the user can impersonate other users.
+    public let impersonator: Bool?
+    /// ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+    public let impersonatorUserId: String?
 
     init(
         id: String,
@@ -84,7 +90,9 @@ open class User<T : Codable>: Codable {
         mfa: Bool,
         prefs: Preferences<T>,
         targets: [Target],
-        accessedAt: String
+        accessedAt: String,
+        impersonator: Bool?,
+        impersonatorUserId: String?
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -105,6 +113,8 @@ open class User<T : Codable>: Codable {
         self.prefs = prefs
         self.targets = targets
         self.accessedAt = accessedAt
+        self.impersonator = impersonator
+        self.impersonatorUserId = impersonatorUserId
     }
 
     public required init(from decoder: Decoder) throws {
@@ -129,6 +139,8 @@ open class User<T : Codable>: Codable {
         self.prefs = try container.decode(Preferences<T>.self, forKey: .prefs)
         self.targets = try container.decode([Target].self, forKey: .targets)
         self.accessedAt = try container.decode(String.self, forKey: .accessedAt)
+        self.impersonator = try container.decodeIfPresent(Bool.self, forKey: .impersonator)
+        self.impersonatorUserId = try container.decodeIfPresent(String.self, forKey: .impersonatorUserId)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -153,6 +165,8 @@ open class User<T : Codable>: Codable {
         try container.encode(prefs, forKey: .prefs)
         try container.encode(targets, forKey: .targets)
         try container.encode(accessedAt, forKey: .accessedAt)
+        try container.encodeIfPresent(impersonator, forKey: .impersonator)
+        try container.encodeIfPresent(impersonatorUserId, forKey: .impersonatorUserId)
     }
 
     public func toMap() -> [String: Any] {
@@ -175,7 +189,9 @@ open class User<T : Codable>: Codable {
             "mfa": mfa as Any,
             "prefs": prefs.toMap() as Any,
             "targets": targets.map { $0.toMap() } as Any,
-            "accessedAt": accessedAt as Any
+            "accessedAt": accessedAt as Any,
+            "impersonator": impersonator as Any,
+            "impersonatorUserId": impersonatorUserId as Any
         ]
     }
 
@@ -199,7 +215,9 @@ open class User<T : Codable>: Codable {
             mfa: map["mfa"] as! Bool,
             prefs: Preferences.from(map: map["prefs"] as! [String: Any]),
             targets: (map["targets"] as! [[String: Any]]).map { Target.from(map: $0) },
-            accessedAt: map["accessedAt"] as! String
+            accessedAt: map["accessedAt"] as! String,
+            impersonator: map["impersonator"] as? Bool,
+            impersonatorUserId: map["impersonatorUserId"] as? String
         )
     }
 }

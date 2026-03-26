@@ -18,7 +18,7 @@ open class Document<T : Codable>: Codable {
     /// Document ID.
     public let id: String
     /// Document sequence ID.
-    public let sequence: Int
+    public let sequence: String
     /// Collection ID.
     public let collectionId: String
     /// Database ID.
@@ -34,7 +34,7 @@ open class Document<T : Codable>: Codable {
 
     init(
         id: String,
-        sequence: Int,
+        sequence: String,
         collectionId: String,
         databaseId: String,
         createdAt: String,
@@ -56,7 +56,7 @@ open class Document<T : Codable>: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.id = try container.decode(String.self, forKey: .id)
-        self.sequence = try container.decode(Int.self, forKey: .sequence)
+        self.sequence = try container.decode(String.self, forKey: .sequence)
         self.collectionId = try container.decode(String.self, forKey: .collectionId)
         self.databaseId = try container.decode(String.self, forKey: .databaseId)
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
@@ -94,7 +94,7 @@ open class Document<T : Codable>: Codable {
     public static func from(map: [String: Any] ) -> Document {
         return Document(
             id: map["$id"] as? String ?? "",
-            sequence: map["$sequence"] as? Int ?? 0,
+            sequence: map["$sequence"] as? String ?? "",
             collectionId: map["$collectionId"] as? String ?? "",
             databaseId: map["$databaseId"] as? String ?? "",
             createdAt: map["$createdAt"] as? String ?? "",
