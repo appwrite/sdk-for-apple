@@ -2,12 +2,15 @@
 
 ## 15.0.0
 
-* [BREAKING] Changed `$sequence` type from `int` to `string` for rows and documents
-* Added impersonation helpers to set impersonation headers.
-* Added `upsertDocuments` overloads supporting generic document types.
-* Deprecated old `upsertDocuments` in favor of generic variant.
-* Updated API version badge to 1.9.0 in README.
-* Updated compatibility note to server version 1.9.x in README.
+* [BREAKING] Changed `$sequence` type from `Int` to `String` for `Row` and `Document` models
+* Added impersonation support: `setImpersonateUserId()`, `setImpersonateUserEmail()`, `setImpersonateUserPhone()` on `Client`
+* Added `impersonator` and `impersonatorUserId` optional fields to `User` model
+* Updated `Log` model field descriptions to clarify impersonation behavior for `userId`, `userEmail`, `userName`
+* Fixed `NIOFoundationCompat` import to be conditional with `#if canImport` for platform compatibility
+* Fixed `ByteBuffer` to `Data` conversion to use `readableBytesView` throughout (Client and WebSocket handler)
+* Fixed `ByteBuffer(data:)` calls replaced with `ByteBuffer(bytes:)` for file/data loading
+* Updated `X-Appwrite-Response-Format` header to `1.9.0`
+* Updated API version badge to `1.9.0` and compatibility note to server version `1.9.x` in README
 
 ## 14.1.0
 
