@@ -10,6 +10,7 @@ open class Log: Codable {
         case userEmail = "userEmail"
         case userName = "userName"
         case mode = "mode"
+        case userType = "userType"
         case ip = "ip"
         case time = "time"
         case osCode = "osCode"
@@ -38,6 +39,8 @@ open class Log: Codable {
     public let userName: String
     /// API mode when event triggered.
     public let mode: String
+    /// User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+    public let userType: String
     /// IP session in use when the session was created.
     public let ip: String
     /// Log creation date in ISO 8601 format.
@@ -77,6 +80,7 @@ open class Log: Codable {
         userEmail: String,
         userName: String,
         mode: String,
+        userType: String,
         ip: String,
         time: String,
         osCode: String,
@@ -99,6 +103,7 @@ open class Log: Codable {
         self.userEmail = userEmail
         self.userName = userName
         self.mode = mode
+        self.userType = userType
         self.ip = ip
         self.time = time
         self.osCode = osCode
@@ -125,6 +130,7 @@ open class Log: Codable {
         self.userEmail = try container.decode(String.self, forKey: .userEmail)
         self.userName = try container.decode(String.self, forKey: .userName)
         self.mode = try container.decode(String.self, forKey: .mode)
+        self.userType = try container.decode(String.self, forKey: .userType)
         self.ip = try container.decode(String.self, forKey: .ip)
         self.time = try container.decode(String.self, forKey: .time)
         self.osCode = try container.decode(String.self, forKey: .osCode)
@@ -151,6 +157,7 @@ open class Log: Codable {
         try container.encode(userEmail, forKey: .userEmail)
         try container.encode(userName, forKey: .userName)
         try container.encode(mode, forKey: .mode)
+        try container.encode(userType, forKey: .userType)
         try container.encode(ip, forKey: .ip)
         try container.encode(time, forKey: .time)
         try container.encode(osCode, forKey: .osCode)
@@ -176,6 +183,7 @@ open class Log: Codable {
             "userEmail": userEmail as Any,
             "userName": userName as Any,
             "mode": mode as Any,
+            "userType": userType as Any,
             "ip": ip as Any,
             "time": time as Any,
             "osCode": osCode as Any,
@@ -202,6 +210,7 @@ open class Log: Codable {
             userEmail: map["userEmail"] as! String,
             userName: map["userName"] as! String,
             mode: map["mode"] as! String,
+            userType: map["userType"] as! String,
             ip: map["ip"] as! String,
             time: map["time"] as! String,
             osCode: map["osCode"] as! String,

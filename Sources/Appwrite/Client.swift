@@ -26,8 +26,8 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "16.0.0",
-        "x-appwrite-response-format": "1.9.0"
+        "x-sdk-version": "16.1.0",
+        "x-appwrite-response-format": "1.9.1"
     ]
 
     internal var config: [String: String] = [:]
@@ -271,6 +271,10 @@ open class Client {
     open func addHeader(key: String, value: String) -> Client {
         self.headers[key] = value
         return self
+    }
+
+    open func getHeaders() -> [String: String] {
+        return self.headers
     }
 
    ///
