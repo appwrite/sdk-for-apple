@@ -37,7 +37,7 @@ open class Storage: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.FileList = { response in
+        let converter: (Any) throws -> AppwriteModels.FileList = { response in
             return AppwriteModels.FileList.from(map: response as! [String: Any])
         }
 
@@ -98,7 +98,7 @@ open class Storage: Service {
             "content-type": "multipart/form-data"
         ]
 
-        let converter: (Any) -> AppwriteModels.File = { response in
+        let converter: (Any) throws -> AppwriteModels.File = { response in
             return AppwriteModels.File.from(map: response as! [String: Any])
         }
 
@@ -137,7 +137,7 @@ open class Storage: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.File = { response in
+        let converter: (Any) throws -> AppwriteModels.File = { response in
             return AppwriteModels.File.from(map: response as! [String: Any])
         }
 
@@ -181,7 +181,7 @@ open class Storage: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.File = { response in
+        let converter: (Any) throws -> AppwriteModels.File = { response in
             return AppwriteModels.File.from(map: response as! [String: Any])
         }
 

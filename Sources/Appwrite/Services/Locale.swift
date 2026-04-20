@@ -27,7 +27,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Locale = { response in
+        let converter: (Any) throws -> AppwriteModels.Locale = { response in
             return AppwriteModels.Locale.from(map: response as! [String: Any])
         }
 
@@ -55,7 +55,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.LocaleCodeList = { response in
+        let converter: (Any) throws -> AppwriteModels.LocaleCodeList = { response in
             return AppwriteModels.LocaleCodeList.from(map: response as! [String: Any])
         }
 
@@ -83,7 +83,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.ContinentList = { response in
+        let converter: (Any) throws -> AppwriteModels.ContinentList = { response in
             return AppwriteModels.ContinentList.from(map: response as! [String: Any])
         }
 
@@ -111,7 +111,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.CountryList = { response in
+        let converter: (Any) throws -> AppwriteModels.CountryList = { response in
             return AppwriteModels.CountryList.from(map: response as! [String: Any])
         }
 
@@ -139,7 +139,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.CountryList = { response in
+        let converter: (Any) throws -> AppwriteModels.CountryList = { response in
             return AppwriteModels.CountryList.from(map: response as! [String: Any])
         }
 
@@ -167,7 +167,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.PhoneList = { response in
+        let converter: (Any) throws -> AppwriteModels.PhoneList = { response in
             return AppwriteModels.PhoneList.from(map: response as! [String: Any])
         }
 
@@ -196,7 +196,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.CurrencyList = { response in
+        let converter: (Any) throws -> AppwriteModels.CurrencyList = { response in
             return AppwriteModels.CurrencyList.from(map: response as! [String: Any])
         }
 
@@ -224,7 +224,7 @@ open class Locale: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.LanguageList = { response in
+        let converter: (Any) throws -> AppwriteModels.LanguageList = { response in
             return AppwriteModels.LanguageList.from(map: response as! [String: Any])
         }
 

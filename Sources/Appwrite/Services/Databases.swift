@@ -27,7 +27,7 @@ open class Databases: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.TransactionList = { response in
+        let converter: (Any) throws -> AppwriteModels.TransactionList = { response in
             return AppwriteModels.TransactionList.from(map: response as! [String: Any])
         }
 
@@ -61,7 +61,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -92,7 +92,7 @@ open class Databases: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -132,7 +132,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -196,7 +196,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -246,7 +246,7 @@ open class Databases: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.DocumentList<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.DocumentList<T> = { response in
             return AppwriteModels.DocumentList.from(map: response as! [String: Any])
         }
 
@@ -334,7 +334,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])
         }
 
@@ -417,7 +417,7 @@ open class Databases: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])
         }
 
@@ -502,7 +502,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])
         }
 
@@ -590,7 +590,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])
         }
 
@@ -716,7 +716,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])
         }
 
@@ -806,7 +806,7 @@ open class Databases: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Document<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Document<T> = { response in
             return AppwriteModels.Document.from(map: response as! [String: Any])
         }
 

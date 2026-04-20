@@ -34,7 +34,7 @@ open class Functions: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.ExecutionList = { response in
+        let converter: (Any) throws -> AppwriteModels.ExecutionList = { response in
             return AppwriteModels.ExecutionList.from(map: response as! [String: Any])
         }
 
@@ -89,7 +89,7 @@ open class Functions: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Execution = { response in
+        let converter: (Any) throws -> AppwriteModels.Execution = { response in
             return AppwriteModels.Execution.from(map: response as! [String: Any])
         }
 
@@ -123,7 +123,7 @@ open class Functions: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Execution = { response in
+        let converter: (Any) throws -> AppwriteModels.Execution = { response in
             return AppwriteModels.Execution.from(map: response as! [String: Any])
         }
 

@@ -27,7 +27,7 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.TransactionList = { response in
+        let converter: (Any) throws -> AppwriteModels.TransactionList = { response in
             return AppwriteModels.TransactionList.from(map: response as! [String: Any])
         }
 
@@ -61,7 +61,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -92,7 +92,7 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -132,7 +132,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -196,7 +196,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Transaction = { response in
+        let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
         }
 
@@ -245,7 +245,7 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.RowList<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.RowList<T> = { response in
             return AppwriteModels.RowList.from(map: response as! [String: Any])
         }
 
@@ -331,7 +331,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
         }
 
@@ -412,7 +412,7 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
         }
 
@@ -495,7 +495,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
         }
 
@@ -581,7 +581,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
         }
 
@@ -704,7 +704,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
         }
 
@@ -792,7 +792,7 @@ open class TablesDB: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Row<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
         }
 
