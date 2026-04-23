@@ -35,7 +35,7 @@ open class Messaging: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Subscriber = { response in
+        let converter: (Any) throws -> AppwriteModels.Subscriber = { response in
             return AppwriteModels.Subscriber.from(map: response as! [String: Any])
         }
 

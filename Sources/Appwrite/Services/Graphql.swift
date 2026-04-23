@@ -30,7 +30,7 @@ open class Graphql: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> Any = { response in
+        let converter: (Any) throws -> Any = { response in
             return response
         }
 
@@ -65,7 +65,7 @@ open class Graphql: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> Any = { response in
+        let converter: (Any) throws -> Any = { response in
             return response
         }
 

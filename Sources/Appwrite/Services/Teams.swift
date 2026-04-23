@@ -35,7 +35,7 @@ open class Teams: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.TeamList<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.TeamList<T> = { response in
             return AppwriteModels.TeamList.from(map: response as! [String: Any])
         }
 
@@ -102,7 +102,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Team<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Team<T> = { response in
             return AppwriteModels.Team.from(map: response as! [String: Any])
         }
 
@@ -159,7 +159,7 @@ open class Teams: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Team<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Team<T> = { response in
             return AppwriteModels.Team.from(map: response as! [String: Any])
         }
 
@@ -214,7 +214,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Team<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Team<T> = { response in
             return AppwriteModels.Team.from(map: response as! [String: Any])
         }
 
@@ -305,7 +305,7 @@ open class Teams: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.MembershipList = { response in
+        let converter: (Any) throws -> AppwriteModels.MembershipList = { response in
             return AppwriteModels.MembershipList.from(map: response as! [String: Any])
         }
 
@@ -377,7 +377,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Membership = { response in
+        let converter: (Any) throws -> AppwriteModels.Membership = { response in
             return AppwriteModels.Membership.from(map: response as! [String: Any])
         }
 
@@ -413,7 +413,7 @@ open class Teams: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Membership = { response in
+        let converter: (Any) throws -> AppwriteModels.Membership = { response in
             return AppwriteModels.Membership.from(map: response as! [String: Any])
         }
 
@@ -456,7 +456,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Membership = { response in
+        let converter: (Any) throws -> AppwriteModels.Membership = { response in
             return AppwriteModels.Membership.from(map: response as! [String: Any])
         }
 
@@ -537,7 +537,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Membership = { response in
+        let converter: (Any) throws -> AppwriteModels.Membership = { response in
             return AppwriteModels.Membership.from(map: response as! [String: Any])
         }
 
@@ -571,7 +571,7 @@ open class Teams: Service {
 
         let apiHeaders: [String: String] = [:]
 
-        let converter: (Any) -> AppwriteModels.Preferences<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Preferences<T> = { response in
             return AppwriteModels.Preferences.from(map: response as! [String: Any])
         }
 
@@ -630,7 +630,7 @@ open class Teams: Service {
             "content-type": "application/json"
         ]
 
-        let converter: (Any) -> AppwriteModels.Preferences<T> = { response in
+        let converter: (Any) throws -> AppwriteModels.Preferences<T> = { response in
             return AppwriteModels.Preferences.from(map: response as! [String: Any])
         }
 
