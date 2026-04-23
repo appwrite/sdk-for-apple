@@ -1,10 +1,10 @@
 # Change Log
 
-## 16.2.0
+## 17.0.0
 
-* Added: `Client.call()` converters now supported throwing parse transformations
-* Fixed: Multipart upload conversion now propagated converter errors correctly
-* Updated: README compatibility note now targets `latest` server version
+* Breaking: Added `unsubscribe()`, `update()`, and `close()` for Realtime subscription lifecycle.
+* Added: Added `userPhone` to the `Membership` model.
+* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.2`.
 
 ## 16.1.0
 

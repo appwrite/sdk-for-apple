@@ -11,6 +11,7 @@ open class Membership: Codable {
         case userId = "userId"
         case userName = "userName"
         case userEmail = "userEmail"
+        case userPhone = "userPhone"
         case teamId = "teamId"
         case teamName = "teamName"
         case invited = "invited"
@@ -32,6 +33,8 @@ open class Membership: Codable {
     public let userName: String
     /// User email address. Hide this attribute by toggling membership privacy in the Console.
     public let userEmail: String
+    /// User phone number. Hide this attribute by toggling membership privacy in the Console.
+    public let userPhone: String
     /// Team ID.
     public let teamId: String
     /// Team name.
@@ -54,6 +57,7 @@ open class Membership: Codable {
         userId: String,
         userName: String,
         userEmail: String,
+        userPhone: String,
         teamId: String,
         teamName: String,
         invited: String,
@@ -68,6 +72,7 @@ open class Membership: Codable {
         self.userId = userId
         self.userName = userName
         self.userEmail = userEmail
+        self.userPhone = userPhone
         self.teamId = teamId
         self.teamName = teamName
         self.invited = invited
@@ -86,6 +91,7 @@ open class Membership: Codable {
         self.userId = try container.decode(String.self, forKey: .userId)
         self.userName = try container.decode(String.self, forKey: .userName)
         self.userEmail = try container.decode(String.self, forKey: .userEmail)
+        self.userPhone = try container.decode(String.self, forKey: .userPhone)
         self.teamId = try container.decode(String.self, forKey: .teamId)
         self.teamName = try container.decode(String.self, forKey: .teamName)
         self.invited = try container.decode(String.self, forKey: .invited)
@@ -104,6 +110,7 @@ open class Membership: Codable {
         try container.encode(userId, forKey: .userId)
         try container.encode(userName, forKey: .userName)
         try container.encode(userEmail, forKey: .userEmail)
+        try container.encode(userPhone, forKey: .userPhone)
         try container.encode(teamId, forKey: .teamId)
         try container.encode(teamName, forKey: .teamName)
         try container.encode(invited, forKey: .invited)
@@ -121,6 +128,7 @@ open class Membership: Codable {
             "userId": userId as Any,
             "userName": userName as Any,
             "userEmail": userEmail as Any,
+            "userPhone": userPhone as Any,
             "teamId": teamId as Any,
             "teamName": teamName as Any,
             "invited": invited as Any,
@@ -139,6 +147,7 @@ open class Membership: Codable {
             userId: map["userId"] as! String,
             userName: map["userName"] as! String,
             userEmail: map["userEmail"] as! String,
+            userPhone: map["userPhone"] as! String,
             teamId: map["teamId"] as! String,
             teamName: map["teamName"] as! String,
             invited: map["invited"] as! String,

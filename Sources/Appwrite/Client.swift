@@ -26,8 +26,8 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "16.2.0",
-        "x-appwrite-response-format": "1.9.1"
+        "x-sdk-version": "17.0.0",
+        "x-appwrite-response-format": "1.9.2"
     ]
 
     internal var config: [String: String] = [:]
