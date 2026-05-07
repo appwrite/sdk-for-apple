@@ -26,13 +26,17 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "17.0.0",
-        "x-appwrite-response-format": "1.9.2"
+        "x-sdk-version": "17.1.0",
+        "x-appwrite-response-format": "1.9.4"
     ]
 
     internal var config: [String: String] = [:]
 
     internal var selfSigned: Bool = false
+
+    internal var compression: Bool = true
+
+    internal var compressionHeaderInjected: Bool = false
 
     internal var http: HTTPClient
 
@@ -52,6 +56,7 @@ open class Client {
 
     private static func createHTTP(
         selfSigned: Bool = false,
+        compression: Bool = true,
         maxRedirects: Int = 5,
         alloweRedirectCycles: Bool = false,
         connectTimeout: TimeAmount = .seconds(30),
@@ -78,7 +83,7 @@ open class Client {
                 tlsConfiguration: tls,
                 redirectConfiguration: redirect,
                 timeout: timeout,
-                decompression: .enabled(limit: .none)
+                decompression: compression ? .enabled(limit: .none) : .disabled
             )
         )
     }
@@ -165,6 +170,21 @@ open class Client {
     }
 
     ///
+    /// Set Cookie
+    ///
+    /// The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
+    ///
+    /// @param String value
+    ///
+    /// @return Client
+    ///
+    open func setCookie(_ value: String) -> Client {
+        config["cookie"] = value
+        _ = addHeader(key: "Cookie", value: value)
+        return self
+    }
+
+    ///
     /// Set ImpersonateUserId
     ///
     /// Impersonate a user by ID on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
@@ -220,7 +240,37 @@ open class Client {
     open func setSelfSigned(_ status: Bool = true) -> Client {
         self.selfSigned = status
         try! http.syncShutdown()
-        http = Client.createHTTP(selfSigned: status)
+        http = Client.createHTTP(selfSigned: status, compression: compression)
+        return self
+    }
+
+    ///
+    /// Enable or disable automatic response decompression.
+    ///
+    /// When disabled, the client asks the server for an identity response
+    /// encoding and does not attempt to decompress response bodies. This can
+    /// be useful when a server or proxy returns compressed responses that the
+    /// underlying HTTP client cannot decode.
+    ///
+    /// @param Bool status Whether response decompression should be enabled.
+    ///
+    /// @return Client The same client instance.
+    ///
+    open func setCompression(_ status: Bool = true) -> Client {
+        self.compression = status
+
+        if status {
+            if compressionHeaderInjected && self.headers["accept-encoding"] == "identity" {
+                self.headers.removeValue(forKey: "accept-encoding")
+            }
+            self.compressionHeaderInjected = false
+        } else {
+            self.headers["accept-encoding"] = "identity"
+            self.compressionHeaderInjected = true
+        }
+
+        try! http.syncShutdown()
+        http = Client.createHTTP(selfSigned: selfSigned, compression: status)
         return self
     }
 
@@ -269,6 +319,10 @@ open class Client {
     /// @return Client
     ///
     open func addHeader(key: String, value: String) -> Client {
+        if key.caseInsensitiveCompare("accept-encoding") == .orderedSame {
+            self.compressionHeaderInjected = false
+        }
+
         self.headers[key] = value
         return self
     }

@@ -1,10 +1,17 @@
 # Change Log
 
+## 17.1.0
+
+* Added: Added `setCookie()` method to `Client` for forwarding incoming `Cookie` headers in server-side runtimes
+* Added: Added `setCompression()` method to `Client` to toggle automatic response decompression
+* Added: Added `fusionauth`, `keycloak`, and `kick` OAuth providers to `OAuthProvider` enum
+* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.4`
+
 ## 17.0.0
 
-* Breaking: Added `unsubscribe()`, `update()`, and `close()` for Realtime subscription lifecycle.
-* Added: Added `userPhone` to the `Membership` model.
-* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.2`.
+* Breaking: Added `unsubscribe()`, `update()`, and `close()` to Realtime subscriptions
+* Added: Added `userPhone` field to `Membership` model
+* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.2`
 
 ## 16.1.0
 
