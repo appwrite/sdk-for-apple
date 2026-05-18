@@ -64,7 +64,7 @@ open class InsightCTA: Codable {
             label: map["label"] as! String,
             service: map["service"] as! String,
             method: map["method"] as! String,
-            params: map["params"] as! [String: AnyCodable]
+            params: (map["params"] as! [String: Any]).mapValues { AnyCodable($0) }
         )
     }
 }

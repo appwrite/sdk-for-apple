@@ -95,7 +95,7 @@ open class Presence<T : Codable>: Codable {
             "status": status as Any,
             "source": source as Any,
             "expiresAt": expiresAt as Any,
-            "metadata": (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(metadata))) ?? [:]
+            "metadata": (try! JSONSerialization.jsonObject(with: JSONEncoder().encode(metadata))) as? [String: Any] ?? [:]
         ]
     }
 
