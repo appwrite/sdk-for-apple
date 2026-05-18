@@ -87,7 +87,7 @@ open class Row<T : Codable>: Codable {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
-            "data": try! JSONEncoder().encode(data)
+            "data": (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(data))) ?? [:]
         ]
     }
 
@@ -100,7 +100,7 @@ open class Row<T : Codable>: Codable {
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
             permissions: map["$permissions"] as! [String],
-            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["data"] as? [String: Any] ?? map, options: []))
+            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["data"] as? [String: Any] ?? [:], options: []))
         )
     }
 }

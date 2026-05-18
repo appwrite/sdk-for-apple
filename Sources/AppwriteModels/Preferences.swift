@@ -31,7 +31,7 @@ open class Preferences<T : Codable>: Codable {
 
     public func toMap() -> [String: Any] {
         return [
-            "data": try! JSONEncoder().encode(data)
+            "data": (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(data))) ?? [:]
         ]
     }
 
