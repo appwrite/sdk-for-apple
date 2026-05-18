@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ExecutionStatus: String, CustomStringConvertible {
+public enum ExecutionStatus: String, Codable, CustomStringConvertible {
     case waiting = "waiting"
     case processing = "processing"
     case completed = "completed"

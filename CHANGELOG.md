@@ -2,10 +2,11 @@
 
 ## 17.1.0
 
-* Added: Added `setCookie()` method to `Client` for forwarding incoming `Cookie` headers in server-side runtimes
-* Added: Added `setCompression()` method to `Client` to toggle automatic response decompression
-* Added: Added `fusionauth`, `keycloak`, and `kick` OAuth providers to `OAuthProvider` enum
-* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.4`
+* Added: Realtime `presences` channel and `RealtimePresence` types for presence subscriptions
+* Added: `Advisor` and `Presences` services
+* Added: `Insight`, `Presence`, and `Report` models with list variants
+* Added: `fusionauth`, `keycloak`, and `kick` providers to `OAuthProvider` enum
+* Updated: `X-Appwrite-Response-Format` header to `1.9.5`
 
 ## 17.0.0
 

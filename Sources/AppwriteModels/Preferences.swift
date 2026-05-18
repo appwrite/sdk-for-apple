@@ -5,7 +5,7 @@ import JSONCodable
 open class Preferences<T : Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case data
+        case data = "data"
     }
 
     /// Additional properties

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Theme: String, CustomStringConvertible {
+public enum Theme: String, Codable, CustomStringConvertible {
     case light = "light"
     case dark = "dark"
 

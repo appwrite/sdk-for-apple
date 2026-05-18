@@ -12,7 +12,7 @@ open class Document<T : Codable>: Codable {
         case createdAt = "$createdAt"
         case updatedAt = "$updatedAt"
         case permissions = "$permissions"
-        case data
+        case data = "data"
     }
 
     /// Document ID.

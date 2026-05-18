@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Timezone: String, CustomStringConvertible {
+public enum Timezone: String, Codable, CustomStringConvertible {
     case africaAbidjan = "africa/abidjan"
     case africaAccra = "africa/accra"
     case africaAddisAbaba = "africa/addis_ababa"

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Browser: String, CustomStringConvertible {
+public enum Browser: String, Codable, CustomStringConvertible {
     case avantBrowser = "aa"
     case androidWebViewBeta = "an"
     case googleChrome = "ch"

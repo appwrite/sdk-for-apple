@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CreditCard: String, CustomStringConvertible {
+public enum CreditCard: String, Codable, CustomStringConvertible {
     case americanExpress = "amex"
     case argencard = "argencard"
     case cabal = "cabal"

@@ -662,7 +662,7 @@ open class Account: Service {
         let apiPath: String = "/account/mfa/challenges"
 
         let apiParams: [String: Any?] = [
-            "factor": factor
+            "factor": factor.rawValue
         ]
 
         let apiHeaders: [String: String] = [
@@ -698,7 +698,7 @@ open class Account: Service {
         let apiPath: String = "/account/mfa/challenges"
 
         let apiParams: [String: Any?] = [
-            "factor": factor
+            "factor": factor.rawValue
         ]
 
         let apiHeaders: [String: String] = [
