@@ -109,7 +109,16 @@ open class Presence<T : Codable>: Codable {
             status: map["status"] as? String,
             source: map["source"] as! String,
             expiresAt: map["expiresAt"] as? String,
-            metadata: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["metadata"] as? [String: Any] ?? [:], options: []))
+            metadata: try! JSONDecoder().decode(T.self, from: {
+                let raw = map["metadata"]
+                if let dict = raw as? [String: Any] {
+                    return try! JSONSerialization.data(withJSONObject: dict, options: [])
+                } else if let raw = raw, JSONSerialization.isValidJSONObject(raw) {
+                    return try! JSONSerialization.data(withJSONObject: raw, options: [])
+                } else {
+                    return try! JSONSerialization.data(withJSONObject: [:] as [String: Any], options: [])
+                }
+            }())
         )
     }
 }
