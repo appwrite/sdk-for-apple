@@ -14,6 +14,7 @@ open class File: Codable {
         case signature = "signature"
         case mimeType = "mimeType"
         case sizeOriginal = "sizeOriginal"
+        case sizeActual = "sizeActual"
         case chunksTotal = "chunksTotal"
         case chunksUploaded = "chunksUploaded"
         case encryption = "encryption"
@@ -38,6 +39,8 @@ open class File: Codable {
     public let mimeType: String
     /// File original size in bytes.
     public let sizeOriginal: Int
+    /// File actual stored size in bytes after compression and/or encryption.
+    public let sizeActual: Int
     /// Total number of chunks available
     public let chunksTotal: Int
     /// Total number of chunks uploaded
@@ -57,6 +60,7 @@ open class File: Codable {
         signature: String,
         mimeType: String,
         sizeOriginal: Int,
+        sizeActual: Int,
         chunksTotal: Int,
         chunksUploaded: Int,
         encryption: Bool,
@@ -71,6 +75,7 @@ open class File: Codable {
         self.signature = signature
         self.mimeType = mimeType
         self.sizeOriginal = sizeOriginal
+        self.sizeActual = sizeActual
         self.chunksTotal = chunksTotal
         self.chunksUploaded = chunksUploaded
         self.encryption = encryption
@@ -89,6 +94,7 @@ open class File: Codable {
         self.signature = try container.decode(String.self, forKey: .signature)
         self.mimeType = try container.decode(String.self, forKey: .mimeType)
         self.sizeOriginal = try container.decode(Int.self, forKey: .sizeOriginal)
+        self.sizeActual = try container.decode(Int.self, forKey: .sizeActual)
         self.chunksTotal = try container.decode(Int.self, forKey: .chunksTotal)
         self.chunksUploaded = try container.decode(Int.self, forKey: .chunksUploaded)
         self.encryption = try container.decode(Bool.self, forKey: .encryption)
@@ -107,6 +113,7 @@ open class File: Codable {
         try container.encode(signature, forKey: .signature)
         try container.encode(mimeType, forKey: .mimeType)
         try container.encode(sizeOriginal, forKey: .sizeOriginal)
+        try container.encode(sizeActual, forKey: .sizeActual)
         try container.encode(chunksTotal, forKey: .chunksTotal)
         try container.encode(chunksUploaded, forKey: .chunksUploaded)
         try container.encode(encryption, forKey: .encryption)
@@ -124,6 +131,7 @@ open class File: Codable {
             "signature": signature as Any,
             "mimeType": mimeType as Any,
             "sizeOriginal": sizeOriginal as Any,
+            "sizeActual": sizeActual as Any,
             "chunksTotal": chunksTotal as Any,
             "chunksUploaded": chunksUploaded as Any,
             "encryption": encryption as Any,
@@ -142,6 +150,7 @@ open class File: Codable {
             signature: map["signature"] as! String,
             mimeType: map["mimeType"] as! String,
             sizeOriginal: map["sizeOriginal"] as! Int,
+            sizeActual: map["sizeActual"] as! Int,
             chunksTotal: map["chunksTotal"] as! Int,
             chunksUploaded: map["chunksUploaded"] as! Int,
             encryption: map["encryption"] as! Bool,
