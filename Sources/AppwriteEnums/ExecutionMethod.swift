@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ExecutionMethod: String, CustomStringConvertible {
+public enum ExecutionMethod: String, Codable, CustomStringConvertible {
     case gET = "GET"
     case pOST = "POST"
     case pUT = "PUT"

@@ -12,7 +12,7 @@ open class Document<T : Codable>: Codable {
         case createdAt = "$createdAt"
         case updatedAt = "$updatedAt"
         case permissions = "$permissions"
-        case data
+        case data = "data"
     }
 
     /// Document ID.
@@ -87,7 +87,7 @@ open class Document<T : Codable>: Codable {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
-            "data": try! JSONEncoder().encode(data)
+            "data": (try! JSONSerialization.jsonObject(with: JSONEncoder().encode(data))) as? [String: Any] ?? [:]
         ]
     }
 
@@ -100,7 +100,16 @@ open class Document<T : Codable>: Codable {
             createdAt: map["$createdAt"] as? String ?? "",
             updatedAt: map["$updatedAt"] as? String ?? "",
             permissions: map["$permissions"] as? [String] ?? [],
-            data: try! JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: map["data"] as? [String: Any] ?? map, options: []))
+            data: try! JSONDecoder().decode(T.self, from: {
+                let raw = map["data"]
+                if let dict = raw as? [String: Any] {
+                    return try! JSONSerialization.data(withJSONObject: dict, options: [])
+                } else if let raw = raw, JSONSerialization.isValidJSONObject(raw) {
+                    return try! JSONSerialization.data(withJSONObject: raw, options: [])
+                } else {
+                    return try! JSONSerialization.data(withJSONObject: [:] as [String: Any], options: [])
+                }
+            }())
         )
     }
 }

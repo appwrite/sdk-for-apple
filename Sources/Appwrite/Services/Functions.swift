@@ -80,7 +80,7 @@ open class Functions: Service {
             "body": body,
             "async": async,
             "path": path,
-            "method": method,
+            "method": method?.rawValue,
             "headers": headers,
             "scheduledAt": scheduledAt
         ]

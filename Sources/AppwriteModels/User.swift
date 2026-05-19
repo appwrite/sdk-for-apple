@@ -203,7 +203,7 @@ open class User<T : Codable>: Codable {
             name: map["name"] as! String,
             password: map["password"] as? String,
             hash: map["hash"] as? String,
-            hashOptions: map["hashOptions"] as? [String: AnyCodable],
+            hashOptions: (map["hashOptions"] as? [String: Any] ?? [:]).mapValues { AnyCodable($0) },
             registration: map["registration"] as! String,
             status: map["status"] as! Bool,
             labels: map["labels"] as! [String],

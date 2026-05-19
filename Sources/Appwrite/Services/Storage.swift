@@ -306,7 +306,7 @@ open class Storage: Service {
         let apiParams: [String: Any?] = [
             "width": width,
             "height": height,
-            "gravity": gravity,
+            "gravity": gravity?.rawValue,
             "quality": quality,
             "borderWidth": borderWidth,
             "borderColor": borderColor,
@@ -314,7 +314,7 @@ open class Storage: Service {
             "opacity": opacity,
             "rotation": rotation,
             "background": background,
-            "output": output,
+            "output": output?.rawValue,
             "token": token,
             "project": client.config["project"]
         ]

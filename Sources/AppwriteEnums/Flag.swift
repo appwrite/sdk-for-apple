@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Flag: String, CustomStringConvertible {
+public enum Flag: String, Codable, CustomStringConvertible {
     case afghanistan = "af"
     case angola = "ao"
     case albania = "al"

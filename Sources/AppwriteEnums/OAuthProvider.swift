@@ -1,6 +1,6 @@
 import Foundation
 
-public enum OAuthProvider: String, CustomStringConvertible {
+public enum OAuthProvider: String, Codable, CustomStringConvertible {
     case amazon = "amazon"
     case apple = "apple"
     case auth0 = "auth0"
@@ -16,9 +16,12 @@ public enum OAuthProvider: String, CustomStringConvertible {
     case etsy = "etsy"
     case facebook = "facebook"
     case figma = "figma"
+    case fusionauth = "fusionauth"
     case github = "github"
     case gitlab = "gitlab"
     case google = "google"
+    case keycloak = "keycloak"
+    case kick = "kick"
     case linkedin = "linkedin"
     case microsoft = "microsoft"
     case notion = "notion"

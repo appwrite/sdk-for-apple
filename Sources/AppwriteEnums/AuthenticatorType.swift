@@ -1,6 +1,6 @@
 import Foundation
 
-public enum AuthenticatorType: String, CustomStringConvertible {
+public enum AuthenticatorType: String, Codable, CustomStringConvertible {
     case totp = "totp"
 
     public var description: String {

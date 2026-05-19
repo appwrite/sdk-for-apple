@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ImageFormat: String, CustomStringConvertible {
+public enum ImageFormat: String, Codable, CustomStringConvertible {
     case jpg = "jpg"
     case jpeg = "jpeg"
     case png = "png"

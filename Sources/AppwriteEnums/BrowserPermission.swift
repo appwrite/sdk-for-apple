@@ -1,6 +1,6 @@
 import Foundation
 
-public enum BrowserPermission: String, CustomStringConvertible {
+public enum BrowserPermission: String, Codable, CustomStringConvertible {
     case geolocation = "geolocation"
     case camera = "camera"
     case microphone = "microphone"

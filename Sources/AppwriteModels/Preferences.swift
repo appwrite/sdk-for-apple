@@ -5,7 +5,7 @@ import JSONCodable
 open class Preferences<T : Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
-        case data
+        case data = "data"
     }
 
     /// Additional properties
@@ -31,7 +31,7 @@ open class Preferences<T : Codable>: Codable {
 
     public func toMap() -> [String: Any] {
         return [
-            "data": try! JSONEncoder().encode(data)
+            "data": (try! JSONSerialization.jsonObject(with: JSONEncoder().encode(data))) as? [String: Any] ?? [:]
         ]
     }
 
