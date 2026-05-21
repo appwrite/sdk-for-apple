@@ -16,6 +16,7 @@ open class Client {
 
     // MARK: Properties
     public static var chunkSize = 5 * 1024 * 1024 // 5MB
+    public static var maxConcurrentUploads = 8
 
     open var endPoint = "https://cloud.appwrite.io/v1"
 
@@ -575,6 +576,8 @@ open class Client {
         var nextChunk = offset / Client.chunkSize
         var completedChunks = nextChunk
         var uploadedBytes = min(offset, size)
+        var completedResponse: [String: Any]? = nil
+        var lastChunkResponse: [String: Any]? = nil
         let baseParams = params
         let baseHeaders = headers
 
@@ -590,7 +593,9 @@ open class Client {
         func uploadChunk(index: Int, uploadId: String?) async throws -> (Int, Int, [String: Any]) {
             let chunkOffset = index * Client.chunkSize
             let chunkLength = min(Client.chunkSize, size - chunkOffset)
-            let slice = (input.data as! ByteBuffer).getSlice(at: chunkOffset, length: chunkLength)!
+            guard let slice = (input.data as! ByteBuffer).getSlice(at: chunkOffset, length: chunkLength) else {
+                throw AppwriteError(message: "Failed to read upload chunk")
+            }
             var chunkParams = baseParams
             var chunkHeaders = baseHeaders
             chunkParams[paramName] = InputFile.fromBuffer(slice, filename: input.filename, mimeType: input.mimeType)
@@ -626,7 +631,7 @@ open class Client {
             ))
         }
 
-        let maxConcurrency = 8
+        let maxConcurrency = Client.maxConcurrentUploads
 
         try await withThrowingTaskGroup(of: (Int, Int, [String: Any]).self) { group in
             var inFlight = 0
@@ -643,8 +648,9 @@ open class Client {
                 inFlight -= 1
                 completedChunks += 1
                 uploadedBytes += chunk.1
+                lastChunkResponse = chunk.2
                 if isUploadComplete(chunk.2) {
-                    result = chunk.2
+                    completedResponse = chunk.2
                 }
 
                 onProgress?(UploadProgress(
@@ -664,6 +670,8 @@ open class Client {
                 }
             }
         }
+
+        result = completedResponse ?? lastChunkResponse ?? result
 
         return try converter!(result)
     }
