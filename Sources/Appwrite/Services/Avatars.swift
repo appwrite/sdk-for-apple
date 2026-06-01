@@ -308,7 +308,7 @@ open class Avatars: Service {
     ///   - viewportWidth: Int (optional)
     ///   - viewportHeight: Int (optional)
     ///   - scale: Double (optional)
-    ///   - theme: AppwriteEnums.Theme (optional)
+    ///   - theme: AppwriteEnums.BrowserTheme (optional)
     ///   - userAgent: String (optional)
     ///   - fullpage: Bool (optional)
     ///   - locale: String (optional)
@@ -332,7 +332,7 @@ open class Avatars: Service {
         viewportWidth: Int? = nil,
         viewportHeight: Int? = nil,
         scale: Double? = nil,
-        theme: AppwriteEnums.Theme? = nil,
+        theme: AppwriteEnums.BrowserTheme? = nil,
         userAgent: String? = nil,
         fullpage: Bool? = nil,
         locale: String? = nil,
