@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// Presences List
-open class PresenceList<T : Codable>: Codable {
+open class PresenceList: Codable {
 
     enum CodingKeys: String, CodingKey {
         case total = "total"
@@ -12,11 +12,11 @@ open class PresenceList<T : Codable>: Codable {
     /// Total number of presences that matched your query.
     public let total: Int
     /// List of presences.
-    public let presences: [Presence<T>]
+    public let presences: [Presence]
 
     init(
         total: Int,
-        presences: [Presence<T>]
+        presences: [Presence]
     ) {
         self.total = total
         self.presences = presences
@@ -26,7 +26,7 @@ open class PresenceList<T : Codable>: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.total = try container.decode(Int.self, forKey: .total)
-        self.presences = try container.decode([Presence<T>].self, forKey: .presences)
+        self.presences = try container.decode([Presence].self, forKey: .presences)
     }
 
     public func encode(to encoder: Encoder) throws {

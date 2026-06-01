@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// Presence
-open class Presence<T : Codable>: Codable {
+open class Presence: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id = "$id"
@@ -32,8 +32,8 @@ open class Presence<T : Codable>: Codable {
     public let source: String
     /// Presence expiry date in ISO 8601 format.
     public let expiresAt: String?
-    /// Additional properties
-    public let metadata: T
+    /// Presence metadata.
+    public let metadata: [String: AnyCodable]?
 
     init(
         id: String,
@@ -44,7 +44,7 @@ open class Presence<T : Codable>: Codable {
         status: String?,
         source: String,
         expiresAt: String?,
-        metadata: T
+        metadata: [String: AnyCodable]?
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -68,7 +68,7 @@ open class Presence<T : Codable>: Codable {
         self.status = try container.decodeIfPresent(String.self, forKey: .status)
         self.source = try container.decode(String.self, forKey: .source)
         self.expiresAt = try container.decodeIfPresent(String.self, forKey: .expiresAt)
-        self.metadata = try container.decode(T.self, forKey: .metadata)
+        self.metadata = try container.decodeIfPresent([String: AnyCodable].self, forKey: .metadata)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -82,7 +82,7 @@ open class Presence<T : Codable>: Codable {
         try container.encodeIfPresent(status, forKey: .status)
         try container.encode(source, forKey: .source)
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
-        try container.encode(metadata, forKey: .metadata)
+        try container.encodeIfPresent(metadata, forKey: .metadata)
     }
 
     public func toMap() -> [String: Any] {
@@ -95,7 +95,7 @@ open class Presence<T : Codable>: Codable {
             "status": status as Any,
             "source": source as Any,
             "expiresAt": expiresAt as Any,
-            "metadata": (try! JSONSerialization.jsonObject(with: JSONEncoder().encode(metadata))) as? [String: Any] ?? [:]
+            "metadata": metadata as Any
         ]
     }
 
@@ -109,16 +109,7 @@ open class Presence<T : Codable>: Codable {
             status: map["status"] as? String,
             source: map["source"] as! String,
             expiresAt: map["expiresAt"] as? String,
-            metadata: try! JSONDecoder().decode(T.self, from: {
-                let raw = map["metadata"]
-                if let dict = raw as? [String: Any] {
-                    return try! JSONSerialization.data(withJSONObject: dict, options: [])
-                } else if let raw = raw, JSONSerialization.isValidJSONObject(raw) {
-                    return try! JSONSerialization.data(withJSONObject: raw, options: [])
-                } else {
-                    return try! JSONSerialization.data(withJSONObject: [:] as [String: Any], options: [])
-                }
-            }())
+            metadata: (map["metadata"] as? [String: Any] ?? [:]).mapValues { AnyCodable($0) }
         )
     }
 }
