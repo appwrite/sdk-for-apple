@@ -18,6 +18,7 @@ open class Membership: Codable {
         case joined = "joined"
         case confirm = "confirm"
         case mfa = "mfa"
+        case userAccessedAt = "userAccessedAt"
         case roles = "roles"
     }
 
@@ -47,6 +48,8 @@ open class Membership: Codable {
     public let confirm: Bool
     /// Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
     public let mfa: Bool
+    /// Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
+    public let userAccessedAt: String
     /// User list of roles
     public let roles: [String]
 
@@ -64,6 +67,7 @@ open class Membership: Codable {
         joined: String,
         confirm: Bool,
         mfa: Bool,
+        userAccessedAt: String,
         roles: [String]
     ) {
         self.id = id
@@ -79,6 +83,7 @@ open class Membership: Codable {
         self.joined = joined
         self.confirm = confirm
         self.mfa = mfa
+        self.userAccessedAt = userAccessedAt
         self.roles = roles
     }
 
@@ -98,6 +103,7 @@ open class Membership: Codable {
         self.joined = try container.decode(String.self, forKey: .joined)
         self.confirm = try container.decode(Bool.self, forKey: .confirm)
         self.mfa = try container.decode(Bool.self, forKey: .mfa)
+        self.userAccessedAt = try container.decode(String.self, forKey: .userAccessedAt)
         self.roles = try container.decode([String].self, forKey: .roles)
     }
 
@@ -117,6 +123,7 @@ open class Membership: Codable {
         try container.encode(joined, forKey: .joined)
         try container.encode(confirm, forKey: .confirm)
         try container.encode(mfa, forKey: .mfa)
+        try container.encode(userAccessedAt, forKey: .userAccessedAt)
         try container.encode(roles, forKey: .roles)
     }
 
@@ -135,6 +142,7 @@ open class Membership: Codable {
             "joined": joined as Any,
             "confirm": confirm as Any,
             "mfa": mfa as Any,
+            "userAccessedAt": userAccessedAt as Any,
             "roles": roles as Any
         ]
     }
@@ -154,6 +162,7 @@ open class Membership: Codable {
             joined: map["joined"] as! String,
             confirm: map["confirm"] as! Bool,
             mfa: map["mfa"] as! Bool,
+            userAccessedAt: map["userAccessedAt"] as! String,
             roles: map["roles"] as! [String]
         )
     }

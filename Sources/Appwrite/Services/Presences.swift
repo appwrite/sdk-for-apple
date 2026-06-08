@@ -32,7 +32,10 @@ open class Presences: Service {
             "ttl": ttl
         ]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.PresenceList = { response in
             return AppwriteModels.PresenceList.from(map: response as! [String: Any])
@@ -65,7 +68,10 @@ open class Presences: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.Presence = { response in
             return AppwriteModels.Presence.from(map: response as! [String: Any])
@@ -111,7 +117,9 @@ open class Presences: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Presence = { response in
@@ -162,7 +170,9 @@ open class Presences: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Presence = { response in
@@ -196,6 +206,7 @@ open class Presences: Service {
         let apiParams: [String: Any] = [:]
 
         let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json"
         ]
 

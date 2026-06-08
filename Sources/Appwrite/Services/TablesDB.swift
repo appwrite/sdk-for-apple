@@ -25,7 +25,10 @@ open class TablesDB: Service {
             "queries": queries
         ]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.TransactionList = { response in
             return AppwriteModels.TransactionList.from(map: response as! [String: Any])
@@ -58,7 +61,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -90,7 +95,10 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
             return AppwriteModels.Transaction.from(map: response as! [String: Any])
@@ -129,7 +137,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -162,6 +172,7 @@ open class TablesDB: Service {
         let apiParams: [String: Any] = [:]
 
         let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json"
         ]
 
@@ -193,7 +204,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -243,7 +256,10 @@ open class TablesDB: Service {
             "ttl": ttl
         ]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.RowList<T> = { response in
             return AppwriteModels.RowList.from(map: response as! [String: Any])
@@ -328,7 +344,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -410,7 +428,10 @@ open class TablesDB: Service {
             "transactionId": transactionId
         ]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
             return AppwriteModels.Row.from(map: response as! [String: Any])
@@ -492,7 +513,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -578,7 +601,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -654,6 +679,7 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json"
         ]
 
@@ -701,7 +727,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -789,7 +817,9 @@ open class TablesDB: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in

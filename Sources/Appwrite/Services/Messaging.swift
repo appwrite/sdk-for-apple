@@ -32,7 +32,9 @@ open class Messaging: Service {
         ]
 
         let apiHeaders: [String: String] = [
-            "content-type": "application/json"
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json"
         ]
 
         let converter: (Any) throws -> AppwriteModels.Subscriber = { response in
@@ -68,6 +70,7 @@ open class Messaging: Service {
         let apiParams: [String: Any] = [:]
 
         let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json"
         ]
 

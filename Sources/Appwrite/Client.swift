@@ -27,7 +27,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "18.0.0",
+        "x-sdk-version": "18.1.0",
         "x-appwrite-response-format": "1.9.5"
     ]
 
@@ -108,7 +108,6 @@ open class Client {
     ///
     open func setProject(_ value: String) -> Client {
         config["project"] = value
-        _ = addHeader(key: "X-Appwrite-Project", value: value)
         return self
     }
 
@@ -384,7 +383,8 @@ open class Client {
        let apiPath: String = "/ping"
 
        let apiHeaders: [String: String] = [
-           "content-type": "application/json"
+           "content-type": "application/json",
+           "X-Appwrite-Project": config["project"] ?? ""
        ]
 
        return try await call(
@@ -415,7 +415,7 @@ open class Client {
         let validParams = params.filter { $0.value != nil }
 
         let queryParameters = method == "GET" && !validParams.isEmpty
-            ? "?" + parametersToQueryString(params: validParams)
+            ? (path.contains("?") ? "&" : "?") + parametersToQueryString(params: validParams)
             : ""
 
         var request = HTTPClientRequest(url: endPoint + path + queryParameters)
