@@ -19,6 +19,11 @@ open class User<T : Codable>: Codable {
         case email = "email"
         case phone = "phone"
         case emailVerification = "emailVerification"
+        case emailCanonical = "emailCanonical"
+        case emailIsFree = "emailIsFree"
+        case emailIsDisposable = "emailIsDisposable"
+        case emailIsCorporate = "emailIsCorporate"
+        case emailIsCanonical = "emailIsCanonical"
         case phoneVerification = "phoneVerification"
         case mfa = "mfa"
         case prefs = "prefs"
@@ -56,6 +61,16 @@ open class User<T : Codable>: Codable {
     public let phone: String
     /// Email verification status.
     public let emailVerification: Bool
+    /// Canonical form of the user email address.
+    public let emailCanonical: String?
+    /// Whether the user email is from a free email provider.
+    public let emailIsFree: Bool?
+    /// Whether the user email is from a disposable email provider.
+    public let emailIsDisposable: Bool?
+    /// Whether the user email is from a corporate domain.
+    public let emailIsCorporate: Bool?
+    /// Whether the user email is in its canonical form.
+    public let emailIsCanonical: Bool?
     /// Phone verification status.
     public let phoneVerification: Bool
     /// Multi factor authentication status.
@@ -86,6 +101,11 @@ open class User<T : Codable>: Codable {
         email: String,
         phone: String,
         emailVerification: Bool,
+        emailCanonical: String?,
+        emailIsFree: Bool?,
+        emailIsDisposable: Bool?,
+        emailIsCorporate: Bool?,
+        emailIsCanonical: Bool?,
         phoneVerification: Bool,
         mfa: Bool,
         prefs: Preferences<T>,
@@ -108,6 +128,11 @@ open class User<T : Codable>: Codable {
         self.email = email
         self.phone = phone
         self.emailVerification = emailVerification
+        self.emailCanonical = emailCanonical
+        self.emailIsFree = emailIsFree
+        self.emailIsDisposable = emailIsDisposable
+        self.emailIsCorporate = emailIsCorporate
+        self.emailIsCanonical = emailIsCanonical
         self.phoneVerification = phoneVerification
         self.mfa = mfa
         self.prefs = prefs
@@ -134,6 +159,11 @@ open class User<T : Codable>: Codable {
         self.email = try container.decode(String.self, forKey: .email)
         self.phone = try container.decode(String.self, forKey: .phone)
         self.emailVerification = try container.decode(Bool.self, forKey: .emailVerification)
+        self.emailCanonical = try container.decodeIfPresent(String.self, forKey: .emailCanonical)
+        self.emailIsFree = try container.decodeIfPresent(Bool.self, forKey: .emailIsFree)
+        self.emailIsDisposable = try container.decodeIfPresent(Bool.self, forKey: .emailIsDisposable)
+        self.emailIsCorporate = try container.decodeIfPresent(Bool.self, forKey: .emailIsCorporate)
+        self.emailIsCanonical = try container.decodeIfPresent(Bool.self, forKey: .emailIsCanonical)
         self.phoneVerification = try container.decode(Bool.self, forKey: .phoneVerification)
         self.mfa = try container.decode(Bool.self, forKey: .mfa)
         self.prefs = try container.decode(Preferences<T>.self, forKey: .prefs)
@@ -160,6 +190,11 @@ open class User<T : Codable>: Codable {
         try container.encode(email, forKey: .email)
         try container.encode(phone, forKey: .phone)
         try container.encode(emailVerification, forKey: .emailVerification)
+        try container.encodeIfPresent(emailCanonical, forKey: .emailCanonical)
+        try container.encodeIfPresent(emailIsFree, forKey: .emailIsFree)
+        try container.encodeIfPresent(emailIsDisposable, forKey: .emailIsDisposable)
+        try container.encodeIfPresent(emailIsCorporate, forKey: .emailIsCorporate)
+        try container.encodeIfPresent(emailIsCanonical, forKey: .emailIsCanonical)
         try container.encode(phoneVerification, forKey: .phoneVerification)
         try container.encode(mfa, forKey: .mfa)
         try container.encode(prefs, forKey: .prefs)
@@ -185,6 +220,11 @@ open class User<T : Codable>: Codable {
             "email": email as Any,
             "phone": phone as Any,
             "emailVerification": emailVerification as Any,
+            "emailCanonical": emailCanonical as Any,
+            "emailIsFree": emailIsFree as Any,
+            "emailIsDisposable": emailIsDisposable as Any,
+            "emailIsCorporate": emailIsCorporate as Any,
+            "emailIsCanonical": emailIsCanonical as Any,
             "phoneVerification": phoneVerification as Any,
             "mfa": mfa as Any,
             "prefs": prefs.toMap() as Any,
@@ -211,6 +251,11 @@ open class User<T : Codable>: Codable {
             email: map["email"] as! String,
             phone: map["phone"] as! String,
             emailVerification: map["emailVerification"] as! Bool,
+            emailCanonical: map["emailCanonical"] as? String,
+            emailIsFree: map["emailIsFree"] as? Bool,
+            emailIsDisposable: map["emailIsDisposable"] as? Bool,
+            emailIsCorporate: map["emailIsCorporate"] as? Bool,
+            emailIsCanonical: map["emailIsCanonical"] as? Bool,
             phoneVerification: map["phoneVerification"] as! Bool,
             mfa: map["mfa"] as! Bool,
             prefs: Preferences.from(map: map["prefs"] as! [String: Any]),

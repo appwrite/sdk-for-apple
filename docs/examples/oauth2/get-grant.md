@@ -5,11 +5,11 @@ let client = Client()
     .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
     .setProject("<YOUR_PROJECT_ID>") // Your project ID
 
-let account = Account(client)
+let oauth2 = Oauth2(client)
 
-let user = try await account.updatePassword(
-    password: "",
-    oldPassword: "<OLD_PASSWORD>" // optional
+let oauth2Grant = try await oauth2.getGrant(
+    project_id: "<PROJECT_ID>",
+    grant_id: "<GRANT_ID>"
 )
 
 ```

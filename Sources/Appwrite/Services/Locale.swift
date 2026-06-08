@@ -25,7 +25,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.Locale = { response in
             return AppwriteModels.Locale.from(map: response as! [String: Any])
@@ -53,7 +56,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.LocaleCodeList = { response in
             return AppwriteModels.LocaleCodeList.from(map: response as! [String: Any])
@@ -81,7 +87,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.ContinentList = { response in
             return AppwriteModels.ContinentList.from(map: response as! [String: Any])
@@ -109,7 +118,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.CountryList = { response in
             return AppwriteModels.CountryList.from(map: response as! [String: Any])
@@ -137,7 +149,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.CountryList = { response in
             return AppwriteModels.CountryList.from(map: response as! [String: Any])
@@ -165,7 +180,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.PhoneList = { response in
             return AppwriteModels.PhoneList.from(map: response as! [String: Any])
@@ -194,7 +212,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.CurrencyList = { response in
             return AppwriteModels.CurrencyList.from(map: response as! [String: Any])
@@ -222,7 +243,10 @@ open class Locale: Service {
 
         let apiParams: [String: Any] = [:]
 
-        let apiHeaders: [String: String] = [:]
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json"
+        ]
 
         let converter: (Any) throws -> AppwriteModels.LanguageList = { response in
             return AppwriteModels.LanguageList.from(map: response as! [String: Any])
