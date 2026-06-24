@@ -259,7 +259,8 @@ open class Storage: Service {
 
         let apiParams: [String: Any?] = [
             "token": token,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -327,7 +328,8 @@ open class Storage: Service {
             "background": background,
             "output": output?.rawValue,
             "token": token,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -360,7 +362,8 @@ open class Storage: Service {
 
         let apiParams: [String: Any?] = [
             "token": token,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(

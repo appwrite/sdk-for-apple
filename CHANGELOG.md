@@ -1,5 +1,11 @@
 # Change Log
 
+## 18.2.0
+
+* Added: Realtime connections now send an `x-appwrite-jwt` header for authentication.
+* Added: Forwarded `impersonateUserId` on `avatars` and `storage` file requests.
+* Fixed: URL-encode path parameters in `databases` requests.
+
 ## 18.1.0
 
 * Added: Email metadata fields to `User` (`emailCanonical`, `emailIsFree`, `emailIsDisposable`, `emailIsCorporate`, `emailIsCanonical`).

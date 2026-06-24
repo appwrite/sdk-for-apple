@@ -8,8 +8,8 @@ let client = Client()
 let account = Account(client)
 
 let user = try await account.updatePassword(
-    password: "",
-    oldPassword: "<OLD_PASSWORD>" // optional
+    password: "password",
+    oldPassword: "password" // optional
 )
 
 ```
