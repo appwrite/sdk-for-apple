@@ -41,7 +41,8 @@ open class Avatars: Service {
             "width": width,
             "height": height,
             "quality": quality,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -83,7 +84,8 @@ open class Avatars: Service {
             "width": width,
             "height": height,
             "quality": quality,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -111,7 +113,8 @@ open class Avatars: Service {
 
         let apiParams: [String: Any?] = [
             "url": url,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -154,7 +157,8 @@ open class Avatars: Service {
             "width": width,
             "height": height,
             "quality": quality,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -195,7 +199,8 @@ open class Avatars: Service {
             "url": url,
             "width": width,
             "height": height,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -244,7 +249,8 @@ open class Avatars: Service {
             "width": width,
             "height": height,
             "background": background,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -280,7 +286,8 @@ open class Avatars: Service {
             "size": size,
             "margin": margin,
             "download": download,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(
@@ -371,7 +378,8 @@ open class Avatars: Service {
             "height": height,
             "quality": quality,
             "output": output?.rawValue,
-            "project": client.config["project"]
+            "project": client.config["project"],
+            "impersonateuserid": client.config["impersonateuserid"]
         ]
 
         return try await client.call(

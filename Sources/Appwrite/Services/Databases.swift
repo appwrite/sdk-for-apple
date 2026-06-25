@@ -16,6 +16,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.TransactionList
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.listTransactions` instead.")
     open func listTransactions(
         queries: [String]? = nil
     ) async throws -> AppwriteModels.TransactionList {
@@ -51,6 +52,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Transaction
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.createTransaction` instead.")
     open func createTransaction(
         ttl: Int? = nil
     ) async throws -> AppwriteModels.Transaction {
@@ -87,6 +89,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Transaction
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.getTransaction` instead.")
     open func getTransaction(
         transactionId: String
     ) async throws -> AppwriteModels.Transaction {
@@ -123,6 +126,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Transaction
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.updateTransaction` instead.")
     open func updateTransaction(
         transactionId: String,
         commit: Bool? = nil,
@@ -163,6 +167,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.deleteTransaction` instead.")
     open func deleteTransaction(
         transactionId: String
     ) async throws -> Any {
@@ -192,6 +197,7 @@ open class Databases: Service {
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Transaction
     ///
+    @available(*, deprecated, message: "This API has been deprecated since 1.8.0. Please use `TablesDB.createOperations` instead.")
     open func createOperations(
         transactionId: String,
         operations: [Any]? = nil
