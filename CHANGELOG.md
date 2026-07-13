@@ -1,5 +1,13 @@
 # Change Log
 
+## 18.3.0
+
+* Added: `Client.setBearer` method for OAuth bearer token authentication
+* Added: `Query.vectorDot`, `Query.vectorCosine`, `Query.vectorEuclidean` vector similarity query methods
+* Added: `appwrite` case to `OAuthProvider` enum
+* Added: optional `Locale` fields: `city`, `timeZone`, `postalCode`, `latitude`, `longitude`, ASN, ISP, connection info
+* Updated: minimum toolchain to Swift 6.1; bumped `async-http-client` and `swift-nio` dependencies
+
 ## 18.2.0
 
 * Added: Realtime connections now send an `x-appwrite-jwt` header for authentication.

@@ -39,7 +39,7 @@ open class Log: Codable {
     public let userName: String
     /// API mode when event triggered.
     public let mode: String
-    /// User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+    /// User type who triggered the audit log. Possible values: user, admin, guest, hidden, keyProject, keyAccount, keyOrganization.
     public let userType: String
     /// IP session in use when the session was created.
     public let ip: String
