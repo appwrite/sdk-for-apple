@@ -27,7 +27,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "18.2.0",
+        "x-sdk-version": "18.3.0",
         "x-appwrite-response-format": "1.9.5"
     ]
 
@@ -123,6 +123,21 @@ open class Client {
     open func setJWT(_ value: String) -> Client {
         config["jwt"] = value
         _ = addHeader(key: "X-Appwrite-JWT", value: value)
+        return self
+    }
+
+    ///
+    /// Set Bearer
+    ///
+    /// The OAuth access token to authenticate with
+    ///
+    /// @param String value
+    ///
+    /// @return Client
+    ///
+    open func setBearer(_ value: String) -> Client {
+        config["bearer"] = value
+        _ = addHeader(key: "Authorization", value: "Bearer \(value)")
         return self
     }
 

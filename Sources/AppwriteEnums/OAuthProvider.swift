@@ -3,6 +3,7 @@ import Foundation
 public enum OAuthProvider: String, Codable, CustomStringConvertible {
     case amazon = "amazon"
     case apple = "apple"
+    case appwrite = "appwrite"
     case auth0 = "auth0"
     case authentik = "authentik"
     case autodesk = "autodesk"
