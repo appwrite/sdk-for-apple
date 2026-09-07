@@ -13,10 +13,10 @@ let document = try await vectorsDB.createDocument(
     documentId: "<DOCUMENT_ID>",
     data: [
         "embeddings": [
-            "0": 0.12,
-            "1": -0.55,
-            "2": 0.88,
-            "3": 1.02
+            0.12,
+            -0.55,
+            0.88,
+            1.02
         ],
         "metadata": [
             "key": "value"

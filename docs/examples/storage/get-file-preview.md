@@ -13,7 +13,7 @@ let bytes = try await storage.getFilePreview(
     fileId: "<FILE_ID>",
     width: 0, // optional
     height: 0, // optional
-    gravity: .center, // optional
+    gravity: .auto, // optional
     quality: -1, // optional
     borderWidth: 0, // optional
     borderColor: "FFFFFF", // optional

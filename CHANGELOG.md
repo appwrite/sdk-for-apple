@@ -14,9 +14,11 @@
 * Added: `AppInstallation`, `Oauth2Consent`, `Oauth2ConsentToken` models and list variants
 * Added: `ExecutionResourceType` enum, `AuthenticationFactor.custom` and `MfaFactors.custom`
 * Added: `cloudflare`, `huggingface`, `resend` cases to `OAuthProvider`
+* Added: `auto` case to `ImageGravity` enum
 * Updated: binary endpoints send `X-Appwrite-Project` header instead of `project` query parameter
 * Updated: `async-http-client` to 1.36.1 and `swift-nio` to 2.102.0
 * Fixed: README install snippet now uses product name `Appwrite`
+* Fixed: object array parameters such as `createOperations` are sent as JSON arrays, not strings
 
 ## 18.3.0
 

@@ -1,6 +1,7 @@
 import Foundation
 
 public enum ImageGravity: String, Codable, CustomStringConvertible {
+    case auto = "auto"
     case center = "center"
     case topLeft = "top-left"
     case top = "top"
