@@ -255,11 +255,11 @@ open class Session: Codable {
             "current": current as Any,
             "factors": factors as Any,
             "secret": secret as Any,
-            "mfaUpdatedAt": mfaUpdatedAt as Any
+            "mfaUpdatedAt": mfaUpdatedAt as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Session {
+    public static func from(map: [String: Any]) -> Session {
         return Session(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

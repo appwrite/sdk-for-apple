@@ -35,7 +35,7 @@ open class Jwt: Codable {
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Jwt {
+    public static func from(map: [String: Any]) -> Jwt {
         return Jwt(
             jwt: map["jwt"] as! String
         )

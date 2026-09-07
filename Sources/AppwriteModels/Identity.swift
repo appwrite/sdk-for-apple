@@ -103,11 +103,11 @@ open class Identity: Codable {
             "providerEmail": providerEmail as Any,
             "providerAccessToken": providerAccessToken as Any,
             "providerAccessTokenExpiry": providerAccessTokenExpiry as Any,
-            "providerRefreshToken": providerRefreshToken as Any
+            "providerRefreshToken": providerRefreshToken as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Identity {
+    public static func from(map: [String: Any]) -> Identity {
         return Identity(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

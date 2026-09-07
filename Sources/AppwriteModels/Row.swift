@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// Row
-open class Row<T : Codable>: Codable {
+open class Row<T: Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id = "$id"
@@ -87,11 +87,11 @@ open class Row<T : Codable>: Codable {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
-            "data": (try! JSONSerialization.jsonObject(with: JSONEncoder().encode(data))) as? [String: Any] ?? [:]
+            "data": (try! JSONSerialization.jsonObject(with: JSONEncoder().encode(data))) as? [String: Any] ?? [:],
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Row {
+    public static func from(map: [String: Any]) -> Row {
         return Row(
             id: map["$id"] as! String,
             sequence: map["$sequence"] as! String,

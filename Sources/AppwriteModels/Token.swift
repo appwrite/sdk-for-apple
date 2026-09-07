@@ -71,11 +71,11 @@ open class Token: Codable {
             "userId": userId as Any,
             "secret": secret as Any,
             "expire": expire as Any,
-            "phrase": phrase as Any
+            "phrase": phrase as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Token {
+    public static func from(map: [String: Any]) -> Token {
         return Token(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

@@ -11,6 +11,8 @@ open class File: Codable {
         case updatedAt = "$updatedAt"
         case permissions = "$permissions"
         case name = "name"
+        case folder = "folder"
+        case key = "key"
         case signature = "signature"
         case mimeType = "mimeType"
         case sizeOriginal = "sizeOriginal"
@@ -33,6 +35,10 @@ open class File: Codable {
     public let permissions: [String]
     /// File name.
     public let name: String
+    /// Virtual folder containing the file, with a trailing slash. Empty for the bucket root.
+    public let folder: String
+    /// Full virtual path of the file: the folder followed by the file name.
+    public let key: String
     /// File MD5 signature.
     public let signature: String
     /// File mime type.
@@ -57,6 +63,8 @@ open class File: Codable {
         updatedAt: String,
         permissions: [String],
         name: String,
+        folder: String,
+        key: String,
         signature: String,
         mimeType: String,
         sizeOriginal: Int,
@@ -72,6 +80,8 @@ open class File: Codable {
         self.updatedAt = updatedAt
         self.permissions = permissions
         self.name = name
+        self.folder = folder
+        self.key = key
         self.signature = signature
         self.mimeType = mimeType
         self.sizeOriginal = sizeOriginal
@@ -91,6 +101,8 @@ open class File: Codable {
         self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
         self.permissions = try container.decode([String].self, forKey: .permissions)
         self.name = try container.decode(String.self, forKey: .name)
+        self.folder = try container.decode(String.self, forKey: .folder)
+        self.key = try container.decode(String.self, forKey: .key)
         self.signature = try container.decode(String.self, forKey: .signature)
         self.mimeType = try container.decode(String.self, forKey: .mimeType)
         self.sizeOriginal = try container.decode(Int.self, forKey: .sizeOriginal)
@@ -110,6 +122,8 @@ open class File: Codable {
         try container.encode(updatedAt, forKey: .updatedAt)
         try container.encode(permissions, forKey: .permissions)
         try container.encode(name, forKey: .name)
+        try container.encode(folder, forKey: .folder)
+        try container.encode(key, forKey: .key)
         try container.encode(signature, forKey: .signature)
         try container.encode(mimeType, forKey: .mimeType)
         try container.encode(sizeOriginal, forKey: .sizeOriginal)
@@ -128,6 +142,8 @@ open class File: Codable {
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
             "name": name as Any,
+            "folder": folder as Any,
+            "key": key as Any,
             "signature": signature as Any,
             "mimeType": mimeType as Any,
             "sizeOriginal": sizeOriginal as Any,
@@ -135,11 +151,11 @@ open class File: Codable {
             "chunksTotal": chunksTotal as Any,
             "chunksUploaded": chunksUploaded as Any,
             "encryption": encryption as Any,
-            "compression": compression as Any
+            "compression": compression as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> File {
+    public static func from(map: [String: Any]) -> File {
         return File(
             id: map["$id"] as! String,
             bucketId: map["bucketId"] as! String,
@@ -147,6 +163,8 @@ open class File: Codable {
             updatedAt: map["$updatedAt"] as! String,
             permissions: map["$permissions"] as! [String],
             name: map["name"] as! String,
+            folder: map["folder"] as! String,
+            key: map["key"] as! String,
             signature: map["signature"] as! String,
             mimeType: map["mimeType"] as! String,
             sizeOriginal: map["sizeOriginal"] as! Int,

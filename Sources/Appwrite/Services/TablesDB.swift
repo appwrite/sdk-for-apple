@@ -1,11 +1,11 @@
-import AsyncHTTPClient
-import Foundation
-import NIO
-import JSONCodable
 import AppwriteEnums
 import AppwriteModels
+import AsyncHTTPClient
+import Foundation
+import JSONCodable
+import NIO
 
-/// 
+/// The TablesDB service allows you to create structured tables of columns, query and filter lists of rows
 open class TablesDB: Service {
 
     ///
@@ -27,7 +27,7 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.TransactionList = { response in
@@ -42,7 +42,6 @@ open class TablesDB: Service {
             converter: converter
         )
     }
-
     ///
     /// Create a new transaction.
     ///
@@ -63,7 +62,7 @@ open class TablesDB: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -78,7 +77,6 @@ open class TablesDB: Service {
             converter: converter
         )
     }
-
     ///
     /// Get a transaction by its unique ID.
     ///
@@ -97,7 +95,7 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -112,7 +110,6 @@ open class TablesDB: Service {
             converter: converter
         )
     }
-
     ///
     /// Update a transaction, to either commit or roll back its operations.
     ///
@@ -133,13 +130,13 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any?] = [
             "commit": commit,
-            "rollback": rollback
+            "rollback": rollback,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -154,7 +151,6 @@ open class TablesDB: Service {
             converter: converter
         )
     }
-
     ///
     /// Delete a transaction by its unique ID.
     ///
@@ -173,28 +169,28 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "content-type": "application/json"
+            "content-type": "application/json",
         ]
 
         return try await client.call(
             method: "DELETE",
             path: apiPath,
             headers: apiHeaders,
-            params: apiParams        )
+            params: apiParams
+        )
     }
-
     ///
     /// Create multiple operations in a single transaction.
     ///
     /// - Parameters:
     ///   - transactionId: String
-    ///   - operations: [Any] (optional)
+    ///   - operations: [AnyCodable] (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Transaction
     ///
     open func createOperations(
         transactionId: String,
-        operations: [Any]? = nil
+        operations: [AnyCodable]? = nil
     ) async throws -> AppwriteModels.Transaction {
         let apiPath: String = "/tablesdb/transactions/{transactionId}/operations"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
@@ -206,7 +202,7 @@ open class TablesDB: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Transaction = { response in
@@ -221,7 +217,6 @@ open class TablesDB: Service {
             converter: converter
         )
     }
-
     ///
     /// Get a list of all the user's rows in a given table. You can use the query
     /// params to filter your results.
@@ -253,12 +248,12 @@ open class TablesDB: Service {
             "queries": queries,
             "transactionId": transactionId,
             "total": total,
-            "ttl": ttl
+            "ttl": ttl,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.RowList<T> = { response in
@@ -306,7 +301,6 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
     ///
     /// Create a new Row. Before using this route, you should create a new table
     /// resource using either a [server
@@ -340,13 +334,13 @@ open class TablesDB: Service {
             "rowId": rowId,
             "data": data,
             "permissions": permissions,
-            "transactionId": transactionId
+            "transactionId": transactionId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -396,7 +390,6 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
     ///
     /// Get a row by its unique ID. This endpoint response returns a JSON object
     /// with the row data.
@@ -425,12 +418,12 @@ open class TablesDB: Service {
 
         let apiParams: [String: Any?] = [
             "queries": queries,
-            "transactionId": transactionId
+            "transactionId": transactionId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -475,7 +468,6 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
     ///
     /// Create or update a Row. Before using this route, you should create a new
     /// table resource using either a [server
@@ -509,13 +501,13 @@ open class TablesDB: Service {
         let apiParams: [String: Any?] = [
             "data": data,
             "permissions": permissions,
-            "transactionId": transactionId
+            "transactionId": transactionId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -565,7 +557,6 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
     ///
     /// Update a row by its unique ID. Using the patch method you can pass only
     /// specific fields that will get updated.
@@ -597,13 +588,13 @@ open class TablesDB: Service {
         let apiParams: [String: Any?] = [
             "data": data,
             "permissions": permissions,
-            "transactionId": transactionId
+            "transactionId": transactionId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -651,7 +642,6 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
     ///
     /// Delete a row by its unique ID.
     ///
@@ -680,16 +670,16 @@ open class TablesDB: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "content-type": "application/json"
+            "content-type": "application/json",
         ]
 
         return try await client.call(
             method: "DELETE",
             path: apiPath,
             headers: apiHeaders,
-            params: apiParams        )
+            params: apiParams
+        )
     }
-
     ///
     /// Decrement a specific column of a row by a given value.
     ///
@@ -723,13 +713,13 @@ open class TablesDB: Service {
         let apiParams: [String: Any?] = [
             "value": value,
             "min": min,
-            "transactionId": transactionId
+            "transactionId": transactionId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -779,7 +769,6 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
     ///
     /// Increment a specific column of a row by a given value.
     ///
@@ -813,13 +802,13 @@ open class TablesDB: Service {
         let apiParams: [String: Any?] = [
             "value": value,
             "max": max,
-            "transactionId": transactionId
+            "transactionId": transactionId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Row<T> = { response in
@@ -869,6 +858,4 @@ open class TablesDB: Service {
             nestedType: [String: AnyCodable].self
         )
     }
-
-
 }

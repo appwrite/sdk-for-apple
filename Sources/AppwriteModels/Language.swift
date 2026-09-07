@@ -47,11 +47,11 @@ open class Language: Codable {
         return [
             "name": name as Any,
             "code": code as Any,
-            "nativeName": nativeName as Any
+            "nativeName": nativeName as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Language {
+    public static func from(map: [String: Any]) -> Language {
         return Language(
             name: map["name"] as! String,
             code: map["code"] as! String,

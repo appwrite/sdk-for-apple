@@ -35,7 +35,7 @@ open class AlgoMd5: Codable {
         ]
     }
 
-    public static func from(map: [String: Any] ) -> AlgoMd5 {
+    public static func from(map: [String: Any]) -> AlgoMd5 {
         return AlgoMd5(
             type: map["type"] as! String
         )

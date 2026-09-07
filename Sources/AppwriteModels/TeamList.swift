@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// Teams List
-open class TeamList<T : Codable>: Codable {
+open class TeamList<T: Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
         case total = "total"
@@ -39,11 +39,11 @@ open class TeamList<T : Codable>: Codable {
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
-            "teams": teams.map { $0.toMap() } as Any
+            "teams": teams.map { $0.toMap() } as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> TeamList {
+    public static func from(map: [String: Any]) -> TeamList {
         return TeamList(
             total: map["total"] as! Int,
             teams: (map["teams"] as! [[String: Any]]).map { Team.from(map: $0) }

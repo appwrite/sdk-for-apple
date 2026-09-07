@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// Team
-open class Team<T : Codable>: Codable {
+open class Team<T: Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id = "$id"
@@ -71,11 +71,11 @@ open class Team<T : Codable>: Codable {
             "$updatedAt": updatedAt as Any,
             "name": name as Any,
             "total": total as Any,
-            "prefs": prefs.toMap() as Any
+            "prefs": prefs.toMap() as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Team {
+    public static func from(map: [String: Any]) -> Team {
         return Team(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

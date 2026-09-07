@@ -39,11 +39,11 @@ open class LocaleCodeList: Codable {
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
-            "localeCodes": localeCodes.map { $0.toMap() } as Any
+            "localeCodes": localeCodes.map { $0.toMap() } as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> LocaleCodeList {
+    public static func from(map: [String: Any]) -> LocaleCodeList {
         return LocaleCodeList(
             total: map["total"] as! Int,
             localeCodes: (map["localeCodes"] as! [[String: Any]]).map { LocaleCode.from(map: $0) }

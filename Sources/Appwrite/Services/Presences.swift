@@ -1,16 +1,15 @@
-import AsyncHTTPClient
-import Foundation
-import NIO
-import JSONCodable
 import AppwriteEnums
 import AppwriteModels
+import AsyncHTTPClient
+import Foundation
+import JSONCodable
+import NIO
 
-/// 
+/// The Presences service allows you to track and manage real-time user presence in your project.
 open class Presences: Service {
 
     ///
     /// List presence logs. Expired entries are filtered out automatically.
-    /// 
     ///
     /// - Parameters:
     ///   - queries: [String] (optional)
@@ -29,12 +28,12 @@ open class Presences: Service {
         let apiParams: [String: Any?] = [
             "queries": queries,
             "total": total,
-            "ttl": ttl
+            "ttl": ttl,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.PresenceList = { response in
@@ -49,11 +48,9 @@ open class Presences: Service {
             converter: converter
         )
     }
-
     ///
     /// Get a presence log by its unique ID. Entries whose `expiresAt` is in the
     /// past are treated as not found.
-    /// 
     ///
     /// - Parameters:
     ///   - presenceId: String
@@ -70,7 +67,7 @@ open class Presences: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Presence = { response in
@@ -85,10 +82,8 @@ open class Presences: Service {
             converter: converter
         )
     }
-
     ///
     /// Create or update a presence log by its user ID.
-    /// 
     ///
     /// - Parameters:
     ///   - presenceId: String
@@ -113,13 +108,13 @@ open class Presences: Service {
             "status": status,
             "permissions": permissions,
             "expiresAt": expiresAt,
-            "metadata": metadata
+            "metadata": metadata,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Presence = { response in
@@ -134,11 +129,9 @@ open class Presences: Service {
             converter: converter
         )
     }
-
     ///
     /// Update a presence log by its unique ID. Using the patch method you can pass
     /// only specific fields that will get updated.
-    /// 
     ///
     /// - Parameters:
     ///   - presenceId: String
@@ -166,13 +159,13 @@ open class Presences: Service {
             "expiresAt": expiresAt,
             "metadata": metadata,
             "permissions": permissions,
-            "purge": purge
+            "purge": purge,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Presence = { response in
@@ -187,10 +180,8 @@ open class Presences: Service {
             converter: converter
         )
     }
-
     ///
     /// Delete a presence log by its unique ID.
-    /// 
     ///
     /// - Parameters:
     ///   - presenceId: String
@@ -207,15 +198,14 @@ open class Presences: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "content-type": "application/json"
+            "content-type": "application/json",
         ]
 
         return try await client.call(
             method: "DELETE",
             path: apiPath,
             headers: apiHeaders,
-            params: apiParams        )
+            params: apiParams
+        )
     }
-
-
 }

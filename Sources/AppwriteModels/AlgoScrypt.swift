@@ -63,11 +63,11 @@ open class AlgoScrypt: Codable {
             "costCpu": costCpu as Any,
             "costMemory": costMemory as Any,
             "costParallel": costParallel as Any,
-            "length": length as Any
+            "length": length as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> AlgoScrypt {
+    public static func from(map: [String: Any]) -> AlgoScrypt {
         return AlgoScrypt(
             type: map["type"] as! String,
             costCpu: map["costCpu"] as! Int,

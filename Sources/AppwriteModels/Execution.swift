@@ -1,6 +1,6 @@
+import AppwriteEnums
 import Foundation
 import JSONCodable
-import AppwriteEnums
 
 /// Execution
 open class Execution: Codable {
@@ -10,7 +10,8 @@ open class Execution: Codable {
         case createdAt = "$createdAt"
         case updatedAt = "$updatedAt"
         case permissions = "$permissions"
-        case functionId = "functionId"
+        case resourceId = "resourceId"
+        case resourceType = "resourceType"
         case deploymentId = "deploymentId"
         case trigger = "trigger"
         case status = "status"
@@ -34,13 +35,15 @@ open class Execution: Codable {
     public let updatedAt: String
     /// Execution roles.
     public let permissions: [String]
-    /// Function ID.
-    public let functionId: String
-    /// Function&#039;s deployment ID used to create the execution.
+    /// Function or site ID.
+    public let resourceId: String
+    /// Execution resource type.
+    public let resourceType: AppwriteEnums.ExecutionResourceType
+    /// Deployment ID used to create the execution.
     public let deploymentId: String
-    /// The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
+    /// The trigger that caused the resource to execute. Possible values can be: `http`, `schedule`, or `event`.
     public let trigger: AppwriteEnums.ExecutionTrigger
-    /// The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
+    /// The status of the resource execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
     public let status: AppwriteEnums.ExecutionStatus
     /// HTTP request method type.
     public let requestMethod: String
@@ -54,9 +57,9 @@ open class Execution: Codable {
     public let responseBody: String
     /// HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
     public let responseHeaders: [Headers]
-    /// Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+    /// Resource logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let logs: String
-    /// Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+    /// Resource errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let errors: String
     /// Resource(function/site) execution duration in seconds.
     public let duration: Double
@@ -68,7 +71,8 @@ open class Execution: Codable {
         createdAt: String,
         updatedAt: String,
         permissions: [String],
-        functionId: String,
+        resourceId: String,
+        resourceType: AppwriteEnums.ExecutionResourceType,
         deploymentId: String,
         trigger: AppwriteEnums.ExecutionTrigger,
         status: AppwriteEnums.ExecutionStatus,
@@ -87,7 +91,8 @@ open class Execution: Codable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.permissions = permissions
-        self.functionId = functionId
+        self.resourceId = resourceId
+        self.resourceType = resourceType
         self.deploymentId = deploymentId
         self.trigger = trigger
         self.status = status
@@ -110,7 +115,8 @@ open class Execution: Codable {
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
         self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
         self.permissions = try container.decode([String].self, forKey: .permissions)
-        self.functionId = try container.decode(String.self, forKey: .functionId)
+        self.resourceId = try container.decode(String.self, forKey: .resourceId)
+        self.resourceType = AppwriteEnums.ExecutionResourceType(rawValue: try container.decode(String.self, forKey: .resourceType))!
         self.deploymentId = try container.decode(String.self, forKey: .deploymentId)
         self.trigger = AppwriteEnums.ExecutionTrigger(rawValue: try container.decode(String.self, forKey: .trigger))!
         self.status = AppwriteEnums.ExecutionStatus(rawValue: try container.decode(String.self, forKey: .status))!
@@ -133,7 +139,8 @@ open class Execution: Codable {
         try container.encode(createdAt, forKey: .createdAt)
         try container.encode(updatedAt, forKey: .updatedAt)
         try container.encode(permissions, forKey: .permissions)
-        try container.encode(functionId, forKey: .functionId)
+        try container.encode(resourceId, forKey: .resourceId)
+        try container.encode(resourceType.rawValue, forKey: .resourceType)
         try container.encode(deploymentId, forKey: .deploymentId)
         try container.encode(trigger.rawValue, forKey: .trigger)
         try container.encode(status.rawValue, forKey: .status)
@@ -155,7 +162,8 @@ open class Execution: Codable {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "$permissions": permissions as Any,
-            "functionId": functionId as Any,
+            "resourceId": resourceId as Any,
+            "resourceType": resourceType.rawValue as Any,
             "deploymentId": deploymentId as Any,
             "trigger": trigger.rawValue as Any,
             "status": status.rawValue as Any,
@@ -168,20 +176,21 @@ open class Execution: Codable {
             "logs": logs as Any,
             "errors": errors as Any,
             "duration": duration as Any,
-            "scheduledAt": scheduledAt as Any
+            "scheduledAt": scheduledAt as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Execution {
+    public static func from(map: [String: Any]) -> Execution {
         return Execution(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
             permissions: map["$permissions"] as! [String],
-            functionId: map["functionId"] as! String,
+            resourceId: map["resourceId"] as! String,
+            resourceType: AppwriteEnums.ExecutionResourceType(rawValue: map["resourceType"] as! String)!,
             deploymentId: map["deploymentId"] as! String,
-            trigger: ExecutionTrigger(rawValue: map["trigger"] as! String)!,
-            status: ExecutionStatus(rawValue: map["status"] as! String)!,
+            trigger: AppwriteEnums.ExecutionTrigger(rawValue: map["trigger"] as! String)!,
+            status: AppwriteEnums.ExecutionStatus(rawValue: map["status"] as! String)!,
             requestMethod: map["requestMethod"] as! String,
             requestPath: map["requestPath"] as! String,
             requestHeaders: (map["requestHeaders"] as! [[String: Any]]).map { Headers.from(map: $0) },

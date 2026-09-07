@@ -167,11 +167,11 @@ open class Locale: Codable {
             "isp": isp as Any,
             "connectionType": connectionType as Any,
             "connectionUsageType": connectionUsageType as Any,
-            "connectionOrganization": connectionOrganization as Any
+            "connectionOrganization": connectionOrganization as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Locale {
+    public static func from(map: [String: Any]) -> Locale {
         return Locale(
             ip: map["ip"] as! String,
             countryCode: map["countryCode"] as! String,

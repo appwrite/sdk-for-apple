@@ -95,11 +95,11 @@ open class Subscriber: Codable {
             "userId": userId as Any,
             "userName": userName as Any,
             "topicId": topicId as Any,
-            "providerType": providerType as Any
+            "providerType": providerType as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Subscriber {
+    public static func from(map: [String: Any]) -> Subscriber {
         return Subscriber(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

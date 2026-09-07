@@ -1,5 +1,25 @@
 # Change Log
 
+## 19.0.0
+
+* Breaking: `Execution.functionId` replaced by `resourceId` and `resourceType` (`ExecutionResourceType`)
+* Breaking: `createOperations` `operations` parameter now typed `[AnyCodable]` instead of `[Any]`
+* Breaking: SDK now targets Appwrite 2.0 (`x-appwrite-response-format: 2.0.0`)
+* Added: `DocumentsDB` and `VectorsDB` services for document and vector database access
+* Added: `Organization` service with `listInstallations`, `createInstallation`, `getInstallation`, `updateInstallation`, `deleteInstallation`
+* Added: `Teams` installation methods `listInstallations`, `createInstallation`, `getInstallation`, `updateInstallation`, `deleteInstallation`
+* Added: `Account` consent methods `listConsents`, `getConsent`, `deleteConsent`, `listConsentTokens`, `getConsentToken`, `deleteConsentToken`
+* Added: `Avatars.getPhoto` returning the best available user profile photo
+* Added: `folder` parameter to `Storage.createFile` and `folder`, `key` fields on `File`
+* Added: `AppInstallation`, `Oauth2Consent`, `Oauth2ConsentToken` models and list variants
+* Added: `ExecutionResourceType` enum, `AuthenticationFactor.custom` and `MfaFactors.custom`
+* Added: `cloudflare`, `huggingface`, `resend` cases to `OAuthProvider`
+* Added: `auto` case to `ImageGravity` enum
+* Updated: binary endpoints send `X-Appwrite-Project` header instead of `project` query parameter
+* Updated: `async-http-client` to 1.36.1 and `swift-nio` to 2.102.0
+* Fixed: README install snippet now uses product name `Appwrite`
+* Fixed: object array parameters such as `createOperations` are sent as JSON arrays, not strings
+
 ## 18.3.0
 
 * Added: `Client.setBearer` method for OAuth bearer token authentication

@@ -1,9 +1,9 @@
-import AsyncHTTPClient
-import Foundation
-import NIO
-import JSONCodable
 import AppwriteEnums
 import AppwriteModels
+import AsyncHTTPClient
+import Foundation
+import JSONCodable
+import NIO
 
 /// The Messaging service allows you to send messages to any provider type (SMTP, push notification, SMS, etc.).
 open class Messaging: Service {
@@ -28,13 +28,13 @@ open class Messaging: Service {
 
         let apiParams: [String: Any?] = [
             "subscriberId": subscriberId,
-            "targetId": targetId
+            "targetId": targetId,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Subscriber = { response in
@@ -49,7 +49,6 @@ open class Messaging: Service {
             converter: converter
         )
     }
-
     ///
     /// Delete a subscriber by its unique ID.
     ///
@@ -71,15 +70,14 @@ open class Messaging: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "content-type": "application/json"
+            "content-type": "application/json",
         ]
 
         return try await client.call(
             method: "DELETE",
             path: apiPath,
             headers: apiHeaders,
-            params: apiParams        )
+            params: apiParams
+        )
     }
-
-
 }

@@ -39,11 +39,11 @@ open class MfaType: Codable {
     public func toMap() -> [String: Any] {
         return [
             "secret": secret as Any,
-            "uri": uri as Any
+            "uri": uri as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> MfaType {
+    public static func from(map: [String: Any]) -> MfaType {
         return MfaType(
             secret: map["secret"] as! String,
             uri: map["uri"] as! String
