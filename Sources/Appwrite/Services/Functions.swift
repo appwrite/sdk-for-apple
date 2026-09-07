@@ -1,9 +1,9 @@
-import AsyncHTTPClient
-import Foundation
-import NIO
-import JSONCodable
 import AppwriteEnums
 import AppwriteModels
+import AsyncHTTPClient
+import Foundation
+import JSONCodable
+import NIO
 
 /// The Functions Service allows you view, create and manage your Cloud Functions.
 open class Functions: Service {
@@ -29,12 +29,12 @@ open class Functions: Service {
 
         let apiParams: [String: Any?] = [
             "queries": queries,
-            "total": total
+            "total": total,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.ExecutionList = { response in
@@ -49,7 +49,6 @@ open class Functions: Service {
             converter: converter
         )
     }
-
     ///
     /// Trigger a function execution. The returned object will return you the
     /// current execution status. You can ping the `Get Execution` endpoint to get
@@ -85,13 +84,13 @@ open class Functions: Service {
             "path": path,
             "method": method?.rawValue,
             "headers": headers,
-            "scheduledAt": scheduledAt
+            "scheduledAt": scheduledAt,
         ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Execution = { response in
@@ -106,7 +105,6 @@ open class Functions: Service {
             converter: converter
         )
     }
-
     ///
     /// Get a function execution log by its unique ID.
     ///
@@ -128,7 +126,7 @@ open class Functions: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> AppwriteModels.Execution = { response in
@@ -143,6 +141,4 @@ open class Functions: Service {
             converter: converter
         )
     }
-
-
 }

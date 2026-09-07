@@ -71,11 +71,11 @@ open class Transaction: Codable {
             "$updatedAt": updatedAt as Any,
             "status": status as Any,
             "operations": operations as Any,
-            "expiresAt": expiresAt as Any
+            "expiresAt": expiresAt as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Transaction {
+    public static func from(map: [String: Any]) -> Transaction {
         return Transaction(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

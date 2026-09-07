@@ -35,7 +35,7 @@ open class AlgoPhpass: Codable {
         ]
     }
 
-    public static func from(map: [String: Any] ) -> AlgoPhpass {
+    public static func from(map: [String: Any]) -> AlgoPhpass {
         return AlgoPhpass(
             type: map["type"] as! String
         )

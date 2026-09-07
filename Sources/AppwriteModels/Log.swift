@@ -199,11 +199,11 @@ open class Log: Codable {
             "deviceBrand": deviceBrand as Any,
             "deviceModel": deviceModel as Any,
             "countryCode": countryCode as Any,
-            "countryName": countryName as Any
+            "countryName": countryName as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Log {
+    public static func from(map: [String: Any]) -> Log {
         return Log(
             event: map["event"] as! String,
             userId: map["userId"] as! String,

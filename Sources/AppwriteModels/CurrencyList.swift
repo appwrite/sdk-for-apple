@@ -39,11 +39,11 @@ open class CurrencyList: Codable {
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
-            "currencies": currencies.map { $0.toMap() } as Any
+            "currencies": currencies.map { $0.toMap() } as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> CurrencyList {
+    public static func from(map: [String: Any]) -> CurrencyList {
         return CurrencyList(
             total: map["total"] as! Int,
             currencies: (map["currencies"] as! [[String: Any]]).map { Currency.from(map: $0) }

@@ -39,11 +39,11 @@ open class Headers: Codable {
     public func toMap() -> [String: Any] {
         return [
             "name": name as Any,
-            "value": value as Any
+            "value": value as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Headers {
+    public static func from(map: [String: Any]) -> Headers {
         return Headers(
             name: map["name"] as! String,
             value: map["value"] as! String

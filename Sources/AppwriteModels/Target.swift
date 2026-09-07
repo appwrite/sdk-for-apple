@@ -95,11 +95,11 @@ open class Target: Codable {
             "providerId": providerId as Any,
             "providerType": providerType as Any,
             "identifier": identifier as Any,
-            "expired": expired as Any
+            "expired": expired as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Target {
+    public static func from(map: [String: Any]) -> Target {
         return Target(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

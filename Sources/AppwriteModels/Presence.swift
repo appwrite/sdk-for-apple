@@ -95,11 +95,11 @@ open class Presence: Codable {
             "status": status as Any,
             "source": source as Any,
             "expiresAt": expiresAt as Any,
-            "metadata": metadata as Any
+            "metadata": metadata as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Presence {
+    public static func from(map: [String: Any]) -> Presence {
         return Presence(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

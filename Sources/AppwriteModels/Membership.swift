@@ -143,11 +143,11 @@ open class Membership: Codable {
             "confirm": confirm as Any,
             "mfa": mfa as Any,
             "userAccessedAt": userAccessedAt as Any,
-            "roles": roles as Any
+            "roles": roles as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Membership {
+    public static func from(map: [String: Any]) -> Membership {
         return Membership(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

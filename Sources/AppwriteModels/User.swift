@@ -2,7 +2,7 @@ import Foundation
 import JSONCodable
 
 /// User
-open class User<T : Codable>: Codable {
+open class User<T: Codable>: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id = "$id"
@@ -231,11 +231,11 @@ open class User<T : Codable>: Codable {
             "targets": targets.map { $0.toMap() } as Any,
             "accessedAt": accessedAt as Any,
             "impersonator": impersonator as Any,
-            "impersonatorUserId": impersonatorUserId as Any
+            "impersonatorUserId": impersonatorUserId as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> User {
+    public static func from(map: [String: Any]) -> User {
         return User(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

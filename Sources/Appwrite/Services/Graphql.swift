@@ -1,9 +1,9 @@
-import AsyncHTTPClient
-import Foundation
-import NIO
-import JSONCodable
 import AppwriteEnums
 import AppwriteModels
+import AsyncHTTPClient
+import Foundation
+import JSONCodable
+import NIO
 
 /// The GraphQL API allows you to query and mutate your Appwrite server using GraphQL.
 open class Graphql: Service {
@@ -29,7 +29,7 @@ open class Graphql: Service {
             "X-Appwrite-Project": client.config["project"] ?? "",
             "x-sdk-graphql": "true",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> Any = { response in
@@ -44,7 +44,6 @@ open class Graphql: Service {
             converter: converter
         )
     }
-
     ///
     /// Execute a GraphQL mutation.
     ///
@@ -66,7 +65,7 @@ open class Graphql: Service {
             "X-Appwrite-Project": client.config["project"] ?? "",
             "x-sdk-graphql": "true",
             "content-type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
         ]
 
         let converter: (Any) throws -> Any = { response in
@@ -81,6 +80,4 @@ open class Graphql: Service {
             converter: converter
         )
     }
-
-
 }

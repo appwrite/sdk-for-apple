@@ -1,6 +1,6 @@
 import Foundation
 
-open class AppwriteError : Swift.Error, Decodable {
+open class AppwriteError: Swift.Error, Decodable {
 
     public let message: String
     public let code: Int?
@@ -17,16 +17,12 @@ open class AppwriteError : Swift.Error, Decodable {
 
 extension AppwriteError: CustomStringConvertible {
     public var description: String {
-        get {
-            return self.message
-        }
+        return self.message
     }
 }
 
 extension AppwriteError: LocalizedError {
     public var errorDescription: String? {
-        get {
-            return self.message
-        }
+        return self.message
     }
 }

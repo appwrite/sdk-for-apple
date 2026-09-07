@@ -39,11 +39,11 @@ open class Country: Codable {
     public func toMap() -> [String: Any] {
         return [
             "name": name as Any,
-            "code": code as Any
+            "code": code as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Country {
+    public static func from(map: [String: Any]) -> Country {
         return Country(
             name: map["name"] as! String,
             code: map["code"] as! String

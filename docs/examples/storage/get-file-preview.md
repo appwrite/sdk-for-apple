@@ -16,11 +16,11 @@ let bytes = try await storage.getFilePreview(
     gravity: .center, // optional
     quality: -1, // optional
     borderWidth: 0, // optional
-    borderColor: "", // optional
+    borderColor: "FFFFFF", // optional
     borderRadius: 0, // optional
     opacity: 0, // optional
     rotation: -360, // optional
-    background: "", // optional
+    background: "FFFFFF", // optional
     output: .jpg, // optional
     token: "<TOKEN>" // optional
 )

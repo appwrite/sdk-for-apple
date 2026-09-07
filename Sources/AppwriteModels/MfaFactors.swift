@@ -9,6 +9,7 @@ open class MfaFactors: Codable {
         case phone = "phone"
         case email = "email"
         case recoveryCode = "recoveryCode"
+        case custom = "custom"
     }
 
     /// Can TOTP be used for MFA challenge for this account.
@@ -19,17 +20,21 @@ open class MfaFactors: Codable {
     public let email: Bool
     /// Can recovery code be used for MFA challenge for this account.
     public let recoveryCode: Bool
+    /// Can custom factor be used for MFA challenge for this account.
+    public let custom: Bool
 
     init(
         totp: Bool,
         phone: Bool,
         email: Bool,
-        recoveryCode: Bool
+        recoveryCode: Bool,
+        custom: Bool
     ) {
         self.totp = totp
         self.phone = phone
         self.email = email
         self.recoveryCode = recoveryCode
+        self.custom = custom
     }
 
     public required init(from decoder: Decoder) throws {
@@ -39,6 +44,7 @@ open class MfaFactors: Codable {
         self.phone = try container.decode(Bool.self, forKey: .phone)
         self.email = try container.decode(Bool.self, forKey: .email)
         self.recoveryCode = try container.decode(Bool.self, forKey: .recoveryCode)
+        self.custom = try container.decode(Bool.self, forKey: .custom)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -48,6 +54,7 @@ open class MfaFactors: Codable {
         try container.encode(phone, forKey: .phone)
         try container.encode(email, forKey: .email)
         try container.encode(recoveryCode, forKey: .recoveryCode)
+        try container.encode(custom, forKey: .custom)
     }
 
     public func toMap() -> [String: Any] {
@@ -55,16 +62,18 @@ open class MfaFactors: Codable {
             "totp": totp as Any,
             "phone": phone as Any,
             "email": email as Any,
-            "recoveryCode": recoveryCode as Any
+            "recoveryCode": recoveryCode as Any,
+            "custom": custom as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> MfaFactors {
+    public static func from(map: [String: Any]) -> MfaFactors {
         return MfaFactors(
             totp: map["totp"] as! Bool,
             phone: map["phone"] as! Bool,
             email: map["email"] as! Bool,
-            recoveryCode: map["recoveryCode"] as! Bool
+            recoveryCode: map["recoveryCode"] as! Bool,
+            custom: map["custom"] as! Bool
         )
     }
 }

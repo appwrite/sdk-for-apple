@@ -39,11 +39,11 @@ open class SessionList: Codable {
     public func toMap() -> [String: Any] {
         return [
             "total": total as Any,
-            "sessions": sessions.map { $0.toMap() } as Any
+            "sessions": sessions.map { $0.toMap() } as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> SessionList {
+    public static func from(map: [String: Any]) -> SessionList {
         return SessionList(
             total: map["total"] as! Int,
             sessions: (map["sessions"] as! [[String: Any]]).map { Session.from(map: $0) }

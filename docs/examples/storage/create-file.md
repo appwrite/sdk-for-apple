@@ -11,7 +11,8 @@ let file = try await storage.createFile(
     bucketId: "<BUCKET_ID>",
     fileId: "<FILE_ID>",
     file: InputFile.fromPath("file.png"),
-    permissions: [Permission.read(Role.any())] // optional
+    permissions: [Permission.read(Role.any())], // optional
+    folder: "photos/2026" // optional
 )
 
 ```

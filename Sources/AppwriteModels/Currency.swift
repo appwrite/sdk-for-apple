@@ -79,11 +79,11 @@ open class Currency: Codable {
             "decimalDigits": decimalDigits as Any,
             "rounding": rounding as Any,
             "code": code as Any,
-            "namePlural": namePlural as Any
+            "namePlural": namePlural as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Currency {
+    public static func from(map: [String: Any]) -> Currency {
         return Currency(
             symbol: map["symbol"] as! String,
             name: map["name"] as! String,

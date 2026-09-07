@@ -55,11 +55,11 @@ open class AlgoScryptModified: Codable {
             "type": type as Any,
             "salt": salt as Any,
             "saltSeparator": saltSeparator as Any,
-            "signerKey": signerKey as Any
+            "signerKey": signerKey as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> AlgoScryptModified {
+    public static func from(map: [String: Any]) -> AlgoScryptModified {
         return AlgoScryptModified(
             type: map["type"] as! String,
             salt: map["salt"] as! String,

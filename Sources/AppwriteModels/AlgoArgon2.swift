@@ -55,11 +55,11 @@ open class AlgoArgon2: Codable {
             "type": type as Any,
             "memoryCost": memoryCost as Any,
             "timeCost": timeCost as Any,
-            "threads": threads as Any
+            "threads": threads as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> AlgoArgon2 {
+    public static func from(map: [String: Any]) -> AlgoArgon2 {
         return AlgoArgon2(
             type: map["type"] as! String,
             memoryCost: map["memoryCost"] as! Int,

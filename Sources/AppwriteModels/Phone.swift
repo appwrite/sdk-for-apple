@@ -47,11 +47,11 @@ open class Phone: Codable {
         return [
             "code": code as Any,
             "countryCode": countryCode as Any,
-            "countryName": countryName as Any
+            "countryName": countryName as Any,
         ]
     }
 
-    public static func from(map: [String: Any] ) -> Phone {
+    public static func from(map: [String: Any]) -> Phone {
         return Phone(
             code: map["code"] as! String,
             countryCode: map["countryCode"] as! String,
