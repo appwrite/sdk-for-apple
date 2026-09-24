@@ -23,6 +23,10 @@ open class Messaging: Service {
         subscriberId: String,
         targetId: String
     ) async throws -> AppwriteModels.Subscriber {
+        if topicId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"topicId\"")
+        }
+
         let apiPath: String = "/messaging/topics/{topicId}/subscribers"
             .replacingOccurrences(of: "{topicId}", with: topicId)
 
@@ -62,6 +66,13 @@ open class Messaging: Service {
         topicId: String,
         subscriberId: String
     ) async throws -> Any {
+        if topicId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"topicId\"")
+        }
+        if subscriberId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"subscriberId\"")
+        }
+
         let apiPath: String = "/messaging/topics/{topicId}/subscribers/{subscriberId}"
             .replacingOccurrences(of: "{topicId}", with: topicId)
             .replacingOccurrences(of: "{subscriberId}", with: subscriberId)
@@ -71,6 +82,7 @@ open class Messaging: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(

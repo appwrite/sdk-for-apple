@@ -88,6 +88,10 @@ open class VectorsDB: Service {
     open func getTransaction(
         transactionId: String
     ) async throws -> AppwriteModels.Transaction {
+        if transactionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"transactionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/transactions/{transactionId}"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
@@ -125,6 +129,10 @@ open class VectorsDB: Service {
         commit: Bool? = nil,
         rollback: Bool? = nil
     ) async throws -> AppwriteModels.Transaction {
+        if transactionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"transactionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/transactions/{transactionId}"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
@@ -162,6 +170,10 @@ open class VectorsDB: Service {
     open func deleteTransaction(
         transactionId: String
     ) async throws -> Any {
+        if transactionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"transactionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/transactions/{transactionId}"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
@@ -170,6 +182,7 @@ open class VectorsDB: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -192,6 +205,10 @@ open class VectorsDB: Service {
         transactionId: String,
         operations: [AnyCodable]? = nil
     ) async throws -> AppwriteModels.Transaction {
+        if transactionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"transactionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/transactions/{transactionId}/operations"
             .replacingOccurrences(of: "{transactionId}", with: transactionId)
 
@@ -240,6 +257,13 @@ open class VectorsDB: Service {
         ttl: Int? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -326,6 +350,13 @@ open class VectorsDB: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -415,6 +446,13 @@ open class VectorsDB: Service {
         ttl: Int? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.DocumentList<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents/query"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -500,6 +538,16 @@ open class VectorsDB: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+        if documentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"documentId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -582,6 +630,16 @@ open class VectorsDB: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+        if documentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"documentId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -669,6 +727,16 @@ open class VectorsDB: Service {
         transactionId: String? = nil,
         nestedType: T.Type
     ) async throws -> AppwriteModels.Document<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+        if documentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"documentId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -748,6 +816,16 @@ open class VectorsDB: Service {
         documentId: String,
         transactionId: String? = nil
     ) async throws -> Any {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+        if documentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"documentId\"")
+        }
+
         let apiPath: String = "/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}"
             .replacingOccurrences(of: "{databaseId}", with: databaseId)
             .replacingOccurrences(of: "{collectionId}", with: collectionId)
@@ -760,6 +838,7 @@ open class VectorsDB: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(

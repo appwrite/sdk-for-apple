@@ -15,6 +15,7 @@ open class Identity: Codable {
         case providerAccessToken = "providerAccessToken"
         case providerAccessTokenExpiry = "providerAccessTokenExpiry"
         case providerRefreshToken = "providerRefreshToken"
+        case providerIdToken = "providerIdToken"
     }
 
     /// Identity ID.
@@ -37,6 +38,8 @@ open class Identity: Codable {
     public let providerAccessTokenExpiry: String
     /// Identity Provider Refresh Token.
     public let providerRefreshToken: String
+    /// Identity Provider ID token (JWT) from the most recent native sign-in. Empty for identities created through the browser OAuth2 flow.
+    public let providerIdToken: String
 
     init(
         id: String,
@@ -48,7 +51,8 @@ open class Identity: Codable {
         providerEmail: String,
         providerAccessToken: String,
         providerAccessTokenExpiry: String,
-        providerRefreshToken: String
+        providerRefreshToken: String,
+        providerIdToken: String
     ) {
         self.id = id
         self.createdAt = createdAt
@@ -60,6 +64,7 @@ open class Identity: Codable {
         self.providerAccessToken = providerAccessToken
         self.providerAccessTokenExpiry = providerAccessTokenExpiry
         self.providerRefreshToken = providerRefreshToken
+        self.providerIdToken = providerIdToken
     }
 
     public required init(from decoder: Decoder) throws {
@@ -75,6 +80,7 @@ open class Identity: Codable {
         self.providerAccessToken = try container.decode(String.self, forKey: .providerAccessToken)
         self.providerAccessTokenExpiry = try container.decode(String.self, forKey: .providerAccessTokenExpiry)
         self.providerRefreshToken = try container.decode(String.self, forKey: .providerRefreshToken)
+        self.providerIdToken = try container.decode(String.self, forKey: .providerIdToken)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -90,6 +96,7 @@ open class Identity: Codable {
         try container.encode(providerAccessToken, forKey: .providerAccessToken)
         try container.encode(providerAccessTokenExpiry, forKey: .providerAccessTokenExpiry)
         try container.encode(providerRefreshToken, forKey: .providerRefreshToken)
+        try container.encode(providerIdToken, forKey: .providerIdToken)
     }
 
     public func toMap() -> [String: Any] {
@@ -104,6 +111,7 @@ open class Identity: Codable {
             "providerAccessToken": providerAccessToken as Any,
             "providerAccessTokenExpiry": providerAccessTokenExpiry as Any,
             "providerRefreshToken": providerRefreshToken as Any,
+            "providerIdToken": providerIdToken as Any,
         ]
     }
 
@@ -118,7 +126,8 @@ open class Identity: Codable {
             providerEmail: map["providerEmail"] as! String,
             providerAccessToken: map["providerAccessToken"] as! String,
             providerAccessTokenExpiry: map["providerAccessTokenExpiry"] as! String,
-            providerRefreshToken: map["providerRefreshToken"] as! String
+            providerRefreshToken: map["providerRefreshToken"] as! String,
+            providerIdToken: map["providerIdToken"] as! String
         )
     }
 }

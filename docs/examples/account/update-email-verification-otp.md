@@ -7,9 +7,9 @@ let client = Client()
 
 let account = Account(client)
 
-let logList = try await account.listLogs(
-    queries: [], // optional
-    total: false // optional
+let token = try await account.updateEmailVerificationOTP(
+    userId: "<USER_ID>",
+    secret: "<SECRET>"
 )
 
 ```
