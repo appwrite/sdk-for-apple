@@ -98,6 +98,10 @@ open class Organization: Service {
     open func getInstallation(
         installationId: String
     ) async throws -> AppwriteModels.AppInstallation {
+        if installationId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"installationId\"")
+        }
+
         let apiPath: String = "/organization/installations/{installationId}"
             .replacingOccurrences(of: "{installationId}", with: installationId)
 
@@ -136,6 +140,10 @@ open class Organization: Service {
         installationId: String,
         authorizationDetails: String? = nil
     ) async throws -> AppwriteModels.AppInstallation {
+        if installationId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"installationId\"")
+        }
+
         let apiPath: String = "/organization/installations/{installationId}"
             .replacingOccurrences(of: "{installationId}", with: installationId)
 
@@ -174,6 +182,10 @@ open class Organization: Service {
     open func deleteInstallation(
         installationId: String
     ) async throws -> Any {
+        if installationId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"installationId\"")
+        }
+
         let apiPath: String = "/organization/installations/{installationId}"
             .replacingOccurrences(of: "{installationId}", with: installationId)
 

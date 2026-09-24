@@ -61,7 +61,7 @@ open class Execution: Codable {
     public let logs: String
     /// Resource errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
     public let errors: String
-    /// Resource(function/site) execution duration in seconds.
+    /// Total time the resource(function/site) took to respond, in seconds.
     public let duration: Double
     /// The scheduled time for execution. If left empty, execution will be queued immediately.
     public let scheduledAt: String?

@@ -28,8 +28,8 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "19.0.0",
-        "x-appwrite-response-format": "2.0.0",
+        "x-sdk-version": "20.0.0",
+        "x-appwrite-response-format": "2.3.0",
     ]
 
     internal var config: [String: String] = [:]
@@ -168,21 +168,6 @@ open class Client {
     open func setSession(_ value: String) -> Client {
         config["session"] = value
         _ = addHeader(key: "X-Appwrite-Session", value: value)
-        return self
-    }
-
-    ///
-    /// Set DevKey
-    ///
-    /// Your secret dev API key
-    ///
-    /// @param String value
-    ///
-    /// @return Client
-    ///
-    open func setDevKey(_ value: String) -> Client {
-        config["devkey"] = value
-        _ = addHeader(key: "X-Appwrite-Dev-Key", value: value)
         return self
     }
 

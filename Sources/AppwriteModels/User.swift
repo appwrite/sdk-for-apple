@@ -24,6 +24,7 @@ open class User<T: Codable>: Codable {
         case emailIsDisposable = "emailIsDisposable"
         case emailIsCorporate = "emailIsCorporate"
         case emailIsCanonical = "emailIsCanonical"
+        case passwordPwned = "passwordPwned"
         case phoneVerification = "phoneVerification"
         case mfa = "mfa"
         case prefs = "prefs"
@@ -71,6 +72,8 @@ open class User<T: Codable>: Codable {
     public let emailIsCorporate: Bool?
     /// Whether the user email is in its canonical form.
     public let emailIsCanonical: Bool?
+    /// Whether the password was found in a known data breach the last time it was checked. Null when the password has never been checked.
+    public let passwordPwned: Bool?
     /// Phone verification status.
     public let phoneVerification: Bool
     /// Multi factor authentication status.
@@ -106,6 +109,7 @@ open class User<T: Codable>: Codable {
         emailIsDisposable: Bool?,
         emailIsCorporate: Bool?,
         emailIsCanonical: Bool?,
+        passwordPwned: Bool?,
         phoneVerification: Bool,
         mfa: Bool,
         prefs: Preferences<T>,
@@ -133,6 +137,7 @@ open class User<T: Codable>: Codable {
         self.emailIsDisposable = emailIsDisposable
         self.emailIsCorporate = emailIsCorporate
         self.emailIsCanonical = emailIsCanonical
+        self.passwordPwned = passwordPwned
         self.phoneVerification = phoneVerification
         self.mfa = mfa
         self.prefs = prefs
@@ -164,6 +169,7 @@ open class User<T: Codable>: Codable {
         self.emailIsDisposable = try container.decodeIfPresent(Bool.self, forKey: .emailIsDisposable)
         self.emailIsCorporate = try container.decodeIfPresent(Bool.self, forKey: .emailIsCorporate)
         self.emailIsCanonical = try container.decodeIfPresent(Bool.self, forKey: .emailIsCanonical)
+        self.passwordPwned = try container.decodeIfPresent(Bool.self, forKey: .passwordPwned)
         self.phoneVerification = try container.decode(Bool.self, forKey: .phoneVerification)
         self.mfa = try container.decode(Bool.self, forKey: .mfa)
         self.prefs = try container.decode(Preferences<T>.self, forKey: .prefs)
@@ -195,6 +201,7 @@ open class User<T: Codable>: Codable {
         try container.encodeIfPresent(emailIsDisposable, forKey: .emailIsDisposable)
         try container.encodeIfPresent(emailIsCorporate, forKey: .emailIsCorporate)
         try container.encodeIfPresent(emailIsCanonical, forKey: .emailIsCanonical)
+        try container.encodeIfPresent(passwordPwned, forKey: .passwordPwned)
         try container.encode(phoneVerification, forKey: .phoneVerification)
         try container.encode(mfa, forKey: .mfa)
         try container.encode(prefs, forKey: .prefs)
@@ -225,6 +232,7 @@ open class User<T: Codable>: Codable {
             "emailIsDisposable": emailIsDisposable as Any,
             "emailIsCorporate": emailIsCorporate as Any,
             "emailIsCanonical": emailIsCanonical as Any,
+            "passwordPwned": passwordPwned as Any,
             "phoneVerification": phoneVerification as Any,
             "mfa": mfa as Any,
             "prefs": prefs.toMap() as Any,
@@ -256,6 +264,7 @@ open class User<T: Codable>: Codable {
             emailIsDisposable: map["emailIsDisposable"] as? Bool,
             emailIsCorporate: map["emailIsCorporate"] as? Bool,
             emailIsCanonical: map["emailIsCanonical"] as? Bool,
+            passwordPwned: map["passwordPwned"] as? Bool,
             phoneVerification: map["phoneVerification"] as! Bool,
             mfa: map["mfa"] as! Bool,
             prefs: Preferences.from(map: map["prefs"] as! [String: Any]),

@@ -1,5 +1,17 @@
 # Change Log
 
+## 20.0.0
+
+* Breaking: removed `Account.listLogs` and the `Log`, `LogList` models
+* Breaking: removed `Client.setDevKey`
+* Breaking: SDK now targets Appwrite 2.3 (`x-appwrite-response-format: 2.3.0`)
+* Added: `Account.createIdTokenSession` for native Apple and Google sign-in with `IdTokenProvider` enum
+* Added: `Account.createRecoveryOTP` and `Account.updateRecoveryOTP` for code-based password recovery
+* Added: `Account.createEmailVerificationOTP` and `Account.updateEmailVerificationOTP`
+* Added: `kakao` and `tiktok` values to `OAuthProvider`
+* Added: `passwordPwned` field on `User` and `providerIdToken` field on `Identity`
+* Fixed: empty-string required path parameters are rejected instead of sent to the API
+
 ## 19.0.0
 
 * Breaking: `Execution.functionId` replaced by `resourceId` and `resourceType` (`ExecutionResourceType`)

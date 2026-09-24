@@ -183,6 +183,10 @@ open class Account: Service {
     open func getConsent(
         consentId: String
     ) async throws -> AppwriteModels.Oauth2Consent {
+        if consentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"consentId\"")
+        }
+
         let apiPath: String = "/account/consents/{consentId}"
             .replacingOccurrences(of: "{consentId}", with: consentId)
 
@@ -218,6 +222,10 @@ open class Account: Service {
     open func deleteConsent(
         consentId: String
     ) async throws -> Any {
+        if consentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"consentId\"")
+        }
+
         let apiPath: String = "/account/consents/{consentId}"
             .replacingOccurrences(of: "{consentId}", with: consentId)
 
@@ -253,6 +261,10 @@ open class Account: Service {
         queries: [String]? = nil,
         total: Bool? = nil
     ) async throws -> AppwriteModels.Oauth2ConsentTokenList {
+        if consentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"consentId\"")
+        }
+
         let apiPath: String = "/account/consents/{consentId}/tokens"
             .replacingOccurrences(of: "{consentId}", with: consentId)
 
@@ -292,6 +304,13 @@ open class Account: Service {
         consentId: String,
         tokenId: String
     ) async throws -> AppwriteModels.Oauth2ConsentToken {
+        if consentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"consentId\"")
+        }
+        if tokenId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"tokenId\"")
+        }
+
         let apiPath: String = "/account/consents/{consentId}/tokens/{tokenId}"
             .replacingOccurrences(of: "{consentId}", with: consentId)
             .replacingOccurrences(of: "{tokenId}", with: tokenId)
@@ -330,6 +349,13 @@ open class Account: Service {
         consentId: String,
         tokenId: String
     ) async throws -> Any {
+        if consentId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"consentId\"")
+        }
+        if tokenId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"tokenId\"")
+        }
+
         let apiPath: String = "/account/consents/{consentId}/tokens/{tokenId}"
             .replacingOccurrences(of: "{consentId}", with: consentId)
             .replacingOccurrences(of: "{tokenId}", with: tokenId)
@@ -468,6 +494,10 @@ open class Account: Service {
     open func deleteIdentity(
         identityId: String
     ) async throws -> Any {
+        if identityId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"identityId\"")
+        }
+
         let apiPath: String = "/account/identities/{identityId}"
             .replacingOccurrences(of: "{identityId}", with: identityId)
 
@@ -476,6 +506,7 @@ open class Account: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -518,44 +549,6 @@ open class Account: Service {
 
         return try await client.call(
             method: "POST",
-            path: apiPath,
-            headers: apiHeaders,
-            params: apiParams,
-            converter: converter
-        )
-    }
-    ///
-    /// Get the list of latest security activity logs for the currently logged in
-    /// user. Each log returns user IP address, location and date and time of log.
-    ///
-    /// - Parameters:
-    ///   - queries: [String] (optional)
-    ///   - total: Bool (optional)
-    /// - Throws: Exception if the request fails
-    /// - Returns: AppwriteModels.LogList
-    ///
-    open func listLogs(
-        queries: [String]? = nil,
-        total: Bool? = nil
-    ) async throws -> AppwriteModels.LogList {
-        let apiPath: String = "/account/logs"
-
-        let apiParams: [String: Any?] = [
-            "queries": queries,
-            "total": total,
-        ]
-
-        let apiHeaders: [String: String] = [
-            "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "application/json",
-        ]
-
-        let converter: (Any) throws -> AppwriteModels.LogList = { response in
-            return AppwriteModels.LogList.from(map: response as! [String: Any])
-        }
-
-        return try await client.call(
-            method: "GET",
             path: apiPath,
             headers: apiHeaders,
             params: apiParams,
@@ -838,6 +831,7 @@ open class Account: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -866,6 +860,7 @@ open class Account: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -1665,6 +1660,102 @@ open class Account: Service {
         )
     }
     ///
+    /// Use this endpoint to send a 6-digit password recovery code to the user's
+    /// email address. Unlike
+    /// [createRecovery](https://appwrite.io/docs/references/cloud/client-web/account#createRecovery),
+    /// this method requires no redirect URL, which makes it suitable for mobile
+    /// and desktop apps that cannot host a recovery page. Learn more about how to
+    /// [complete the recovery
+    /// process](https://appwrite.io/docs/references/cloud/client-web/account#updateRecoveryOTP).
+    /// The code sent to the user's email address is valid for 15 minutes.
+    ///
+    /// Enable the **phrase** parameter to include a randomly generated security
+    /// phrase in both the email and the response. Showing that phrase in your app
+    /// lets the user confirm the email genuinely came from your request, which
+    /// helps protect against phishing.
+    ///
+    /// - Parameters:
+    ///   - email: String
+    ///   - phrase: Bool (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Token
+    ///
+    open func createRecoveryOTP(
+        email: String,
+        phrase: Bool? = nil
+    ) async throws -> AppwriteModels.Token {
+        let apiPath: String = "/account/recovery/otp"
+
+        let apiParams: [String: Any?] = [
+            "email": email,
+            "phrase": phrase,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Token = { response in
+            return AppwriteModels.Token.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Use this endpoint to complete the user password recovery process using the
+    /// 6-digit code that was emailed by
+    /// [createRecoveryOTP](https://appwrite.io/docs/references/cloud/client-web/account#createRecoveryOTP).
+    /// Pass the **userId** of the user along with the **secret** code from the
+    /// email and the new **password** to set. If confirmed, this route will return
+    /// a 200 status code, the code is consumed and the user's password is updated.
+    ///
+    /// - Parameters:
+    ///   - userId: String
+    ///   - secret: String
+    ///   - password: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Token
+    ///
+    open func updateRecoveryOTP(
+        userId: String,
+        secret: String,
+        password: String
+    ) async throws -> AppwriteModels.Token {
+        let apiPath: String = "/account/recovery/otp"
+
+        let apiParams: [String: Any?] = [
+            "userId": userId,
+            "secret": secret,
+            "password": password,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Token = { response in
+            return AppwriteModels.Token.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
     /// Get the list of active sessions across different devices for the currently
     /// logged in user.
     ///
@@ -1708,6 +1799,7 @@ open class Account: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -1775,6 +1867,96 @@ open class Account: Service {
         let apiParams: [String: Any?] = [
             "email": email,
             "password": password,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Session = { response in
+            return AppwriteModels.Session.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Allow the user to login to their account using an OpenID Connect ID token
+    /// obtained natively from the OAuth2 provider, for example via Google
+    /// Credential Manager on Android or Sign in with Apple on iOS. No browser or
+    /// redirect is involved: the ID token is verified against the provider's
+    /// published signing keys and a session is created in a single request.
+    ///
+    /// Native sign-in is switched on per provider with its nativeEnabled setting.
+    /// It is independent of the browser-based flow's enabled setting, which has no
+    /// effect on this endpoint. The token's audience must match the provider's
+    /// configured client ID or one of its native client IDs; tokens issued for any
+    /// other client ID are rejected. For Sign in with Apple, register your app's
+    /// bundle ID as a native client ID. For Google, the web client ID used by
+    /// Credential Manager is usually the configured client ID; add your Android
+    /// and iOS client IDs as native client IDs if your app requests tokens for
+    /// them.
+    ///
+    /// Pass the raw nonce used when requesting the ID token so it can be validated
+    /// against the token's nonce claim. When signing in with Apple, the nonce is
+    /// required: hash it with SHA-256 before passing it to the Apple SDK, and send
+    /// the raw value here - Apple tokens requested without a nonce are rejected.
+    /// For Google the nonce is optional: it is validated whenever the token
+    /// carries one, and ignored when the provider issued the token without one.
+    /// Apple only returns the user's name on the first authorization, and never
+    /// inside the ID token - capture it on the client and pass it via the name
+    /// parameter.
+    ///
+    /// If there is already an active session, the new session will be attached to
+    /// the logged-in account. If there are no active sessions, the server will
+    /// attempt to look for a user with the same email address as the verified
+    /// email received from the provider and attach the new session to the existing
+    /// user. If no matching user is found - the server will create a new user.
+    ///
+    /// This flow does not return provider refresh tokens. You may pass an access
+    /// token the provider handed your client, along with its lifetime, to store it
+    /// on the session - but Appwrite cannot renew it once it expires. If your app
+    /// needs long-lived access to provider APIs, use the browser-based OAuth2 flow
+    /// instead.
+    ///
+    /// A user is limited to 10 active sessions at a time by default. [Learn more
+    /// about session
+    /// limits](https://appwrite.io/docs/authentication-security#limits).
+    ///
+    /// - Parameters:
+    ///   - provider: AppwriteEnums.IdTokenProvider
+    ///   - idToken: String
+    ///   - nonce: String (optional)
+    ///   - accessToken: String (optional)
+    ///   - accessTokenExpiry: Int (optional)
+    ///   - name: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Session
+    ///
+    open func createIdTokenSession(
+        provider: AppwriteEnums.IdTokenProvider,
+        idToken: String,
+        nonce: String? = nil,
+        accessToken: String? = nil,
+        accessTokenExpiry: Int? = nil,
+        name: String? = nil
+    ) async throws -> AppwriteModels.Session {
+        let apiPath: String = "/account/sessions/id-token"
+
+        let apiParams: [String: Any?] = [
+            "provider": provider.rawValue,
+            "idToken": idToken,
+            "nonce": nonce,
+            "accessToken": accessToken,
+            "accessTokenExpiry": accessTokenExpiry,
+            "name": name,
         ]
 
         let apiHeaders: [String: String] = [
@@ -1992,6 +2174,10 @@ open class Account: Service {
     open func getSession(
         sessionId: String
     ) async throws -> AppwriteModels.Session {
+        if sessionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"sessionId\"")
+        }
+
         let apiPath: String = "/account/sessions/{sessionId}"
             .replacingOccurrences(of: "{sessionId}", with: sessionId)
 
@@ -2027,6 +2213,10 @@ open class Account: Service {
     open func updateSession(
         sessionId: String
     ) async throws -> AppwriteModels.Session {
+        if sessionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"sessionId\"")
+        }
+
         let apiPath: String = "/account/sessions/{sessionId}"
             .replacingOccurrences(of: "{sessionId}", with: sessionId)
 
@@ -2065,6 +2255,10 @@ open class Account: Service {
     open func deleteSession(
         sessionId: String
     ) async throws -> Any {
+        if sessionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"sessionId\"")
+        }
+
         let apiPath: String = "/account/sessions/{sessionId}"
             .replacingOccurrences(of: "{sessionId}", with: sessionId)
 
@@ -2073,6 +2267,7 @@ open class Account: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -2134,7 +2329,10 @@ open class Account: Service {
     /// target ID (custom or generated using ID.unique()), a device identifier
     /// (usually a device token), and optionally specify which provider should send
     /// notifications to this target. The target is automatically linked to the
-    /// current session and includes device information like brand and model.
+    /// current session and includes device information like brand and model. A
+    /// session holds one push target per provider, so if one already exists this
+    /// endpoint updates and returns that target instead of creating a second one,
+    /// and a device that rotates its token is never notified twice.
     ///
     /// - Parameters:
     ///   - targetId: String
@@ -2191,6 +2389,10 @@ open class Account: Service {
         targetId: String,
         identifier: String
     ) async throws -> AppwriteModels.Target {
+        if targetId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"targetId\"")
+        }
+
         let apiPath: String = "/account/targets/{targetId}/push"
             .replacingOccurrences(of: "{targetId}", with: targetId)
 
@@ -2229,6 +2431,10 @@ open class Account: Service {
     open func deletePushTarget(
         targetId: String
     ) async throws -> Any {
+        if targetId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"targetId\"")
+        }
+
         let apiPath: String = "/account/targets/{targetId}/push"
             .replacingOccurrences(of: "{targetId}", with: targetId)
 
@@ -2237,6 +2443,7 @@ open class Account: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -2366,6 +2573,10 @@ open class Account: Service {
     /// create a new session using the [Create
     /// session](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
     /// endpoint.
+    ///
+    /// If there is already an active session, the OAuth2 identity is attached to
+    /// the logged-in account and that session stays active until the token is
+    /// exchanged for a new one.
     ///
     /// A user is limited to 10 active sessions at a time by default. [Learn more
     /// about session
@@ -2620,6 +2831,96 @@ open class Account: Service {
         secret: String
     ) async throws -> AppwriteModels.Token {
         let apiPath: String = "/account/verifications/email"
+
+        let apiParams: [String: Any?] = [
+            "userId": userId,
+            "secret": secret,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Token = { response in
+            return AppwriteModels.Token.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Use this endpoint to send a 6-digit verification code to the currently
+    /// logged in user's email address. Unlike
+    /// [createEmailVerification](https://appwrite.io/docs/references/cloud/client-web/account#createEmailVerification),
+    /// this method requires no redirect URL, which makes it suitable for mobile
+    /// and desktop apps that cannot host a verification page. Learn more about how
+    /// to [complete the verification
+    /// process](https://appwrite.io/docs/references/cloud/client-web/account#updateEmailVerificationOTP).
+    /// The code sent to the user's email address is valid for 15 minutes.
+    ///
+    /// Enable the **phrase** parameter to include a randomly generated security
+    /// phrase in both the email and the response. Showing that phrase in your app
+    /// lets the user confirm the email genuinely came from your request, which
+    /// helps protect against phishing.
+    ///
+    /// - Parameters:
+    ///   - phrase: Bool (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Token
+    ///
+    open func createEmailVerificationOTP(
+        phrase: Bool? = nil
+    ) async throws -> AppwriteModels.Token {
+        let apiPath: String = "/account/verifications/email/otp"
+
+        let apiParams: [String: Any?] = [
+            "phrase": phrase
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Token = { response in
+            return AppwriteModels.Token.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Use this endpoint to complete the user email verification process using the
+    /// 6-digit code that was emailed by
+    /// [createEmailVerificationOTP](https://appwrite.io/docs/references/cloud/client-web/account#createEmailVerificationOTP).
+    /// Pass the **userId** of the user being verified along with the **secret**
+    /// code from the email. If confirmed, this route will return a 200 status code
+    /// and the code is consumed.
+    ///
+    /// - Parameters:
+    ///   - userId: String
+    ///   - secret: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Token
+    ///
+    open func updateEmailVerificationOTP(
+        userId: String,
+        secret: String
+    ) async throws -> AppwriteModels.Token {
+        let apiPath: String = "/account/verifications/email/otp"
 
         let apiParams: [String: Any?] = [
             "userId": userId,

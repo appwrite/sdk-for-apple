@@ -24,6 +24,10 @@ open class Functions: Service {
         queries: [String]? = nil,
         total: Bool? = nil
     ) async throws -> AppwriteModels.ExecutionList {
+        if functionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"functionId\"")
+        }
+
         let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
@@ -75,6 +79,10 @@ open class Functions: Service {
         headers: Any? = nil,
         scheduledAt: String? = nil
     ) async throws -> AppwriteModels.Execution {
+        if functionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"functionId\"")
+        }
+
         let apiPath: String = "/functions/{functionId}/executions"
             .replacingOccurrences(of: "{functionId}", with: functionId)
 
@@ -118,6 +126,13 @@ open class Functions: Service {
         functionId: String,
         executionId: String
     ) async throws -> AppwriteModels.Execution {
+        if functionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"functionId\"")
+        }
+        if executionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"executionId\"")
+        }
+
         let apiPath: String = "/functions/{functionId}/executions/{executionId}"
             .replacingOccurrences(of: "{functionId}", with: functionId)
             .replacingOccurrences(of: "{executionId}", with: executionId)

@@ -26,6 +26,10 @@ open class Storage: Service {
         search: String? = nil,
         total: Bool? = nil
     ) async throws -> AppwriteModels.FileList {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
 
@@ -88,6 +92,10 @@ open class Storage: Service {
         folder: String? = nil,
         onProgress: ((UploadProgress) -> Void)? = nil
     ) async throws -> AppwriteModels.File {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
 
@@ -134,6 +142,13 @@ open class Storage: Service {
         bucketId: String,
         fileId: String
     ) async throws -> AppwriteModels.File {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+        if fileId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"fileId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
@@ -175,6 +190,13 @@ open class Storage: Service {
         name: String? = nil,
         permissions: [String]? = nil
     ) async throws -> AppwriteModels.File {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+        if fileId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"fileId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
@@ -216,6 +238,13 @@ open class Storage: Service {
         bucketId: String,
         fileId: String
     ) async throws -> Any {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+        if fileId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"fileId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
@@ -225,6 +254,7 @@ open class Storage: Service {
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
             "content-type": "application/json",
+            "accept": "application/json",
         ]
 
         return try await client.call(
@@ -251,6 +281,13 @@ open class Storage: Service {
         fileId: String,
         token: String? = nil
     ) async throws -> ByteBuffer {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+        if fileId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"fileId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/download"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
@@ -312,6 +349,13 @@ open class Storage: Service {
         output: AppwriteEnums.ImageFormat? = nil,
         token: String? = nil
     ) async throws -> ByteBuffer {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+        if fileId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"fileId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/preview"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
@@ -360,6 +404,13 @@ open class Storage: Service {
         fileId: String,
         token: String? = nil
     ) async throws -> ByteBuffer {
+        if bucketId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"bucketId\"")
+        }
+        if fileId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"fileId\"")
+        }
+
         let apiPath: String = "/storage/buckets/{bucketId}/files/{fileId}/view"
             .replacingOccurrences(of: "{bucketId}", with: bucketId)
             .replacingOccurrences(of: "{fileId}", with: fileId)
