@@ -125,7 +125,8 @@ open class Storage: Service {
             paramName: paramName,
             idParamName: idParamName,
             converter: converter,
-            onProgress: onProgress
+            onProgress: onProgress,
+            method: "POST"
         )
     }
     ///

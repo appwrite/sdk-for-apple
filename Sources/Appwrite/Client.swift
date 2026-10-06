@@ -23,12 +23,16 @@ open class Client {
 
     open var endPointRealtime: String? = nil
 
+    open var endPointPush: String? = nil
+
+    open var pushClientId: String? = nil
+
     open var headers: [String: String] = [
         "content-type": "application/json",
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "20.0.0",
+        "x-sdk-version": "20.1.0-rc.0",
         "x-appwrite-response-format": "2.3.0",
     ]
 
@@ -313,6 +317,37 @@ open class Client {
     }
 
     ///
+    /// Set push endpoint.
+    ///
+    /// The MQTT broker URL the Push service connects to, e.g. `mqtt://host:1883` or
+    /// `mqtts://host:8883`.
+    ///
+    /// @param String endPoint
+    ///
+    /// @return Client
+    ///
+    open func setPushEndpoint(_ endPoint: String) -> Client {
+        self.endPointPush = endPoint
+        return self
+    }
+
+    ///
+    /// Set push client id.
+    ///
+    /// A stable client id for the Push service. The broker keys its offline-replay cursor on
+    /// this id, so pass a stable value to resume replay across restarts. Defaults to a
+    /// per-connection id when unset.
+    ///
+    /// @param String pushClientId
+    ///
+    /// @return Client
+    ///
+    open func setPushClientId(_ pushClientId: String) -> Client {
+        self.pushClientId = pushClientId
+        return self
+    }
+
+    ///
     /// Add header
     ///
     /// @param String key
@@ -533,9 +568,18 @@ open class Client {
         paramName: String,
         idParamName: String? = nil,
         converter: ((Any) throws -> T)? = nil,
-        onProgress: ((UploadProgress) -> Void)? = nil
+        onProgress: ((UploadProgress) -> Void)? = nil,
+        method: String = "POST"
     ) async throws -> T {
-        let input = params[paramName] as! InputFile
+        guard let input = params[paramName] as? InputFile else {
+            return try await call(
+                method: method,
+                path: path,
+                headers: headers,
+                params: params,
+                converter: converter
+            )
+        }
 
         switch input.sourceType {
         case "path":
@@ -548,10 +592,10 @@ open class Client {
 
         let size = (input.data as! ByteBuffer).readableBytes
 
-        if size < Client.chunkSize {
+        if size <= Client.chunkSize || T.self == String.self {
             params[paramName] = input
             return try await call(
-                method: "POST",
+                method: method,
                 path: path,
                 headers: headers,
                 params: params,
@@ -614,7 +658,7 @@ open class Client {
             }
 
             let chunkResult = try await call(
-                method: "POST",
+                method: method,
                 path: path,
                 headers: chunkHeaders,
                 params: chunkParams,
@@ -755,9 +799,15 @@ open class Client {
                 return
             }
 
-            let string = String(describing: value)
+            var string = String(describing: value)
+            if let object = value as? [String: Any],
+                let data = try? JSONSerialization.data(withJSONObject: object),
+                let json = String(data: data, encoding: .utf8)
+            {
+                string = json
+            }
             bodyBuffer.writeString(CRLF)
-            bodyBuffer.writeString("Content-Length: \(string.count)")
+            bodyBuffer.writeString("Content-Length: \(string.utf8.count)")
             bodyBuffer.writeString(CRLF + CRLF)
             bodyBuffer.writeString(string)
             bodyBuffer.writeString(CRLF)
@@ -789,7 +839,7 @@ open class Client {
         if !chunked {
             request.headers.add(name: "Content-Length", value: bodyBuffer.readableBytes.description)
         }
-        request.headers.add(name: "Content-Type", value: "multipart/form-data;boundary=\"\(Client.boundary)\"")
+        request.headers.add(name: "Content-Type", value: "multipart/form-data; boundary=\"\(Client.boundary)\"")
         request.body = .bytes(bodyBuffer)
     }
 

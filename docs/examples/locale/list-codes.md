@@ -7,6 +7,8 @@ let client = Client()
 
 let locale = Locale(client)
 
-let localeCodeList = try await locale.listCodes()
+let localeCodeList = try await locale.listCodes(
+    total: false // optional
+)
 
 ```
