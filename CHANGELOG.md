@@ -1,5 +1,11 @@
 # Change Log
 
+## 20.1.0-rc.1
+
+* Added: background push notifications render the server `notification` title, body, and image
+* Added: notification `userInfo` now carries `topic` and `payload`
+* Fixed: a server-sent title replaces per-subscription titles and dedupes notifications
+
 ## 20.1.0-rc.0
 
 * Added: `Apps` service to manage OAuth2 apps, keys, secrets, and installations
