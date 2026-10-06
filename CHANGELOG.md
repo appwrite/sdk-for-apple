@@ -1,5 +1,18 @@
 # Change Log
 
+## 20.1.0-rc.0
+
+* Added: `Apps` service to manage OAuth2 apps, keys, secrets, and installations
+* Added: `Oauth2` service for authorization, consent, device, PAR, and token flows
+* Added: `Push` service for MQTT realtime push, backed by `mqtt-nio`
+* Added: `Topic` builder for push targeting
+* Added: `Client.setPushEndpoint()` and `Client.setPushClientId()`
+* Added: `Avatars.updatePhoto()` and `Avatars.deletePhoto()` methods
+* Added: `App`, `Oauth2*`, and `Account` models
+* Added: `webflow` to the `OAuthProvider` enum
+* Added: optional `duration` and `total` params on account and list methods
+* Updated: `chunkedUpload` gained a `method` param for `PUT` uploads
+
 ## 20.0.0
 
 * Breaking: removed `Account.listLogs` and the `Log`, `LogList` models
