@@ -8,7 +8,9 @@ let client = Client()
 let graphql = Graphql(client)
 
 let any = try await graphql.mutation(
-    query: [:]
+    query: [
+        "query": "mutation { accountUpdateName(name: \"Walter\") { name } }"
+    ]
 )
 
 ```

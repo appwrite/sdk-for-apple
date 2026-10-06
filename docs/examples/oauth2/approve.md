@@ -1,0 +1,16 @@
+```swift
+import Appwrite
+
+let client = Client()
+    .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
+    .setProject("<YOUR_PROJECT_ID>") // Your project ID
+
+let oauth2 = Oauth2(client)
+
+let oauth2Approve = try await oauth2.approve(
+    grant_id: "<GRANT_ID>",
+    authorization_details: "<AUTHORIZATION_DETAILS>", // optional
+    scope: "<SCOPE>" // optional
+)
+
+```

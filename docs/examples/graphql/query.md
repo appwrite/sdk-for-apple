@@ -8,7 +8,9 @@ let client = Client()
 let graphql = Graphql(client)
 
 let any = try await graphql.query(
-    query: [:]
+    query: [
+        "query": "query { localeGet { ip } }"
+    ]
 )
 
 ```

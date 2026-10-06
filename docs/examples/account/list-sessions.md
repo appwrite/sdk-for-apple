@@ -7,6 +7,8 @@ let client = Client()
 
 let account = Account(client)
 
-let sessionList = try await account.listSessions()
+let sessionList = try await account.listSessions(
+    total: false // optional
+)
 
 ```

@@ -1759,13 +1759,19 @@ open class Account: Service {
     /// Get the list of active sessions across different devices for the currently
     /// logged in user.
     ///
+    /// - Parameters:
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.SessionList
     ///
-    open func listSessions() async throws -> AppwriteModels.SessionList {
+    open func listSessions(
+        total: Bool? = nil
+    ) async throws -> AppwriteModels.SessionList {
         let apiPath: String = "/account/sessions"
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "total": total
+        ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
@@ -1786,15 +1792,22 @@ open class Account: Service {
     }
     ///
     /// Delete all sessions from the user account and remove any sessions cookies
-    /// from the end client.
+    /// from the end client. Pass `current` as false to keep the session making the
+    /// request and sign out of every other session.
     ///
+    /// - Parameters:
+    ///   - current: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
-    open func deleteSessions() async throws -> Any {
+    open func deleteSessions(
+        current: Bool? = nil
+    ) async throws -> Any {
         let apiPath: String = "/account/sessions"
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "current": current
+        ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
@@ -1847,6 +1860,9 @@ open class Account: Service {
     ///
     /// Allow the user to login into their account by providing a valid email and
     /// password combination. This route will create a new session for the user.
+    /// Use the optional `duration` parameter to create a shorter session, for
+    /// example when the user doesn't choose "remember me". It must be at least 60
+    /// seconds and cannot exceed the project maximum session length.
     ///
     /// A user is limited to 10 active sessions at a time by default. [Learn more
     /// about session
@@ -1855,18 +1871,21 @@ open class Account: Service {
     /// - Parameters:
     ///   - email: String
     ///   - password: String
+    ///   - duration: Int (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
     open func createEmailPasswordSession(
         email: String,
-        password: String
+        password: String,
+        duration: Int? = nil
     ) async throws -> AppwriteModels.Session {
         let apiPath: String = "/account/sessions/email"
 
         let apiParams: [String: Any?] = [
             "email": email,
             "password": password,
+            "duration": duration,
         ]
 
         let apiHeaders: [String: String] = [

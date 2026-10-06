@@ -10,7 +10,9 @@ let teams = Teams(client)
 let membership = try await teams.updateMembership(
     teamId: "<TEAM_ID>",
     membershipId: "<MEMBERSHIP_ID>",
-    roles: []
+    roles: [
+        "editor"
+    ]
 )
 
 ```
