@@ -1,5 +1,18 @@
 # Change Log
 
+## 20.1.0-rc.3
+
+* Added: `getInitialNotification()` and `onNotificationOpened(_:)` for background notification taps
+* Added: `PushNotificationOpened` exposing the tapped notification `topic` and parsed `data`
+* Added: `Push.handleNotificationResponse(_:)` for apps with their own notification-center delegate
+* Fixed: `Push` reads the session the app signed in with from saved cookies
+* Fixed: posts one notification per distinct title instead of only the first server title
+* Fixed: image attachments fall back to the URL extension when the MIME type is missing
+
+## 20.1.0-rc.2
+
+* Updated: regenerated with sdk-generator 5.5.0; no SDK code changes
+
 ## 20.1.0-rc.1
 
 * Added: background push notifications render the server `notification` title, body, and image
