@@ -25,7 +25,7 @@ open class Oauth2ConsentList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
         self.consents = try container.decode([Oauth2Consent].self, forKey: .consents)
     }
 
@@ -44,6 +44,11 @@ open class Oauth2ConsentList: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2ConsentList {
+        let defaults: [String: Any] = [
+            "total": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2ConsentList(
             total: map["total"] as! Int,
             consents: (map["consents"] as! [[String: Any]]).map { Oauth2Consent.from(map: $0) }

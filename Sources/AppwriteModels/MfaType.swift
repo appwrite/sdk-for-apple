@@ -25,8 +25,8 @@ open class MfaType: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.secret = try container.decode(String.self, forKey: .secret)
-        self.uri = try container.decode(String.self, forKey: .uri)
+        self.secret = try container.contains(.secret) ? container.decode(String.self, forKey: .secret) : ""
+        self.uri = try container.contains(.uri) ? container.decode(String.self, forKey: .uri) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class MfaType: Codable {
     }
 
     public static func from(map: [String: Any]) -> MfaType {
+        let defaults: [String: Any] = [
+            "secret": "",
+            "uri": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return MfaType(
             secret: map["secret"] as! String,
             uri: map["uri"] as! String

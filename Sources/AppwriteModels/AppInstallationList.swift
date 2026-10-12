@@ -25,7 +25,7 @@ open class AppInstallationList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
         self.installations = try container.decode([AppInstallation].self, forKey: .installations)
     }
 
@@ -44,6 +44,11 @@ open class AppInstallationList: Codable {
     }
 
     public static func from(map: [String: Any]) -> AppInstallationList {
+        let defaults: [String: Any] = [
+            "total": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AppInstallationList(
             total: map["total"] as! Int,
             installations: (map["installations"] as! [[String: Any]]).map { AppInstallation.from(map: $0) }

@@ -20,7 +20,7 @@ open class Oauth2Approve: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.redirectUrl = try container.decode(String.self, forKey: .redirectUrl)
+        self.redirectUrl = try container.contains(.redirectUrl) ? container.decode(String.self, forKey: .redirectUrl) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,11 @@ open class Oauth2Approve: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2Approve {
+        let defaults: [String: Any] = [
+            "redirectUrl": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2Approve(
             redirectUrl: map["redirectUrl"] as! String
         )

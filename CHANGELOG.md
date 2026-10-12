@@ -1,36 +1,29 @@
 # Change Log
 
-## 20.1.0-rc.3
+## 20.1.0
 
-* Added: `getInitialNotification()` and `onNotificationOpened(_:)` for background notification taps
-* Added: `PushNotificationOpened` exposing the tapped notification `topic` and parsed `data`
-* Added: `Push.handleNotificationResponse(_:)` for apps with their own notification-center delegate
-* Fixed: `Push` reads the session the app signed in with from saved cookies
-* Fixed: posts one notification per distinct title instead of only the first server title
-* Fixed: image attachments fall back to the URL extension when the MIME type is missing
-
-## 20.1.0-rc.2
-
-* Updated: regenerated with sdk-generator 5.5.0; no SDK code changes
-
-## 20.1.0-rc.1
-
+* Added: `Account.listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey` and `deletePasskey`
+* Added: `Account.updatePasskeyVerification` to finish registering a passkey
+* Added: `Account.createPasskeyToken` and `Account.updatePasskeyToken` for passkey sign-in
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge` and `TokenSecret` models
+* Added: `Push` service for MQTT realtime push, backed by `mqtt-nio`, with a `Topic` builder
+* Added: `Client.setPushEndpoint()` and `Client.setPushClientId()`
 * Added: background push notifications render the server `notification` title, body, and image
-* Added: notification `userInfo` now carries `topic` and `payload`
-* Fixed: a server-sent title replaces per-subscription titles and dedupes notifications
-
-## 20.1.0-rc.0
-
+* Added: `getInitialNotification()`, `onNotificationOpened(_:)` and `PushNotificationOpened` for notification taps
+* Added: `Push.handleNotificationResponse(_:)` for apps with their own notification-center delegate
+* Added: `Analytics` service with `createEvent`
 * Added: `Apps` service to manage OAuth2 apps, keys, secrets, and installations
 * Added: `Oauth2` service for authorization, consent, device, PAR, and token flows
-* Added: `Push` service for MQTT realtime push, backed by `mqtt-nio`
-* Added: `Topic` builder for push targeting
-* Added: `Client.setPushEndpoint()` and `Client.setPushClientId()`
 * Added: `Avatars.updatePhoto()` and `Avatars.deletePhoto()` methods
 * Added: `App`, `Oauth2*`, and `Account` models
+* Added: `state` parameter to `Account.createOAuth2Session` and `Account.createOAuth2Token`
+* Added: `duration` on `createEmailPasswordSession` and `current` on `deleteSessions`
+* Added: `total` parameter to `Account.listSessions`, `Locale` list methods and `listTransactions`
+* Added: `membershipId` parameter to `Teams.createMembership`
 * Added: `webflow` to the `OAuthProvider` enum
-* Added: optional `duration` and `total` params on account and list methods
+* Fixed: response models fill missing fields from spec defaults instead of throwing
 * Updated: `chunkedUpload` gained a `method` param for `PUT` uploads
+* Updated: SDK now targets Appwrite 2.4 (`x-appwrite-response-format: 2.4.0`)
 * Fixed: `chunkedUpload` sends an exactly-chunk-sized file in a single request
 
 ## 20.0.0

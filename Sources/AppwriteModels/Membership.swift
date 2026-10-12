@@ -90,21 +90,21 @@ open class Membership: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.userId = try container.decode(String.self, forKey: .userId)
-        self.userName = try container.decode(String.self, forKey: .userName)
-        self.userEmail = try container.decode(String.self, forKey: .userEmail)
-        self.userPhone = try container.decode(String.self, forKey: .userPhone)
-        self.teamId = try container.decode(String.self, forKey: .teamId)
-        self.teamName = try container.decode(String.self, forKey: .teamName)
-        self.invited = try container.decode(String.self, forKey: .invited)
-        self.joined = try container.decode(String.self, forKey: .joined)
-        self.confirm = try container.decode(Bool.self, forKey: .confirm)
-        self.mfa = try container.decode(Bool.self, forKey: .mfa)
-        self.userAccessedAt = try container.decode(String.self, forKey: .userAccessedAt)
-        self.roles = try container.decode([String].self, forKey: .roles)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
+        self.userName = try container.contains(.userName) ? container.decode(String.self, forKey: .userName) : ""
+        self.userEmail = try container.contains(.userEmail) ? container.decode(String.self, forKey: .userEmail) : ""
+        self.userPhone = try container.contains(.userPhone) ? container.decode(String.self, forKey: .userPhone) : ""
+        self.teamId = try container.contains(.teamId) ? container.decode(String.self, forKey: .teamId) : ""
+        self.teamName = try container.contains(.teamName) ? container.decode(String.self, forKey: .teamName) : ""
+        self.invited = try container.contains(.invited) ? container.decode(String.self, forKey: .invited) : ""
+        self.joined = try container.contains(.joined) ? container.decode(String.self, forKey: .joined) : ""
+        self.confirm = try container.contains(.confirm) ? container.decode(Bool.self, forKey: .confirm) : false
+        self.mfa = try container.contains(.mfa) ? container.decode(Bool.self, forKey: .mfa) : false
+        self.userAccessedAt = try container.contains(.userAccessedAt) ? container.decode(String.self, forKey: .userAccessedAt) : ""
+        self.roles = try container.contains(.roles) ? container.decode([String].self, forKey: .roles) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -148,6 +148,25 @@ open class Membership: Codable {
     }
 
     public static func from(map: [String: Any]) -> Membership {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "userId": "",
+            "userName": "",
+            "userEmail": "",
+            "userPhone": "",
+            "teamId": "",
+            "teamName": "",
+            "invited": "",
+            "joined": "",
+            "confirm": false,
+            "mfa": false,
+            "userAccessedAt": "",
+            "roles": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Membership(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

@@ -25,7 +25,7 @@ open class AppScopeList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
         self.scopes = try container.decode([AppScope].self, forKey: .scopes)
     }
 
@@ -44,6 +44,11 @@ open class AppScopeList: Codable {
     }
 
     public static func from(map: [String: Any]) -> AppScopeList {
+        let defaults: [String: Any] = [
+            "total": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AppScopeList(
             total: map["total"] as! Int,
             scopes: (map["scopes"] as! [[String: Any]]).map { AppScope.from(map: $0) }

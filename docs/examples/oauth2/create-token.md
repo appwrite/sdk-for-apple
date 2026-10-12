@@ -16,7 +16,7 @@ let oauth2Token = try await oauth2.createToken(
     client_secret: "<CLIENT_SECRET>", // optional
     code_verifier: "<CODE_VERIFIER>", // optional
     redirect_uri: "https://example.com", // optional
-    resource: "", // optional
+    resource: [], // optional
     audience: "<AUDIENCE>" // optional
 )
 

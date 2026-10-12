@@ -20,7 +20,7 @@ open class Jwt: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.jwt = try container.decode(String.self, forKey: .jwt)
+        self.jwt = try container.contains(.jwt) ? container.decode(String.self, forKey: .jwt) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,11 @@ open class Jwt: Codable {
     }
 
     public static func from(map: [String: Any]) -> Jwt {
+        let defaults: [String: Any] = [
+            "jwt": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Jwt(
             jwt: map["jwt"] as! String
         )

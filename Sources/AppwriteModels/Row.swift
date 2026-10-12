@@ -55,12 +55,12 @@ open class Row<T: Codable>: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.sequence = try container.decode(String.self, forKey: .sequence)
-        self.tableId = try container.decode(String.self, forKey: .tableId)
-        self.databaseId = try container.decode(String.self, forKey: .databaseId)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.sequence = try container.contains(.sequence) ? container.decode(String.self, forKey: .sequence) : ""
+        self.tableId = try container.contains(.tableId) ? container.decode(String.self, forKey: .tableId) : ""
+        self.databaseId = try container.contains(.databaseId) ? container.decode(String.self, forKey: .databaseId) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
         self.permissions = try container.decode([String].self, forKey: .permissions)
         self.data = try container.decode(T.self, forKey: .data)
     }
@@ -92,6 +92,16 @@ open class Row<T: Codable>: Codable {
     }
 
     public static func from(map: [String: Any]) -> Row {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$sequence": "",
+            "$tableId": "",
+            "$databaseId": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Row(
             id: map["$id"] as! String,
             sequence: map["$sequence"] as! String,

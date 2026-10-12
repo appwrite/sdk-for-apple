@@ -30,9 +30,9 @@ open class Phone: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.code = try container.decode(String.self, forKey: .code)
-        self.countryCode = try container.decode(String.self, forKey: .countryCode)
-        self.countryName = try container.decode(String.self, forKey: .countryName)
+        self.code = try container.contains(.code) ? container.decode(String.self, forKey: .code) : ""
+        self.countryCode = try container.contains(.countryCode) ? container.decode(String.self, forKey: .countryCode) : ""
+        self.countryName = try container.contains(.countryName) ? container.decode(String.self, forKey: .countryName) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -52,6 +52,13 @@ open class Phone: Codable {
     }
 
     public static func from(map: [String: Any]) -> Phone {
+        let defaults: [String: Any] = [
+            "code": "",
+            "countryCode": "",
+            "countryName": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Phone(
             code: map["code"] as! String,
             countryCode: map["countryCode"] as! String,

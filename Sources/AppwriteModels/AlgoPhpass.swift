@@ -20,7 +20,7 @@ open class AlgoPhpass: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "phpass"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,11 @@ open class AlgoPhpass: Codable {
     }
 
     public static func from(map: [String: Any]) -> AlgoPhpass {
+        let defaults: [String: Any] = [
+            "type": "phpass",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AlgoPhpass(
             type: map["type"] as! String
         )

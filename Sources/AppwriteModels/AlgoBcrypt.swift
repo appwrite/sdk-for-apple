@@ -20,7 +20,7 @@ open class AlgoBcrypt: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "bcrypt"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,11 @@ open class AlgoBcrypt: Codable {
     }
 
     public static func from(map: [String: Any]) -> AlgoBcrypt {
+        let defaults: [String: Any] = [
+            "type": "bcrypt",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AlgoBcrypt(
             type: map["type"] as! String
         )

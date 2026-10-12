@@ -150,31 +150,31 @@ open class User<T: Codable>: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.name = try container.decode(String.self, forKey: .name)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
         self.password = try container.decodeIfPresent(String.self, forKey: .password)
         self.hash = try container.decodeIfPresent(String.self, forKey: .hash)
         self.hashOptions = try container.decodeIfPresent([String: AnyCodable].self, forKey: .hashOptions)
-        self.registration = try container.decode(String.self, forKey: .registration)
-        self.status = try container.decode(Bool.self, forKey: .status)
-        self.labels = try container.decode([String].self, forKey: .labels)
-        self.passwordUpdate = try container.decode(String.self, forKey: .passwordUpdate)
-        self.email = try container.decode(String.self, forKey: .email)
-        self.phone = try container.decode(String.self, forKey: .phone)
-        self.emailVerification = try container.decode(Bool.self, forKey: .emailVerification)
+        self.registration = try container.contains(.registration) ? container.decode(String.self, forKey: .registration) : ""
+        self.status = try container.contains(.status) ? container.decode(Bool.self, forKey: .status) : true
+        self.labels = try container.contains(.labels) ? container.decode([String].self, forKey: .labels) : []
+        self.passwordUpdate = try container.contains(.passwordUpdate) ? container.decode(String.self, forKey: .passwordUpdate) : ""
+        self.email = try container.contains(.email) ? container.decode(String.self, forKey: .email) : ""
+        self.phone = try container.contains(.phone) ? container.decode(String.self, forKey: .phone) : ""
+        self.emailVerification = try container.contains(.emailVerification) ? container.decode(Bool.self, forKey: .emailVerification) : false
         self.emailCanonical = try container.decodeIfPresent(String.self, forKey: .emailCanonical)
         self.emailIsFree = try container.decodeIfPresent(Bool.self, forKey: .emailIsFree)
         self.emailIsDisposable = try container.decodeIfPresent(Bool.self, forKey: .emailIsDisposable)
         self.emailIsCorporate = try container.decodeIfPresent(Bool.self, forKey: .emailIsCorporate)
         self.emailIsCanonical = try container.decodeIfPresent(Bool.self, forKey: .emailIsCanonical)
         self.passwordPwned = try container.decodeIfPresent(Bool.self, forKey: .passwordPwned)
-        self.phoneVerification = try container.decode(Bool.self, forKey: .phoneVerification)
-        self.mfa = try container.decode(Bool.self, forKey: .mfa)
+        self.phoneVerification = try container.contains(.phoneVerification) ? container.decode(Bool.self, forKey: .phoneVerification) : false
+        self.mfa = try container.contains(.mfa) ? container.decode(Bool.self, forKey: .mfa) : false
         self.prefs = try container.decode(Preferences<T>.self, forKey: .prefs)
         self.targets = try container.decode([Target].self, forKey: .targets)
-        self.accessedAt = try container.decode(String.self, forKey: .accessedAt)
+        self.accessedAt = try container.contains(.accessedAt) ? container.decode(String.self, forKey: .accessedAt) : ""
         self.impersonator = try container.decodeIfPresent(Bool.self, forKey: .impersonator)
         self.impersonatorUserId = try container.decodeIfPresent(String.self, forKey: .impersonatorUserId)
     }
@@ -244,6 +244,24 @@ open class User<T: Codable>: Codable {
     }
 
     public static func from(map: [String: Any]) -> User {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "name": "",
+            "registration": "",
+            "status": true,
+            "labels": [Any](),
+            "passwordUpdate": "",
+            "email": "",
+            "phone": "",
+            "emailVerification": false,
+            "phoneVerification": false,
+            "mfa": false,
+            "accessedAt": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return User(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

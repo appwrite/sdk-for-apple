@@ -45,12 +45,12 @@ open class Oauth2DeviceAuthorization: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.device_code = try container.decode(String.self, forKey: .device_code)
-        self.user_code = try container.decode(String.self, forKey: .user_code)
-        self.verification_uri = try container.decode(String.self, forKey: .verification_uri)
-        self.verification_uri_complete = try container.decode(String.self, forKey: .verification_uri_complete)
-        self.expires_in = try container.decode(Int.self, forKey: .expires_in)
-        self.interval = try container.decode(Int.self, forKey: .interval)
+        self.device_code = try container.contains(.device_code) ? container.decode(String.self, forKey: .device_code) : ""
+        self.user_code = try container.contains(.user_code) ? container.decode(String.self, forKey: .user_code) : ""
+        self.verification_uri = try container.contains(.verification_uri) ? container.decode(String.self, forKey: .verification_uri) : ""
+        self.verification_uri_complete = try container.contains(.verification_uri_complete) ? container.decode(String.self, forKey: .verification_uri_complete) : ""
+        self.expires_in = try container.contains(.expires_in) ? container.decode(Int.self, forKey: .expires_in) : 0
+        self.interval = try container.contains(.interval) ? container.decode(Int.self, forKey: .interval) : 0
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -76,6 +76,16 @@ open class Oauth2DeviceAuthorization: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2DeviceAuthorization {
+        let defaults: [String: Any] = [
+            "device_code": "",
+            "user_code": "",
+            "verification_uri": "",
+            "verification_uri_complete": "",
+            "expires_in": 0,
+            "interval": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2DeviceAuthorization(
             device_code: map["device_code"] as! String,
             user_code: map["user_code"] as! String,

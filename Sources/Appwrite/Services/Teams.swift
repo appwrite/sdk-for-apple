@@ -597,6 +597,7 @@ open class Teams: Service {
     /// - Parameters:
     ///   - teamId: String
     ///   - roles: [String]
+    ///   - membershipId: String (optional)
     ///   - email: String (optional)
     ///   - userId: String (optional)
     ///   - phone: String (optional)
@@ -608,6 +609,7 @@ open class Teams: Service {
     open func createMembership(
         teamId: String,
         roles: [String],
+        membershipId: String? = nil,
         email: String? = nil,
         userId: String? = nil,
         phone: String? = nil,
@@ -622,6 +624,7 @@ open class Teams: Service {
             .replacingOccurrences(of: "{teamId}", with: teamId)
 
         let apiParams: [String: Any?] = [
+            "membershipId": membershipId,
             "email": email,
             "userId": userId,
             "phone": phone,

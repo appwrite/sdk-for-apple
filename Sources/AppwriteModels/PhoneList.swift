@@ -25,7 +25,7 @@ open class PhoneList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
         self.phones = try container.decode([Phone].self, forKey: .phones)
     }
 
@@ -44,6 +44,11 @@ open class PhoneList: Codable {
     }
 
     public static func from(map: [String: Any]) -> PhoneList {
+        let defaults: [String: Any] = [
+            "total": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return PhoneList(
             total: map["total"] as! Int,
             phones: (map["phones"] as! [[String: Any]]).map { Phone.from(map: $0) }

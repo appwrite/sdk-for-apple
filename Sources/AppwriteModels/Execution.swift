@@ -111,24 +111,24 @@ open class Execution: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
         self.permissions = try container.decode([String].self, forKey: .permissions)
-        self.resourceId = try container.decode(String.self, forKey: .resourceId)
-        self.resourceType = AppwriteEnums.ExecutionResourceType(rawValue: try container.decode(String.self, forKey: .resourceType))!
-        self.deploymentId = try container.decode(String.self, forKey: .deploymentId)
+        self.resourceId = try container.contains(.resourceId) ? container.decode(String.self, forKey: .resourceId) : ""
+        self.resourceType = AppwriteEnums.ExecutionResourceType(rawValue: try container.contains(.resourceType) ? container.decode(String.self, forKey: .resourceType) : "functions")!
+        self.deploymentId = try container.contains(.deploymentId) ? container.decode(String.self, forKey: .deploymentId) : ""
         self.trigger = AppwriteEnums.ExecutionTrigger(rawValue: try container.decode(String.self, forKey: .trigger))!
         self.status = AppwriteEnums.ExecutionStatus(rawValue: try container.decode(String.self, forKey: .status))!
-        self.requestMethod = try container.decode(String.self, forKey: .requestMethod)
-        self.requestPath = try container.decode(String.self, forKey: .requestPath)
+        self.requestMethod = try container.contains(.requestMethod) ? container.decode(String.self, forKey: .requestMethod) : ""
+        self.requestPath = try container.contains(.requestPath) ? container.decode(String.self, forKey: .requestPath) : ""
         self.requestHeaders = try container.decode([Headers].self, forKey: .requestHeaders)
-        self.responseStatusCode = try container.decode(Int.self, forKey: .responseStatusCode)
-        self.responseBody = try container.decode(String.self, forKey: .responseBody)
+        self.responseStatusCode = try container.contains(.responseStatusCode) ? container.decode(Int.self, forKey: .responseStatusCode) : 0
+        self.responseBody = try container.contains(.responseBody) ? container.decode(String.self, forKey: .responseBody) : ""
         self.responseHeaders = try container.decode([Headers].self, forKey: .responseHeaders)
-        self.logs = try container.decode(String.self, forKey: .logs)
-        self.errors = try container.decode(String.self, forKey: .errors)
-        self.duration = try container.decode(Double.self, forKey: .duration)
+        self.logs = try container.contains(.logs) ? container.decode(String.self, forKey: .logs) : ""
+        self.errors = try container.contains(.errors) ? container.decode(String.self, forKey: .errors) : ""
+        self.duration = try container.contains(.duration) ? container.decode(Double.self, forKey: .duration) : 0
         self.scheduledAt = try container.decodeIfPresent(String.self, forKey: .scheduledAt)
     }
 
@@ -181,6 +181,23 @@ open class Execution: Codable {
     }
 
     public static func from(map: [String: Any]) -> Execution {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "resourceId": "",
+            "resourceType": "functions",
+            "deploymentId": "",
+            "requestMethod": "",
+            "requestPath": "",
+            "responseStatusCode": 0,
+            "responseBody": "",
+            "logs": "",
+            "errors": "",
+            "duration": 0.0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Execution(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

@@ -25,7 +25,7 @@ open class ContinentList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
         self.continents = try container.decode([Continent].self, forKey: .continents)
     }
 
@@ -44,6 +44,11 @@ open class ContinentList: Codable {
     }
 
     public static func from(map: [String: Any]) -> ContinentList {
+        let defaults: [String: Any] = [
+            "total": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return ContinentList(
             total: map["total"] as! Int,
             continents: (map["continents"] as! [[String: Any]]).map { Continent.from(map: $0) }

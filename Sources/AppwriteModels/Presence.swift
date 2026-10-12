@@ -60,13 +60,13 @@ open class Presence: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
         self.permissions = try container.decode([String].self, forKey: .permissions)
-        self.userId = try container.decode(String.self, forKey: .userId)
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
         self.status = try container.decodeIfPresent(String.self, forKey: .status)
-        self.source = try container.decode(String.self, forKey: .source)
+        self.source = try container.contains(.source) ? container.decode(String.self, forKey: .source) : ""
         self.expiresAt = try container.decodeIfPresent(String.self, forKey: .expiresAt)
         self.metadata = try container.decodeIfPresent([String: AnyCodable].self, forKey: .metadata)
     }
@@ -100,6 +100,15 @@ open class Presence: Codable {
     }
 
     public static func from(map: [String: Any]) -> Presence {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "userId": "",
+            "source": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Presence(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

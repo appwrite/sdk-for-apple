@@ -19,7 +19,7 @@ let oauth2PAR = try await oauth2.createPAR(
     prompt: "<PROMPT>", // optional
     max_age: 0, // optional
     authorization_details: "<AUTHORIZATION_DETAILS>", // optional
-    resource: "", // optional
+    resource: [], // optional
     audience: "<AUDIENCE>" // optional
 )
 

@@ -11,7 +11,7 @@ let oauth2DeviceAuthorization = try await oauth2.createDeviceAuthorization(
     client_id: "<CLIENT_ID>", // optional
     scope: "<SCOPE>", // optional
     authorization_details: "<AUTHORIZATION_DETAILS>", // optional
-    resource: "", // optional
+    resource: [], // optional
     audience: "<AUDIENCE>" // optional
 )
 

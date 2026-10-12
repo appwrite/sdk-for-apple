@@ -35,10 +35,10 @@ open class AlgoScryptModified: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.type = try container.decode(String.self, forKey: .type)
-        self.salt = try container.decode(String.self, forKey: .salt)
-        self.saltSeparator = try container.decode(String.self, forKey: .saltSeparator)
-        self.signerKey = try container.decode(String.self, forKey: .signerKey)
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "scryptMod"
+        self.salt = try container.contains(.salt) ? container.decode(String.self, forKey: .salt) : ""
+        self.saltSeparator = try container.contains(.saltSeparator) ? container.decode(String.self, forKey: .saltSeparator) : ""
+        self.signerKey = try container.contains(.signerKey) ? container.decode(String.self, forKey: .signerKey) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -60,6 +60,14 @@ open class AlgoScryptModified: Codable {
     }
 
     public static func from(map: [String: Any]) -> AlgoScryptModified {
+        let defaults: [String: Any] = [
+            "type": "scryptMod",
+            "salt": "",
+            "saltSeparator": "",
+            "signerKey": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AlgoScryptModified(
             type: map["type"] as! String,
             salt: map["salt"] as! String,

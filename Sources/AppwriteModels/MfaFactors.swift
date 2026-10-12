@@ -40,11 +40,11 @@ open class MfaFactors: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.totp = try container.decode(Bool.self, forKey: .totp)
-        self.phone = try container.decode(Bool.self, forKey: .phone)
-        self.email = try container.decode(Bool.self, forKey: .email)
-        self.recoveryCode = try container.decode(Bool.self, forKey: .recoveryCode)
-        self.custom = try container.decode(Bool.self, forKey: .custom)
+        self.totp = try container.contains(.totp) ? container.decode(Bool.self, forKey: .totp) : false
+        self.phone = try container.contains(.phone) ? container.decode(Bool.self, forKey: .phone) : false
+        self.email = try container.contains(.email) ? container.decode(Bool.self, forKey: .email) : false
+        self.recoveryCode = try container.contains(.recoveryCode) ? container.decode(Bool.self, forKey: .recoveryCode) : false
+        self.custom = try container.contains(.custom) ? container.decode(Bool.self, forKey: .custom) : false
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -68,6 +68,15 @@ open class MfaFactors: Codable {
     }
 
     public static func from(map: [String: Any]) -> MfaFactors {
+        let defaults: [String: Any] = [
+            "totp": false,
+            "phone": false,
+            "email": false,
+            "recoveryCode": false,
+            "custom": false,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return MfaFactors(
             totp: map["totp"] as! Bool,
             phone: map["phone"] as! Bool,

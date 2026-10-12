@@ -1336,6 +1336,250 @@ open class Account: Service {
         )
     }
     ///
+    /// Get the list of verified passkeys registered by the currently logged in
+    /// user.
+    ///
+    /// - Parameters:
+    ///   - queries: [String] (optional)
+    ///   - total: Bool (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PasskeyList
+    ///
+    open func listPasskeys(
+        queries: [String]? = nil,
+        total: Bool? = nil
+    ) async throws -> AppwriteModels.PasskeyList {
+        let apiPath: String = "/account/passkeys"
+
+        let apiParams: [String: Any?] = [
+            "queries": queries,
+            "total": total,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.PasskeyList = { response in
+            return AppwriteModels.PasskeyList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Start registering a passkey for the currently logged in user. The session
+    /// must have signed in or completed an MFA challenge within the last 10
+    /// minutes. Pass the returned `publicKey` options to
+    /// `navigator.credentials.create()`, then complete the registration with
+    /// [Update passkey
+    /// verification](/docs/references/cloud/client-web/account#updatePasskeyVerification).
+    /// The passkey stays pending until verified, and the challenge expires after 5
+    /// minutes.
+    ///
+    /// - Parameters:
+    ///   - passkeyId: String (optional)
+    ///   - name: String (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PasskeyChallenge
+    ///
+    open func createPasskey(
+        passkeyId: String? = nil,
+        name: String? = nil
+    ) async throws -> AppwriteModels.PasskeyChallenge {
+        let apiPath: String = "/account/passkeys"
+
+        let apiParams: [String: Any?] = [
+            "passkeyId": passkeyId,
+            "name": name,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.PasskeyChallenge = { response in
+            return AppwriteModels.PasskeyChallenge.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Get a verified passkey of the currently logged in user by its unique ID.
+    ///
+    /// - Parameters:
+    ///   - passkeyId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Passkey
+    ///
+    open func getPasskey(
+        passkeyId: String
+    ) async throws -> AppwriteModels.Passkey {
+        if passkeyId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"passkeyId\"")
+        }
+
+        let apiPath: String = "/account/passkeys/{passkeyId}"
+            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Passkey = { response in
+            return AppwriteModels.Passkey.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Rename a passkey of the currently logged in user.
+    ///
+    /// - Parameters:
+    ///   - passkeyId: String
+    ///   - name: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Passkey
+    ///
+    open func updatePasskey(
+        passkeyId: String,
+        name: String
+    ) async throws -> AppwriteModels.Passkey {
+        if passkeyId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"passkeyId\"")
+        }
+
+        let apiPath: String = "/account/passkeys/{passkeyId}"
+            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+
+        let apiParams: [String: Any?] = [
+            "name": name
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Passkey = { response in
+            return AppwriteModels.Passkey.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Delete a passkey from the currently logged in user. The passkey can no
+    /// longer be used to sign in, although it may remain stored on the user's
+    /// device. The session must have signed in or completed an MFA challenge
+    /// within the last 10 minutes.
+    ///
+    /// - Parameters:
+    ///   - passkeyId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deletePasskey(
+        passkeyId: String
+    ) async throws -> Any {
+        if passkeyId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"passkeyId\"")
+        }
+
+        let apiPath: String = "/account/passkeys/{passkeyId}"
+            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams
+        )
+    }
+    ///
+    /// Complete a passkey registration started with [Create
+    /// passkey](/docs/references/cloud/client-web/account#createPasskey). Pass the
+    /// JSON form of the credential returned by `navigator.credentials.create()`,
+    /// for example `credential.toJSON()`. Each registration can be verified once;
+    /// a failed attempt requires starting it again.
+    ///
+    /// - Parameters:
+    ///   - passkeyId: String
+    ///   - credential: Any
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Passkey
+    ///
+    open func updatePasskeyVerification(
+        passkeyId: String,
+        credential: Any
+    ) async throws -> AppwriteModels.Passkey {
+        if passkeyId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"passkeyId\"")
+        }
+
+        let apiPath: String = "/account/passkeys/{passkeyId}/verification"
+            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+
+        let apiParams: [String: Any?] = [
+            "credential": credential
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Passkey = { response in
+            return AppwriteModels.Passkey.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
     /// Update currently logged in user password. For validation, user is required
     /// to pass in the new password, and the old password. For users created with
     /// OAuth, Team Invites and Magic URL, oldPassword is optional.
@@ -2059,6 +2303,7 @@ open class Account: Service {
     ///   - success: String (optional)
     ///   - failure: String (optional)
     ///   - scopes: [String] (optional)
+    ///   - state: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Bool
     ///
@@ -2067,7 +2312,8 @@ open class Account: Service {
         provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
-        scopes: [String]? = nil
+        scopes: [String]? = nil,
+        state: String? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/sessions/oauth2/{provider}"
             .replacingOccurrences(of: "{provider}", with: provider.rawValue)
@@ -2076,6 +2322,7 @@ open class Account: Service {
             "success": success,
             "failure": failure,
             "scopes": scopes,
+            "state": state,
             "project": client.config["project"],
         ]
 
@@ -2606,6 +2853,7 @@ open class Account: Service {
     ///   - success: String (optional)
     ///   - failure: String (optional)
     ///   - scopes: [String] (optional)
+    ///   - state: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Bool
     ///
@@ -2614,7 +2862,8 @@ open class Account: Service {
         provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
-        scopes: [String]? = nil
+        scopes: [String]? = nil,
+        state: String? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/tokens/oauth2/{provider}"
             .replacingOccurrences(of: "{provider}", with: provider.rawValue)
@@ -2623,6 +2872,7 @@ open class Account: Service {
             "success": success,
             "failure": failure,
             "scopes": scopes,
+            "state": state,
             "project": client.config["project"],
         ]
 
@@ -2646,6 +2896,87 @@ open class Account: Service {
 
         return true
 
+    }
+    ///
+    /// Start signing in with a passkey. No email or user ID is needed: pass the
+    /// returned `publicKey` options to `navigator.credentials.get()` and the user
+    /// picks one of their passkeys. Then call [Update passkey
+    /// token](/docs/references/cloud/client-web/account#updatePasskeyToken) with
+    /// the credential to receive a token, and exchange it with [Create
+    /// session](/docs/references/cloud/client-web/account#createSession). The
+    /// challenge expires after 5 minutes.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.PasskeyChallenge
+    ///
+    open func createPasskeyToken() async throws -> AppwriteModels.PasskeyChallenge {
+        let apiPath: String = "/account/tokens/passkey"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.PasskeyChallenge = { response in
+            return AppwriteModels.PasskeyChallenge.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Complete a passkey sign-in started with [Create passkey
+    /// token](/docs/references/cloud/client-web/account#createPasskeyToken). Pass
+    /// the challenge ID and the JSON form of the credential returned by
+    /// `navigator.credentials.get()`, for example `credential.toJSON()`. The
+    /// returned token includes its secret and expires after 1 minute: exchange it
+    /// for a session with [Create
+    /// session](/docs/references/cloud/client-web/account#createSession). Passkeys
+    /// require user verification, so the session also satisfies MFA. Each
+    /// challenge can only be used once.
+    ///
+    /// - Parameters:
+    ///   - challengeId: String
+    ///   - credential: Any
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.TokenSecret
+    ///
+    open func updatePasskeyToken(
+        challengeId: String,
+        credential: Any
+    ) async throws -> AppwriteModels.TokenSecret {
+        let apiPath: String = "/account/tokens/passkey"
+
+        let apiParams: [String: Any?] = [
+            "challengeId": challengeId,
+            "credential": credential,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.TokenSecret = { response in
+            return AppwriteModels.TokenSecret.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PUT",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
     }
     ///
     /// Sends the user an SMS with a secret key for creating a session. If the

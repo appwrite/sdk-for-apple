@@ -145,31 +145,31 @@ open class App: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.clientUri = try container.decode(String.self, forKey: .clientUri)
-        self.logoUri = try container.decode(String.self, forKey: .logoUri)
-        self.privacyPolicyUrl = try container.decode(String.self, forKey: .privacyPolicyUrl)
-        self.termsUrl = try container.decode(String.self, forKey: .termsUrl)
-        self.contacts = try container.decode([String].self, forKey: .contacts)
-        self.tagline = try container.decode(String.self, forKey: .tagline)
-        self.tags = try container.decode([String].self, forKey: .tags)
-        self.labels = try container.decode([String].self, forKey: .labels)
-        self.images = try container.decode([String].self, forKey: .images)
-        self.supportUrl = try container.decode(String.self, forKey: .supportUrl)
-        self.dataDeletionUrl = try container.decode(String.self, forKey: .dataDeletionUrl)
-        self.redirectUris = try container.decode([String].self, forKey: .redirectUris)
-        self.postLogoutRedirectUris = try container.decode([String].self, forKey: .postLogoutRedirectUris)
-        self.enabled = try container.decode(Bool.self, forKey: .enabled)
-        self.type = try container.decode(String.self, forKey: .type)
-        self.deviceFlow = try container.decode(Bool.self, forKey: .deviceFlow)
-        self.teamId = try container.decode(String.self, forKey: .teamId)
-        self.userId = try container.decode(String.self, forKey: .userId)
-        self.installationScopes = try container.decode([String].self, forKey: .installationScopes)
-        self.installationRedirectUrl = try container.decode(String.self, forKey: .installationRedirectUrl)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
+        self.description = try container.contains(.description) ? container.decode(String.self, forKey: .description) : ""
+        self.clientUri = try container.contains(.clientUri) ? container.decode(String.self, forKey: .clientUri) : ""
+        self.logoUri = try container.contains(.logoUri) ? container.decode(String.self, forKey: .logoUri) : ""
+        self.privacyPolicyUrl = try container.contains(.privacyPolicyUrl) ? container.decode(String.self, forKey: .privacyPolicyUrl) : ""
+        self.termsUrl = try container.contains(.termsUrl) ? container.decode(String.self, forKey: .termsUrl) : ""
+        self.contacts = try container.contains(.contacts) ? container.decode([String].self, forKey: .contacts) : []
+        self.tagline = try container.contains(.tagline) ? container.decode(String.self, forKey: .tagline) : ""
+        self.tags = try container.contains(.tags) ? container.decode([String].self, forKey: .tags) : []
+        self.labels = try container.contains(.labels) ? container.decode([String].self, forKey: .labels) : []
+        self.images = try container.contains(.images) ? container.decode([String].self, forKey: .images) : []
+        self.supportUrl = try container.contains(.supportUrl) ? container.decode(String.self, forKey: .supportUrl) : ""
+        self.dataDeletionUrl = try container.contains(.dataDeletionUrl) ? container.decode(String.self, forKey: .dataDeletionUrl) : ""
+        self.redirectUris = try container.contains(.redirectUris) ? container.decode([String].self, forKey: .redirectUris) : []
+        self.postLogoutRedirectUris = try container.contains(.postLogoutRedirectUris) ? container.decode([String].self, forKey: .postLogoutRedirectUris) : []
+        self.enabled = try container.contains(.enabled) ? container.decode(Bool.self, forKey: .enabled) : true
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "confidential"
+        self.deviceFlow = try container.contains(.deviceFlow) ? container.decode(Bool.self, forKey: .deviceFlow) : false
+        self.teamId = try container.contains(.teamId) ? container.decode(String.self, forKey: .teamId) : ""
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
+        self.installationScopes = try container.contains(.installationScopes) ? container.decode([String].self, forKey: .installationScopes) : []
+        self.installationRedirectUrl = try container.contains(.installationRedirectUrl) ? container.decode(String.self, forKey: .installationRedirectUrl) : ""
         self.secrets = try container.decode([AppSecret].self, forKey: .secrets)
     }
 
@@ -236,6 +236,35 @@ open class App: Codable {
     }
 
     public static func from(map: [String: Any]) -> App {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "name": "",
+            "description": "",
+            "clientUri": "",
+            "logoUri": "",
+            "privacyPolicyUrl": "",
+            "termsUrl": "",
+            "contacts": [Any](),
+            "tagline": "",
+            "tags": [Any](),
+            "labels": [Any](),
+            "images": [Any](),
+            "supportUrl": "",
+            "dataDeletionUrl": "",
+            "redirectUris": [Any](),
+            "postLogoutRedirectUris": [Any](),
+            "enabled": true,
+            "type": "confidential",
+            "deviceFlow": false,
+            "teamId": "",
+            "userId": "",
+            "installationScopes": [Any](),
+            "installationRedirectUrl": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return App(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

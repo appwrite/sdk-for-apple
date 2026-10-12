@@ -25,7 +25,7 @@ open class FileList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
         self.files = try container.decode([File].self, forKey: .files)
     }
 
@@ -44,6 +44,11 @@ open class FileList: Codable {
     }
 
     public static func from(map: [String: Any]) -> FileList {
+        let defaults: [String: Any] = [
+            "total": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return FileList(
             total: map["total"] as! Int,
             files: (map["files"] as! [[String: Any]]).map { File.from(map: $0) }
