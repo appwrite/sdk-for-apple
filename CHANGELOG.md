@@ -1,5 +1,11 @@
 # Change Log
 
+## 20.1.0
+
+* Added: `account` passkey methods `listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey` and `updatePasskeyVerification`
+* Added: `account.createPasskeyToken` and `account.updatePasskeyToken` for passkey sign-in
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge` and `TokenSecret` models
+
 ## 20.0.0
 
 * Breaking: removed `Account.listLogs` and the `Log`, `LogList` models
