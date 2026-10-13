@@ -362,7 +362,7 @@ open class Client {
                     guard let item = item else {
                         continue
                     }
-                    output.append("\(encode(key))[]=\(encode(item))")
+                    output.append("\(encode("\(key)[]"))=\(encode(item))")
                 }
             default:
                 output.append("\(encode(key))=\(encode(value!))")
