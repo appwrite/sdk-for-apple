@@ -9,7 +9,8 @@ let account = Account(client)
 
 let session = try await account.createEmailPasswordSession(
     email: "email@example.com",
-    password: "password"
+    password: "password",
+    duration: 60 // optional
 )
 
 ```

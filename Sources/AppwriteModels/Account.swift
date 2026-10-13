@@ -1,0 +1,250 @@
+import Foundation
+import JSONCodable
+
+/// Account
+open class Account<T: Codable>: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case id = "$id"
+        case createdAt = "$createdAt"
+        case updatedAt = "$updatedAt"
+        case name = "name"
+        case registration = "registration"
+        case status = "status"
+        case labels = "labels"
+        case passwordUpdate = "passwordUpdate"
+        case email = "email"
+        case phone = "phone"
+        case emailVerification = "emailVerification"
+        case emailCanonical = "emailCanonical"
+        case emailIsFree = "emailIsFree"
+        case emailIsDisposable = "emailIsDisposable"
+        case emailIsCorporate = "emailIsCorporate"
+        case emailIsCanonical = "emailIsCanonical"
+        case passwordPwned = "passwordPwned"
+        case phoneVerification = "phoneVerification"
+        case mfa = "mfa"
+        case prefs = "prefs"
+        case targets = "targets"
+        case accessedAt = "accessedAt"
+        case impersonator = "impersonator"
+        case impersonatorUserId = "impersonatorUserId"
+    }
+
+    /// User ID.
+    public let id: String
+    /// User creation date in ISO 8601 format.
+    public let createdAt: String
+    /// User update date in ISO 8601 format.
+    public let updatedAt: String
+    /// User name.
+    public let name: String
+    /// User registration date in ISO 8601 format.
+    public let registration: String
+    /// User status. Pass `true` for enabled and `false` for disabled.
+    public let status: Bool
+    /// Labels for the user.
+    public let labels: [String]
+    /// Password update time in ISO 8601 format.
+    public let passwordUpdate: String
+    /// User email address.
+    public let email: String
+    /// User phone number in E.164 format.
+    public let phone: String
+    /// Email verification status.
+    public let emailVerification: Bool
+    /// Canonical form of the user email address.
+    public let emailCanonical: String?
+    /// Whether the user email is from a free email provider.
+    public let emailIsFree: Bool?
+    /// Whether the user email is from a disposable email provider.
+    public let emailIsDisposable: Bool?
+    /// Whether the user email is from a corporate domain.
+    public let emailIsCorporate: Bool?
+    /// Whether the user email is in its canonical form.
+    public let emailIsCanonical: Bool?
+    /// Whether the password was found in a known data breach the last time it was checked. Null when the password has never been checked.
+    public let passwordPwned: Bool?
+    /// Phone verification status.
+    public let phoneVerification: Bool
+    /// Multi factor authentication status.
+    public let mfa: Bool
+    /// User preferences as a key-value object
+    public let prefs: Preferences<T>
+    /// A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
+    public let targets: [Target]
+    /// Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+    public let accessedAt: String
+    /// Whether the user can impersonate other users.
+    public let impersonator: Bool?
+    /// ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+    public let impersonatorUserId: String?
+
+    init(
+        id: String,
+        createdAt: String,
+        updatedAt: String,
+        name: String,
+        registration: String,
+        status: Bool,
+        labels: [String],
+        passwordUpdate: String,
+        email: String,
+        phone: String,
+        emailVerification: Bool,
+        emailCanonical: String?,
+        emailIsFree: Bool?,
+        emailIsDisposable: Bool?,
+        emailIsCorporate: Bool?,
+        emailIsCanonical: Bool?,
+        passwordPwned: Bool?,
+        phoneVerification: Bool,
+        mfa: Bool,
+        prefs: Preferences<T>,
+        targets: [Target],
+        accessedAt: String,
+        impersonator: Bool?,
+        impersonatorUserId: String?
+    ) {
+        self.id = id
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.name = name
+        self.registration = registration
+        self.status = status
+        self.labels = labels
+        self.passwordUpdate = passwordUpdate
+        self.email = email
+        self.phone = phone
+        self.emailVerification = emailVerification
+        self.emailCanonical = emailCanonical
+        self.emailIsFree = emailIsFree
+        self.emailIsDisposable = emailIsDisposable
+        self.emailIsCorporate = emailIsCorporate
+        self.emailIsCanonical = emailIsCanonical
+        self.passwordPwned = passwordPwned
+        self.phoneVerification = phoneVerification
+        self.mfa = mfa
+        self.prefs = prefs
+        self.targets = targets
+        self.accessedAt = accessedAt
+        self.impersonator = impersonator
+        self.impersonatorUserId = impersonatorUserId
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decode(String.self, forKey: .id)
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.registration = try container.decode(String.self, forKey: .registration)
+        self.status = try container.decode(Bool.self, forKey: .status)
+        self.labels = try container.decode([String].self, forKey: .labels)
+        self.passwordUpdate = try container.decode(String.self, forKey: .passwordUpdate)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.phone = try container.decode(String.self, forKey: .phone)
+        self.emailVerification = try container.decode(Bool.self, forKey: .emailVerification)
+        self.emailCanonical = try container.decodeIfPresent(String.self, forKey: .emailCanonical)
+        self.emailIsFree = try container.decodeIfPresent(Bool.self, forKey: .emailIsFree)
+        self.emailIsDisposable = try container.decodeIfPresent(Bool.self, forKey: .emailIsDisposable)
+        self.emailIsCorporate = try container.decodeIfPresent(Bool.self, forKey: .emailIsCorporate)
+        self.emailIsCanonical = try container.decodeIfPresent(Bool.self, forKey: .emailIsCanonical)
+        self.passwordPwned = try container.decodeIfPresent(Bool.self, forKey: .passwordPwned)
+        self.phoneVerification = try container.decode(Bool.self, forKey: .phoneVerification)
+        self.mfa = try container.decode(Bool.self, forKey: .mfa)
+        self.prefs = try container.decode(Preferences<T>.self, forKey: .prefs)
+        self.targets = try container.decode([Target].self, forKey: .targets)
+        self.accessedAt = try container.decode(String.self, forKey: .accessedAt)
+        self.impersonator = try container.decodeIfPresent(Bool.self, forKey: .impersonator)
+        self.impersonatorUserId = try container.decodeIfPresent(String.self, forKey: .impersonatorUserId)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encode(updatedAt, forKey: .updatedAt)
+        try container.encode(name, forKey: .name)
+        try container.encode(registration, forKey: .registration)
+        try container.encode(status, forKey: .status)
+        try container.encode(labels, forKey: .labels)
+        try container.encode(passwordUpdate, forKey: .passwordUpdate)
+        try container.encode(email, forKey: .email)
+        try container.encode(phone, forKey: .phone)
+        try container.encode(emailVerification, forKey: .emailVerification)
+        try container.encodeIfPresent(emailCanonical, forKey: .emailCanonical)
+        try container.encodeIfPresent(emailIsFree, forKey: .emailIsFree)
+        try container.encodeIfPresent(emailIsDisposable, forKey: .emailIsDisposable)
+        try container.encodeIfPresent(emailIsCorporate, forKey: .emailIsCorporate)
+        try container.encodeIfPresent(emailIsCanonical, forKey: .emailIsCanonical)
+        try container.encodeIfPresent(passwordPwned, forKey: .passwordPwned)
+        try container.encode(phoneVerification, forKey: .phoneVerification)
+        try container.encode(mfa, forKey: .mfa)
+        try container.encode(prefs, forKey: .prefs)
+        try container.encode(targets, forKey: .targets)
+        try container.encode(accessedAt, forKey: .accessedAt)
+        try container.encodeIfPresent(impersonator, forKey: .impersonator)
+        try container.encodeIfPresent(impersonatorUserId, forKey: .impersonatorUserId)
+    }
+
+    public func toMap() -> [String: Any] {
+        return [
+            "$id": id as Any,
+            "$createdAt": createdAt as Any,
+            "$updatedAt": updatedAt as Any,
+            "name": name as Any,
+            "registration": registration as Any,
+            "status": status as Any,
+            "labels": labels as Any,
+            "passwordUpdate": passwordUpdate as Any,
+            "email": email as Any,
+            "phone": phone as Any,
+            "emailVerification": emailVerification as Any,
+            "emailCanonical": emailCanonical as Any,
+            "emailIsFree": emailIsFree as Any,
+            "emailIsDisposable": emailIsDisposable as Any,
+            "emailIsCorporate": emailIsCorporate as Any,
+            "emailIsCanonical": emailIsCanonical as Any,
+            "passwordPwned": passwordPwned as Any,
+            "phoneVerification": phoneVerification as Any,
+            "mfa": mfa as Any,
+            "prefs": prefs.toMap() as Any,
+            "targets": targets.map { $0.toMap() } as Any,
+            "accessedAt": accessedAt as Any,
+            "impersonator": impersonator as Any,
+            "impersonatorUserId": impersonatorUserId as Any,
+        ]
+    }
+
+    public static func from(map: [String: Any]) -> Account {
+        return Account(
+            id: map["$id"] as! String,
+            createdAt: map["$createdAt"] as! String,
+            updatedAt: map["$updatedAt"] as! String,
+            name: map["name"] as! String,
+            registration: map["registration"] as! String,
+            status: map["status"] as! Bool,
+            labels: map["labels"] as! [String],
+            passwordUpdate: map["passwordUpdate"] as! String,
+            email: map["email"] as! String,
+            phone: map["phone"] as! String,
+            emailVerification: map["emailVerification"] as! Bool,
+            emailCanonical: map["emailCanonical"] as? String,
+            emailIsFree: map["emailIsFree"] as? Bool,
+            emailIsDisposable: map["emailIsDisposable"] as? Bool,
+            emailIsCorporate: map["emailIsCorporate"] as? Bool,
+            emailIsCanonical: map["emailIsCanonical"] as? Bool,
+            passwordPwned: map["passwordPwned"] as? Bool,
+            phoneVerification: map["phoneVerification"] as! Bool,
+            mfa: map["mfa"] as! Bool,
+            prefs: Preferences.from(map: map["prefs"] as! [String: Any]),
+            targets: (map["targets"] as! [[String: Any]]).map { Target.from(map: $0) },
+            accessedAt: map["accessedAt"] as! String,
+            impersonator: map["impersonator"] as? Bool,
+            impersonatorUserId: map["impersonatorUserId"] as? String
+        )
+    }
+}

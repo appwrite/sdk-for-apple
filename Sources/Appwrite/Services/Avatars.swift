@@ -340,6 +340,103 @@ open class Avatars: Service {
         )
     }
     ///
+    /// Update the profile photo of the currently authenticated user. The uploaded
+    /// image takes priority over every other photo source, including OAuth2
+    /// identity photos, Gravatar, and Libravatar. Updating an already customized
+    /// photo replaces it. The image must be at most 5MB and is sent in a single
+    /// request.
+    ///
+    /// - Parameters:
+    ///   - file: InputFile
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Account<T>
+    ///
+    open func updatePhoto<T>(
+        file: InputFile,
+        nestedType: T.Type,
+        onProgress: ((UploadProgress) -> Void)? = nil
+    ) async throws -> AppwriteModels.Account<T> {
+        let apiPath: String = "/avatars/photo"
+
+        var apiParams: [String: Any?] = [
+            "file": file
+        ]
+
+        var apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "multipart/form-data",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Account<T> = { response in
+            return AppwriteModels.Account.from(map: response as! [String: Any])
+        }
+
+        let idParamName: String? = nil
+        let paramName = "file"
+        return try await client.chunkedUpload(
+            path: apiPath,
+            headers: &apiHeaders,
+            params: &apiParams,
+            paramName: paramName,
+            idParamName: idParamName,
+            converter: converter,
+            onProgress: onProgress,
+            method: "PUT"
+        )
+    }
+
+    ///
+    /// Update the profile photo of the currently authenticated user. The uploaded
+    /// image takes priority over every other photo source, including OAuth2
+    /// identity photos, Gravatar, and Libravatar. Updating an already customized
+    /// photo replaces it. The image must be at most 5MB and is sent in a single
+    /// request.
+    ///
+    /// - Parameters:
+    ///   - file: InputFile
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Account<T>
+    ///
+    open func updatePhoto(
+        file: InputFile,
+        onProgress: ((UploadProgress) -> Void)? = nil
+    ) async throws -> AppwriteModels.Account<[String: AnyCodable]> {
+        return try await updatePhoto(
+            file: file,
+            nestedType: [String: AnyCodable].self,
+            onProgress: onProgress
+        )
+    }
+    ///
+    /// Delete the profile photo of the currently authenticated user and store the
+    /// built-in static placeholder in its place. The placeholder is the user's
+    /// photo from then on, so it takes priority over every other photo source —
+    /// OAuth2 identity photos, Gravatar, Libravatar, and initials — until a new
+    /// photo is uploaded with avatars.updatePhoto.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deletePhoto() async throws -> Any {
+        let apiPath: String = "/avatars/photo"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams
+        )
+    }
+    ///
     /// Converts a given plain text to a QR code image. You can use the query
     /// parameters to change the size and style of the resulting image.
     ///

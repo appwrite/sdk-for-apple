@@ -2003,13 +2003,19 @@ open class Account: Service {
     /// Get the list of active sessions across different devices for the currently
     /// logged in user.
     ///
+    /// - Parameters:
+    ///   - total: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.SessionList
     ///
-    open func listSessions() async throws -> AppwriteModels.SessionList {
+    open func listSessions(
+        total: Bool? = nil
+    ) async throws -> AppwriteModels.SessionList {
         let apiPath: String = "/account/sessions"
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "total": total
+        ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
@@ -2032,13 +2038,19 @@ open class Account: Service {
     /// Delete all sessions from the user account and remove any sessions cookies
     /// from the end client.
     ///
+    /// - Parameters:
+    ///   - current: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
-    open func deleteSessions() async throws -> Any {
+    open func deleteSessions(
+        current: Bool? = nil
+    ) async throws -> Any {
         let apiPath: String = "/account/sessions"
 
-        let apiParams: [String: Any] = [:]
+        let apiParams: [String: Any?] = [
+            "current": current
+        ]
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
@@ -2099,18 +2111,21 @@ open class Account: Service {
     /// - Parameters:
     ///   - email: String
     ///   - password: String
+    ///   - duration: Int (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Session
     ///
     open func createEmailPasswordSession(
         email: String,
-        password: String
+        password: String,
+        duration: Int? = nil
     ) async throws -> AppwriteModels.Session {
         let apiPath: String = "/account/sessions/email"
 
         let apiParams: [String: Any?] = [
             "email": email,
             "password": password,
+            "duration": duration,
         ]
 
         let apiHeaders: [String: String] = [
@@ -2284,6 +2299,7 @@ open class Account: Service {
     ///   - success: String (optional)
     ///   - failure: String (optional)
     ///   - scopes: [String] (optional)
+    ///   - state: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Bool
     ///
@@ -2292,7 +2308,8 @@ open class Account: Service {
         provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
-        scopes: [String]? = nil
+        scopes: [String]? = nil,
+        state: String? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/sessions/oauth2/{provider}"
             .replacingOccurrences(of: "{provider}", with: provider.rawValue)
@@ -2301,6 +2318,7 @@ open class Account: Service {
             "success": success,
             "failure": failure,
             "scopes": scopes,
+            "state": state,
             "project": client.config["project"],
         ]
 
@@ -2831,6 +2849,7 @@ open class Account: Service {
     ///   - success: String (optional)
     ///   - failure: String (optional)
     ///   - scopes: [String] (optional)
+    ///   - state: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Bool
     ///
@@ -2839,7 +2858,8 @@ open class Account: Service {
         provider: AppwriteEnums.OAuthProvider,
         success: String? = nil,
         failure: String? = nil,
-        scopes: [String]? = nil
+        scopes: [String]? = nil,
+        state: String? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/tokens/oauth2/{provider}"
             .replacingOccurrences(of: "{provider}", with: provider.rawValue)
@@ -2848,6 +2868,7 @@ open class Account: Service {
             "success": success,
             "failure": failure,
             "scopes": scopes,
+            "state": state,
             "project": client.config["project"],
         ]
 
