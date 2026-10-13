@@ -10,6 +10,7 @@
 * Added: optional `current` on `account.deleteSessions` to keep the current session signed in
 * Added: optional `membershipId` on `teams.createMembership`
 * Added: optional `total` on `account.listSessions`, the `locale` list methods and `listTransactions`
+* Fixed: OAuth2 query parameters (`success`, `failure`, `scopes`, `state`) are URL-encoded, so values containing `&`, `+` or `#` survive the redirect
 
 ## 20.1.0
 
