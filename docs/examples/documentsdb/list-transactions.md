@@ -8,7 +8,8 @@ let client = Client()
 let documentsDB = DocumentsDB(client)
 
 let transactionList = try await documentsDB.listTransactions(
-    queries: [] // optional
+    queries: [], // optional
+    total: false // optional
 )
 
 ```

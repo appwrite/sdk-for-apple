@@ -8,7 +8,8 @@ let client = Client()
 let vectorsDB = VectorsDB(client)
 
 let transactionList = try await vectorsDB.listTransactions(
-    queries: [] // optional
+    queries: [], // optional
+    total: false // optional
 )
 
 ```

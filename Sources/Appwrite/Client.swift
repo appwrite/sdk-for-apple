@@ -28,7 +28,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "20.1.0",
+        "x-sdk-version": "20.2.0",
         "x-appwrite-response-format": "2.3.0",
     ]
 
@@ -533,7 +533,8 @@ open class Client {
         paramName: String,
         idParamName: String? = nil,
         converter: ((Any) throws -> T)? = nil,
-        onProgress: ((UploadProgress) -> Void)? = nil
+        onProgress: ((UploadProgress) -> Void)? = nil,
+        method: String = "POST"
     ) async throws -> T {
         let input = params[paramName] as! InputFile
 
@@ -551,7 +552,7 @@ open class Client {
         if size < Client.chunkSize {
             params[paramName] = input
             return try await call(
-                method: "POST",
+                method: method,
                 path: path,
                 headers: headers,
                 params: params,
@@ -614,7 +615,7 @@ open class Client {
             }
 
             let chunkResult = try await call(
-                method: "POST",
+                method: method,
                 path: path,
                 headers: chunkHeaders,
                 params: chunkParams,

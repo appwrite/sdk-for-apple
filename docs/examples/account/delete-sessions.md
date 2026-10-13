@@ -7,6 +7,8 @@ let client = Client()
 
 let account = Account(client)
 
-let result = try await account.deleteSessions()
+let result = try await account.deleteSessions(
+    current: false // optional
+)
 
 ```
