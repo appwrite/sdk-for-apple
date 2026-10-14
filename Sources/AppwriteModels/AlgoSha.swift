@@ -20,7 +20,7 @@ open class AlgoSha: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "sha"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,9 @@ open class AlgoSha: Codable {
     }
 
     public static func from(map: [String: Any]) -> AlgoSha {
+        let defaults: [String: Any] = ["type": "sha"]
+        let map = defaults.merging(map) { _, new in new }
+
         return AlgoSha(
             type: map["type"] as! String
         )

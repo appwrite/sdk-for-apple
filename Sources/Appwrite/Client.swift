@@ -23,17 +23,13 @@ open class Client {
 
     open var endPointRealtime: String? = nil
 
-    open var endPointPush: String? = nil
-
-    open var pushClientId: String? = nil
-
     open var headers: [String: String] = [
         "content-type": "application/json",
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "20.1.0-rc.3",
-        "x-appwrite-response-format": "2.3.0",
+        "x-sdk-version": "21.0.0",
+        "x-appwrite-response-format": "2.5.0",
     ]
 
     internal var config: [String: String] = [:]
@@ -317,37 +313,6 @@ open class Client {
     }
 
     ///
-    /// Set push endpoint.
-    ///
-    /// The MQTT broker URL the Push service connects to, e.g. `mqtt://host:1883` or
-    /// `mqtts://host:8883`.
-    ///
-    /// @param String endPoint
-    ///
-    /// @return Client
-    ///
-    open func setPushEndpoint(_ endPoint: String) -> Client {
-        self.endPointPush = endPoint
-        return self
-    }
-
-    ///
-    /// Set push client id.
-    ///
-    /// A stable client id for the Push service. The broker keys its offline-replay cursor on
-    /// this id, so pass a stable value to resume replay across restarts. Defaults to a
-    /// per-connection id when unset.
-    ///
-    /// @param String pushClientId
-    ///
-    /// @return Client
-    ///
-    open func setPushClientId(_ pushClientId: String) -> Client {
-        self.pushClientId = pushClientId
-        return self
-    }
-
-    ///
     /// Add header
     ///
     /// @param String key
@@ -377,43 +342,34 @@ open class Client {
     /// @return String
     ///
     open func parametersToQueryString(params: [String: Any?]) -> String {
-        var output: String = ""
+        // RFC 3986 unreserved characters only, so `&`, `=`, `+` and `#` inside a value are escaped
+        let allowed = CharacterSet(
+            charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+        )
 
-        func appendWhenNotLast(
-            _ index: Int, ofTotal count: Int, outerIndex: Int? = nil, outerCount: Int? = nil
-        ) {
-            if index != count - 1
-                || (outerIndex != nil
-                    && outerCount != nil
-                    && index == count - 1
-                    && outerIndex! != outerCount! - 1)
-            {
-                output += "&"
-            }
+        func encode(_ value: Any) -> String {
+            return "\(value)".addingPercentEncoding(withAllowedCharacters: allowed) ?? ""
         }
 
-        for (parameterIndex, element) in params.enumerated() {
-            switch element.value {
+        var output: [String] = []
+
+        for (key, value) in params {
+            switch value {
             case nil:
-                break
-            case is [Any?]:
-                let list = element.value as! [Any?]
-                for (nestedIndex, item) in list.enumerated() {
-                    output += "\(element.key)[]=\(item!)"
-                    appendWhenNotLast(
-                        nestedIndex, ofTotal: list.count, outerIndex: parameterIndex,
-                        outerCount: params.count)
+                continue
+            case let list as [Any?]:
+                for item in list {
+                    guard let item = item else {
+                        continue
+                    }
+                    output.append("\(encode("\(key)[]"))=\(encode(item))")
                 }
-                appendWhenNotLast(parameterIndex, ofTotal: params.count)
             default:
-                output += "\(element.key)=\(element.value!)"
-                appendWhenNotLast(parameterIndex, ofTotal: params.count)
+                output.append("\(encode(key))=\(encode(value!))")
             }
         }
 
-        return output.addingPercentEncoding(
-            withAllowedCharacters: .urlHostAllowed
-        )?.replacingOccurrences(of: "+", with: "%2B") ?? ""  // since urlHostAllowed doesn't include +
+        return output.joined(separator: "&")
     }
 
     ///

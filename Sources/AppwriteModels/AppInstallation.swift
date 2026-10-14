@@ -65,15 +65,15 @@ open class AppInstallation: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.appId = try container.decode(String.self, forKey: .appId)
-        self.teamId = try container.decode(String.self, forKey: .teamId)
-        self.scopes = try container.decode([String].self, forKey: .scopes)
-        self.authorizationDetails = try container.decode([AnyCodable].self, forKey: .authorizationDetails)
-        self.createdById = try container.decode(String.self, forKey: .createdById)
-        self.createdByName = try container.decode(String.self, forKey: .createdByName)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.appId = try container.contains(.appId) ? container.decode(String.self, forKey: .appId) : ""
+        self.teamId = try container.contains(.teamId) ? container.decode(String.self, forKey: .teamId) : ""
+        self.scopes = try container.contains(.scopes) ? container.decode([String].self, forKey: .scopes) : []
+        self.authorizationDetails = try container.contains(.authorizationDetails) ? container.decode([AnyCodable].self, forKey: .authorizationDetails) : []
+        self.createdById = try container.contains(.createdById) ? container.decode(String.self, forKey: .createdById) : ""
+        self.createdByName = try container.contains(.createdByName) ? container.decode(String.self, forKey: .createdByName) : ""
         self.lastAccessedAt = try container.decodeIfPresent(String.self, forKey: .lastAccessedAt)
     }
 
@@ -108,6 +108,19 @@ open class AppInstallation: Codable {
     }
 
     public static func from(map: [String: Any]) -> AppInstallation {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "appId": "",
+            "teamId": "",
+            "scopes": [Any](),
+            "authorizationDetails": [Any](),
+            "createdById": "",
+            "createdByName": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AppInstallation(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

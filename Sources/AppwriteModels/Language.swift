@@ -30,9 +30,9 @@ open class Language: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.name = try container.decode(String.self, forKey: .name)
-        self.code = try container.decode(String.self, forKey: .code)
-        self.nativeName = try container.decode(String.self, forKey: .nativeName)
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
+        self.code = try container.contains(.code) ? container.decode(String.self, forKey: .code) : ""
+        self.nativeName = try container.contains(.nativeName) ? container.decode(String.self, forKey: .nativeName) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -52,6 +52,13 @@ open class Language: Codable {
     }
 
     public static func from(map: [String: Any]) -> Language {
+        let defaults: [String: Any] = [
+            "name": "",
+            "code": "",
+            "nativeName": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Language(
             name: map["name"] as! String,
             code: map["code"] as! String,

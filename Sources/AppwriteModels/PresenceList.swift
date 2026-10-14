@@ -25,8 +25,8 @@ open class PresenceList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.presences = try container.decode([Presence].self, forKey: .presences)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.presences = try container.contains(.presences) ? container.decode([Presence].self, forKey: .presences) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class PresenceList: Codable {
     }
 
     public static func from(map: [String: Any]) -> PresenceList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "presences": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return PresenceList(
             total: map["total"] as! Int,
             presences: (map["presences"] as! [[String: Any]]).map { Presence.from(map: $0) }

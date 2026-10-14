@@ -50,11 +50,11 @@ open class Oauth2Token: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.access_token = try container.decode(String.self, forKey: .access_token)
-        self.token_type = try container.decode(String.self, forKey: .token_type)
-        self.expires_in = try container.decode(Int.self, forKey: .expires_in)
-        self.refresh_token = try container.decode(String.self, forKey: .refresh_token)
-        self.scope = try container.decode(String.self, forKey: .scope)
+        self.access_token = try container.contains(.access_token) ? container.decode(String.self, forKey: .access_token) : ""
+        self.token_type = try container.contains(.token_type) ? container.decode(String.self, forKey: .token_type) : "Bearer"
+        self.expires_in = try container.contains(.expires_in) ? container.decode(Int.self, forKey: .expires_in) : 0
+        self.refresh_token = try container.contains(.refresh_token) ? container.decode(String.self, forKey: .refresh_token) : ""
+        self.scope = try container.contains(.scope) ? container.decode(String.self, forKey: .scope) : ""
         self.authorization_details = try container.decodeIfPresent(String.self, forKey: .authorization_details)
         self.id_token = try container.decodeIfPresent(String.self, forKey: .id_token)
     }
@@ -84,6 +84,15 @@ open class Oauth2Token: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2Token {
+        let defaults: [String: Any] = [
+            "access_token": "",
+            "token_type": "Bearer",
+            "expires_in": 0,
+            "refresh_token": "",
+            "scope": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2Token(
             access_token: map["access_token"] as! String,
             token_type: map["token_type"] as! String,

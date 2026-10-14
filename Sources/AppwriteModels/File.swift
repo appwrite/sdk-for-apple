@@ -95,22 +95,22 @@ open class File: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.bucketId = try container.decode(String.self, forKey: .bucketId)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.permissions = try container.decode([String].self, forKey: .permissions)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.folder = try container.decode(String.self, forKey: .folder)
-        self.key = try container.decode(String.self, forKey: .key)
-        self.signature = try container.decode(String.self, forKey: .signature)
-        self.mimeType = try container.decode(String.self, forKey: .mimeType)
-        self.sizeOriginal = try container.decode(Int.self, forKey: .sizeOriginal)
-        self.sizeActual = try container.decode(Int.self, forKey: .sizeActual)
-        self.chunksTotal = try container.decode(Int.self, forKey: .chunksTotal)
-        self.chunksUploaded = try container.decode(Int.self, forKey: .chunksUploaded)
-        self.encryption = try container.decode(Bool.self, forKey: .encryption)
-        self.compression = try container.decode(String.self, forKey: .compression)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.bucketId = try container.contains(.bucketId) ? container.decode(String.self, forKey: .bucketId) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.permissions = try container.contains(.permissions) ? container.decode([String].self, forKey: .permissions) : []
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
+        self.folder = try container.contains(.folder) ? container.decode(String.self, forKey: .folder) : ""
+        self.key = try container.contains(.key) ? container.decode(String.self, forKey: .key) : ""
+        self.signature = try container.contains(.signature) ? container.decode(String.self, forKey: .signature) : ""
+        self.mimeType = try container.contains(.mimeType) ? container.decode(String.self, forKey: .mimeType) : ""
+        self.sizeOriginal = try container.contains(.sizeOriginal) ? container.decode(Int.self, forKey: .sizeOriginal) : 0
+        self.sizeActual = try container.contains(.sizeActual) ? container.decode(Int.self, forKey: .sizeActual) : 0
+        self.chunksTotal = try container.contains(.chunksTotal) ? container.decode(Int.self, forKey: .chunksTotal) : 0
+        self.chunksUploaded = try container.contains(.chunksUploaded) ? container.decode(Int.self, forKey: .chunksUploaded) : 0
+        self.encryption = try container.contains(.encryption) ? container.decode(Bool.self, forKey: .encryption) : false
+        self.compression = try container.contains(.compression) ? container.decode(String.self, forKey: .compression) : "none"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -156,6 +156,26 @@ open class File: Codable {
     }
 
     public static func from(map: [String: Any]) -> File {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "bucketId": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "$permissions": [Any](),
+            "name": "",
+            "folder": "",
+            "key": "",
+            "signature": "",
+            "mimeType": "",
+            "sizeOriginal": 0,
+            "sizeActual": 0,
+            "chunksTotal": 0,
+            "chunksUploaded": 0,
+            "encryption": false,
+            "compression": "none",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return File(
             id: map["$id"] as! String,
             bucketId: map["bucketId"] as! String,

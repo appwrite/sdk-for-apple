@@ -160,35 +160,35 @@ open class Session: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.userId = try container.decode(String.self, forKey: .userId)
-        self.expire = try container.decode(String.self, forKey: .expire)
-        self.provider = try container.decode(String.self, forKey: .provider)
-        self.providerUid = try container.decode(String.self, forKey: .providerUid)
-        self.providerAccessToken = try container.decode(String.self, forKey: .providerAccessToken)
-        self.providerAccessTokenExpiry = try container.decode(String.self, forKey: .providerAccessTokenExpiry)
-        self.providerRefreshToken = try container.decode(String.self, forKey: .providerRefreshToken)
-        self.ip = try container.decode(String.self, forKey: .ip)
-        self.osCode = try container.decode(String.self, forKey: .osCode)
-        self.osName = try container.decode(String.self, forKey: .osName)
-        self.osVersion = try container.decode(String.self, forKey: .osVersion)
-        self.clientType = try container.decode(String.self, forKey: .clientType)
-        self.clientCode = try container.decode(String.self, forKey: .clientCode)
-        self.clientName = try container.decode(String.self, forKey: .clientName)
-        self.clientVersion = try container.decode(String.self, forKey: .clientVersion)
-        self.clientEngine = try container.decode(String.self, forKey: .clientEngine)
-        self.clientEngineVersion = try container.decode(String.self, forKey: .clientEngineVersion)
-        self.deviceName = try container.decode(String.self, forKey: .deviceName)
-        self.deviceBrand = try container.decode(String.self, forKey: .deviceBrand)
-        self.deviceModel = try container.decode(String.self, forKey: .deviceModel)
-        self.countryCode = try container.decode(String.self, forKey: .countryCode)
-        self.countryName = try container.decode(String.self, forKey: .countryName)
-        self.current = try container.decode(Bool.self, forKey: .current)
-        self.factors = try container.decode([String].self, forKey: .factors)
-        self.secret = try container.decode(String.self, forKey: .secret)
-        self.mfaUpdatedAt = try container.decode(String.self, forKey: .mfaUpdatedAt)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
+        self.expire = try container.contains(.expire) ? container.decode(String.self, forKey: .expire) : ""
+        self.provider = try container.contains(.provider) ? container.decode(String.self, forKey: .provider) : ""
+        self.providerUid = try container.contains(.providerUid) ? container.decode(String.self, forKey: .providerUid) : ""
+        self.providerAccessToken = try container.contains(.providerAccessToken) ? container.decode(String.self, forKey: .providerAccessToken) : ""
+        self.providerAccessTokenExpiry = try container.contains(.providerAccessTokenExpiry) ? container.decode(String.self, forKey: .providerAccessTokenExpiry) : ""
+        self.providerRefreshToken = try container.contains(.providerRefreshToken) ? container.decode(String.self, forKey: .providerRefreshToken) : ""
+        self.ip = try container.contains(.ip) ? container.decode(String.self, forKey: .ip) : ""
+        self.osCode = try container.contains(.osCode) ? container.decode(String.self, forKey: .osCode) : ""
+        self.osName = try container.contains(.osName) ? container.decode(String.self, forKey: .osName) : ""
+        self.osVersion = try container.contains(.osVersion) ? container.decode(String.self, forKey: .osVersion) : ""
+        self.clientType = try container.contains(.clientType) ? container.decode(String.self, forKey: .clientType) : ""
+        self.clientCode = try container.contains(.clientCode) ? container.decode(String.self, forKey: .clientCode) : ""
+        self.clientName = try container.contains(.clientName) ? container.decode(String.self, forKey: .clientName) : ""
+        self.clientVersion = try container.contains(.clientVersion) ? container.decode(String.self, forKey: .clientVersion) : ""
+        self.clientEngine = try container.contains(.clientEngine) ? container.decode(String.self, forKey: .clientEngine) : ""
+        self.clientEngineVersion = try container.contains(.clientEngineVersion) ? container.decode(String.self, forKey: .clientEngineVersion) : ""
+        self.deviceName = try container.contains(.deviceName) ? container.decode(String.self, forKey: .deviceName) : ""
+        self.deviceBrand = try container.contains(.deviceBrand) ? container.decode(String.self, forKey: .deviceBrand) : ""
+        self.deviceModel = try container.contains(.deviceModel) ? container.decode(String.self, forKey: .deviceModel) : ""
+        self.countryCode = try container.contains(.countryCode) ? container.decode(String.self, forKey: .countryCode) : ""
+        self.countryName = try container.contains(.countryName) ? container.decode(String.self, forKey: .countryName) : ""
+        self.current = try container.contains(.current) ? container.decode(Bool.self, forKey: .current) : false
+        self.factors = try container.contains(.factors) ? container.decode([String].self, forKey: .factors) : []
+        self.secret = try container.contains(.secret) ? container.decode(String.self, forKey: .secret) : ""
+        self.mfaUpdatedAt = try container.contains(.mfaUpdatedAt) ? container.decode(String.self, forKey: .mfaUpdatedAt) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -260,6 +260,39 @@ open class Session: Codable {
     }
 
     public static func from(map: [String: Any]) -> Session {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "userId": "",
+            "expire": "",
+            "provider": "",
+            "providerUid": "",
+            "providerAccessToken": "",
+            "providerAccessTokenExpiry": "",
+            "providerRefreshToken": "",
+            "ip": "",
+            "osCode": "",
+            "osName": "",
+            "osVersion": "",
+            "clientType": "",
+            "clientCode": "",
+            "clientName": "",
+            "clientVersion": "",
+            "clientEngine": "",
+            "clientEngineVersion": "",
+            "deviceName": "",
+            "deviceBrand": "",
+            "deviceModel": "",
+            "countryCode": "",
+            "countryName": "",
+            "current": false,
+            "factors": [Any](),
+            "secret": "",
+            "mfaUpdatedAt": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Session(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

@@ -8,20 +8,20 @@ let client = Client()
 let oauth2 = Oauth2(client)
 
 let oauth2Authorize = try await oauth2.authorize(
-    client_id: "<CLIENT_ID>", // optional
-    redirect_uri: "https://example.com", // optional
-    response_type: "", // optional
+    clientId: "<CLIENT_ID>", // optional
+    redirectUri: "https://example.com", // optional
+    responseType: "", // optional
     scope: "<SCOPE>", // optional
     state: "<STATE>", // optional
     nonce: "<NONCE>", // optional
-    code_challenge: "<CODE_CHALLENGE>", // optional
-    code_challenge_method: "s256", // optional
+    codeChallenge: "<CODE_CHALLENGE>", // optional
+    codeChallengeMethod: "s256", // optional
     prompt: "<PROMPT>", // optional
-    max_age: 0, // optional
-    authorization_details: "<AUTHORIZATION_DETAILS>", // optional
-    resource: "", // optional
+    maxAge: 0, // optional
+    authorizationDetails: "<AUTHORIZATION_DETAILS>", // optional
+    resource: [], // optional
     audience: "<AUDIENCE>", // optional
-    request_uri: "<REQUEST_URI>" // optional
+    requestUri: "<REQUEST_URI>" // optional
 )
 
 ```

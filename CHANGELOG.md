@@ -1,37 +1,30 @@
 # Change Log
 
-## 20.1.0-rc.3
+## 21.0.0
 
-* Added: `getInitialNotification()` and `onNotificationOpened(_:)` for background notification taps
-* Added: `PushNotificationOpened` exposing the tapped notification `topic` and parsed `data`
-* Added: `Push.handleNotificationResponse(_:)` for apps with their own notification-center delegate
-* Fixed: `Push` reads the session the app signed in with from saved cookies
-* Fixed: posts one notification per distinct title instead of only the first server title
-* Fixed: image attachments fall back to the URL extension when the MIME type is missing
+* Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes
+* Breaking: missing response fields decode to their documented defaults instead of throwing
+* Added: `Apps` service to manage apps, installations, keys and secrets
+* Added: `Oauth2` service for the OAuth2 authorize, token, device and grant flows
+* Fixed: a file exactly `Client.chunkSize` bytes long uploads in a single request
 
-## 20.1.0-rc.2
+## 20.2.0
 
-* Updated: regenerated with sdk-generator 5.5.0; no SDK code changes
+* Added: `analytics.createEvent` in a new `Analytics` service to send tracking events
+* Added: `avatars.updatePhoto` and `avatars.deletePhoto` to manage the user's custom profile photo, and the `Account` model
+* Added: `Webflow` to the `OAuthProvider` enum
+* Added: optional `state` on `account.createOAuth2Session` and `account.createOAuth2Token`, returned unchanged on the success and failure URLs
+* Added: optional `duration` on `account.createEmailPasswordSession` to set the session length
+* Added: optional `current` on `account.deleteSessions` to keep the current session signed in
+* Added: optional `membershipId` on `teams.createMembership`
+* Added: optional `total` on `account.listSessions`, the `locale` list methods and `listTransactions`
+* Fixed: OAuth2 query parameters (`success`, `failure`, `scopes`, `state`) are URL-encoded, so values containing `&`, `+` or `#` survive the redirect
 
-## 20.1.0-rc.1
+## 20.1.0
 
-* Added: background push notifications render the server `notification` title, body, and image
-* Added: notification `userInfo` now carries `topic` and `payload`
-* Fixed: a server-sent title replaces per-subscription titles and dedupes notifications
-
-## 20.1.0-rc.0
-
-* Added: `Apps` service to manage OAuth2 apps, keys, secrets, and installations
-* Added: `Oauth2` service for authorization, consent, device, PAR, and token flows
-* Added: `Push` service for MQTT realtime push, backed by `mqtt-nio`
-* Added: `Topic` builder for push targeting
-* Added: `Client.setPushEndpoint()` and `Client.setPushClientId()`
-* Added: `Avatars.updatePhoto()` and `Avatars.deletePhoto()` methods
-* Added: `App`, `Oauth2*`, and `Account` models
-* Added: `webflow` to the `OAuthProvider` enum
-* Added: optional `duration` and `total` params on account and list methods
-* Updated: `chunkedUpload` gained a `method` param for `PUT` uploads
-* Fixed: `chunkedUpload` sends an exactly-chunk-sized file in a single request
+* Added: `account` passkey methods `listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey` and `updatePasskeyVerification`
+* Added: `account.createPasskeyToken` and `account.updatePasskeyToken` for passkey sign-in
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge` and `TokenSecret` models
 
 ## 20.0.0
 

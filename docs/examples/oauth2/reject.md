@@ -8,7 +8,7 @@ let client = Client()
 let oauth2 = Oauth2(client)
 
 let oauth2Reject = try await oauth2.reject(
-    grant_id: "<GRANT_ID>"
+    grantId: "<GRANT_ID>"
 )
 
 ```

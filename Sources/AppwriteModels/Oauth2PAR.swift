@@ -25,8 +25,8 @@ open class Oauth2PAR: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.request_uri = try container.decode(String.self, forKey: .request_uri)
-        self.expires_in = try container.decode(Int.self, forKey: .expires_in)
+        self.request_uri = try container.contains(.request_uri) ? container.decode(String.self, forKey: .request_uri) : ""
+        self.expires_in = try container.contains(.expires_in) ? container.decode(Int.self, forKey: .expires_in) : 0
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class Oauth2PAR: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2PAR {
+        let defaults: [String: Any] = [
+            "request_uri": "",
+            "expires_in": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2PAR(
             request_uri: map["request_uri"] as! String,
             expires_in: map["expires_in"] as! Int

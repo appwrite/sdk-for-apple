@@ -20,7 +20,7 @@ open class Oauth2Organization: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,9 @@ open class Oauth2Organization: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2Organization {
+        let defaults: [String: Any] = ["$id": ""]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2Organization(
             id: map["$id"] as! String
         )

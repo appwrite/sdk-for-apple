@@ -602,6 +602,7 @@ open class Teams: Service {
     ///   - phone: String (optional)
     ///   - url: String (optional)
     ///   - name: String (optional)
+    ///   - membershipId: String (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: AppwriteModels.Membership
     ///
@@ -612,7 +613,8 @@ open class Teams: Service {
         userId: String? = nil,
         phone: String? = nil,
         url: String? = nil,
-        name: String? = nil
+        name: String? = nil,
+        membershipId: String? = nil
     ) async throws -> AppwriteModels.Membership {
         if teamId.isEmpty {
             throw AppwriteError(message: "Missing required parameter: \"teamId\"")
@@ -628,6 +630,7 @@ open class Teams: Service {
             "roles": roles,
             "url": url,
             "name": name,
+            "membershipId": membershipId,
         ]
 
         let apiHeaders: [String: String] = [

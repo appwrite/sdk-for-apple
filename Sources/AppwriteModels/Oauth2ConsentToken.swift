@@ -70,17 +70,17 @@ open class Oauth2ConsentToken: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.consentId = try container.decode(String.self, forKey: .consentId)
-        self.userId = try container.decode(String.self, forKey: .userId)
-        self.appId = try container.decode(String.self, forKey: .appId)
-        self.cimdUrl = try container.decode(String.self, forKey: .cimdUrl)
-        self.scopes = try container.decode([String].self, forKey: .scopes)
-        self.resources = try container.decode([String].self, forKey: .resources)
-        self.authorizationDetails = try container.decode(String.self, forKey: .authorizationDetails)
-        self.expire = try container.decode(String.self, forKey: .expire)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.consentId = try container.contains(.consentId) ? container.decode(String.self, forKey: .consentId) : ""
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
+        self.appId = try container.contains(.appId) ? container.decode(String.self, forKey: .appId) : ""
+        self.cimdUrl = try container.contains(.cimdUrl) ? container.decode(String.self, forKey: .cimdUrl) : ""
+        self.scopes = try container.contains(.scopes) ? container.decode([String].self, forKey: .scopes) : []
+        self.resources = try container.contains(.resources) ? container.decode([String].self, forKey: .resources) : []
+        self.authorizationDetails = try container.contains(.authorizationDetails) ? container.decode(String.self, forKey: .authorizationDetails) : "[]"
+        self.expire = try container.contains(.expire) ? container.decode(String.self, forKey: .expire) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -116,6 +116,21 @@ open class Oauth2ConsentToken: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2ConsentToken {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "consentId": "",
+            "userId": "",
+            "appId": "",
+            "cimdUrl": "",
+            "scopes": [Any](),
+            "resources": [Any](),
+            "authorizationDetails": "[]",
+            "expire": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2ConsentToken(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

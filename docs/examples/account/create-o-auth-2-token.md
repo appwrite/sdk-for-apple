@@ -12,7 +12,8 @@ let success = try await account.createOAuth2Token(
     provider: .amazon,
     success: "https://example.com", // optional
     failure: "https://example.com", // optional
-    scopes: [] // optional
+    scopes: [], // optional
+    state: "<STATE>" // optional
 )
 
 ```

@@ -25,8 +25,8 @@ open class Oauth2ProjectList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.projects = try container.decode([Oauth2Project].self, forKey: .projects)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.projects = try container.contains(.projects) ? container.decode([Oauth2Project].self, forKey: .projects) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class Oauth2ProjectList: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2ProjectList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "projects": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2ProjectList(
             total: map["total"] as! Int,
             projects: (map["projects"] as! [[String: Any]]).map { Oauth2Project.from(map: $0) }

@@ -8,7 +8,7 @@ let client = Client()
 let oauth2 = Oauth2(client)
 
 let oauth2Grant = try await oauth2.createGrant(
-    user_code: "<USER_CODE>"
+    userCode: "<USER_CODE>"
 )
 
 ```

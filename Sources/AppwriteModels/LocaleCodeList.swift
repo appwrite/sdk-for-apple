@@ -25,8 +25,8 @@ open class LocaleCodeList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.localeCodes = try container.decode([LocaleCode].self, forKey: .localeCodes)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.localeCodes = try container.contains(.localeCodes) ? container.decode([LocaleCode].self, forKey: .localeCodes) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class LocaleCodeList: Codable {
     }
 
     public static func from(map: [String: Any]) -> LocaleCodeList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "localeCodes": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return LocaleCodeList(
             total: map["total"] as! Int,
             localeCodes: (map["localeCodes"] as! [[String: Any]]).map { LocaleCode.from(map: $0) }
