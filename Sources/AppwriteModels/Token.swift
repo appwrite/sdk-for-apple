@@ -45,12 +45,12 @@ open class Token: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.userId = try container.decode(String.self, forKey: .userId)
-        self.secret = try container.decode(String.self, forKey: .secret)
-        self.expire = try container.decode(String.self, forKey: .expire)
-        self.phrase = try container.decode(String.self, forKey: .phrase)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
+        self.secret = try container.contains(.secret) ? container.decode(String.self, forKey: .secret) : ""
+        self.expire = try container.contains(.expire) ? container.decode(String.self, forKey: .expire) : ""
+        self.phrase = try container.contains(.phrase) ? container.decode(String.self, forKey: .phrase) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -76,6 +76,16 @@ open class Token: Codable {
     }
 
     public static func from(map: [String: Any]) -> Token {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "userId": "",
+            "secret": "",
+            "expire": "",
+            "phrase": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Token(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

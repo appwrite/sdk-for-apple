@@ -40,11 +40,11 @@ open class AppScope: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.value = try container.decode(String.self, forKey: .value)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.type = try container.decode(String.self, forKey: .type)
-        self.category = try container.decode(String.self, forKey: .category)
-        self.deprecated = try container.decode(Bool.self, forKey: .deprecated)
+        self.value = try container.contains(.value) ? container.decode(String.self, forKey: .value) : ""
+        self.description = try container.contains(.description) ? container.decode(String.self, forKey: .description) : ""
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : ""
+        self.category = try container.contains(.category) ? container.decode(String.self, forKey: .category) : ""
+        self.deprecated = try container.contains(.deprecated) ? container.decode(Bool.self, forKey: .deprecated) : false
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -68,6 +68,15 @@ open class AppScope: Codable {
     }
 
     public static func from(map: [String: Any]) -> AppScope {
+        let defaults: [String: Any] = [
+            "value": "",
+            "description": "",
+            "type": "",
+            "category": "",
+            "deprecated": false,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AppScope(
             value: map["value"] as! String,
             description: map["description"] as! String,

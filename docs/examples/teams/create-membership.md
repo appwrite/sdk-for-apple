@@ -16,7 +16,8 @@ let membership = try await teams.createMembership(
     userId: "<USER_ID>", // optional
     phone: "+12065550100", // optional
     url: "https://example.com", // optional
-    name: "<NAME>" // optional
+    name: "<NAME>", // optional
+    membershipId: "<MEMBERSHIP_ID>" // optional
 )
 
 ```

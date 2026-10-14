@@ -60,15 +60,15 @@ open class Target: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.userId = try container.decode(String.self, forKey: .userId)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
+        self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
         self.providerId = try container.decodeIfPresent(String.self, forKey: .providerId)
-        self.providerType = try container.decode(String.self, forKey: .providerType)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.expired = try container.decode(Bool.self, forKey: .expired)
+        self.providerType = try container.contains(.providerType) ? container.decode(String.self, forKey: .providerType) : ""
+        self.identifier = try container.contains(.identifier) ? container.decode(String.self, forKey: .identifier) : ""
+        self.expired = try container.contains(.expired) ? container.decode(Bool.self, forKey: .expired) : false
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -100,6 +100,18 @@ open class Target: Codable {
     }
 
     public static func from(map: [String: Any]) -> Target {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "name": "",
+            "userId": "",
+            "providerType": "",
+            "identifier": "",
+            "expired": false,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Target(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

@@ -32,8 +32,8 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "20.1.0-rc.3",
-        "x-appwrite-response-format": "2.3.0",
+        "x-sdk-version": "21.0.0",
+        "x-appwrite-response-format": "2.5.0",
     ]
 
     internal var config: [String: String] = [:]
@@ -377,43 +377,34 @@ open class Client {
     /// @return String
     ///
     open func parametersToQueryString(params: [String: Any?]) -> String {
-        var output: String = ""
+        // RFC 3986 unreserved characters only, so `&`, `=`, `+` and `#` inside a value are escaped
+        let allowed = CharacterSet(
+            charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
+        )
 
-        func appendWhenNotLast(
-            _ index: Int, ofTotal count: Int, outerIndex: Int? = nil, outerCount: Int? = nil
-        ) {
-            if index != count - 1
-                || (outerIndex != nil
-                    && outerCount != nil
-                    && index == count - 1
-                    && outerIndex! != outerCount! - 1)
-            {
-                output += "&"
-            }
+        func encode(_ value: Any) -> String {
+            return "\(value)".addingPercentEncoding(withAllowedCharacters: allowed) ?? ""
         }
 
-        for (parameterIndex, element) in params.enumerated() {
-            switch element.value {
+        var output: [String] = []
+
+        for (key, value) in params {
+            switch value {
             case nil:
-                break
-            case is [Any?]:
-                let list = element.value as! [Any?]
-                for (nestedIndex, item) in list.enumerated() {
-                    output += "\(element.key)[]=\(item!)"
-                    appendWhenNotLast(
-                        nestedIndex, ofTotal: list.count, outerIndex: parameterIndex,
-                        outerCount: params.count)
+                continue
+            case let list as [Any?]:
+                for item in list {
+                    guard let item = item else {
+                        continue
+                    }
+                    output.append("\(encode("\(key)[]"))=\(encode(item))")
                 }
-                appendWhenNotLast(parameterIndex, ofTotal: params.count)
             default:
-                output += "\(element.key)=\(element.value!)"
-                appendWhenNotLast(parameterIndex, ofTotal: params.count)
+                output.append("\(encode(key))=\(encode(value!))")
             }
         }
 
-        return output.addingPercentEncoding(
-            withAllowedCharacters: .urlHostAllowed
-        )?.replacingOccurrences(of: "+", with: "%2B") ?? ""  // since urlHostAllowed doesn't include +
+        return output.joined(separator: "&")
     }
 
     ///

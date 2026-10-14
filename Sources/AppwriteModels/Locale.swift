@@ -105,13 +105,13 @@ open class Locale: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.ip = try container.decode(String.self, forKey: .ip)
-        self.countryCode = try container.decode(String.self, forKey: .countryCode)
-        self.country = try container.decode(String.self, forKey: .country)
-        self.continentCode = try container.decode(String.self, forKey: .continentCode)
-        self.continent = try container.decode(String.self, forKey: .continent)
-        self.eu = try container.decode(Bool.self, forKey: .eu)
-        self.currency = try container.decode(String.self, forKey: .currency)
+        self.ip = try container.contains(.ip) ? container.decode(String.self, forKey: .ip) : ""
+        self.countryCode = try container.contains(.countryCode) ? container.decode(String.self, forKey: .countryCode) : ""
+        self.country = try container.contains(.country) ? container.decode(String.self, forKey: .country) : ""
+        self.continentCode = try container.contains(.continentCode) ? container.decode(String.self, forKey: .continentCode) : ""
+        self.continent = try container.contains(.continent) ? container.decode(String.self, forKey: .continent) : ""
+        self.eu = try container.contains(.eu) ? container.decode(Bool.self, forKey: .eu) : false
+        self.currency = try container.contains(.currency) ? container.decode(String.self, forKey: .currency) : ""
         self.city = try container.decodeIfPresent(String.self, forKey: .city)
         self.timeZone = try container.decodeIfPresent(String.self, forKey: .timeZone)
         self.postalCode = try container.decodeIfPresent(String.self, forKey: .postalCode)
@@ -172,6 +172,17 @@ open class Locale: Codable {
     }
 
     public static func from(map: [String: Any]) -> Locale {
+        let defaults: [String: Any] = [
+            "ip": "",
+            "countryCode": "",
+            "country": "",
+            "continentCode": "",
+            "continent": "",
+            "eu": false,
+            "currency": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Locale(
             ip: map["ip"] as! String,
             countryCode: map["countryCode"] as! String,

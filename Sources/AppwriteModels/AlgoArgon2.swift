@@ -35,10 +35,10 @@ open class AlgoArgon2: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.type = try container.decode(String.self, forKey: .type)
-        self.memoryCost = try container.decode(Int.self, forKey: .memoryCost)
-        self.timeCost = try container.decode(Int.self, forKey: .timeCost)
-        self.threads = try container.decode(Int.self, forKey: .threads)
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "argon2"
+        self.memoryCost = try container.contains(.memoryCost) ? container.decode(Int.self, forKey: .memoryCost) : 0
+        self.timeCost = try container.contains(.timeCost) ? container.decode(Int.self, forKey: .timeCost) : 0
+        self.threads = try container.contains(.threads) ? container.decode(Int.self, forKey: .threads) : 0
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -60,6 +60,14 @@ open class AlgoArgon2: Codable {
     }
 
     public static func from(map: [String: Any]) -> AlgoArgon2 {
+        let defaults: [String: Any] = [
+            "type": "argon2",
+            "memoryCost": 0,
+            "timeCost": 0,
+            "threads": 0,
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return AlgoArgon2(
             type: map["type"] as! String,
             memoryCost: map["memoryCost"] as! Int,

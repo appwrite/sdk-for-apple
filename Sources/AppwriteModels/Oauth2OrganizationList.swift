@@ -25,8 +25,8 @@ open class Oauth2OrganizationList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.organizations = try container.decode([Oauth2Organization].self, forKey: .organizations)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.organizations = try container.contains(.organizations) ? container.decode([Oauth2Organization].self, forKey: .organizations) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class Oauth2OrganizationList: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2OrganizationList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "organizations": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2OrganizationList(
             total: map["total"] as! Int,
             organizations: (map["organizations"] as! [[String: Any]]).map { Oauth2Organization.from(map: $0) }
