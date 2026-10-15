@@ -20,7 +20,7 @@ open class AlgoMd5: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.contains(.type) ? container.decode(String.self, forKey: .type) : "md5"
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,9 @@ open class AlgoMd5: Codable {
     }
 
     public static func from(map: [String: Any]) -> AlgoMd5 {
+        let defaults: [String: Any] = ["type": "md5"]
+        let map = defaults.merging(map) { _, new in new }
+
         return AlgoMd5(
             type: map["type"] as! String
         )

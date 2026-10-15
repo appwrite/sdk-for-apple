@@ -8,18 +8,18 @@ let client = Client()
 let oauth2 = Oauth2(client)
 
 let oauth2PAR = try await oauth2.createPAR(
-    client_id: "<CLIENT_ID>",
-    redirect_uri: "https://example.com",
-    response_type: "code",
+    clientId: "<CLIENT_ID>",
+    redirectUri: "https://example.com",
+    responseType: "code",
     scope: "<SCOPE>", // optional
     state: "<STATE>", // optional
     nonce: "<NONCE>", // optional
-    code_challenge: "<CODE_CHALLENGE>", // optional
-    code_challenge_method: "s256", // optional
+    codeChallenge: "<CODE_CHALLENGE>", // optional
+    codeChallengeMethod: "s256", // optional
     prompt: "<PROMPT>", // optional
-    max_age: 0, // optional
-    authorization_details: "<AUTHORIZATION_DETAILS>", // optional
-    resource: "", // optional
+    maxAge: 0, // optional
+    authorizationDetails: "<AUTHORIZATION_DETAILS>", // optional
+    resource: [], // optional
     audience: "<AUDIENCE>" // optional
 )
 

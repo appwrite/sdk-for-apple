@@ -25,8 +25,8 @@ open class Headers: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.name = try container.decode(String.self, forKey: .name)
-        self.value = try container.decode(String.self, forKey: .value)
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
+        self.value = try container.contains(.value) ? container.decode(String.self, forKey: .value) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class Headers: Codable {
     }
 
     public static func from(map: [String: Any]) -> Headers {
+        let defaults: [String: Any] = [
+            "name": "",
+            "value": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Headers(
             name: map["name"] as! String,
             value: map["value"] as! String

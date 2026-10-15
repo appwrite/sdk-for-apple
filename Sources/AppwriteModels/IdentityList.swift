@@ -25,8 +25,8 @@ open class IdentityList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.identities = try container.decode([Identity].self, forKey: .identities)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.identities = try container.contains(.identities) ? container.decode([Identity].self, forKey: .identities) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class IdentityList: Codable {
     }
 
     public static func from(map: [String: Any]) -> IdentityList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "identities": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return IdentityList(
             total: map["total"] as! Int,
             identities: (map["identities"] as! [[String: Any]]).map { Identity.from(map: $0) }

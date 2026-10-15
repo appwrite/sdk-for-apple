@@ -25,8 +25,8 @@ open class CurrencyList: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.currencies = try container.decode([Currency].self, forKey: .currencies)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.currencies = try container.contains(.currencies) ? container.decode([Currency].self, forKey: .currencies) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class CurrencyList: Codable {
     }
 
     public static func from(map: [String: Any]) -> CurrencyList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "currencies": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return CurrencyList(
             total: map["total"] as! Int,
             currencies: (map["currencies"] as! [[String: Any]]).map { Currency.from(map: $0) }
