@@ -45,12 +45,12 @@ open class Transaction: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.createdAt = try container.decode(String.self, forKey: .createdAt)
-        self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
-        self.status = try container.decode(String.self, forKey: .status)
-        self.operations = try container.decode(Int.self, forKey: .operations)
-        self.expiresAt = try container.decode(String.self, forKey: .expiresAt)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
+        self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
+        self.status = try container.contains(.status) ? container.decode(String.self, forKey: .status) : "pending"
+        self.operations = try container.contains(.operations) ? container.decode(Int.self, forKey: .operations) : 0
+        self.expiresAt = try container.contains(.expiresAt) ? container.decode(String.self, forKey: .expiresAt) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -76,6 +76,16 @@ open class Transaction: Codable {
     }
 
     public static func from(map: [String: Any]) -> Transaction {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "$createdAt": "",
+            "$updatedAt": "",
+            "status": "pending",
+            "operations": 0,
+            "expiresAt": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Transaction(
             id: map["$id"] as! String,
             createdAt: map["$createdAt"] as! String,

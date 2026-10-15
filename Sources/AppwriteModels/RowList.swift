@@ -25,8 +25,8 @@ open class RowList<T: Codable>: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.total = try container.decode(Int.self, forKey: .total)
-        self.rows = try container.decode([Row<T>].self, forKey: .rows)
+        self.total = try container.contains(.total) ? container.decode(Int.self, forKey: .total) : 0
+        self.rows = try container.contains(.rows) ? container.decode([Row<T>].self, forKey: .rows) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class RowList<T: Codable>: Codable {
     }
 
     public static func from(map: [String: Any]) -> RowList {
+        let defaults: [String: Any] = [
+            "total": 0,
+            "rows": [Any](),
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return RowList(
             total: map["total"] as! Int,
             rows: (map["rows"] as! [[String: Any]]).map { Row.from(map: $0) }

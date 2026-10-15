@@ -25,8 +25,8 @@ open class Oauth2Authorize: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.grantId = try container.decode(String.self, forKey: .grantId)
-        self.redirectUrl = try container.decode(String.self, forKey: .redirectUrl)
+        self.grantId = try container.contains(.grantId) ? container.decode(String.self, forKey: .grantId) : ""
+        self.redirectUrl = try container.contains(.redirectUrl) ? container.decode(String.self, forKey: .redirectUrl) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -44,6 +44,12 @@ open class Oauth2Authorize: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2Authorize {
+        let defaults: [String: Any] = [
+            "grantId": "",
+            "redirectUrl": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2Authorize(
             grantId: map["grantId"] as! String,
             redirectUrl: map["redirectUrl"] as! String

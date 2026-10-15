@@ -20,7 +20,7 @@ open class MfaRecoveryCodes: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.recoveryCodes = try container.decode([String].self, forKey: .recoveryCodes)
+        self.recoveryCodes = try container.contains(.recoveryCodes) ? container.decode([String].self, forKey: .recoveryCodes) : []
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -36,6 +36,9 @@ open class MfaRecoveryCodes: Codable {
     }
 
     public static func from(map: [String: Any]) -> MfaRecoveryCodes {
+        let defaults: [String: Any] = ["recoveryCodes": [Any]()]
+        let map = defaults.merging(map) { _, new in new }
+
         return MfaRecoveryCodes(
             recoveryCodes: map["recoveryCodes"] as! [String]
         )

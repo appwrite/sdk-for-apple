@@ -50,13 +50,13 @@ open class Currency: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.symbol = try container.decode(String.self, forKey: .symbol)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.symbolNative = try container.decode(String.self, forKey: .symbolNative)
-        self.decimalDigits = try container.decode(Int.self, forKey: .decimalDigits)
-        self.rounding = try container.decode(Double.self, forKey: .rounding)
-        self.code = try container.decode(String.self, forKey: .code)
-        self.namePlural = try container.decode(String.self, forKey: .namePlural)
+        self.symbol = try container.contains(.symbol) ? container.decode(String.self, forKey: .symbol) : ""
+        self.name = try container.contains(.name) ? container.decode(String.self, forKey: .name) : ""
+        self.symbolNative = try container.contains(.symbolNative) ? container.decode(String.self, forKey: .symbolNative) : ""
+        self.decimalDigits = try container.contains(.decimalDigits) ? container.decode(Int.self, forKey: .decimalDigits) : 0
+        self.rounding = try container.contains(.rounding) ? container.decode(Double.self, forKey: .rounding) : 0
+        self.code = try container.contains(.code) ? container.decode(String.self, forKey: .code) : ""
+        self.namePlural = try container.contains(.namePlural) ? container.decode(String.self, forKey: .namePlural) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -84,6 +84,17 @@ open class Currency: Codable {
     }
 
     public static func from(map: [String: Any]) -> Currency {
+        let defaults: [String: Any] = [
+            "symbol": "",
+            "name": "",
+            "symbolNative": "",
+            "decimalDigits": 0,
+            "rounding": 0.0,
+            "code": "",
+            "namePlural": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Currency(
             symbol: map["symbol"] as! String,
             name: map["name"] as! String,

@@ -8,12 +8,12 @@ let client = Client()
 let oauth2 = Oauth2(client)
 
 let result = try await oauth2.logout(
-    id_token_hint: "<ID_TOKEN_HINT>", // optional
-    logout_hint: "<LOGOUT_HINT>", // optional
-    client_id: "<CLIENT_ID>", // optional
-    post_logout_redirect_uri: "https://example.com", // optional
+    idTokenHint: "<ID_TOKEN_HINT>", // optional
+    logoutHint: "<LOGOUT_HINT>", // optional
+    clientId: "<CLIENT_ID>", // optional
+    postLogoutRedirectUri: "https://example.com", // optional
     state: "<STATE>", // optional
-    ui_locales: "<UI_LOCALES>" // optional
+    uiLocales: "<UI_LOCALES>" // optional
 )
 
 ```

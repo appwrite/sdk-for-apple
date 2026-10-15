@@ -30,9 +30,9 @@ open class Oauth2Project: Codable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.region = try container.decode(String.self, forKey: .region)
-        self.endpoint = try container.decode(String.self, forKey: .endpoint)
+        self.id = try container.contains(.id) ? container.decode(String.self, forKey: .id) : ""
+        self.region = try container.contains(.region) ? container.decode(String.self, forKey: .region) : ""
+        self.endpoint = try container.contains(.endpoint) ? container.decode(String.self, forKey: .endpoint) : ""
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -52,6 +52,13 @@ open class Oauth2Project: Codable {
     }
 
     public static func from(map: [String: Any]) -> Oauth2Project {
+        let defaults: [String: Any] = [
+            "$id": "",
+            "region": "",
+            "endpoint": "",
+        ]
+        let map = defaults.merging(map) { _, new in new }
+
         return Oauth2Project(
             id: map["$id"] as! String,
             region: map["region"] as! String,
