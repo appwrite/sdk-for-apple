@@ -9,7 +9,9 @@ let account = Account(client)
 
 let target = try await account.updatePushTarget(
     targetId: "<TARGET_ID>",
-    identifier: "<IDENTIFIER>"
+    identifier: "<IDENTIFIER>",
+    bundleId: "<BUNDLE_ID>", // optional
+    environment: "sandbox" // optional
 )
 
 ```

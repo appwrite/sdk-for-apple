@@ -509,6 +509,102 @@ open class DocumentsDB: Service {
         )
     }
     ///
+    /// Get a list of all the user's documents in a given collection using a POST
+    /// request. This behaves identically to the list documents endpoint but
+    /// accepts the queries in the request body, allowing much larger `queries`
+    /// arrays than can fit in a URL query string.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
+    ///   - total: Bool (optional)
+    ///   - ttl: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.DocumentList<T>
+    ///
+    open func createQuery<T>(
+        databaseId: String,
+        collectionId: String,
+        queries: [String]? = nil,
+        transactionId: String? = nil,
+        total: Bool? = nil,
+        ttl: Int? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.DocumentList<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if collectionId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"collectionId\"")
+        }
+
+        let apiPath: String = "/documentsdb/{databaseId}/collections/{collectionId}/documents/query"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{collectionId}", with: collectionId)
+
+        let apiParams: [String: Any?] = [
+            "queries": queries,
+            "transactionId": transactionId,
+            "total": total,
+            "ttl": ttl,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.DocumentList<T> = { response in
+            return AppwriteModels.DocumentList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get a list of all the user's documents in a given collection using a POST
+    /// request. This behaves identically to the list documents endpoint but
+    /// accepts the queries in the request body, allowing much larger `queries`
+    /// arrays than can fit in a URL query string.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - collectionId: String
+    ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
+    ///   - total: Bool (optional)
+    ///   - ttl: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.DocumentList<T>
+    ///
+    open func createQuery(
+        databaseId: String,
+        collectionId: String,
+        queries: [String]? = nil,
+        transactionId: String? = nil,
+        total: Bool? = nil,
+        ttl: Int? = nil
+    ) async throws -> AppwriteModels.DocumentList<[String: AnyCodable]> {
+        return try await createQuery(
+            databaseId: databaseId,
+            collectionId: collectionId,
+            queries: queries,
+            transactionId: transactionId,
+            total: total,
+            ttl: ttl,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+    ///
     /// Get a document by its unique ID. This endpoint response returns a JSON
     /// object with the document data.
     ///

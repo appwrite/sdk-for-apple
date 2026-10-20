@@ -57,7 +57,10 @@ let package = Package(
         .testTarget(
             name: "AppwriteTests",
             dependencies: [
-                "Appwrite"
+                "Appwrite",
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "NIOEmbedded", package: "swift-nio"),
+                .product(name: "NIOWebSocket", package: "swift-nio"),
             ]
         ),
     ],
