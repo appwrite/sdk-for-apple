@@ -241,6 +241,14 @@ open class TablesDB: Service {
     /// Get a list of all the user's rows in a given table. You can use the query
     /// params to filter your results.
     ///
+    /// Rows returned by aggregate, groupBy or distinct queries hold only the
+    /// columns they select, group or aggregate, typed as a row types them, with a
+    /// joined column named by its join alias (`alias.column`). The response omits
+    /// their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`,
+    /// `$databaseId` and `$tableId` unless they select or group it, and those of a
+    /// right or full join row that no row of this table matched. SDK row models
+    /// fill omitted system columns with empty values.
+    ///
     /// - Parameters:
     ///   - databaseId: String
     ///   - tableId: String
@@ -299,6 +307,14 @@ open class TablesDB: Service {
     ///
     /// Get a list of all the user's rows in a given table. You can use the query
     /// params to filter your results.
+    ///
+    /// Rows returned by aggregate, groupBy or distinct queries hold only the
+    /// columns they select, group or aggregate, typed as a row types them, with a
+    /// joined column named by its join alias (`alias.column`). The response omits
+    /// their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`,
+    /// `$databaseId` and `$tableId` unless they select or group it, and those of a
+    /// right or full join row that no row of this table matched. SDK row models
+    /// fill omitted system columns with empty values.
     ///
     /// - Parameters:
     ///   - databaseId: String
@@ -421,6 +437,102 @@ open class TablesDB: Service {
             data: data,
             permissions: permissions,
             transactionId: transactionId,
+            nestedType: [String: AnyCodable].self
+        )
+    }
+    ///
+    /// Get a list of all the user's rows in a given table using a POST request.
+    /// This behaves identically to the list rows endpoint but accepts the queries
+    /// in the request body, allowing much larger `queries` arrays than can fit in
+    /// a URL query string.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - tableId: String
+    ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
+    ///   - total: Bool (optional)
+    ///   - ttl: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.RowList<T>
+    ///
+    open func createQuery<T>(
+        databaseId: String,
+        tableId: String,
+        queries: [String]? = nil,
+        transactionId: String? = nil,
+        total: Bool? = nil,
+        ttl: Int? = nil,
+        nestedType: T.Type
+    ) async throws -> AppwriteModels.RowList<T> {
+        if databaseId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"databaseId\"")
+        }
+        if tableId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"tableId\"")
+        }
+
+        let apiPath: String = "/tablesdb/{databaseId}/tables/{tableId}/rows/query"
+            .replacingOccurrences(of: "{databaseId}", with: databaseId)
+            .replacingOccurrences(of: "{tableId}", with: tableId)
+
+        let apiParams: [String: Any?] = [
+            "queries": queries,
+            "transactionId": transactionId,
+            "total": total,
+            "ttl": ttl,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.RowList<T> = { response in
+            return AppwriteModels.RowList.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+
+    ///
+    /// Get a list of all the user's rows in a given table using a POST request.
+    /// This behaves identically to the list rows endpoint but accepts the queries
+    /// in the request body, allowing much larger `queries` arrays than can fit in
+    /// a URL query string.
+    ///
+    /// - Parameters:
+    ///   - databaseId: String
+    ///   - tableId: String
+    ///   - queries: [String] (optional)
+    ///   - transactionId: String (optional)
+    ///   - total: Bool (optional)
+    ///   - ttl: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.RowList<T>
+    ///
+    open func createQuery(
+        databaseId: String,
+        tableId: String,
+        queries: [String]? = nil,
+        transactionId: String? = nil,
+        total: Bool? = nil,
+        ttl: Int? = nil
+    ) async throws -> AppwriteModels.RowList<[String: AnyCodable]> {
+        return try await createQuery(
+            databaseId: databaseId,
+            tableId: tableId,
+            queries: queries,
+            transactionId: transactionId,
+            total: total,
+            ttl: ttl,
             nestedType: [String: AnyCodable].self
         )
     }

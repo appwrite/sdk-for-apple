@@ -32,7 +32,7 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "21.0.0",
+        "x-sdk-version": "21.1.0",
         "x-appwrite-response-format": "2.5.0",
     ]
 
@@ -99,7 +99,7 @@ open class Client {
         do {
             try http.syncShutdown()
         } catch {
-            print(error)
+            FileHandle.standardError.write(Data("\(error)\n".utf8))
         }
     }
 
