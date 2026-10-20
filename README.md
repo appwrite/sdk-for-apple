@@ -1,6 +1,6 @@
 # Appwrite Apple SDK
 
-![Swift Package Manager](https://img.shields.io/badge/swift%20package%20manager-21.0.0-green.svg?style=flat-square)
+![Swift Package Manager](https://img.shields.io/badge/swift%20package%20manager-21.1.0-green.svg?style=flat-square)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg?style=flat-square)
 ![Version](https://img.shields.io/badge/api%20version-2.5.0-blue.svg?style=flat-square)
 [![X Account](https://img.shields.io/badge/follow-%40appwrite-000000?logo=x&style=flat-square)](https://x.com/appwrite)
@@ -20,7 +20,7 @@ Requires Swift 6.1 or later (Xcode 16.3 or later). Supported platforms are iOS 1
 
 1. In Xcode, select **File > Add Package Dependencies...**
 2. Enter `https://github.com/appwrite/sdk-for-apple` in the search field and select `sdk-for-apple`.
-3. Choose a dependency rule, for example **Up to Next Major Version** from `21.0.0`, and click **Add Package**.
+3. Choose a dependency rule, for example **Up to Next Major Version** from `21.1.0`, and click **Add Package**.
 4. Add the `Appwrite` library to your app target and click **Add Package**.
 
 ### Swift Package Manager
@@ -29,7 +29,7 @@ Add the package to the dependencies in your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/appwrite/sdk-for-apple", from: "21.0.0"),
+    .package(url: "https://github.com/appwrite/sdk-for-apple", from: "21.1.0"),
 ],
 ```
 

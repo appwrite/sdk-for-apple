@@ -1,5 +1,15 @@
 # Change Log
 
+## 21.1.0
+
+* Added: `account.listMemberships` to list the current user's team memberships
+* Added: `createQuery` on `Databases`, `DocumentsDB` and `TablesDB` to send list queries in the request body
+* Added: `bundleId` and `environment` params on `account.createPushTarget` and `updatePushTarget`
+* Fixed: realtime no longer drops the first frame that arrives with the WebSocket upgrade
+* Fixed: `WebSocketClient.connect()` waits for the upgrade and throws when the server rejects it
+* Fixed: realtime reconnects after the server closes the socket
+* Updated: SDK diagnostics are written to stderr instead of stdout
+
 ## 21.0.0
 
 * Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes

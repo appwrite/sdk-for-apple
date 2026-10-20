@@ -10,7 +10,9 @@ let account = Account(client)
 let target = try await account.createPushTarget(
     targetId: "<TARGET_ID>",
     identifier: "<IDENTIFIER>",
-    providerId: "<PROVIDER_ID>" // optional
+    providerId: "<PROVIDER_ID>", // optional
+    bundleId: "<BUNDLE_ID>", // optional
+    environment: "sandbox" // optional
 )
 
 ```
