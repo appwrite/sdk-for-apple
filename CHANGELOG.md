@@ -1,5 +1,10 @@
 # Change Log
 
+## 21.1.1
+
+* Updated: UIKit example dependency pins to the current resolved graph, replacing versions with known security advisories
+* Fixed: UIKit example resolves the containing SDK as a local Swift package
+
 ## 21.1.0
 
 * Added: `account.listMemberships` to list the current user's team memberships
