@@ -160,7 +160,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any] = [:]
 
@@ -217,7 +217,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any?] = [
             "name": name
@@ -278,7 +278,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any] = [:]
 
@@ -315,7 +315,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/installations"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any?] = [
             "queries": queries,
@@ -362,7 +362,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/installations"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any?] = [
             "appId": appId,
@@ -409,8 +409,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/installations/{installationId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{installationId}", with: installationId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{installationId}", with: try Client.encodePath(installationId))
 
         let apiParams: [String: Any] = [:]
 
@@ -457,8 +457,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/installations/{installationId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{installationId}", with: installationId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{installationId}", with: try Client.encodePath(installationId))
 
         let apiParams: [String: Any?] = [
             "authorizationDetails": authorizationDetails
@@ -505,8 +505,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/installations/{installationId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{installationId}", with: installationId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{installationId}", with: try Client.encodePath(installationId))
 
         let apiParams: [String: Any] = [:]
 
@@ -547,7 +547,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/memberships"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any?] = [
             "queries": queries,
@@ -621,7 +621,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/memberships"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any?] = [
             "email": email,
@@ -674,8 +674,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/memberships/{membershipId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{membershipId}", with: membershipId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{membershipId}", with: try Client.encodePath(membershipId))
 
         let apiParams: [String: Any] = [:]
 
@@ -721,8 +721,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/memberships/{membershipId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{membershipId}", with: membershipId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{membershipId}", with: try Client.encodePath(membershipId))
 
         let apiParams: [String: Any?] = [
             "roles": roles
@@ -769,8 +769,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/memberships/{membershipId}"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{membershipId}", with: membershipId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{membershipId}", with: try Client.encodePath(membershipId))
 
         let apiParams: [String: Any] = [:]
 
@@ -817,8 +817,8 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/memberships/{membershipId}/status"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
-            .replacingOccurrences(of: "{membershipId}", with: membershipId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
+            .replacingOccurrences(of: "{membershipId}", with: try Client.encodePath(membershipId))
 
         let apiParams: [String: Any?] = [
             "userId": userId,
@@ -862,7 +862,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/prefs"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any] = [:]
 
@@ -923,7 +923,7 @@ open class Teams: Service {
         }
 
         let apiPath: String = "/teams/{teamId}/prefs"
-            .replacingOccurrences(of: "{teamId}", with: teamId)
+            .replacingOccurrences(of: "{teamId}", with: try Client.encodePath(teamId))
 
         let apiParams: [String: Any?] = [
             "prefs": prefs

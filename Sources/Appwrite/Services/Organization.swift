@@ -103,7 +103,7 @@ open class Organization: Service {
         }
 
         let apiPath: String = "/organization/installations/{installationId}"
-            .replacingOccurrences(of: "{installationId}", with: installationId)
+            .replacingOccurrences(of: "{installationId}", with: try Client.encodePath(installationId))
 
         let apiParams: [String: Any] = [:]
 
@@ -145,7 +145,7 @@ open class Organization: Service {
         }
 
         let apiPath: String = "/organization/installations/{installationId}"
-            .replacingOccurrences(of: "{installationId}", with: installationId)
+            .replacingOccurrences(of: "{installationId}", with: try Client.encodePath(installationId))
 
         let apiParams: [String: Any?] = [
             "authorizationDetails": authorizationDetails
@@ -187,7 +187,7 @@ open class Organization: Service {
         }
 
         let apiPath: String = "/organization/installations/{installationId}"
-            .replacingOccurrences(of: "{installationId}", with: installationId)
+            .replacingOccurrences(of: "{installationId}", with: try Client.encodePath(installationId))
 
         let apiParams: [String: Any] = [:]
 

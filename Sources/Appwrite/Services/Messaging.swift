@@ -28,7 +28,7 @@ open class Messaging: Service {
         }
 
         let apiPath: String = "/messaging/topics/{topicId}/subscribers"
-            .replacingOccurrences(of: "{topicId}", with: topicId)
+            .replacingOccurrences(of: "{topicId}", with: try Client.encodePath(topicId))
 
         let apiParams: [String: Any?] = [
             "subscriberId": subscriberId,
@@ -74,8 +74,8 @@ open class Messaging: Service {
         }
 
         let apiPath: String = "/messaging/topics/{topicId}/subscribers/{subscriberId}"
-            .replacingOccurrences(of: "{topicId}", with: topicId)
-            .replacingOccurrences(of: "{subscriberId}", with: subscriberId)
+            .replacingOccurrences(of: "{topicId}", with: try Client.encodePath(topicId))
+            .replacingOccurrences(of: "{subscriberId}", with: try Client.encodePath(subscriberId))
 
         let apiParams: [String: Any] = [:]
 
