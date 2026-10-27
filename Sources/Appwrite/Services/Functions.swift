@@ -29,7 +29,7 @@ open class Functions: Service {
         }
 
         let apiPath: String = "/functions/{functionId}/executions"
-            .replacingOccurrences(of: "{functionId}", with: functionId)
+            .replacingOccurrences(of: "{functionId}", with: try Client.encodePath(functionId))
 
         let apiParams: [String: Any?] = [
             "queries": queries,
@@ -84,7 +84,7 @@ open class Functions: Service {
         }
 
         let apiPath: String = "/functions/{functionId}/executions"
-            .replacingOccurrences(of: "{functionId}", with: functionId)
+            .replacingOccurrences(of: "{functionId}", with: try Client.encodePath(functionId))
 
         let apiParams: [String: Any?] = [
             "body": body,
@@ -134,8 +134,8 @@ open class Functions: Service {
         }
 
         let apiPath: String = "/functions/{functionId}/executions/{executionId}"
-            .replacingOccurrences(of: "{functionId}", with: functionId)
-            .replacingOccurrences(of: "{executionId}", with: executionId)
+            .replacingOccurrences(of: "{functionId}", with: try Client.encodePath(functionId))
+            .replacingOccurrences(of: "{executionId}", with: try Client.encodePath(executionId))
 
         let apiParams: [String: Any] = [:]
 

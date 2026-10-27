@@ -48,7 +48,7 @@ open class Analytics: Service {
         }
 
         let apiPath: String = "/analytics/properties/{propertyId}/events"
-            .replacingOccurrences(of: "{propertyId}", with: propertyId)
+            .replacingOccurrences(of: "{propertyId}", with: try Client.encodePath(propertyId))
 
         let apiParams: [String: Any?] = [
             "name": name,

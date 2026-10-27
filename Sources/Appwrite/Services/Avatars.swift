@@ -35,7 +35,7 @@ open class Avatars: Service {
         quality: Int? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/avatars/browsers/{code}"
-            .replacingOccurrences(of: "{code}", with: code.rawValue)
+            .replacingOccurrences(of: "{code}", with: try Client.encodePath(code.rawValue))
 
         let apiParams: [String: Any?] = [
             "width": width,
@@ -80,7 +80,7 @@ open class Avatars: Service {
         quality: Int? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/avatars/credit-cards/{code}"
-            .replacingOccurrences(of: "{code}", with: code.rawValue)
+            .replacingOccurrences(of: "{code}", with: try Client.encodePath(code.rawValue))
 
         let apiParams: [String: Any?] = [
             "width": width,
@@ -158,7 +158,7 @@ open class Avatars: Service {
         quality: Int? = nil
     ) async throws -> ByteBuffer {
         let apiPath: String = "/avatars/flags/{code}"
-            .replacingOccurrences(of: "{code}", with: code.rawValue)
+            .replacingOccurrences(of: "{code}", with: try Client.encodePath(code.rawValue))
 
         let apiParams: [String: Any?] = [
             "width": width,

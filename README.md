@@ -1,12 +1,12 @@
 # Appwrite Apple SDK
 
-![Swift Package Manager](https://img.shields.io/badge/swift%20package%20manager-21.1.1-green.svg?style=flat-square)
+![Swift Package Manager](https://img.shields.io/badge/swift%20package%20manager-21.2.0-green.svg?style=flat-square)
 ![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg?style=flat-square)
-![Version](https://img.shields.io/badge/api%20version-2.5.0-blue.svg?style=flat-square)
+![Version](https://img.shields.io/badge/api%20version-2.6.2-blue.svg?style=flat-square)
 [![X Account](https://img.shields.io/badge/follow-%40appwrite-000000?logo=x&style=flat-square)](https://x.com/appwrite)
 [![Discord](https://img.shields.io/discord/564160730845151244?label=discord&style=flat-square)](https://appwrite.io/discord)
 
-**This SDK targets Appwrite server version 2.5.x as shipped on Appwrite Cloud.** Self-hosted releases can lag behind Cloud — if you run an older self-hosted build, use a matching older SDK from [previous releases](https://github.com/appwrite/sdk-for-apple/releases) when APIs differ.
+**This SDK targets Appwrite server version 2.6.x as shipped on Appwrite Cloud.** Self-hosted releases can lag behind Cloud — if you run an older self-hosted build, use a matching older SDK from [previous releases](https://github.com/appwrite/sdk-for-apple/releases) when APIs differ.
 
 Appwrite is an open-source backend as a service server that abstracts and simplifies complex and repetitive development tasks behind a very simple to use REST API. Appwrite aims to help you develop your apps faster and in a more secure way. Use the Apple SDK to integrate your app with the Appwrite server to easily start interacting with all of Appwrite backend APIs and tools. For full API documentation and tutorials go to [https://appwrite.io/docs](https://appwrite.io/docs)
 
@@ -20,7 +20,7 @@ Requires Swift 6.1 or later (Xcode 16.3 or later). Supported platforms are iOS 1
 
 1. In Xcode, select **File > Add Package Dependencies...**
 2. Enter `https://github.com/appwrite/sdk-for-apple` in the search field and select `sdk-for-apple`.
-3. Choose a dependency rule, for example **Up to Next Major Version** from `21.1.1`, and click **Add Package**.
+3. Choose a dependency rule, for example **Up to Next Major Version** from `21.2.0`, and click **Add Package**.
 4. Add the `Appwrite` library to your app target and click **Add Package**.
 
 ### Swift Package Manager
@@ -29,7 +29,7 @@ Add the package to the dependencies in your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/appwrite/sdk-for-apple", from: "21.1.1"),
+    .package(url: "https://github.com/appwrite/sdk-for-apple", from: "21.2.0"),
 ],
 ```
 
@@ -47,6 +47,9 @@ targets: [
 ```
 
 ## Getting Started
+
+Use SDK 21.1.1 or later. In Xcode's package dependency settings, choose **Up to Next Major Version** from `21.1.1`.
+
 
 ### Add your Apple platform
 

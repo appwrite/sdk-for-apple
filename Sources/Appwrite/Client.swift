@@ -19,6 +19,11 @@ open class Client {
     public static var chunkSize = 5 * 1024 * 1024  // 5MB
     public static var maxConcurrentUploads = 8
 
+    /// Characters a path segment keeps as they are: letters, digits and -_.!~*'(), as encodeURIComponent.
+    private static let pathSegmentAllowed = CharacterSet(
+        charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.!~*'()"
+    )
+
     open var endPoint = "https://cloud.appwrite.io/v1"
 
     open var endPointRealtime: String? = nil
@@ -32,8 +37,8 @@ open class Client {
         "x-sdk-name": "Apple",
         "x-sdk-platform": "client",
         "x-sdk-language": "apple",
-        "x-sdk-version": "21.1.1",
-        "x-appwrite-response-format": "2.5.0",
+        "x-sdk-version": "21.2.0",
+        "x-appwrite-response-format": "2.6.2",
     ]
 
     internal var config: [String: String] = [:]
@@ -101,6 +106,20 @@ open class Client {
         } catch {
             FileHandle.standardError.write(Data("\(error)\n".utf8))
         }
+    }
+
+    ///
+    /// Encodes a value as one path segment, so it fills exactly the segment it replaces
+    ///
+    /// @param String value
+    ///
+    /// @return String
+    ///
+    internal static func encodePath(_ value: String) throws -> String {
+        if value == "." || value == ".." {
+            throw AppwriteError(message: "Path parameter cannot be \".\" or \"..\"")
+        }
+        return value.addingPercentEncoding(withAllowedCharacters: pathSegmentAllowed) ?? ""
     }
 
     ///
@@ -607,11 +626,12 @@ open class Client {
         var uploadId = idParamName != nil ? params[idParamName!] as? String : nil
 
         if let uploadId {
+            let uploadPath = try Client.encodePath(uploadId)
             // Make a request to check if a file already exists
             do {
                 let map = try await call(
                     method: "GET",
-                    path: path + "/" + uploadId,
+                    path: path + "/" + uploadPath,
                     headers: headers,
                     params: [:],
                     converter: { return $0 as! [String: Any] }

@@ -1,5 +1,16 @@
 # Change Log
 
+## 21.2.0
+
+* Updated: requests send `X-Appwrite-Response-Format: 2.6.2`; the SDK targets Appwrite 2.6.x
+* Updated: `async-http-client` to `1.36.2` and `swift-nio` to `2.104.0`
+* Added: `selfSigned` option on `WebSocketClient`; `tlsEnabled` defaults to the URL scheme
+* Fixed: an OAuth callback cookie is kept only during a login, and only for its endpoint
+* Fixed: realtime keeps TLS on when self-signed certificates are allowed, instead of connecting unencrypted
+* Fixed: path parameters are percent-encoded as one segment; `.` and `..` throw `AppwriteError`
+* Fixed: chunked upload resume lookups percent-encode the file ID
+* Fixed: examples pass `nil` for unset optional params instead of empty strings
+
 ## 21.1.1
 
 * Updated: UIKit example dependency pins to the current resolved graph, replacing versions with known security advisories

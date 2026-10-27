@@ -28,7 +28,7 @@ open class Oauth2: Service {
         scope: String? = nil
     ) async throws -> AppwriteModels.Oauth2Approve {
         let apiPath: String = "/oauth2/{project_id}/approve"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "grant_id": grantId,
@@ -95,7 +95,7 @@ open class Oauth2: Service {
         requestUri: String? = nil
     ) async throws -> AppwriteModels.Oauth2Authorize {
         let apiPath: String = "/oauth2/{project_id}/authorize"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "client_id": clientId,
@@ -172,7 +172,7 @@ open class Oauth2: Service {
         requestUri: String? = nil
     ) async throws -> AppwriteModels.Oauth2Authorize {
         let apiPath: String = "/oauth2/{project_id}/authorize"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "client_id": clientId,
@@ -229,7 +229,7 @@ open class Oauth2: Service {
         audience: String? = nil
     ) async throws -> AppwriteModels.Oauth2DeviceAuthorization {
         let apiPath: String = "/oauth2/{project_id}/device_authorization"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "client_id": clientId,
@@ -271,7 +271,7 @@ open class Oauth2: Service {
         userCode: String
     ) async throws -> AppwriteModels.Oauth2Grant {
         let apiPath: String = "/oauth2/{project_id}/grants"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "user_code": userCode
@@ -312,8 +312,8 @@ open class Oauth2: Service {
         }
 
         let apiPath: String = "/oauth2/{project_id}/grants/{grant_id}"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
-            .replacingOccurrences(of: "{grant_id}", with: grantId)
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
+            .replacingOccurrences(of: "{grant_id}", with: try Client.encodePath(grantId))
 
         let apiParams: [String: Any] = [:]
 
@@ -358,7 +358,7 @@ open class Oauth2: Service {
         uiLocales: String? = nil
     ) async throws -> Any {
         let apiPath: String = "/oauth2/{project_id}/logout"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "id_token_hint": idTokenHint,
@@ -405,7 +405,7 @@ open class Oauth2: Service {
         uiLocales: String? = nil
     ) async throws -> Any {
         let apiPath: String = "/oauth2/{project_id}/logout"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "id_token_hint": idTokenHint,
@@ -446,7 +446,7 @@ open class Oauth2: Service {
         search: String? = nil
     ) async throws -> AppwriteModels.Oauth2OrganizationList {
         let apiPath: String = "/oauth2/{project_id}/organizations"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "limit": limit,
@@ -507,7 +507,7 @@ open class Oauth2: Service {
         audience: String? = nil
     ) async throws -> AppwriteModels.Oauth2PAR {
         let apiPath: String = "/oauth2/{project_id}/par"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "client_id": clientId,
@@ -560,7 +560,7 @@ open class Oauth2: Service {
         search: String? = nil
     ) async throws -> AppwriteModels.Oauth2ProjectList {
         let apiPath: String = "/oauth2/{project_id}/projects"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "limit": limit,
@@ -599,7 +599,7 @@ open class Oauth2: Service {
         grantId: String
     ) async throws -> AppwriteModels.Oauth2Reject {
         let apiPath: String = "/oauth2/{project_id}/reject"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "grant_id": grantId
@@ -640,7 +640,7 @@ open class Oauth2: Service {
         clientSecret: String? = nil
     ) async throws -> Any {
         let apiPath: String = "/oauth2/{project_id}/revoke"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "token": token,
@@ -692,7 +692,7 @@ open class Oauth2: Service {
         audience: String? = nil
     ) async throws -> AppwriteModels.Oauth2Token {
         let apiPath: String = "/oauth2/{project_id}/token"
-            .replacingOccurrences(of: "{project_id}", with: client.config["project"] ?? "")
+            .replacingOccurrences(of: "{project_id}", with: try Client.encodePath(client.config["project"] ?? ""))
 
         let apiParams: [String: Any?] = [
             "grant_type": grantType,

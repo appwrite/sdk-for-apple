@@ -10,7 +10,7 @@ let oauth2 = Oauth2(client)
 let oauth2Authorize = try await oauth2.authorizePost(
     clientId: "<CLIENT_ID>", // optional
     redirectUri: "https://example.com", // optional
-    responseType: "", // optional
+    responseType: nil, // optional
     scope: "<SCOPE>", // optional
     state: "<STATE>", // optional
     nonce: "<NONCE>", // optional
