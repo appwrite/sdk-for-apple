@@ -65,7 +65,7 @@ open class Presences: Service {
         }
 
         let apiPath: String = "/presences/{presenceId}"
-            .replacingOccurrences(of: "{presenceId}", with: presenceId)
+            .replacingOccurrences(of: "{presenceId}", with: try Client.encodePath(presenceId))
 
         let apiParams: [String: Any] = [:]
 
@@ -110,7 +110,7 @@ open class Presences: Service {
         }
 
         let apiPath: String = "/presences/{presenceId}"
-            .replacingOccurrences(of: "{presenceId}", with: presenceId)
+            .replacingOccurrences(of: "{presenceId}", with: try Client.encodePath(presenceId))
 
         let apiParams: [String: Any?] = [
             "status": status,
@@ -164,7 +164,7 @@ open class Presences: Service {
         }
 
         let apiPath: String = "/presences/{presenceId}"
-            .replacingOccurrences(of: "{presenceId}", with: presenceId)
+            .replacingOccurrences(of: "{presenceId}", with: try Client.encodePath(presenceId))
 
         let apiParams: [String: Any?] = [
             "status": status,
@@ -208,7 +208,7 @@ open class Presences: Service {
         }
 
         let apiPath: String = "/presences/{presenceId}"
-            .replacingOccurrences(of: "{presenceId}", with: presenceId)
+            .replacingOccurrences(of: "{presenceId}", with: try Client.encodePath(presenceId))
 
         let apiParams: [String: Any] = [:]
 

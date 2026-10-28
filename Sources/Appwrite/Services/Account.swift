@@ -188,7 +188,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/consents/{consentId}"
-            .replacingOccurrences(of: "{consentId}", with: consentId)
+            .replacingOccurrences(of: "{consentId}", with: try Client.encodePath(consentId))
 
         let apiParams: [String: Any] = [:]
 
@@ -227,7 +227,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/consents/{consentId}"
-            .replacingOccurrences(of: "{consentId}", with: consentId)
+            .replacingOccurrences(of: "{consentId}", with: try Client.encodePath(consentId))
 
         let apiParams: [String: Any] = [:]
 
@@ -266,7 +266,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/consents/{consentId}/tokens"
-            .replacingOccurrences(of: "{consentId}", with: consentId)
+            .replacingOccurrences(of: "{consentId}", with: try Client.encodePath(consentId))
 
         let apiParams: [String: Any?] = [
             "queries": queries,
@@ -312,8 +312,8 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/consents/{consentId}/tokens/{tokenId}"
-            .replacingOccurrences(of: "{consentId}", with: consentId)
-            .replacingOccurrences(of: "{tokenId}", with: tokenId)
+            .replacingOccurrences(of: "{consentId}", with: try Client.encodePath(consentId))
+            .replacingOccurrences(of: "{tokenId}", with: try Client.encodePath(tokenId))
 
         let apiParams: [String: Any] = [:]
 
@@ -357,8 +357,8 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/consents/{consentId}/tokens/{tokenId}"
-            .replacingOccurrences(of: "{consentId}", with: consentId)
-            .replacingOccurrences(of: "{tokenId}", with: tokenId)
+            .replacingOccurrences(of: "{consentId}", with: try Client.encodePath(consentId))
+            .replacingOccurrences(of: "{tokenId}", with: try Client.encodePath(tokenId))
 
         let apiParams: [String: Any] = [:]
 
@@ -499,7 +499,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/identities/{identityId}"
-            .replacingOccurrences(of: "{identityId}", with: identityId)
+            .replacingOccurrences(of: "{identityId}", with: try Client.encodePath(identityId))
 
         let apiParams: [String: Any] = [:]
 
@@ -661,7 +661,7 @@ open class Account: Service {
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
         let apiPath: String = "/account/mfa/authenticators/{type}"
-            .replacingOccurrences(of: "{type}", with: type.rawValue)
+            .replacingOccurrences(of: "{type}", with: try Client.encodePath(type.rawValue))
 
         let apiParams: [String: Any] = [:]
 
@@ -698,7 +698,7 @@ open class Account: Service {
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> AppwriteModels.MfaType {
         let apiPath: String = "/account/mfa/authenticators/{type}"
-            .replacingOccurrences(of: "{type}", with: type.rawValue)
+            .replacingOccurrences(of: "{type}", with: try Client.encodePath(type.rawValue))
 
         let apiParams: [String: Any] = [:]
 
@@ -738,7 +738,7 @@ open class Account: Service {
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
         let apiPath: String = "/account/mfa/authenticators/{type}"
-            .replacingOccurrences(of: "{type}", with: type.rawValue)
+            .replacingOccurrences(of: "{type}", with: try Client.encodePath(type.rawValue))
 
         let apiParams: [String: Any?] = [
             "otp": otp
@@ -802,7 +802,7 @@ open class Account: Service {
         nestedType: T.Type
     ) async throws -> AppwriteModels.User<T> {
         let apiPath: String = "/account/mfa/authenticators/{type}"
-            .replacingOccurrences(of: "{type}", with: type.rawValue)
+            .replacingOccurrences(of: "{type}", with: try Client.encodePath(type.rawValue))
 
         let apiParams: [String: Any?] = [
             "otp": otp
@@ -861,7 +861,7 @@ open class Account: Service {
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
-            .replacingOccurrences(of: "{type}", with: type.rawValue)
+            .replacingOccurrences(of: "{type}", with: try Client.encodePath(type.rawValue))
 
         let apiParams: [String: Any] = [:]
 
@@ -890,7 +890,7 @@ open class Account: Service {
         type: AppwriteEnums.AuthenticatorType
     ) async throws -> Any {
         let apiPath: String = "/account/mfa/authenticators/{type}"
-            .replacingOccurrences(of: "{type}", with: type.rawValue)
+            .replacingOccurrences(of: "{type}", with: try Client.encodePath(type.rawValue))
 
         let apiParams: [String: Any] = [:]
 
@@ -1471,7 +1471,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/passkeys/{passkeyId}"
-            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+            .replacingOccurrences(of: "{passkeyId}", with: try Client.encodePath(passkeyId))
 
         let apiParams: [String: Any] = [:]
 
@@ -1510,7 +1510,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/passkeys/{passkeyId}"
-            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+            .replacingOccurrences(of: "{passkeyId}", with: try Client.encodePath(passkeyId))
 
         let apiParams: [String: Any?] = [
             "name": name
@@ -1553,7 +1553,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/passkeys/{passkeyId}"
-            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+            .replacingOccurrences(of: "{passkeyId}", with: try Client.encodePath(passkeyId))
 
         let apiParams: [String: Any] = [:]
 
@@ -1592,7 +1592,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/passkeys/{passkeyId}/verification"
-            .replacingOccurrences(of: "{passkeyId}", with: passkeyId)
+            .replacingOccurrences(of: "{passkeyId}", with: try Client.encodePath(passkeyId))
 
         let apiParams: [String: Any?] = [
             "credential": credential
@@ -2369,7 +2369,7 @@ open class Account: Service {
         state: String? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/sessions/oauth2/{provider}"
-            .replacingOccurrences(of: "{provider}", with: provider.rawValue)
+            .replacingOccurrences(of: "{provider}", with: try Client.encodePath(provider.rawValue))
 
         let apiParams: [String: Any?] = [
             "success": success,
@@ -2498,7 +2498,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/sessions/{sessionId}"
-            .replacingOccurrences(of: "{sessionId}", with: sessionId)
+            .replacingOccurrences(of: "{sessionId}", with: try Client.encodePath(sessionId))
 
         let apiParams: [String: Any] = [:]
 
@@ -2537,7 +2537,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/sessions/{sessionId}"
-            .replacingOccurrences(of: "{sessionId}", with: sessionId)
+            .replacingOccurrences(of: "{sessionId}", with: try Client.encodePath(sessionId))
 
         let apiParams: [String: Any] = [:]
 
@@ -2579,7 +2579,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/sessions/{sessionId}"
-            .replacingOccurrences(of: "{sessionId}", with: sessionId)
+            .replacingOccurrences(of: "{sessionId}", with: try Client.encodePath(sessionId))
 
         let apiParams: [String: Any] = [:]
 
@@ -2723,7 +2723,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/targets/{targetId}/push"
-            .replacingOccurrences(of: "{targetId}", with: targetId)
+            .replacingOccurrences(of: "{targetId}", with: try Client.encodePath(targetId))
 
         let apiParams: [String: Any?] = [
             "identifier": identifier,
@@ -2767,7 +2767,7 @@ open class Account: Service {
         }
 
         let apiPath: String = "/account/targets/{targetId}/push"
-            .replacingOccurrences(of: "{targetId}", with: targetId)
+            .replacingOccurrences(of: "{targetId}", with: try Client.encodePath(targetId))
 
         let apiParams: [String: Any] = [:]
 
@@ -2931,7 +2931,7 @@ open class Account: Service {
         state: String? = nil
     ) async throws -> Bool {
         let apiPath: String = "/account/tokens/oauth2/{provider}"
-            .replacingOccurrences(of: "{provider}", with: provider.rawValue)
+            .replacingOccurrences(of: "{provider}", with: try Client.encodePath(provider.rawValue))
 
         let apiParams: [String: Any?] = [
             "success": success,
