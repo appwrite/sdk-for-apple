@@ -1,5 +1,20 @@
 # Change Log
 
+## 21.3.0
+
+* Added: `Tracking` sends app, screen and push analytics through `Analytics`; `start()` sends `first_open` once per install and `app_updated` after a version change
+* Added: `Push.setTracking` sends `push_received` and `push_opened` with the message's `messageId`
+* Added: `PushNotificationOpened.messageId`
+* Added: `Account.createDevice`, `getDevice`, `deleteDevice` and `updateDeviceSession`, and the `Device` model
+* Added: `Account.createLDAPSession`
+* Added: `Session.userName`
+* Added: `ImageFormat.auto` on `Storage.getFilePreview` and the avatar endpoints, serving avif or webp when the `Accept` header supports it
+* Added: `OAuthProvider.naver`, `OAuthProvider.vipps` and `OAuthProvider.vippsSandbox`
+* Added: optional `interactive` param on `Analytics.createEvent` to mark an event as telemetry that does not end a bounce
+* Added: `Client.setEnvironment` to act in a project environment; realtime connections carry it
+* Fixed: `Presence.metadata` and `User.hashOptions` are `nil` when the response omits them, instead of an empty dictionary
+* Updated: requests send `X-Appwrite-Response-Format: 2.7.2`; the SDK targets Appwrite 2.7.x
+
 ## 21.2.0
 
 * Updated: requests send `X-Appwrite-Response-Format: 2.6.2`; the SDK targets Appwrite 2.6.x

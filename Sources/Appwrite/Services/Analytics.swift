@@ -25,6 +25,7 @@ open class Analytics: Service {
     ///   - userId: String (optional)
     ///   - ip: String (optional)
     ///   - userAgent: String (optional)
+    ///   - interactive: Bool (optional)
     /// - Throws: Exception if the request fails
     /// - Returns: Any
     ///
@@ -41,7 +42,8 @@ open class Analytics: Service {
         props: [String]? = nil,
         userId: String? = nil,
         ip: String? = nil,
-        userAgent: String? = nil
+        userAgent: String? = nil,
+        interactive: Bool? = nil
     ) async throws -> Any {
         if propertyId.isEmpty {
             throw AppwriteError(message: "Missing required parameter: \"propertyId\"")
@@ -63,6 +65,7 @@ open class Analytics: Service {
             "userId": userId,
             "ip": ip,
             "userAgent": userAgent,
+            "interactive": interactive,
         ]
 
         let apiHeaders: [String: String] = [

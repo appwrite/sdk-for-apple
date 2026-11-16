@@ -46,15 +46,20 @@ public struct PushNotificationOpened {
     /// The `data` sent with the message (e.g. `createPush`), parsed; empty when it had none.
     public let data: [String: Any]
 
+    /// The Appwrite Messaging message id, when the server sent one.
+    public let messageId: String?
+
     init(topic: String, payload: String) {
         self.topic = topic
         let object = (try? JSONSerialization.jsonObject(with: Data(payload.utf8))) as? [String: Any]
         self.data = object?["data"] as? [String: Any] ?? [:]
+        self.messageId = Push.RemoteMessage.id(payload: Array(payload.utf8))
     }
 
-    init(topic: String, data: [String: Any]) {
+    init(topic: String, data: [String: Any], messageId: String?) {
         self.topic = topic
         self.data = data
+        self.messageId = messageId
     }
 }
 
@@ -70,6 +75,7 @@ public struct PushNotificationOpened {
         private var pending: PushNotificationOpened?
         private var listeners: [UUID: (PushNotificationOpened) -> Void] = [:]
         private weak var forwarded: UNUserNotificationCenterDelegate?
+        private var tracking: Tracking?
 
         func install() {
             // The notification center needs an app bundle; command-line tools have none.
@@ -98,7 +104,7 @@ public struct PushNotificationOpened {
             if let topic = info["topic"] as? String, let payload = info["payload"] as? String {
                 opened = PushNotificationOpened(topic: topic, payload: payload)
             } else if let remote = Push.RemoteMessage(userInfo: info), !remote.wake {
-                opened = PushNotificationOpened(topic: remote.topic ?? "", data: remote.data)
+                opened = PushNotificationOpened(topic: remote.topic ?? "", data: remote.data, messageId: remote.id)
             } else {
                 return false
             }
@@ -107,16 +113,31 @@ public struct PushNotificationOpened {
             if callbacks.isEmpty {
                 pending = opened
             }
+            let tracking = self.tracking
             lock.unlock()
+            // Once per tap however many listeners get it; a held tap counts when it is taken.
+            if !callbacks.isEmpty {
+                Push.trackOpened(opened, tracking)
+            }
             callbacks.forEach { $0(opened) }
             return true
         }
 
+        func track(_ tracking: Tracking) {
+            lock.lock()
+            self.tracking = tracking
+            lock.unlock()
+        }
+
         func take() -> PushNotificationOpened? {
             lock.lock()
-            defer { lock.unlock() }
             let opened = pending
             pending = nil
+            let tracking = self.tracking
+            lock.unlock()
+            if let opened {
+                Push.trackOpened(opened, tracking)
+            }
             return opened
         }
 
@@ -278,6 +299,10 @@ open class Push: Service {
     private var onOpenCb: (() -> Void)?
     private var onCloseCb: (() -> Void)?
     private var onErrorCb: ((Swift.Error) -> Void)?
+    private var tracking: Tracking?
+
+    private static let receivedLock = NSLock()
+    private static var received: [String: Date] = [:]
 
     // Set by close() so the close listener does not try to reconnect a deliberate teardown.
     private var closing = false
@@ -355,6 +380,34 @@ open class Push: Service {
     public func onError(_ callback: @escaping (Swift.Error) -> Void) -> Self {
         onErrorCb = callback
         return self
+    }
+
+    /// Send `push_received` for each message a background subscription gets with a notification to
+    /// show, and `push_opened` for each tap reported by `getInitialNotification()` or
+    /// `onNotificationOpened(_:)`, both with the message's `messageId`. Taps go to the `Tracking` set last.
+    @discardableResult
+    public func setTracking(_ tracking: Tracking) -> Self {
+        sync.sync { self.tracking = tracking }
+        #if canImport(UserNotifications)
+            PushNotificationTaps.shared.track(tracking)
+        #endif
+        return self
+    }
+
+    // Recently tracked push events. A message can reach the app through MQTT, APNs and the
+    // extension's hand-off, once per overlapping subscription and `Push`, so each counts once.
+    static func firstTracked(_ key: String) -> Bool {
+        receivedLock.lock()
+        defer { receivedLock.unlock() }
+        let now = Date()
+        received = received.filter { now.timeIntervalSince($0.value) < 10 }
+        return received.updateValue(now, forKey: key) == nil
+    }
+
+    static func trackOpened(_ opened: PushNotificationOpened, _ tracking: Tracking?) {
+        if let tracking, firstTracked("opened\n\(opened.topic)\n\(opened.messageId ?? "\(opened.data)")") {
+            tracking.pushOpened(messageId: opened.messageId)
+        }
     }
 
     /// The background notification whose tap launched the app, or nil. Reported once. The tap
@@ -1147,8 +1200,9 @@ open class Push: Service {
         deliver(pushMessage)
     }
 
-    // `notifyLocally` is false for a message APNs delivered: iOS already showed it.
-    private func deliver(_ pushMessage: PushMessage, notifyLocally: Bool = true) {
+    // `notifyLocally` is false for a message APNs delivered: iOS already showed it. `shown` is true
+    // when iOS showed one whose payload no longer carries the notification.
+    private func deliver(_ pushMessage: PushMessage, notifyLocally: Bool = true, shown: Bool = false) {
         // Notification is per-subscription: only subs that opted in post one, each title once, as
         // their callbacks return. A title the server sent replaces theirs, so it is posted once.
         let matched = sync.sync {
@@ -1162,6 +1216,12 @@ open class Push: Service {
             if notifyLocally && entry.background && notification.visible && postedTitles.insert(title).inserted {
                 notify(pushMessage, title: title, notification: notification)
             }
+        }
+        let messageId = RemoteMessage.id(payload: pushMessage.payload)
+        if (shown || notification.visible) && matched.contains(where: { $0.background }),
+            Push.firstTracked("received\n\(pushMessage.topic)\n\(messageId ?? pushMessage.data)")
+        {
+            sync.sync { tracking }?.pushReceived(messageId: messageId)
         }
     }
 
@@ -1832,7 +1892,7 @@ extension Push {
             body["messageId"] = id
         }
         let payload = (try? JSONSerialization.data(withJSONObject: body)) ?? Data()
-        deliver(PushMessage(topic: topic, payload: [UInt8](payload), qos: 1), notifyLocally: false)
+        deliver(PushMessage(topic: topic, payload: [UInt8](payload), qos: 1), notifyLocally: false, shown: true)
     }
 
     /// Reconnect MQTT for a silent wake, then give the broker a moment to replay the backlog.
@@ -2026,7 +2086,7 @@ extension Push {
         /// From an APNs `userInfo`: Appwrite's data under `appwrite`, `data`, `aps.data` or at the top level. Nil when it is not Appwrite's.
         init?(userInfo: [AnyHashable: Any]) {
             if let appwrite = userInfo["appwrite"] as? [String: Any] {
-                id = appwrite["messageId"] as? String
+                id = (appwrite["messageId"] as? String).flatMap { $0.isEmpty ? nil : $0 }
                 topic = appwrite["topic"] as? String
                 data = appwrite["data"] as? [String: Any] ?? [:]
                 wake = (appwrite["type"] as? String) == "wake"
@@ -2053,7 +2113,8 @@ extension Push {
             if let id = json["messageId"] as? String, !id.isEmpty {
                 return id
             }
-            return (json["appwrite"] as? [String: Any])?["messageId"] as? String
+            let id = (json["appwrite"] as? [String: Any])?["messageId"] as? String
+            return id?.isEmpty == false ? id : nil
         }
     }
 

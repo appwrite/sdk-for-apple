@@ -8,6 +8,7 @@ public enum ImageFormat: String, Codable, CustomStringConvertible {
     case heic = "heic"
     case avif = "avif"
     case gif = "gif"
+    case auto = "auto"
 
     public var description: String {
         return rawValue
