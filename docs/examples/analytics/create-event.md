@@ -20,7 +20,8 @@ let result = try await analytics.createEvent(
     props: [], // optional
     userId: "<USER_ID>", // optional
     ip: "<IP>", // optional
-    userAgent: "<USER_AGENT>" // optional
+    userAgent: "<USER_AGENT>", // optional
+    interactive: false // optional
 )
 
 ```

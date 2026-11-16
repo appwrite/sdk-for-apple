@@ -9,6 +9,7 @@ open class Session: Codable {
         case createdAt = "$createdAt"
         case updatedAt = "$updatedAt"
         case userId = "userId"
+        case userName = "userName"
         case expire = "expire"
         case provider = "provider"
         case providerUid = "providerUid"
@@ -44,6 +45,8 @@ open class Session: Codable {
     public let updatedAt: String
     /// User ID.
     public let userId: String
+    /// Name of the user the session belongs to. Lets a client label the account, for example in an account switcher.
+    public let userName: String
     /// Session expiration date in ISO 8601 format.
     public let expire: String
     /// Session Provider.
@@ -100,6 +103,7 @@ open class Session: Codable {
         createdAt: String,
         updatedAt: String,
         userId: String,
+        userName: String,
         expire: String,
         provider: String,
         providerUid: String,
@@ -130,6 +134,7 @@ open class Session: Codable {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.userId = userId
+        self.userName = userName
         self.expire = expire
         self.provider = provider
         self.providerUid = providerUid
@@ -164,6 +169,7 @@ open class Session: Codable {
         self.createdAt = try container.contains(.createdAt) ? container.decode(String.self, forKey: .createdAt) : ""
         self.updatedAt = try container.contains(.updatedAt) ? container.decode(String.self, forKey: .updatedAt) : ""
         self.userId = try container.contains(.userId) ? container.decode(String.self, forKey: .userId) : ""
+        self.userName = try container.contains(.userName) ? container.decode(String.self, forKey: .userName) : ""
         self.expire = try container.contains(.expire) ? container.decode(String.self, forKey: .expire) : ""
         self.provider = try container.contains(.provider) ? container.decode(String.self, forKey: .provider) : ""
         self.providerUid = try container.contains(.providerUid) ? container.decode(String.self, forKey: .providerUid) : ""
@@ -198,6 +204,7 @@ open class Session: Codable {
         try container.encode(createdAt, forKey: .createdAt)
         try container.encode(updatedAt, forKey: .updatedAt)
         try container.encode(userId, forKey: .userId)
+        try container.encode(userName, forKey: .userName)
         try container.encode(expire, forKey: .expire)
         try container.encode(provider, forKey: .provider)
         try container.encode(providerUid, forKey: .providerUid)
@@ -231,6 +238,7 @@ open class Session: Codable {
             "$createdAt": createdAt as Any,
             "$updatedAt": updatedAt as Any,
             "userId": userId as Any,
+            "userName": userName as Any,
             "expire": expire as Any,
             "provider": provider as Any,
             "providerUid": providerUid as Any,
@@ -265,6 +273,7 @@ open class Session: Codable {
             "$createdAt": "",
             "$updatedAt": "",
             "userId": "",
+            "userName": "",
             "expire": "",
             "provider": "",
             "providerUid": "",
@@ -298,6 +307,7 @@ open class Session: Codable {
             createdAt: map["$createdAt"] as! String,
             updatedAt: map["$updatedAt"] as! String,
             userId: map["userId"] as! String,
+            userName: map["userName"] as! String,
             expire: map["expire"] as! String,
             provider: map["provider"] as! String,
             providerUid: map["providerUid"] as! String,

@@ -7,6 +7,6 @@ let client = Client()
 
 let locale = Locale(client)
 
-let locale = try await locale.get()
+let result = try await locale.get()
 
 ```

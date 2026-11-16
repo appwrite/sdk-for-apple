@@ -119,7 +119,7 @@ open class Presence: Codable {
             status: map["status"] as? String,
             source: map["source"] as! String,
             expiresAt: map["expiresAt"] as? String,
-            metadata: (map["metadata"] as? [String: Any] ?? [:]).mapValues { AnyCodable($0) }
+            metadata: (map["metadata"] as? [String: Any])?.mapValues { AnyCodable($0) }
         )
     }
 }
