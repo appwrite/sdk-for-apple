@@ -487,6 +487,9 @@ open class Avatars: Service {
     /// both dimensions are 0, the API provides an image at original size. If
     /// dimensions are not specified, the default viewport size is 1280x720px.
     ///
+    /// Set `output` to `auto` to receive avif or webp when the `Accept` header of
+    /// your request supports it, falling back to png.
+    ///
     /// - Parameters:
     ///   - url: String
     ///   - headers: Any (optional)
@@ -560,7 +563,7 @@ open class Avatars: Service {
 
         let apiHeaders: [String: String] = [
             "X-Appwrite-Project": client.config["project"] ?? "",
-            "accept": "image/png",
+            "accept": "image/*",
         ]
 
         return try await client.call(

@@ -376,6 +376,176 @@ open class Account: Service {
         )
     }
     ///
+    /// Create an account switching device. A device is a container, scoped to one
+    /// browser or app install, that holds multiple sessions and tracks which one
+    /// is active. Once a device exists, session creation endpoints attach the new
+    /// session to it automatically, so a single browser can stay signed in to
+    /// several accounts and switch between them. A device holds at most one
+    /// session per user: signing in again as a user it already holds replaces that
+    /// user's session. The device lives as long as its newest session.
+    ///
+    /// The device secret is returned in a cookie. Run this on app start: if the
+    /// browser already has a valid device, the existing one is returned with the
+    /// same status code instead of an error, so it is always safe to call.
+    ///
+    /// Every session that joins the device rotates the device secret and re-issues
+    /// the cookie, so an earlier copy of the secret stops working. A client that
+    /// keeps the secret itself, rather than relying on the cookie, must replace it
+    /// from each session response.
+    ///
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Device
+    ///
+    open func createDevice() async throws -> AppwriteModels.Device {
+        let apiPath: String = "/account/devices"
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Device = { response in
+            return AppwriteModels.Device.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Get the account switching device for the current browser, including every
+    /// session it holds, the name of the user each session belongs to, and the ID
+    /// of the active session. Use the string 'current' to reference the current
+    /// browser's device.
+    ///
+    /// - Parameters:
+    ///   - deviceId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Device
+    ///
+    open func getDevice(
+        deviceId: String
+    ) async throws -> AppwriteModels.Device {
+        if deviceId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"deviceId\"")
+        }
+
+        let apiPath: String = "/account/devices/{deviceId}"
+            .replacingOccurrences(of: "{deviceId}", with: try Client.encodePath(deviceId))
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Device = { response in
+            return AppwriteModels.Device.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "GET",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Delete the account switching device for the current browser. Every session
+    /// the device holds is signed out, each firing its own session delete event,
+    /// the device is removed, and both the device and session cookies are cleared.
+    /// Use the string 'current' to reference the current browser's device.
+    ///
+    /// - Parameters:
+    ///   - deviceId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: Any
+    ///
+    open func deleteDevice(
+        deviceId: String
+    ) async throws -> Any {
+        if deviceId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"deviceId\"")
+        }
+
+        let apiPath: String = "/account/devices/{deviceId}"
+            .replacingOccurrences(of: "{deviceId}", with: try Client.encodePath(deviceId))
+
+        let apiParams: [String: Any] = [:]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        return try await client.call(
+            method: "DELETE",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams
+        )
+    }
+    ///
+    /// Switch the active account on an account switching device to one of the
+    /// sessions it holds. The chosen session becomes active and its secret is
+    /// written to the browser's session cookie, so subsequent requests
+    /// authenticate as that account. Use the string 'current' to reference the
+    /// current browser's device.
+    ///
+    /// Switching rotates the chosen session's secret. Any other holder of that
+    /// session, such as a copy kept elsewhere, stops working, so a session should
+    /// not be shared across devices.
+    ///
+    /// - Parameters:
+    ///   - deviceId: String
+    ///   - sessionId: String
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Session
+    ///
+    open func updateDeviceSession(
+        deviceId: String,
+        sessionId: String
+    ) async throws -> AppwriteModels.Session {
+        if deviceId.isEmpty {
+            throw AppwriteError(message: "Missing required parameter: \"deviceId\"")
+        }
+
+        let apiPath: String = "/account/devices/{deviceId}/session"
+            .replacingOccurrences(of: "{deviceId}", with: try Client.encodePath(deviceId))
+
+        let apiParams: [String: Any?] = [
+            "sessionId": sessionId
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Session = { response in
+            return AppwriteModels.Session.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "PATCH",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
     /// Update currently logged in user account email address. After changing user
     /// address, the user confirmation status will get reset. A new confirmation
     /// email is not sent automatically however you can use the send confirmation
@@ -2273,6 +2443,54 @@ open class Account: Service {
             "accessToken": accessToken,
             "accessTokenExpiry": accessTokenExpiry,
             "name": name,
+        ]
+
+        let apiHeaders: [String: String] = [
+            "X-Appwrite-Project": client.config["project"] ?? "",
+            "content-type": "application/json",
+            "accept": "application/json",
+        ]
+
+        let converter: (Any) throws -> AppwriteModels.Session = { response in
+            return AppwriteModels.Session.from(map: response as! [String: Any])
+        }
+
+        return try await client.call(
+            method: "POST",
+            path: apiPath,
+            headers: apiHeaders,
+            params: apiParams,
+            converter: converter
+        )
+    }
+    ///
+    /// Allow the user to login into their account by providing the username and
+    /// password they use in the project's LDAP directory. The directory verifies
+    /// the password; on the first sign-in an account is created from the directory
+    /// entry, and on later sign-ins the name, email and phone follow the
+    /// directory. This endpoint requires LDAP to be configured and enabled for the
+    /// project. A user is limited to 10 active sessions at a time by default.
+    /// [Learn more about session
+    /// limits](https://appwrite.io/docs/authentication-security#limits).
+    ///
+    /// - Parameters:
+    ///   - username: String
+    ///   - password: String
+    ///   - duration: Int (optional)
+    /// - Throws: Exception if the request fails
+    /// - Returns: AppwriteModels.Session
+    ///
+    open func createLDAPSession(
+        username: String,
+        password: String,
+        duration: Int? = nil
+    ) async throws -> AppwriteModels.Session {
+        let apiPath: String = "/account/sessions/ldap"
+
+        let apiParams: [String: Any?] = [
+            "username": username,
+            "password": password,
+            "duration": duration,
         ]
 
         let apiHeaders: [String: String] = [
